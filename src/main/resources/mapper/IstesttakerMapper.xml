@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.icia.isTestTaker.IisTestTaker">
+ 	
+ 	<select id="selectIsTestTaker" parameterType="String" resultType="istesttaker">
+ 		SELECT cl_idnum, cl_clname, co_name, co_num, co_lv, cl_id
+		FROM lectureQuiz1
+		where gr_kind='T' and cl_id=#{id}
+		group by cl_idnum, cl_clname, co_name, co_num, co_lv, cl_id
+ 	</select>
+ 	
+ 	<select id="allSelectIsTestTaker" parameterType="String" resultType="istesttaker">
+	SELECT *
+		FROM(SELECT cl_idnum, cl_clname, co_name, co_num, co_lv, cl_id
+			FROM lectureQuiz1
+			where gr_kind='T' and cl_id=#{id}
+			group by cl_idnum, cl_clname, co_name, co_num, co_lv, cl_id) 
+	WHERE cl_clname LIKE '%${cont}%' OR Co_name LIKE '%${cont}%'
+	</select>
+	
+	<select id="classSelectLectureTestAnswer" parameterType="String" resultType="istesttaker">
+		SELECT cl_idnum, cl_clname, co_name, co_num, co_lv, cl_id
+        FROM lectureQuiz1
+        where gr_kind='T' and cl_id=#{id} and cl_clname LIKE '%${cont}%'
+        group by cl_idnum, cl_clname, co_name, co_num, co_lv, cl_id
+	</select>
+	
+	<select id="courseSelectIsTestTaker" parameterType="String" resultType="istesttaker">
+		SELECT cl_idnum, cl_clname, co_name, co_num, co_lv, cl_id
+        FROM lectureQuiz1
+        where gr_kind='T' and cl_id=#{id} and Co_name LIKE '%${cont}%'
+        group by cl_idnum, cl_clname, co_name, co_num, co_lv, cl_id
+	</select>
+	
+	<select id="isTestTakerSelect" parameterType="istesttaker" resultType="istesttaker">
+		SELECT studcntavg.gr_idnum, studcntavg.co_name, studcntavg.gr_num, studcntavg.gr_id, problem.PB_ID 
+		FROM studcntavg, (SELECT PB_ID,pb_idnum FROM problem where pb_pbchkqz=0) problem 
+		WHERE problem.pb_id(+)=studcntavg.gr_id and problem.pb_idnum(+)=studcntavg.gr_idnum 
+		and studcntavg.co_name=#{co_name} and studcntavg.gr_num =#{gr_num}
+		group by studcntavg.gr_idnum, studcntavg.co_name,studcntavg.gr_num, studcntavg.gr_id, problem.PB_ID
+	</select>
+	
+	<select id="selectnumlist" parameterType="istesttaker" resultType="istesttaker">
+		SELECT gr_num FROM studcntavg WHERE co_name=#{co_name}
+	</select>
+ </mapper>

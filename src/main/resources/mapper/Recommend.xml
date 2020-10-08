@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icia.Recommendedlecture.RecommendDao">
+
+<select id="getlevelmatchCount" resultType="int">
+SELECT COUNT(*)
+FROM Lvmat_vw
+<where>
+<if test="selvalue.equals('searchcc')">
+cl_cc LIKE '%'||#{search}||'%'
+</if>
+<if test="selvalue.equals('searchWriter')">
+cl_id LIKE '%'||#{search}||'%'
+</if>
+</where>
+</select>
+<select id="lnterestCount" resultType="int">
+SELECT COUNT(*)
+FROM ccmat_vw
+<where>
+<if test="selvalue.equals('searchcc')">
+ cc_cc LIKE '%'||#{search}||'%'
+</if>
+<if test="selvalue.equals('searchWriter')">
+ cl_id LIKE '%'||#{search}||'%'
+</if>
+</where>
+</select>
+
+
+	<select id="LevelMatchPage" resultType="lvs">
+	<![CDATA[
+	  SELECT floor(AVG(LV_LV)) as LV_LV
+	  FROM LV
+where lv_id = #{MB_ID}
+]]>
+	</select>
+	
+<select id="searchLevelDetail" resultType="cl">
+	<![CDATA[
+	SELECT * 
+	FROM 
+( SELECT /*+INDEX_DESC(Lvmat_vw cl_idnum)*/ ROWNUM RN, Lvmat_vw.* 
+FROM Lvmat_vw 
+WHERE ROWNUM<=#{pageNum}*10)
+]]>
+		<where>
+			<if test="selvalue.equals('searchcc')">
+	<![CDATA[
+RN>=#{pageNum}*9-10 and cl_cc LIKE '%'||#{search}||'%'
+]]>
+			</if>
+			<if test="selvalue.equals('searchWriter')">
+	<![CDATA[
+RN>=#{pageNum}*9-10 and cl_id LIKE '%'||#{search}||'%'
+]]>
+			</if>
+		</where>
+	</select>
+
+	<select id="lnterestSearchDetail" resultType="cl">
+	<![CDATA[
+	SELECT * 
+	FROM 
+( SELECT /*+INDEX_DESC(Ccmat_vw cl_idnum)*/ ROWNUM RN, Ccmat_vw.* 
+FROM Ccmat_vw 
+WHERE ROWNUM<=#{pageNum}*10)
+]]>
+		<where>
+			<if test="selvalue.equals('searchcc')">
+	<![CDATA[
+RN>=#{pageNum}*9-10 and cc_cc LIKE '%'||#{search}||'%'
+]]>
+			</if>
+			<if test="selvalue.equals('searchWriter')">
+	<![CDATA[
+RN>=#{pageNum}*9-10 and cl_id LIKE '%'||#{search}||'%'
+]]>
+			</if>
+		</where>
+	</select>
+
+	<select id="DeeplearningSearchDetail" resultType="cl">
+	<![CDATA[
+	SELECT * 
+	FROM 
+( SELECT /*+INDEX_DESC(Ccmat_vw cl_idnum)*/ ROWNUM RN, Ccmat_vw.* 
+FROM Ccmat_vw 
+WHERE ROWNUM<=#{pageNum}*10)
+]]>
+		<where>
+			<if test="selvalue.equals('searchcc')">
+	<![CDATA[
+RN>=#{pageNum}*9-10 and cc_cc LIKE '%'||#{search}||'%' and cl_lv>4
+]]>
+			</if>
+			<if test="selvalue.equals('searchWriter')">
+	<![CDATA[
+RN>=#{pageNum}*9-10 and cl_id LIKE '%'||#{search}||'%' and cl_lv>4
+]]>
+			</if>
+		</where>
+	</select>
+
+</mapper>

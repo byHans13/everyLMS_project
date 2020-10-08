@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- IMemberDao 전용 Mapper: 회원관련 sql -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 1.parameterType에 1개의 Type만 올 수 있다. Type 여러개인 경우 생략할 것. 2.parameterType이 
+	bean(DTO)인 경우 #{필드명} 3.parameterType이 변수인 경우 #{변수명} 4.parameterType이 Map<key,value> 
+	인 경우 #{key} 5.resultType 1개 또는 1개 이상의 레코드를 검색하려는 경우 bean(DTO)타입만 명시하면 됨.(select일떄는 
+	resultType을 꼭 입력해야함) -->
+
+<mapper namespace="com.icia.adminMainPage.IAdminMainPageDao">
+	<select id="selectCountJoinMember" resultType="int">
+		select count(*)
+		from (select * from at where at_at= 'ROLE_STUD' AND at_date like
+		'%${setCompLast}%')
+		where at_date like '%${searchMonth}%'
+	</select>
+
+
+	<!-- <select id="selectIntroduction" resultType="adminmain"> -->
+	<select id="selectIntroduction" resultMap="selIntro">
+		select mb_id,
+		mb_email, mb_phone, mb_loe, mb_name, ct_prof, ct_cont,
+		ctf_sysname,
+		cc_cc
+		from member inner join certiforprof on
+		member.mb_id=certiforprof.ct_id
+		inner join certiFile on
+		certiforprof.ct_prof=certiFile.ctf_prof
+		inner join concern on
+		member.mb_id=concern.cc_id
+		where mb_id = #{mb_id} and ctf_check=1 and ct_check = 1
+		and ct_prof=#{ct_prof}
+	</select>
+
+	<resultMap type="adminmain" id="selIntro">
+		<id column="MB_ID" property="mb_id" />
+		<result column="MB_EMAIL" property="mb_email" />
+		<result column="MB_PHONE" property="mb_phone" />
+		<result column="MB_LOE" property="mb_loe" />
+		<result column="MB_NAME" property="mb_name" />
+		<result column="CT_PROF" property="ct_prof" />
+		<result column="CT_CONT" property="ct_cont" />
+		<result column="CTF_SYSNAME" property="ctf_sysname" />
+		<collection property="cc_cc" javaType="java.util.ArrayList"
+			resultMap="selCc"></collection>
+	</resultMap>
+
+	<resultMap type="string" id="selCc">
+		<id column="CC_CC" property="cc_cc" />
+	</resultMap>
+
+
+	<select id="selectCertification" resultType="adminmain">
+		select ctf_sysname
+		from member inner join certiforprof on member.mb_id=certiforprof.ct_id
+		inner join certiFile on certiforprof.ct_prof=certiFile.ctf_prof
+		where mb_id = #{mb_id} and ctf_check=0 and ct_check = 1 and ct_prof=#{ct_prof}
+
+	</select>
+</mapper>
+
+
+
+

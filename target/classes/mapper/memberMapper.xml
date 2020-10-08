@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- IMemberDao 전용 Mapper: 회원관련 sql -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 1.parameterType에 1개의 Type만 올 수 있다. Type 여러개인 경우 생략할 것. 2.parameterType이 
+	bean(DTO)인 경우 #{필드명} 3.parameterType이 변수인 경우 #{변수명} 4.parameterType이 Map<key,value> 
+	인 경우 #{key} 5.resultType 1개 또는 1개 이상의 레코드를 검색하려는 경우 bean(DTO)타입만 명시하면 됨.(select일떄는 
+	resultType을 꼭 입력해야함) -->
+<!-- <mapper namespace="memberMapper"> <select id="getLoginResult" parameterType="com.icia.board.bean.Member" 
+	resultType="boolean"> SELECT COUNT(*) FROM M WHERE M_ID=#{m_id} AND M_PW=#{m_pw} 
+	</select> </mapper> -->
+<mapper namespace="com.icia.member.IMemberDao">
+	<insert id="insertMemberJoin" parameterType="member">
+		INSERT INTO
+		MEMBER(mb_id,mb_pw, mb_name, mb_email, mb_phone, mb_loe, mb_addr,
+		mb_rrn, mb_point, mb_gender, enabled) VALUES(#{mb_id}, #{mb_pw},
+		#{mb_name}, #{mb_email}, #{mb_phone}, #{mb_loe}, #{mb_addr},
+		#{mb_rrn}, DEFAULT, #{mb_gender}, DEFAULT)
+	</insert>
+
+	<insert id="insertConcern" parameterType="member">
+		INSERT INTO CONCERN
+		(cc_id, cc_cc, cc_check) VALUES(#{mb_id}, #{cc_cc}, DEFAULT)
+	</insert>
+
+	<insert id="insertAuthority" parameterType="member">
+		INSERT INTO AUTHORITY (at_id, at_at, at_date)
+		VALUES(#{mb_id}, DEFAULT, default )
+	</insert>
+
+	<insert id="insertAuthority2" parameterType="string">
+		INSERT INTO AUTHORITY(at_id,at_at,at_date) VALUES
+		<choose>
+			<when test="spl3 == null">
+				('${mb_id}', 'ROLE_STUD', '2020-09-20' )
+			</when>
+			<when test="spl3 lte 10">
+				('${mb_id}', 'ROLE_STUD', '2020-08-29' )
+			</when>
+			<when test="spl3 lte 30">
+				('${mb_id}', 'ROLE_STUD', '2020-09-10' )
+			</when>
+
+			<when test="spl3 lte 50">
+				('${mb_id}', 'ROLE_STUD', '2020-07-11' )
+			</when>
+
+			<when test="spl3 lte 70">
+				('${mb_id}', 'ROLE_STUD', '2020-06-29' )
+			</when>
+
+			<when test="spl3 lte 120">
+				('${mb_id}', 'ROLE_STUD', '2020-06-29' )
+			</when>
+
+			<when test="spl3 lte 150">
+				('${mb_id}', 'ROLE_STUD', '2020-03-29' )
+			</when>
+
+			<when test="spl3 lte 180">
+				('${mb_id}', 'ROLE_STUD', '2020-08-29' )
+			</when>
+
+			<when test="spl3 lte 190">
+				('${mb_id}', 'ROLE_STUD', '2020-01-29' )
+			</when>
+
+			<when test="spl3 lte 210">
+				('${mb_id}', 'ROLE_STUD', '2019-10-20' )
+			</when>
+
+			<when test="spl3 lte 237">
+				('${mb_id}', 'ROLE_STUD', '2019-11-13' )
+			</when>
+
+			<when test="spl3 lte 249">
+				('${mb_id}', 'ROLE_STUD', '2019-12-06' )
+			</when>
+
+			<when test="spl3 lte 300">
+				('${mb_id}', 'ROLE_STUD', '2020-01-29' )
+			</when>
+
+			<when test="spl3 != null">
+				('${mb_id}', 'ROLE_STUD', '2020-05-29' )
+			</when>
+
+
+		</choose>
+	</insert>
+
+	<select id="selectConcern" parameterType="String"
+		resultType="String">
+		SELECT CC_CC FROM CONCERN WHERE CC_ID=#{mb_id} AND
+		CC_CHECK= 1
+	</select>
+
+	<select id="securityPwd" parameterType="String"
+		resultType="String">
+		SELECT MB_PW FROM MEMBER WHERE MB_ID=#{mb_id}
+	</select>
+
+	<select id="selectIdclick" parameterType="String"
+		resultType="int">
+		SELECT COUNT(*) FROM MEMBER WHERE MB_ID=#{id}
+	</select>
+
+	<select id="idChecknumConfirm" parameterType="String"
+		resultType="String">
+		SELECT MB_id FROM MEMBER WHERE MB_NAME=#{e_name} AND
+		MB_EMAIL=#{e_email}
+	</select>
+
+	<select id="pwChecknumConfirm" parameterType="String"
+		resultType="String">
+		SELECT MB_id FROM MEMBER WHERE MB_ID=#{e_id} AND
+		MB_EMAIL=#{e_email}
+	</select>
+
+	<update id="PwUpdate" parameterType="member">
+		UPDATE MEMBER SET MB_PW
+		=#{mb_pw} WHERE MB_ID =#{mb_id}
+	</update>
+</mapper>
+
+
+
+
