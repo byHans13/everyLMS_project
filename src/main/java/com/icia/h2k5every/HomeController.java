@@ -19,7 +19,6 @@ public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
-	String hi;
 	String donsJjang = "real";
 	/**
 	 * Simply selects the home view to render by returning its name.
