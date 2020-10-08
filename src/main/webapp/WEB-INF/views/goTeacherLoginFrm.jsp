@@ -29,6 +29,23 @@ section {
     float: left;
 }
 
+.sbClassTable{
+border: black 1px solid;
+}
+
+.sbClassTh,.sbClassTd{
+border: black 1px solid;
+border-collapse: collapse;
+text-align: center;
+width: 180px;
+height: 50px;
+}
+
+.sbClassTh{
+background-color: skyblue;
+font-size: 20px;
+}
+
 </style>
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
