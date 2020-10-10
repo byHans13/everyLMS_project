@@ -39,7 +39,7 @@ $(document).ready
 	console.log('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal}');
 	console.log('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.authorities}');
 	//var aut =JSON.parse("${sessionScope.SPRING_SECURITY_CONTEXT.authentication.authorities}");
-	var aut= "${aut}";
+	var aut= '${sessionScope.SPRING_SECURITY_CONTEXT.authentication.authorities}';
 	console.log(aut);
 	var p = aut.indexOf("ROLE_PROF");
 	var s = aut.indexOf("ROLE_STUD");
@@ -53,11 +53,14 @@ $(document).ready
 	 console.log("hansnq3"+id);
 	if (p != -1 && a == -1 ){
 		$("#mainlogo").attr("href","/h2k5every/prof/goTeacherLoginFrm");
+		$("#movetagmain").attr("href","/h2k5every/prof/goTeacherLoginFrm");
 	}
 	else if (p == -1 && s != -1 && a==-1){
 		$("#mainlogo").attr("href","/h2k5every/stud/goLoginFrm");
+		$("#movetagmain").attr("href","/h2k5every/stud/goLoginFrm");
 	}else{
 		$("#mainlogo").attr("href","/h2k5every/admi/admiLogin");
+		$("#movetagmain").attr("href","/h2k5every/admi/admiLogin");
 		
 	}
 });
@@ -65,14 +68,14 @@ $(document).ready
 </script>
 
 <body>
-	<header top : 0px;>
+	<!-- <header top : 0px;> -->
 		<a position= 'absolute' top:0px  id="mainlogo" href="#"><img src="../upload/h2k5_mainLogo.PNG"
 			 width="200"></a>
-	</header>
+	<!-- </header> -->
 	<nav class="navbar navbar-inverse">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="#">＜h2＞k5＜h2＞</a>
+				<a id="movetagmain" class="navbar-brand" href="#">＜h2＞k5＜h2＞</a>
 			</div>
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="#">Main</a></li>

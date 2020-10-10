@@ -9,8 +9,8 @@
 header {
 	/* background-color: gray; */
 	 position: absolute; 
-	 transform:translate(0px,55px);  
-	 width: 1500px;
+	 transform:translate(0px,0px);  
+	 width: 1500px; 
 }
 
 aside {
@@ -25,7 +25,7 @@ section {
 	/* background-color: pink; */
 	width: 1000px;
 	float: left;
-		position: absolute;
+	position: absolute;
 	transform:translate(320px,100px);
 }
 .menu{
