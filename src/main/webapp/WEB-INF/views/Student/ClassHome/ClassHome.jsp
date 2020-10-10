@@ -182,32 +182,21 @@ td {
 		for ( var i in el) {
 			//강의 head, aside 강의 정보 찍어주기 
 			$('#classPk').val(el[i].cl_idnum);
-			$('#classImg')
-					.html(
-							"<img src='../picture/"+el[i].pi_pisysname+"' width='150px' height='200px'>");
-			$('#classInfo').html(
-					"<h5>" + el[i].cl_cc + " | LV " + el[i].cl_lv + " | "
-							+ el[i].mb_name + " 강사</h5>");
+			$('#classImg').html("<img src='../picture/"+el[i].pi_pisysname+"' width='150px' height='200px'>");
+			$('#classInfo').html("<h5>" + el[i].cl_cc + " | LV " + el[i].cl_lv + " | "+ el[i].mb_name + " 강사</h5>");
 			$('#className').html("<h2>" + el[i].cl_clName + "</h2>");
-			cInfo.append("<tr><td>과목명</td><td>" + el[i].cl_clName
-					+ "</td></tr>");
-			cInfo.append("<tr><td>학습레벨</td><td>LV " + el[i].cl_lv
-					+ "</td></tr>");
-			cInfo
-					.append("<tr><td>강수</td><td>" + el[i].cl_lcnum
-							+ "강</td></tr>");
+			cInfo.append("<tr><td>과목명</td><td>" + el[i].cl_clName	+ "</td></tr>");
+			cInfo.append("<tr><td>학습레벨</td><td>LV " + el[i].cl_lv	+ "</td></tr>");
+			cInfo.append("<tr><td>강수</td><td>" + el[i].cl_lcnum+ "강</td></tr>");
 			cInfo.append("<tr><td>강의평점</td><td>" + avg + "점</td></tr>");
 		}
 		//ajax하기 전 초기화 
 		$("#classRight").html("");
 		//classRight에 값 찍어주기, 수강후기는 ajax 타고 와야함 
 		var str = $("#classRight");
-		str
-				.append("<div style='width:745px; height:80px;'><h3>해당강의 맛보기 문제 풀어보기</h3><hr style='width:350px;'>");
-		str
-				.append("<div>해당강의의 맛보기 문제를 풀어볼 수 있습니다.</div><div>해당강의와 level이 맞지 않으면 맛보기 문제를 풀어주세요.</div>");
-		str
-				.append("<br><input type='button' onclick='previewQuiz()' value='맛보기문제 풀러가기'>");
+		str.append("<div style='width:745px; height:80px;'><h3>해당강의 맛보기 문제 풀어보기</h3><hr style='width:350px;'>");
+		str.append("<div>해당강의의 맛보기 문제를 풀어볼 수 있습니다.</div><div>해당강의와 level이 맞지 않으면 맛보기 문제를 풀어주세요.</div>");
+		str.append("<br><input type='button' onclick='previewQuiz()' value='맛보기문제 풀러가기'>");
 		str.append("<br><br><hr style='width:350px;'></div>");
 		// 수강후기 ajax 타고와서 table 찍어줌
 		var classReviews = "";
@@ -235,16 +224,10 @@ td {
 				}
 				var rename = name.join('');
 			}
-			classReviews += "<div style='width:745px;' onclick=\"classReviewDetail('"
-					+ infoReview[i].cob_bonum
-					+ "','"
-					+ infoReview[i].gpa_gpa
-					+ "','" + infoReview[i].cob_kind + "')\">";
-			classReviews += "<div>" + infoReview[i].gpa_gpa + "점 || " + rename
-					+ " || " + infoReview[i].cob_date + "</div>";
+			classReviews += "<div style='width:745px;' onclick=\"classReviewDetail('"+ infoReview[i].cob_bonum+ "','"	+ infoReview[i].gpa_gpa	+ "','" + infoReview[i].cob_kind + "')\">";
+			classReviews += "<div>" + infoReview[i].gpa_gpa + "점 || " + rename+ " || " + infoReview[i].cob_date + "</div>";
 			classReviews += "<h4>" + infoReview[i].cob_title + "</h4>";
-			classReviews += "<div>" + infoReview[i].cob_cont
-					+ "</div></div><br/>";
+			classReviews += "<div>" + infoReview[i].cob_cont+ "</div></div><br/>";
 		}
 		str.append(classReviews);
 
@@ -280,9 +263,7 @@ td {
 
 	function previewQuiz() {
 		var classPk = $('#classPk').val(); //cl_clname
-		window.open("selectPreviewQuiz?cl_idnum=" + classPk + "&cl_lv="
-				+ el[0].cl_lv, '_blank',
-				'width=800, height=600, top=200, left=400');
+		window.open("selectPreviewQuiz?cl_idnum=" + classPk + "&cl_lv="+ el[0].cl_lv, '_blank',	'width=800, height=600, top=200, left=400');
 
 	}// previewQuiz() END
 
@@ -300,8 +281,7 @@ td {
 					dataType : 'json',
 					beforeSend : function(xhr) {
 						var $token = $("#token");
-						xhr.setRequestHeader($token.data("token-name"), $token
-								.val());
+						xhr.setRequestHeader($token.data("token-name"), $token.val());
 					},
 					success : function(json) {
 						var lectureList = $('#classRight'); //여기에 table 출력
@@ -309,18 +289,12 @@ td {
 							alert("로그인 후 이용해주세요.");
 							classInfoAjax();
 						} else {
-
-							lectureList
-									.append("<div id='lectureDiv' style='width:1036px; height:652px;'><table id='lectureTable' style='margin:auto; border-collapse:collapse;'></table></div>");
-							$('#lectureTable')
-									.append(
-											"<tr><td>회차</td><td>강좌명</td><td>수강여부</td></tr>");
+							lectureList.append("<div id='lectureDiv' style='width:1036px; height:652px;'><table id='lectureTable' style='margin:auto; border-collapse:collapse;'></table></div>");
+							$('#lectureTable').append("<tr><td>회차</td><td>강좌명</td><td>수강여부</td></tr>");
 							for ( var i in json) {
 								console.log("atmk=" + json[i].atd_atmk);
 								if (json[i].atd_atmk != null) {
-									$('#lectureTable')
-											.append(
-													"<tr style='border-bottom:1px solid black;'><td>"
+									$('#lectureTable').append("<tr style='border-bottom:1px solid black;'><td>"
 															+ json[i].co_num
 															+ "강</td><td><a href='selectClassLectureVideoPage?co_idnum="
 															+ json[i].co_idnum
@@ -334,19 +308,8 @@ td {
 															+ json[i].co_name
 															+ "</a></td><td>수강완료</td></tr>");
 								} else {
-									$('#lectureTable')
-											.append(
-													"<tr style='border-bottom:1px solid black;'><td>"
-															+ json[i].co_num
-															+ "강</td><td><a href='selectClassLectureVideoPage?co_idnum="
-															+ json[i].co_idnum
-															+ "&co_lv="
-															+ json[i].co_lv
-															+ "&co_num="
-															+ json[i].co_num
-															+ "' target='_blank'>"
-															+ json[i].co_name
-															+ "</a></td><td>미수강</td></tr>");
+									$('#lectureTable').append("<tr style='border-bottom:1px solid black;'><td>"+ json[i].co_num+ "강</td><td><a href='selectClassLectureVideoPage?co_idnum="
+															+ json[i].co_idnum+ "&co_lv="+ json[i].co_lv+ "&co_num="+ json[i].co_num+ "' target='_blank'>"+ json[i].co_name	+ "</a></td><td>미수강</td></tr>");
 								}
 							}//for 
 						}// 로그인 if else에서 else문 end
@@ -371,19 +334,16 @@ td {
 					dataType : 'json',
 					beforeSend : function(xhr) {
 						var $token = $("#token");
-						xhr.setRequestHeader($token.data("token-name"), $token
-								.val());
+						xhr.setRequestHeader($token.data("token-name"), $token.val());
 					},
 
 					success : function(json) {
 						//console.log(json);
 						var notice = $('#classRight');
 						notice.html("");
-						notice
-								.append("<div id='noticeDiv' style='width:1036px; height:652px;'><table id='noticeTable' style='margin:auto; border-collapse:collapse;'></table></div>");
+						notice.append("<div id='noticeDiv' style='width:1036px; height:652px;'><table id='noticeTable' style='margin:auto; border-collapse:collapse;'></table></div>");
 						var noticeTable = $('#noticeTable');
-						noticeTable
-								.append("<tr><td>번호</td><td>구분</td><td>제목</td><td>등록일</td></tr>");
+						noticeTable	.append("<tr><td>번호</td><td>구분</td><td>제목</td><td>등록일</td></tr>");
 						if (json != "") {
 							for ( var i in json) {
 								//console.log("1=",json[i]);
@@ -391,23 +351,13 @@ td {
 								//console.log(boardInfo);
 								noticeTable.append("<tr id='tr_"+i+"'></tr>");
 								var noticeTr = $('#tr_' + i);
-								noticeTr.append("<td>"
-										+ json[i].cob_bonum.substring(3)
-										+ "</td>");
-								noticeTr.append("<td>" + json[i].bk_boardName
-										+ "</td>");
-								noticeTr
-										.append("<td><a href='#;' onclick='classNoticeDetail("
-												+ boardInfo
-												+ ")'>"
-												+ json[i].cob_title
-												+ "</a></td>");
-								noticeTr.append("<td>" + json[i].cob_date
-										+ "</td>");
+								noticeTr.append("<td>"+ json[i].cob_bonum.substring(3)+ "</td>");
+								noticeTr.append("<td>" + json[i].bk_boardName+ "</td>");
+								noticeTr.append("<td><a href='#;' onclick='classNoticeDetail("+ boardInfo+ ")'>"+ json[i].cob_title+ "</a></td>");
+								noticeTr.append("<td>" + json[i].cob_date+ "</td>");
 							}
 						} else {
-							noticeTable
-									.append("<tr><td colspan='4'>등록된 게시글이 없습니다.</td></tr>");
+							noticeTable.append("<tr><td colspan='4'>등록된 게시글이 없습니다.</td></tr>");
 						}
 					},
 					error : function(err) {
@@ -425,19 +375,11 @@ td {
 		noticeDetail.append("<div id='noticeDetailDiv' style='width:800px; height:300px; margin:auto; text-align:left;'></div>");
 		//$('#noticeDetailDiv').append("<table style='margin:auto; border-collapse:collapse; border:1px;'><tr><td>"+info.bk_boardName+"</td><td>"+info.cob_title+"</td><td>"+info.cob_date+"</td></tr></table>")
 		$('#noticeDetailDiv').append("<h4>" + info.bk_boardName + "</h4><hr>");
-		$('#noticeDetailDiv')
-				.append(
-						"<table id='noticeDetailTable' style='margin:auto; border-collapse:collapse; float:left;'><tr><td>제목:</td><td>"
-								+ info.cob_title + "</td></tr></table>");
-		$('#noticeDetailTable').append(
-				"<tr><td>강사명</td><td>" + classInfo[0].mb_name + "</td></tr>");
-		$('#noticeDetailTable').append(
-				"<tr><td>작성일</td><td>" + info.cob_date + "</td></tr>");
-		$('#noticeDetailDiv').append(
-				"<div style='float:left; margin:auto; width:800px; height:300px;'><hr><br/>"
-						+ info.cob_cont + "</div>");
-		$('#noticeDetailDiv').append(
-				"<input type='button' value='돌아가기' onclick='classNotice()'>");
+		$('#noticeDetailDiv').append("<table id='noticeDetailTable' style='margin:auto; border-collapse:collapse; float:left;'><tr><td>제목:</td><td>"+ info.cob_title + "</td></tr></table>");
+		$('#noticeDetailTable').append("<tr><td>강사명</td><td>" + classInfo[0].mb_name + "</td></tr>");
+		$('#noticeDetailTable').append("<tr><td>작성일</td><td>" + info.cob_date + "</td></tr>");
+		$('#noticeDetailDiv').append("<div style='float:left; margin:auto; width:800px; height:300px;'><hr><br/>"+ info.cob_cont + "</div>");
+		$('#noticeDetailDiv').append("<input type='button' value='돌아가기' onclick='classNotice()'>");
 	}
 
 	function classQNA() {
@@ -448,27 +390,17 @@ td {
 			'cob_kind' : $('#boardKind').val()
 		}
 		$('#classRight').html("");
-		$('#classRight').append(
-				"<div id='QNADiv' style='width:1036px; height:652px;'></div>");
-		$('#QNADiv')
-				.append(
-						"<table id='QNATable' style='margin:auto; border-collapse:collapse;'></table>");
-		$('#QNATable')
-				.append(
-						"<tr><td>번호</td><td>구분</td><td>강좌</td><td>제목</td><td>등록일</td></tr>");
-		$('#QNADiv')
-				.append(
-						"<input type='button' value='Q&A 작성' onclick='classInsertViewQNA()'>");
-		$
-				.ajax({
-					type : 'post',
+		$('#classRight').append("<div id='QNADiv' style='width:1036px; height:652px;'></div>");
+		$('#QNADiv').append("<table id='QNATable' style='margin:auto; border-collapse:collapse;'></table>");
+		$('#QNATable').append("<tr><td>번호</td><td>구분</td><td>강좌</td><td>제목</td><td>등록일</td></tr>");
+		$('#QNADiv').append("<input type='button' value='Q&A 작성' onclick='classInsertViewQNA()'>");
+		$.ajax({	type : 'post',
 					url : 'rest/selectClassQNA',
 					data : obj,
 					dataType : 'json',
 					beforeSend : function(xhr) {
 						var $token = $("#token");
-						xhr.setRequestHeader($token.data("token-name"), $token
-								.val());
+						xhr.setRequestHeader($token.data("token-name"), $token.val());
 					},
 
 					success : function(json) {
@@ -477,26 +409,14 @@ td {
 								$('#QNATable')
 										.append("<tr id='tr_"+i+"'></tr>");
 								var QNATr = $('#tr_' + i);
-								QNATr.append("<td>"
-										+ json[i].cob_bonum.substring(2)
-										+ "</td>");
-								QNATr.append("<td>" + json[i].bk_boardName
-										+ "</td>");
-								QNATr.append("<td>" + json[i].cob_num
-										+ "강</td>");
-								QNATr
-										.append("<td><a href='#;' onclick=\"classQnaDetail('"
-												+ json[i].cob_bonum
-												+ "')\">"
-												+ json[i].cob_title
-												+ "</a></td>");
-								QNATr.append("<td>" + json[i].cob_date
-										+ "</td>");
+								QNATr.append("<td>"+ json[i].cob_bonum.substring(2)+ "</td>");
+								QNATr.append("<td>" + json[i].bk_boardName+ "</td>");
+								QNATr.append("<td>" + json[i].cob_num+ "강</td>");
+								QNATr.append("<td><a href='#;' onclick=\"classQnaDetail('"+ json[i].cob_bonum+ "')\">"+ json[i].cob_title+ "</a></td>");
+								QNATr.append("<td>" + json[i].cob_date+ "</td>");
 							}
 						} else {
-							$('#QNATable')
-									.append(
-											"<tr><td colspan='5'>등록된 게시글이 없습니다.</td></tr>");
+							$('#QNATable').append("<tr><td colspan='5'>등록된 게시글이 없습니다.</td></tr>");
 						}
 					},
 					error : function(err) {
@@ -518,32 +438,26 @@ td {
 					dataType : 'json',
 					beforeSend : function(xhr) {
 						var $token = $("#token");
-						xhr.setRequestHeader($token.data("token-name"), $token
-								.val());
+						xhr.setRequestHeader($token.data("token-name"), $token.val());
 					},
 
 					success : function(json) {
 						var cr = $('#classRight');
 						cr.html("");
-						cr
-								.append("<div id='insertQNADiv' style='width:500px; height:652px; margin:auto;'></div>");
+						cr.append("<div id='insertQNADiv' style='width:500px; height:652px; margin:auto;'></div>");
 						var iDiv = $('#insertQNADiv');
 						var str = "";
-
 						str += "<form name='insertFrmQNA' id='insertFrmQNA'>";
 						str += "<input type='hidden' name='cob_idnum' value='"+json[0].co_idnum+"'>";
 						str += "<input type='hidden' name='cob_lv' value='"+json[0].co_lv+"'><br/>"
-						str += "<input type='hidden' name= cob_kind value='"
-								+ $('#boardKind').val() + "'>";
+						str += "<input type='hidden' name= cob_kind value='"+ $('#boardKind').val() + "'>";
 						str += "<select id='cob_num' name='cob_num'><option value=''>강좌를 선택해주세요.</option>";
 						for ( var i in json) {
-							str += "<option value='"+json[i].co_num+"'>"
-									+ json[i].co_name + "</option>";
+							str += "<option value='"+json[i].co_num+"'>"+ json[i].co_name + "</option>";
 						}
 						str += "</select><br/><hr>";
 						str += "<input type='text' placeholder='제목을 입력해주세요.' name='cob_title'><br/><br/>";
 						str += "<textarea id='cob_cont' name='cob_cont' cols='40' rows='20'></textarea><br/>";
-
 						str += "<input type='button' value='작성하기' onclick='insertQNA()'></form>";
 						iDiv.append(str);
 					},
@@ -566,10 +480,8 @@ td {
 				dataType : 'json',
 				beforeSend : function(xhr) {
 					var $token = $("#token");
-					xhr.setRequestHeader($token.data("token-name"), $token
-							.val());
+					xhr.setRequestHeader($token.data("token-name"), $token.val());
 				},
-
 				success : function(json) {
 					console.log(json);
 					if (json != "") {
@@ -604,33 +516,19 @@ td {
 					dataType : 'json',
 					beforeSend : function(xhr) {
 						var $token = $("#token");
-						xhr.setRequestHeader($token.data("token-name"), $token
-								.val());
+						xhr.setRequestHeader($token.data("token-name"), $token.val());
 					},success : function(json) {
 						var QnaDetail = $('#classRight');
 						QnaDetail.html("");
-						QnaDetail
-								.append("<div id='QnaDetailDiv' style='width:800px; height:300px; margin:auto; text-align:left;'></div>");
-						$('#QnaDetailDiv').append(
-								"<h4>" + json[0].bk_boardName + "</h4><hr>");
-						$('#QnaDetailDiv')
-								.append(
-										"<table id='QnaDetailTable' style='margin:auto; border-collapse:collapse; float:left;'><tr><td>제목:</td><td>"
-												+ json[0].cob_title
-												+ "</td></tr></table>");
-						$('#QnaDetailTable').append(
-								"<tr><td>작성자</td><td>" + json[0].cob_id
-										+ "</td></tr>");
-						$('#QnaDetailTable').append(
-								"<tr><td>작성일</td><td>" + json[0].cob_date
-										+ "</td></tr>");
+						QnaDetail.append("<div id='QnaDetailDiv' style='width:800px; height:300px; margin:auto; text-align:left;'></div>");
+						$('#QnaDetailDiv').append("<h4>" + json[0].bk_boardName + "</h4><hr>");
+						$('#QnaDetailDiv').append("<table id='QnaDetailTable' style='margin:auto; border-collapse:collapse; float:left;'><tr><td>제목:</td><td>"+ json[0].cob_title+ "</td></tr></table>");
+						$('#QnaDetailTable').append("<tr><td>작성자</td><td>"+json[0].cob_id+ "</td></tr>");
+						$('#QnaDetailTable').append("<tr><td>작성일</td><td>" + json[0].cob_date+ "</td></tr>");
 						console.log(json[0].cob_cont);
-						$('#QnaDetailDiv').append(
-								"<div style='float:left; margin:auto; width:800px; height:300px;'><hr><br/>"
+						$('#QnaDetailDiv').append("<div style='float:left; margin:auto; width:800px; height:300px;'><hr><br/>"
 										+ json[0].cob_cont + "</div>");
-						$('#QnaDetailDiv')
-								.append(
-										"<div style='float:left; marign:auto width:800px; height:300px;' id='replyDiv'></div>");
+						$('#QnaDetailDiv').append("<div style='float:left; marign:auto width:800px; height:300px;' id='replyDiv'></div>");
 						$('#replyDiv').append("<hr><h4>댓글</h4><hr>");
 						console.log(json[0].reply);
 						var str = "";
@@ -646,14 +544,11 @@ td {
 							}
 						}
 						str += "<form id='replyFrm' name='replyFrm'>";
-						str += "<div style='float:left'>" + sessionID
-								+ "</div><br/>";
+						str += "<div style='float:left'>" + sessionID+ "</div><br/>";
 						str += "<textarea rows='3px' cols='80px' name='cr_reply'></textarea><br/>";
 						str += "<input type='hidden' value='"+json[0].cob_bonum+"' name='cob_bonum'>";
 						str += "<input type='button' value='댓글 작성' onclick='insertQnaReply()'><br/><br/><br/></form>";
-						$('#QnaDetailDiv')
-								.append(
-										"<input type='button' value='돌아가기' onclick='classQNA()'>");
+						$('#QnaDetailDiv').append("<input type='button' value='돌아가기' onclick='classQNA()'>");
 						$('#replyDiv').append(str);
 					},
 					error : function(err) {
@@ -693,18 +588,10 @@ td {
 			'cob_kind' : $('#boardKind').val()
 		}
 		$('#classRight').html("");
-		$('#classRight')
-				.append(
-						"<div id='reviewDiv' style='width:1036px; height:652px;'></div>");
-		$('#reviewDiv')
-				.append(
-						"<table id='reviewTable' style='margin:auto; border-collapse:collapse;'></table>");
-		$('#reviewTable')
-				.append(
-						"<tr><td>번호</td><td>구분</td><td>제목</td><td>평점</td><td>작성자</td><td>등록일</td></tr>");
-		$('#reviewDiv')
-				.append(
-						"<input type='button' value='리뷰 작성' onclick='classReviewInsertPage()'>");
+		$('#classRight').append("<div id='reviewDiv' style='width:1036px; height:652px;'></div>");
+		$('#reviewDiv').append("<table id='reviewTable' style='margin:auto; border-collapse:collapse;'></table>");
+		$('#reviewTable').append("<tr><td>번호</td><td>구분</td><td>제목</td><td>평점</td><td>작성자</td><td>등록일</td></tr>");
+		$('#reviewDiv').append("<input type='button' value='리뷰 작성' onclick='classReviewInsertPage()'>");
 		$.ajax({
 					type : 'post',
 					url : 'rest/selectClassReview',
@@ -712,24 +599,15 @@ td {
 					dataType : 'json',
 					beforeSend : function(xhr) {
 						var $token = $("#token");
-						xhr.setRequestHeader($token.data("token-name"), $token
-								.val());
+						xhr.setRequestHeader($token.data("token-name"), $token.val());
 					},
-
 					success : function(json) {
 						var str = "";
 						if (json != "") {
 							for ( var i in json) {
-								str += "<tr><td>"
-										+ json[i].cob_bonum.substring(2)
-										+ "</td>";
+								str += "<tr><td>"+ json[i].cob_bonum.substring(2)+ "</td>";
 								str += "<td>" + json[i].bk_boardName + "</td>";
-								str += "<td><a href='#;' onclick=\"classReviewDetail('"
-										+ json[i].cob_bonum
-										+ "','"
-										+ json[i].gpa_gpa
-										+ "')\">"
-										+ json[i].cob_title + "</a></td>";
+								str += "<td><a href='#;' onclick=\"classReviewDetail('"+ json[i].cob_bonum+ "','"+ json[i].gpa_gpa+"')\">"+ json[i].cob_title + "</a></td>";
 								str += "<td>" + json[i].gpa_gpa + "점</td>";
 								if (json[i].cob_id.length > 2) {
 									var name = json[i].cob_id.split('');
@@ -768,11 +646,7 @@ td {
 	}//function classReview() END
 
 	function classReviewInsertPage() {
-		var cl = $
-		{
-			classInfo
-		}
-		;
+		var cl = ${classInfo};
 		var obj = {
 			'cob_idnum' : el[0].cl_idnum,
 			'cob_lv' : el[0].cl_lv
@@ -784,17 +658,14 @@ td {
 					dataType : 'json',
 					beforeSend : function(xhr) {
 						var $token = $("#token");
-						xhr.setRequestHeader($token.data("token-name"), $token
-								.val());
+						xhr.setRequestHeader($token.data("token-name"), $token.val());
 					},
-
 					success : function(json) {
 						if (json >= 1) {
 							var str = "";
 							var reviewDetail = $('#classRight');
 							reviewDetail.html("");
-							reviewDetail
-									.append("<div id='reviewDiv' style='width:500px; height:652px; margin:auto; text-align:left;'></div>");
+							reviewDetail.append("<div id='reviewDiv' style='width:500px; height:652px; margin:auto; text-align:left;'></div>");
 							str += "<h4>강의후기 작성</h4><hr>"
 							str += "<form name='insertFrmReview' id='insertFrmReview'>";
 							str += "<input type='hidden' name='cob_idnum' value='"+cl[0].cl_idnum+"'>";
@@ -810,10 +681,8 @@ td {
 									+ "</div><hr>";
 							str += "<input type='text' placeholder='제목을 입력해주세요.' name='cob_title'><br/><br/>";
 							str += "<textarea id='cob_cont' name='cob_cont' cols='40' rows='20'></textarea><br/>";
-							str += "<input type='button' value='작성하기' onclick=\"insertReview('"
-									+ json + "')\"></form>";
+							str += "<input type='button' value='작성하기' onclick=\"insertReview('"+ json + "')\"></form>";	
 							$('#reviewDiv').append(str);
-
 						} else if (-1 >= json) {
 							alert("강의평가를 진행할 수 없습니다. (미수강)");
 						} else {
@@ -840,7 +709,6 @@ td {
 				var $token = $("#token");
 				xhr.setRequestHeader($token.data("token-name"), $token.val());
 			},
-
 			success : function(json) {
 				classReviewDetail(json, myAvg);
 			},
@@ -867,11 +735,7 @@ td {
 			}
 		}
 		var myAvg = gpa;
-		var cl = $
-		{
-			classInfo
-		}
-		;
+		var cl = ${classInfo};
 		console.log(gpa);
 		console.log(kind);
 		console.log(myAvg);
@@ -882,25 +746,16 @@ td {
 					dataType : 'json',
 					beforeSend : function(xhr) {
 						var $token = $("#token");
-						xhr.setRequestHeader($token.data("token-name"), $token
-								.val());
+						xhr.setRequestHeader($token.data("token-name"), $token.val());
 					},
-
 					success : function(json) {
 						console.log(sessionID);
 						var reviewDetail = $('#classRight');
 						reviewDetail.html("");
-						reviewDetail
-								.append("<div id='reviewDetailDiv' style='width:800px; height:300px; margin:auto; text-align:left;'></div>");
-						$('#reviewDetailDiv').append(
-								"<h4>" + json[0].bk_boardName + "</h4><hr>");
-						$('#reviewDetailDiv')
-								.append(
-										"<table id='reviewDetailTable' style='margin:auto; border-collapse:collapse; float:left;'><tr><td>제목:</td><td>"
-												+ json[0].cob_title
-												+ "</td></tr></table>");
-						$('#reviewDetailTable').append(
-								"<tr><td>평점</td><td>" + myAvg + "</td></tr>");
+						reviewDetail.append("<div id='reviewDetailDiv' style='width:800px; height:300px; margin:auto; text-align:left;'></div>");
+						$('#reviewDetailDiv').append("<h4>" + json[0].bk_boardName + "</h4><hr>");
+						$('#reviewDetailDiv').append("<table id='reviewDetailTable' style='margin:auto; border-collapse:collapse; float:left;'><tr><td>제목:</td><td>"+ json[0].cob_title	+ "</td></tr></table>");
+						$('#reviewDetailTable').append("<tr><td>평점</td><td>" + myAvg + "</td></tr>");
 						if (json[0].cob_id.length > 2) {
 							var name = json[0].cob_id.split('');
 							for ( var j in name) {
@@ -922,17 +777,10 @@ td {
 							}
 							var rename = name.join('');
 						}
-						$('#reviewDetailTable').append(
-								"<tr><td>작성자</td><td>" + rename + "</td></tr>");
-						$('#reviewDetailTable').append(
-								"<tr><td>작성일</td><td>" + json[0].cob_date
-										+ "</td></tr>");
-						$('#reviewDetailDiv').append(
-								"<div style='float:left; margin:auto; width:800px; height:300px;'><hr><br/>"
-										+ json[0].cob_cont + "</div>");
-						$('#reviewDetailDiv')
-								.append(
-										"<div style='float:left; marign:auto width:800px; height:300px;' id='replyDiv'></div>");
+						$('#reviewDetailTable').append("<tr><td>작성자</td><td>" + rename + "</td></tr>");
+						$('#reviewDetailTable').append("<tr><td>작성일</td><td>" + json[0].cob_date+ "</td></tr>");
+						$('#reviewDetailDiv').append("<div style='float:left; margin:auto; width:800px; height:300px;'><hr><br/>"+ json[0].cob_cont + "</div>");
+						$('#reviewDetailDiv').append("<div style='float:left; marign:auto width:800px; height:300px;' id='replyDiv'></div>");
 						$('#replyDiv').append("<hr><h4>댓글</h4><hr>");
 						var str = "";
 						if (json[0].cr_reply != undefined) {
@@ -955,15 +803,11 @@ td {
 							}
 						}
 						str += "<form id='replyFrm' name='replyFrm'>";
-						str += "<div style='float:left'>" + sessionID
-								+ "</div><br/>";
+						str += "<div style='float:left'>" + sessionID+ "</div><br/>";
 						str += "<textarea rows='3px' cols='80px' name='cr_reply'></textarea><br/>";
 						str += "<input type='hidden' value='"+json[0].cob_bonum+"' name='cob_bonum'>";
-						str += "<input type='button' value='댓글 작성' onclick=\"insertReviewReply('"
-								+ myAvg + "')\"><br/><br/><br/></form>";
-						$('#reviewDetailDiv').append(
-								"<input type='button' value='돌아가기' onclick=\"classReview('"
-										+ myAvg + "')\">");
+						str += "<input type='button' value='댓글 작성' onclick=\"insertReviewReply('"+ myAvg + "')\"><br/><br/><br/></form>";
+						$('#reviewDetailDiv').append("<input type='button' value='돌아가기' onclick=\"classReview('"+ myAvg + "')\">");
 						$('#replyDiv').append(str);
 					},
 					error : function(err) {
