@@ -110,10 +110,32 @@ html, body {
         animation: stack 2s 1;
         }
         
+        aside {
+	width: 300px;
+	float: left;
+}
+section {
+	width: 1000px;
+	float: left;
+}
+.menu{
+    margin-left: 20px;
+    text-align:center;
+    width: 200px;
+    border: 1px black solid;
+    float: left;
+}
+        
 </style>
 </head>
 
 <body>
+		<jsp:include page="../../h2k5every_loginHeader.jsp" /><!-- 동적인 방식 -->
+	</header>
+	<aside>
+		<jsp:include page="../../h2k5every_teacherAside.jsp" />
+	</aside>
+	<section id="section" style="margin-left: 20px;">
 <h1>나의 강의 관리</h1>
 <div id='comeClass'></div>
 <br><br><hr><br><br>
@@ -127,6 +149,12 @@ html, body {
      				 <div id="bg_layer"></div>
       				<div id="contents_layer"></div>
  			  </div>
+ 			  
+ 			  </section>
+	<footer>
+		<jsp:include page="../../h2k5every_footer.jsp" />
+	</footer>
+ 			  
 
 <script>
 var managerClassList =${manager_classList};

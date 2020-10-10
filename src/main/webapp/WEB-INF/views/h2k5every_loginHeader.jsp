@@ -6,12 +6,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<style type="text/css">
+/* header{
+	position : absolute;
+	transform:translate(0px,60px);
+}
+nav{
+	position: absolute;
+	transform:translate(0px,60px);
+	height : 50px;
+}
+li{
+	position : absolute;
+	height : 48px;
+}
+ul li a{
+	posiotion : absolute;
+	} */
+
+</style>
 </head>
 <script type="text/javascript">
 $(document).ready
@@ -46,8 +65,8 @@ $(document).ready
 </script>
 
 <body>
-	<header>
-		<a id="mainlogo" href="#"><img src="../upload/h2k5_mainLogo.PNG"
+	<header top : 0px;>
+		<a position= 'absolute' top:0px  id="mainlogo" href="#"><img src="../upload/h2k5_mainLogo.PNG"
 			 width="200"></a>
 	</header>
 	<nav class="navbar navbar-inverse">

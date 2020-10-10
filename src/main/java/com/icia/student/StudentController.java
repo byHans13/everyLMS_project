@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -81,5 +82,13 @@ public class StudentController {
 		mav = mm.Addpoint(id, session);
 		return mav;
 	}
+	
+	@GetMapping(value="classHome")
+	   public ModelAndView selectClassHome(Clasc cb, HttpSession session) {
+	      mav= mm.selectClassHomePage(cb, session);   
+	      return mav;
+	   }//강의 일련번호로 classInfo view 출력해서 classHome으로 이동
+	
+	
 }
 

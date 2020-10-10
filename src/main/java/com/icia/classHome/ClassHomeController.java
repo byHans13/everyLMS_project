@@ -63,4 +63,9 @@ public class ClassHomeController {
 		mav = cs.selectClassFinalTest(pb, session);
 		return mav;
 	}
+	@GetMapping(value="selectClassFinalTestPage")
+	public ModelAndView selectClassFinalTestPage(HttpSession session) {
+		mav = cs.selectClassFinalTestPage(session);
+		return mav;
+	}
 }

@@ -113,9 +113,10 @@ $('#classList').change(function() {
                console.log("hans check 퀴즈개수", result[i].pb_pbnum);
                str += "<th>" + result[i].pb_pbnum +"</th></tr>";
                $("#tableShow").html(str);
-         }
             $("#tableShow").append(
-                  "<button name='goselectclasshome' style='margin:auto; float:right;'><a href='selectClassHomePage?cl_idnum="+result[i].cl_idnum+"'>강의들으러가기</a></button>");
+                  "<button name='goselectclasshome' style='margin:auto; float:right;'><a href='classhome?cl_idnum="+result[i].cl_idnum+"&cl_lv="+result[i].cl_lv+"'>강의들으러가기</a></button>");
+         }
+            
          },error : function (request, status, error) {
              alert ( "code :"+ request.status + "\ n"+ "message :"+ request.responseText + "\ n"+ "error :"+ error);}
       });// ajax

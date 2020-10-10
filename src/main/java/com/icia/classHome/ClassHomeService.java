@@ -567,13 +567,22 @@ public class ClassHomeService {
 
 	public List<ProblemBean> selectCourseQuizWithPbnum(ProblemBean pb, HttpSession session) {
 		List<ProblemBean> pList;
+		String professorId =null;
+		if(pb.getPb_id() !=null) {
+			professorId = pb.getPb_id();
+		}
 		pb.setPb_id(session.getAttribute("id").toString());
 		int cnt = cDao.selectCoQuizCntForchk(pb);
 		if (cnt != 0) {
 			pList = cDao.selectCoQuizThroughId(pb); // 체크한 값 가져오기
 		} else {
-			pb.setPb_id(session.getAttribute("classId").toString());
+			if(professorId !=null) {
+				pb.setPb_id(professorId);
+			}else {
+				pb.setPb_id(session.getAttribute("classId").toString());				
+			}
 			pList = cDao.selectCoQuizThroughId(pb);// 교수 id로 select
+
 		}
 		System.out.println(pList);
 		if (pList != null) {
@@ -585,6 +594,10 @@ public class ClassHomeService {
 
 	public int insertCourseQuiz(ProblemBean pb, HttpSession session) {
 		String sessionID = session.getAttribute("id").toString();
+		String professorId =null;
+		if(pb.getPb_id()!=null) {
+			professorId = pb.getPb_id();
+		}
 		pb.setPb_id(sessionID);
 		String pb_pbstudent = pb.getPb_pbstudent();
 		int insertChk = cDao.selectCourseQuizForInsertChk(pb);
@@ -596,7 +609,11 @@ public class ClassHomeService {
 				pbnum = 0;
 			}
 		} else {
-			pb.setPb_id(session.getAttribute("classId").toString());
+			if(professorId != null) {
+				pb.setPb_id(professorId);
+			}else {
+				pb.setPb_id(session.getAttribute("classId").toString());				
+			}
 			pb = cDao.selectPbdata(pb);
 			pb.setPb_pbstudent(pb_pbstudent);
 			pb.setPb_id(sessionID);
@@ -611,7 +628,12 @@ public class ClassHomeService {
 	}
 
 	public int lastQuizInsert(ProblemBean pb, HttpSession session) {
-		String sessionClassId = session.getAttribute("classId").toString();
+		String sessionClassId;
+		if(pb.getPb_id()!=null) {
+			sessionClassId=pb.getPb_id();
+		}else {
+			sessionClassId=session.getAttribute("classId").toString();			
+		}
 		String sessionID = session.getAttribute("id").toString();
 		List<ProblemBean> pList;
 		int insertChk = 0;
@@ -950,5 +972,93 @@ public class ClassHomeService {
 		mav.addObject("finalTest", new Gson().toJson(pList));
 		mav.setViewName("Student/ClassHome/ClassFinalTest");
 		return mav;
+	}
+	public ModelAndView selectClassFinalTestPage(HttpSession session) {
+		mav= new ModelAndView();
+		String sessionId = session.getAttribute("id").toString();
+		String view; 
+		List<ClassBean> cList = cDao.selectClassFinalTestPage(sessionId);
+		List<GradeBean> gList;
+		System.out.println("clist="+cList);
+		if(cList != null) {
+			gList = cDao.selectClassFinalTestGrade(sessionId);
+			mav.addObject("ft", new Gson().toJson(cList));
+			if(gList != null) {
+				mav.addObject("grade", new Gson().toJson(gList));
+				view="Student/GradeManagement/LastTestPage";				
+			}else {				
+				mav.addObject("grade", 0);
+				view="Student/GradeManagement/LastTestPage";				
+			}
+		}else {
+			mav.addObject("ft", 0);
+			view="Student/GradeManagement/LastTestPage";
+		}
+		mav.setViewName(view);
+		return mav;
+	}
+	public List<ProblemBean> selectFinalTestPbnum(ProblemBean pb) {
+		System.out.println("pb="+pb);
+		List<ProblemBean> pbnum ;
+		if(pb !=null) {
+			pbnum = cDao.selectFinalTestPbnum(pb);			
+		}else {
+			pbnum = null;
+		}
+		return pbnum;
+	}
+
+	public boolean insertFinalTestPbnum(ProblemBean pb, HttpSession session) {
+		String sessionId = session.getAttribute("id").toString();
+		String professor = pb.getPb_id();
+		String idnum = pb.getPb_idnum();
+		int lv = pb.getPb_lv();
+		int num = pb.getPb_num();
+		List<ProblemBean> pbnumList;
+		int count =0;
+		int insertChk=0;
+		boolean result =false;
+		//pb = idnum lv num id 
+		pb.setPb_id(professor);
+		pbnumList = cDao.selectClassFinalTestLength(pb);
+		for(int i=0; i<pbnumList.size(); i++) {
+			pb.setPb_pbnum(pbnumList.get(i).getPb_pbnum());
+			pb = cDao.selectClassFinalTestPbInfo(pb); 
+			insertChk = cDao.selectClassFinalTestInsertChk(pb);
+			pb.setPb_answerchk(0);
+			pb.setPb_pbstudent("0");
+			pb.setPb_id(sessionId);
+			if(insertChk !=0) {
+				result = cDao.updateClassFinalTest(pb);
+			}else {
+				result = cDao.insertClassFinalTestForceStop();
+			}
+			if(result == true) {
+				count+=1;
+			}else {
+				count+=0;
+			}
+			// 1) sessionID 입력값 있는지 
+			// 2) 있으면 update 
+			// 3) 없으면 insert 
+			// 4) count+=1; >> if(count==10) true;
+			insertChk =0;
+			result=false;
+		}
+		if(count == pbnumList.size()) {
+			GradeBean gb = new GradeBean();
+				gb.setGr_score(0);
+				gb.setGr_id(sessionId);
+				gb.setGr_idnum(idnum);
+				gb.setGr_lv(lv);
+				gb.setGr_num(num);
+				gb.setGr_kind("T");
+				result = cDao.insertCourseGrade(gb);
+		}
+		if(result == true) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 }// classHomeService END

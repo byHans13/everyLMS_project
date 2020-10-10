@@ -89,14 +89,14 @@ $(document).ready
         <label for='myMenu'>메뉴</label>
         <div>
             <div><p><a href='#'>공지사항</a></p></div>
-            <div><p><a href='#'>상담게시판</a></p></div>
+            <div><p><a href='insertcounselboard'>상담게시판</a></p></div>
             <div><p><a href='#'>내 정보 관리</a></p></div>
         </div>
       
         <input type='radio' name='asideMenu' id='myGradeManagement'>
         <label for='myGradeManagement'>성적관리</label>
         <div>
-            <div><p><a href='#'>시험 보기</a></p></div>
+            <div><p><a href='selectClassFinalTestPage'>시험 보기</a></p></div>
             <div><p><a href='#'>시험 성적 분석</a></p></div>
             <div><p><a href='#'>퀴즈 성적 분석</a></p></div>
             <div><p><a href='#'>성적 통계</a></p></div>

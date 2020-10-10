@@ -223,8 +223,24 @@ public interface ClassHomeDao {
 		//finalTest
 		@Select("SELECT * FROM problem WHERE pb_idnum=#{pb_idnum} AND pb_lv=#{pb_lv} AND pb_num=#{pb_num}")
 		List<ProblemBean> selectClassFinalTest(ProblemBean pb);
-
-		
+		@Select("SELECT * FROM finalTest where aa_id=#{sessionId}")
+		List<ClassBean> selectClassFinalTestPage(String sessionId);
+		@Select("SELECT * FROM finalTestChk WHERE aa_id=#{sessionId}")
+		List<GradeBean> selectClassFinalTestGrade(String sessionId);
+		@Select("SELECT * FROM pb WHERE pb_idnum=#{pb_idnum} AND pb_lv=#{pb_lv} AND pb_num=#{pb_num} AND pb_id=#{pb_id}")
+		List<ProblemBean> selectFinalTestPbnum(ProblemBean pb);
+		@Select("SELECT pb_pbnum FROM pb WHERE pb_idnum=#{pb_idnum} AND pb_lv=#{pb_lv} AND pb_num=#{pb_num} AND pb_id=#{pb_id}")
+		List<ProblemBean> selectClassFinalTestLength(ProblemBean pb);
+		@Select("SELECT * FROM pb WHERE pb_idnum=#{pb_idnum} AND pb_lv=#{pb_lv} AND pb_num=#{pb_num} AND pb_pbnum=#{pb_pbnum} AND pb_id=#{pb_id}")
+		ProblemBean selectClassFinalTestPbInfo(ProblemBean pb);
+		@Select("SELECT COUNT(*) FROM pb WHERE pb_idnum=#{pb_idnum} AND pb_lv=#{pb_lv} AND pb_num=#{pb_num} AND pb_pbnum=#{pb_pbnum} AND pb_id=#{pb_id}")
+		int selectClassFinalTestInsertChk(ProblemBean pb);
+		@Update("UPDATE pb SET pb_pbstudent=#{pb_pbstudent}, pb_answerchk=#{pb_answerchk} WHERE"
+				+ " pb_idnum=#{pb_idnum} AND pb_lv=#{pb_lv} AND pb_num=#{pb_num} AND pb_pbnum=#{pb_pbnum} AND pb_id=#{pb_id}")
+		boolean updateClassFinalTest(ProblemBean pb);
+		@Insert("INSERT INTO pb(pb_num, pb_lv, pb_id, pb_idnum, pb_pbnum, pb_pbname, pb_pbanswer, pb_pbexplain, pb_pbstudent, pb_answerchk, pb_pbdate, pb_pbchkqz"
+				+ "VALUES(#{pb_num}, #{pb_lv}, #{pb_id},#{pb_idnum},#{pb_pbnum},#{pb_pbname},#{pb_pbanswer},#{pb_pbexplain},#{pb_pbstudent},#{pb_answerchk},default,#{pb_pbchkqz})")
+		boolean insertClassFinalTestForceStop();
 
 
 

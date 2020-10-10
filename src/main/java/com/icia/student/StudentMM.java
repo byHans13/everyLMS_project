@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+
 @Service // @Component //IoC컨테이너 등록
 public class StudentMM {
 	@Autowired
@@ -257,4 +259,37 @@ public class StudentMM {
 
 		return mav;
 	}
+	
+	 public ModelAndView selectClassHomePage(Clasc cb, HttpSession session) {
+	      List<Clasc> cList;
+	      List<CourseBoard> rList;
+	      mav = new ModelAndView();
+	      String view;
+	      String avgNum = null;
+	      cList = sDao.selectClassHome(cb);
+	      session.setAttribute("classId", cList.get(0).getCl_id());
+	      if (cList != null) {
+	         avgNum = sDao.selectClassAvgNum(cb);
+	         if (avgNum == null) {
+	            avgNum = "0";
+	         }
+	         rList = sDao.selectInfoReview(cb);
+	         System.out.println(rList);
+	         view = "Student/ClassHome/ClassHome";
+	      } else {
+	         view = "./";
+	         rList = null;
+	      }
+	      mav.addObject("classInfo", new Gson().toJson(cList));
+	      mav.addObject("avgNum", avgNum);
+	      mav.addObject("infoReview", new Gson().toJson(rList));
+	      mav.setViewName(view);
+	      return mav;
+	   }
+
+	
+	
+	
+	
+	
 }

@@ -24,15 +24,43 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 <style>
+html, body {
+   height: 100%;
+   margin: 0
+}            
     #errP{
     color: red;
     }
     #rateChart{
     display: none;
     }
+
+aside {
+	width: 300px;
+	float: left;
+}
+section {
+	width: 1000px;
+	float: left;
+}
+.menu{
+    margin-left: 20px;
+    text-align:center;
+    width: 200px;
+    border: 1px black solid;
+    float: left;
+}
+        
     </style>
     </head>
     <body>
+    <header>
+    <jsp:include page="../../h2k5every_loginHeader.jsp" /><!-- 동적인 방식 -->
+	</header>
+	<aside>
+		<jsp:include page="../../h2k5every_teacherAside.jsp" />
+	</aside>
+	<section id="section" style="margin-left: 20px;">
  <h1>강의 업로드 폼</h1>
         <form action="insertclassupload?${_csrf.parameterName }=${_csrf.token}" method="post" enctype="multipart/form-data" id="frm">
         <table>
@@ -89,6 +117,12 @@
     </form>
     <input type="hidden" id='token' data-token-name='${_csrf.headerName }' value='${_csrf.token }'/>
      <p id='errP'></p>
+      		  </section>
+	<footer>
+		<jsp:include page="../../h2k5every_footer.jsp" />
+	</footer>
+     
+     
     <script>
     var num;
     var rateNum = 0;
@@ -282,5 +316,7 @@
 
         
     </script>
+   
+    
 </body>
 </html>
