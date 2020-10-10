@@ -44,6 +44,7 @@ public class FileManager {
 	
 	//String fullpath = "C:/Users/gahee/Documents/project/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/RealProject_semi_css/";
 	String fullpath = "C:/work/springWork/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/RealProject_semi/";
+	//String fullpath = "C:\\work\\springWork\\RealProject_semi\\src\\main\\webapp\\video";
 	
 	public boolean fileUp(MultipartHttpServletRequest multi,CourseFilesBean cfb) {
 		

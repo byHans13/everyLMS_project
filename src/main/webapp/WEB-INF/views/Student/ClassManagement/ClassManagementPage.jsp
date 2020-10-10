@@ -249,6 +249,10 @@ function test(id) {
 		type:'get',
 		url:'rest/selectConcern',
 		datatype:'json',
+		beforeSend : function(xhr){
+			var $token = $("#token");
+			xhr.setRequestHeader($token.data("token-name"), $token.val());
+		},		
 		success: function (json) {
 			for(var i=0; i<json.length; i++){
 				$('#menu').append("<div class='menu'><p>"+json[i]+"</p></div>");

@@ -8,22 +8,25 @@
 <style>
 header {
 	/* background-color: gray; */
+	 position: absolute; 
+	 transform:translate(0px,0px);  
+	 width: 1500px; 
 }
 
 aside {
 	/* background-color: blue; */
 	width: 300px;
 	float: left;
+	 position : absolute;
+	 transform:translate(0px,230px);  
 }
-body{
-position: relative;
-}
+
 section {
 	/* background-color: pink; */
 	width: 1000px;
 	float: left;
-	transform:translate(320px,0px);
 	position: absolute;
+	transform:translate(320px,100px);
 }
 .menu{
     margin-left: 20px;
@@ -55,7 +58,7 @@ font-size: 20px;
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <body>
 <input type="hidden" id="token"  data-token-name="${_csrf.headerName}" name = "${_csrf.parameterName}" value="${_csrf.token}" />
-	<header>
+	<header id = "header">
 		<%-- <%@ include file="h2k5every_header.jsp"%><!-- 정적인 방식 --> --%>
 		<jsp:include page="h2k5every_loginHeader.jsp" /><!-- 동적인 방식 -->
 	</header>

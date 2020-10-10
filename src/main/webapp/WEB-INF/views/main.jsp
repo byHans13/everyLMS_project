@@ -11,8 +11,6 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-	<link href="css/main.css" rel="stylesheet" type="text/css">
-	 <script src="js/main.js" type="text/javascript" defer="defer"></script>
 <title>H2K5에 오신것을 환영합니다.</title>
 <style>
 #container {
@@ -48,31 +46,19 @@
 </style>
 </head>
 <body>
-  <div class="slide">
-      <ul class="imgSlide">
-        <li><img alt="H2K5 메인" src="lms_main_imgFile/header_01.PNG" class="img"></li>
-        <li><img alt="dons" src="lms_main_imgFile/dons_01.PNG" class="img"></li>
-        <li><img alt="hans" src="lms_main_imgFile/hans_01.PNG" class="img"></li>
-      </ul>
-      <div class="moveBtn">
-        <a href="#" class="pre">
-          < </a>
-            <a href="#" class="next"> > </a>
-      </div>
-    </div>
-<!-- 	<div id="container"> -->
-<!-- 		<div class="section"> -->
-<!-- 			<div class="container"> -->
-<!-- 				<img alt="H2K5 메인" src="lms_main_imgFile/header_01.PNG" class="img"> -->
-<!-- 			</div> -->
-<!-- 			<div class="container"> -->
-<!-- 				<img alt="dons" src="lms_main_imgFile/dons_01.PNG" class="img"> -->
-<!-- 			</div> -->
-<!-- 			<div class="container"> -->
-<!-- 				<img alt="hans" src="lms_main_imgFile/hans_01.PNG" class="img"> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
+	<div id="container">
+		<div class="section">
+			<div class="container">
+				<img alt="H2K5 메인" src="lms_main_imgFile/header_01.PNG" class="img">
+			</div>
+			<div class="container">
+				<img alt="dons" src="lms_main_imgFile/dons_01.PNG" class="img">
+			</div>
+			<div class="container">
+				<img alt="hans" src="lms_main_imgFile/hans_01.PNG" class="img">
+			</div>
+		</div>
+	</div>
 	<div class="floating">
 		<div class="container-fluid">
 			<div class="navbar-header">

@@ -57,4 +57,15 @@ public class ClassHomeController {
 		mav = cs.selectLevelCheckPage(session);
 		return mav;
 	}//main에서 levelcheck page로 이동
+	
+	@GetMapping(value="selectClassFinalTest")
+	public ModelAndView selectClassFinalTest(ProblemBean pb, HttpSession session) {	
+		mav = cs.selectClassFinalTest(pb, session);
+		return mav;
+	}
+	@GetMapping(value="selectClassFinalTestPage")
+	public ModelAndView selectClassFinalTestPage(HttpSession session) {
+		mav = cs.selectClassFinalTestPage(session);
+		return mav;
+	}
 }

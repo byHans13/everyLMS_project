@@ -17,6 +17,7 @@ private String cob_idnum;
 private int cob_lv;
 private int cob_num;
 private String cob_id;
+private String cob_title;
 private String cob_bonum;
 private String cob_cont;
 private String cob_contents;

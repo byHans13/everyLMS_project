@@ -48,12 +48,7 @@ $(document).ready
 	console.log(n);
 
 	 var id = "${id}";
-	 console.log("hansnq3"+id);
-	if (n != -1){
-		$("#goTeacherPage").append("<p style='margin-top: auto;'><b><a href='/h2k5every/prof/goTeacherLoginFrm' style='color: white; '>강사페이지이동</a></b></p>");
-	}
- 
-	test();
+	test(id);
 });
 </script>
 

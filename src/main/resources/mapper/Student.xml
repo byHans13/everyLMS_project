@@ -16,6 +16,8 @@
 			]]>
 
 	</select>
+	
+	
 
 	<select id="searchClassQnaDetail" resultType="cl"> <!-- 검색시 페이징 -->
 	<![CDATA[
@@ -125,5 +127,12 @@ RN>=#{pageNum}*9-10 and cob_title LIKE '%'||#{search}||'%'
 		WHERE mo_id = #{mo_id} and cl_idnum = #{cl_idnum} and
 		CO_NAME = #{co_name}
 	</select>
+	
+	
+	<select id='selectClassHome' parameterType='cl'
+      resultType='cl'>
+      SELECT * FROM classInfo WHERE cl_idnum = #{cl_idnum} AND cl_lv=#{cl_lv}
+   </select>
+	
 
 </mapper>

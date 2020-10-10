@@ -187,4 +187,14 @@ public class ClassHomeRestController {
 		Map<String, List<ProblemBean>> pMap = cs.selectLevelCheckQuiz(pb);
 		return pMap;
 	}
+	@GetMapping(value="rest/selectFinalTestPbnum")
+	public List<ProblemBean> selectFinalTestPbnum(ProblemBean pb) {
+		List<ProblemBean> pbnum = cs.selectFinalTestPbnum(pb);
+		return pbnum;
+	}
+	@GetMapping(value="rest/insertFinalTestForceStop")
+	public boolean insertFinalTestForceStop(ProblemBean pb, HttpSession session) {
+		boolean result = cs.insertFinalTestPbnum(pb, session);
+		return result;
+	}
 }

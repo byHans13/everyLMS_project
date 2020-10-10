@@ -21,8 +21,6 @@ section {
 	/* background-color: pink; */
 	width: 1000px;
 	float: left;
-		position: absolute;
-	transform:translate(320px,0px)
 }
 .menu{
     margin-left: 20px;

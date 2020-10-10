@@ -3,8 +3,7 @@
 	<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.icia.classHome.ClassHomeDao">
-	<select id="selectSchedule" parameterType="schedule"
-		resultType="schedule">
+	<select id="selectSchedule" parameterType="schedule" resultType="schedule">
 		SELECT * FROM CLCOSC WHERE SC_YEAR=#{Sc_year} AND SC_MONTH=#{Sc_month} AND
 		SC_DATE=#{Sc_date} AND SC_ID =#{Sc_id}
 	</select>

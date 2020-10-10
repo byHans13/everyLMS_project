@@ -129,12 +129,19 @@ section {
 			<tbody id="tableShow">
 				<c:forEach var="Clasc" items="${cList}">
 					<tr height="25">
-						<td align="center">${Clasc.cc_cc}</td>
+						<td align="center">${Clasc.cl_cc}</td>
 						<td align="center"><img
 							src="<c:url value="/upload/${Clasc.pi_pioriname}"/>" width="50px;" /></td>
 						<td align="center"><h2>${Clasc.cl_clname}</h2>${Clasc.cl_id}
 							| ${Clasc.co_num} |${Clasc.cl_lv}</td>
-						<td align="center">${Clasc.gpa_gpa}</td>
+							  <c:choose>
+                     <c:when test="${Clasc.gpa_gpa eq 0}">
+                        <th><h3>등록된 강의가 없습니다.</h3></th>
+                     </c:when>
+                     <c:when test="${Clasc.gpa_gpa ne 0}">
+                        <th width="150"><h2>${Clasc.gpa_gpa}</h2></th>
+                     </c:when>
+                  </c:choose>
 						<td align="center"><a href='goSelectTasterQuestion?cl_idnum=${Clasc.cl_idnum}'>맛보기 문제</a><a
 							href='goSelectClassReport?cl_idnum=${Clasc.cl_idnum}'>강의계획서</a></td>
 						<td><a href='#'
@@ -170,8 +177,7 @@ $('#LIKEMYCC')
 			var select_sub = $('#LIKEMYCC').val();
 			var json = new Object();
 			json.cc_cc = select_sub;
-			$
-					.ajax({
+			$.ajax({
 						type : 'post',
 						dataType : 'json',
 						url : 'rest/selectMylnterestLevel',
@@ -188,11 +194,18 @@ $('#LIKEMYCC')
 							$('#LIKEMYCC').val('---------');
 							$('#Paging').remove();
 							str = "";
+							  if(result ==0){
+			                        alert("등록된 강의가 없습니다!");
+			                     } else{
 							for ( var i in result) {
-								str += "<tr><th>" + result[i].cc_cc+ "</th>";
+								str += "<tr><th>" + result[i].cl_cc+ "</th>";
 								str += "<th><img src='<c:url value='/upload/"+result[i].pi_pioriname +"'/>'width='150px;'></th>";
 								str += "<th><h2>" + result[i].cl_clname+ "</h2>|" + result[i].cl_id+ "|" +result[i].co_num+ "|" + result[i].cl_lv+ "</th>";
-							    str += "<th><h2>"+result[i].gpa_gpa+"</h2></th>"
+								  if(result[i].gpa_gpa == 0){
+	                                     str += "<th><h2>등록된 평점이 없습니다.<h2></th>"
+	                                  }else{
+	                                  str += "<th><h2>"+result[i].gpa_gpa+"</h2></th>"
+	                                  }
 								str += "<th><a href='goSelectTasterQuestion?cl_idnum="+result[i].cl_idnum+"'>맛보기문제|<a href='goSelectClassReport?cl_idnum="
 										+ result[i].cl_idnum
 										+ "'>강의계획서</th>";
@@ -201,7 +214,7 @@ $('#LIKEMYCC')
 									
 								$("#tableShow").html(str);
 							}
-
+			                     }
 						},
 						error : function(request, status, error) {
 							alert("code :" + request.status + "\ n"
@@ -211,16 +224,13 @@ $('#LIKEMYCC')
 						}
 					});// ajax
 		});
-$('#LIKEMYCC')
-.change(
-		function() {
+$('#LIKEMYCC').change(function() {
 			var select_sub = $('#hiddenid').val();
 			var json = new Object();
 			json.mb_id = select_sub;
 			console.log(json);
-						$("#viewlevel").empty();
-			$
-					.ajax({
+			$("#viewlevel").empty();
+			$.ajax({
 						type : 'post',
 						dataType : 'json',
 						url : 'rest/selectMyDeepenlnterestAjax',
@@ -239,7 +249,7 @@ $('#LIKEMYCC')
 						})
 		});
 function openBuyPage(idnum, lv){
-	modal.addClass('open');
+	$("#modal").addClass('open');
 	var m_contents=$('#contents_modal');
 	var obj = {"cl_idnum":idnum, "cl_lv":lv};
 	console.log(obj);
@@ -271,17 +281,18 @@ function openBuyPage(idnum, lv){
 		}
 	});//ajaxEND
 };//openBuyPage END
-modal.find('#bg_modal').on('mousedown',function(evt){
+$("#modal").find('#bg_modal').on('mousedown',function(evt){
 	console.log(evt);
-	modal.removeClass('open'); 
+	$("#modal").removeClass('open'); 
 });// modal mousesdown end
 $(document).keydown(function(evt){
 	if(evt.keyCode !=27){
 		return;
 	}else if (modal.hasClass('open')){
-		modal.removeClass('open');
+		$("#modal").removeClass('open');
 	}
-}); //modal esc END
+}); 
+//modal esc END
 </script>
 
 
