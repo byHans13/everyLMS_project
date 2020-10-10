@@ -117,6 +117,8 @@ html, body {
 section {
 	width: 1000px;
 	float: left;
+		position: absolute;
+	transform:translate(320px,20px);
 }
 .menu{
     margin-left: 20px;

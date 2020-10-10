@@ -90,9 +90,28 @@ video{
 width: 500px;
 height: 500px;
 }
+
+        aside {
+	width: 300px;
+	float: left;
+}
+section {
+	width: 1000px;
+	float: left;
+		position: absolute;
+	transform:translate(320px,20px);
+}
 </style>
 </head>
 <body>
+<header>
+<input type="hidden" id='token' data-token-name='${_csrf.headerName }' value='${_csrf.token }'/>
+		<jsp:include page="../../h2k5every_loginHeader.jsp" /><!-- 동적인 방식 -->
+	</header>
+	<aside>
+		<jsp:include page="../../h2k5every_teacherAside.jsp" />
+	</aside>
+	<section id="section" style="margin-left: 20px;">
 <h1>강좌</h1>
 <div>
 <table>
@@ -136,6 +155,10 @@ height: 500px;
      	<div id="bg_layer"><input type="hidden" id='token' data-token-name='${_csrf.headerName }' value='${_csrf.token }'/></div>
       	<div id="contents_layer"><input type="hidden" id='token' data-token-name='${_csrf.headerName }' value='${_csrf.token }'/></div>
  </div>
+ </section>
+	<footer>
+		<jsp:include page="../../h2k5every_footer.jsp" />
+	</footer>
 <script>
 
 

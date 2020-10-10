@@ -27,7 +27,7 @@
 html, body {
    height: 100%;
    margin: 0
-}            
+}             
     #errP{
     color: red;
     }
@@ -42,14 +42,16 @@ aside {
 section {
 	width: 1000px;
 	float: left;
+			position: absolute;
+	transform:translate(320px,20px);
 }
-.menu{
+ .menu{
     margin-left: 20px;
     text-align:center;
     width: 200px;
     border: 1px black solid;
     float: left;
-}
+} 
         
     </style>
     </head>
