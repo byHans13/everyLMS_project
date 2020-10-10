@@ -112,7 +112,11 @@ td {
 }
 </style>
 </head>
+
+
 <body>
+
+
 	<header>
 		<%-- <%@ include file="h2k5every_header.jsp"%><!-- 정적인 방식 --> --%>
 		<jsp:include page="../../h2k5every_loginHeader.jsp" /><!-- 동적인 방식 -->
@@ -145,7 +149,8 @@ td {
 				<li id='classQNA' class='li' onclick='classQNA()'>Q&A</li>
 				<li id='classPostscript' class='li' onclick='classReview()'>
 					수강후기</li>
-				<li id='classReference' class='li' onclick='test()'>자료실</li>
+				<li id='classReference' class='li' onclick='test()'>과제제출 </li>
+           	<li id='classFinalTest' class='li' onclick='classFinalTest()' style='color:red;'>최종시험</li>
 			</ul>
 		</div>
 		<div id='classAll' name='classAll' class='classAll'>
@@ -288,8 +293,7 @@ td {
 			"cl_lv" : el[0].cl_lv
 		};
 		console.log(obj);
-		$
-				.ajax({ //강의 pk값으로 해당 강의 강좌list 가져오기 위한 ajax
+		$.ajax({ //강의 pk값으로 해당 강의 강좌list 가져오기 위한 ajax
 					type : 'post',
 					url : 'rest/classLectureAjax',
 					data : obj,
@@ -360,8 +364,7 @@ td {
 			"cob_lv" : el[0].cl_lv,
 			'cob_kind' : $('#boardKind').val()
 		}
-		$
-				.ajax({
+		$.ajax({
 					type : 'post',
 					url : 'rest/selectClassNoticeAjax',
 					data : obj,
@@ -414,17 +417,12 @@ td {
 	}//function classNotice() END
 
 	function classNoticeDetail(info) {
-		classInfo = $
-		{
-			classInfo
-		}
-		;
+		classInfo = ${classInfo};
 		console.log(info);
 		//var boardInfo = JSON.parse(info);
 		var noticeDetail = $('#classRight');
 		noticeDetail.html("");
-		noticeDetail
-				.append("<div id='noticeDetailDiv' style='width:800px; height:300px; margin:auto; text-align:left;'></div>");
+		noticeDetail.append("<div id='noticeDetailDiv' style='width:800px; height:300px; margin:auto; text-align:left;'></div>");
 		//$('#noticeDetailDiv').append("<table style='margin:auto; border-collapse:collapse; border:1px;'><tr><td>"+info.bk_boardName+"</td><td>"+info.cob_title+"</td><td>"+info.cob_date+"</td></tr></table>")
 		$('#noticeDetailDiv').append("<h4>" + info.bk_boardName + "</h4><hr>");
 		$('#noticeDetailDiv')
@@ -513,8 +511,7 @@ td {
 			"cl_lv" : el[0].cl_lv
 		};
 		console.log(obj);
-		$
-				.ajax({
+		$.ajax({
 					type : 'post',
 					url : 'rest/classLectureAjax',
 					data : obj,
@@ -600,8 +597,7 @@ td {
 			'cob_bonum' : bonum,
 			'cob_kind' : $('#boardKind').val()
 		}
-		$
-				.ajax({
+		$.ajax({
 					type : 'post',
 					url : 'rest/selectClassQnaDetail',
 					data : obj,
@@ -610,9 +606,7 @@ td {
 						var $token = $("#token");
 						xhr.setRequestHeader($token.data("token-name"), $token
 								.val());
-					},
-
-					success : function(json) {
+					},success : function(json) {
 						var QnaDetail = $('#classRight');
 						QnaDetail.html("");
 						QnaDetail
@@ -711,8 +705,7 @@ td {
 		$('#reviewDiv')
 				.append(
 						"<input type='button' value='리뷰 작성' onclick='classReviewInsertPage()'>");
-		$
-				.ajax({
+		$.ajax({
 					type : 'post',
 					url : 'rest/selectClassReview',
 					data : obj,
@@ -784,8 +777,7 @@ td {
 			'cob_idnum' : el[0].cl_idnum,
 			'cob_lv' : el[0].cl_lv
 		}
-		$
-				.ajax({
+		$.ajax({
 					type : 'post',
 					url : 'rest/selectMyClassAvg',
 					data : obj,
@@ -883,8 +875,7 @@ td {
 		console.log(gpa);
 		console.log(kind);
 		console.log(myAvg);
-		$
-				.ajax({
+		$.ajax({
 					type : 'post',
 					url : 'rest/selectClassReviewDetail',
 					data : obj,
@@ -1003,5 +994,13 @@ td {
 			}
 		});// ajax insertReviewReply END
 	}//function insertReviewReply()END
+	
+	function classFinalTest(){
+    	var idnum =el[0].cl_idnum;
+    	var lv=el[0].cl_lv;
+    	var num=0;
+    	window.open("selectClassFinalTest?pb_idnum="+idnum+"&pb_lv="+lv+"&pb_num="+num,'_blank','width=800, height=600, top=200, left=200'); 
+
+    }// function classFinalTest() END
 </script>
 </html>

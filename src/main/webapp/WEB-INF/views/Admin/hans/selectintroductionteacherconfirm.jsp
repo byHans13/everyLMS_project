@@ -247,6 +247,7 @@ $(document).on("click","#certiConfirm",function(){
 		success:function(data){
 			console.log(data);
 			alert("수락이 완료되었습니다.");
+			reloadStart();
 		
 		},
 		error:function(err){
@@ -254,10 +255,14 @@ $(document).on("click","#certiConfirm",function(){
 		}
 		});//ajax end
 	
+		
+		
 	
 });
 
-
+function reloadStart(){
+	location.reload();
+}
 
 
 

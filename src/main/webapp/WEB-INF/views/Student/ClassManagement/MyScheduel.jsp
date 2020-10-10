@@ -166,6 +166,8 @@ var leapYear=[31,29,31,30,31,30,31,31,30,31,30,31]; // 윤년
 var notLeapYear=[31,28,31,30,31,30,31,31,30,31,30,31]; 
 var pageFirst = first; 
 var pageYear;
+var classList = ${classList};
+
 // 년도 / 4 = 0 >> 윤년 
 if(first.getFullYear() % 4 === 0){ 
     pageYear = leapYear;
@@ -277,7 +279,6 @@ function next(){
 }//next End // 다음달로 넘어가기 위한 함수
 function showMain(){ // 시작했을 때,날짜 변경시 실행
 	var option = $('#classList');
-	var classList = ${classList};
 	var courseOption = $('#courseList');
 	option.html("");
 	courseOption.html("");
@@ -293,6 +294,26 @@ function showMain(){ // 시작했을 때,날짜 변경시 실행
     document.getElementById('hiddenYear').value=today.getFullYear();
     document.getElementById('hiddenMonth').value=(today.getMonth()+1);
     document.getElementById('hiddenDate').value=today.getDate(); 
+	jQuery.fn.serializeObject = function() {
+		  var obj = null;
+		  try {
+		    if(this[0].tagName && this[0].tagName.toUpperCase() == "FORM" ) {
+		      var arr = this.serializeArray();
+		      if(arr){
+		        obj = {};    
+		        jQuery.each(arr, function() {
+		        obj[this.name] = this.value;
+		        });             
+		      }
+		    }
+		  }catch(e) {
+		    alert(e.message);
+		  }finally  {}
+		  console.log("serialObject hans= ",obj);
+		  return obj;
+		}
+    
+    
     var obj = jQuery('#todoList').serializeObject();
     console.log(obj);
     $.ajax({ //일정 select하기
@@ -312,8 +333,10 @@ function showMain(){ // 시작했을 때,날짜 변경시 실행
     		var str=$('#plan-output');  
     		str.append("<table><tbody>");
     		for(var i=0; i<json.length; i++){
+    			console.log("dddddddddddddddddddd"+json[i].sc_lv);
+
 				str.append("<tr><td>"+json[i].cl_clName+"</td><td>"+json[i].co_name+"</td><td>"+json[i].sc_contents+
-						"</td><td onclick =\"deleteCalendar('"+json[i].sc_idnum+"','"+json[i].sc_contents+"','"+json[i].sc_num+"')\">(X)</td></tr>");
+						"</td><td onclick =\"deleteCalendar('"+json[i].sc_idnum+"','"+json[i].sc_lv+"','"+json[i].sc_contents+"','"+json[i].sc_num+"')\">(X)</td></tr>");
     		}
     		str.append("</tbody></table>");
     		str.append("<input type='hidden' id='token' data-token-name='${_csrf.headerName}'" 
@@ -334,6 +357,7 @@ function test(e){
     showMain();
 }
 function insertCalendar(){
+
     var obj = $('#todoList').serializeObject();
 	$.ajax({
 		type:'post',
@@ -362,8 +386,9 @@ function insertCalendar(){
 			if(json.length !=0){
     		str.append("<table><tbody>");
     		for(var i=0; i<json.length; i++){
+    			console.log("dddddddddddddddddddd"+json[i].sc_lv);
     			str.append("<tr><td>"+json[i].cl_clName+"</td><td>"+json[i].co_name+"</td><td>"+json[i].sc_contents+
-						"</td><td onclick =\"deleteCalendar('"+json[i].sc_idnum+"','"+json[i].sc_contents+"','"+json[i].sc_num+"'','"+json[i].sc_lv+"')\">(X)</td></tr>");
+						"</td><td onclick =\"deleteCalendar('"+json[i].sc_idnum+"','"+json[i].sc_lv+"','"+json[i].sc_contents+"','"+json[i].sc_num+"'')\">(X)</td></tr>");
     		}
     		str.append("</tbody></table>");
   			}else {
@@ -377,15 +402,17 @@ function insertCalendar(){
 	$('#classList').val("강의를 선택해주세요");
 	$('#contents').val(""); // insert 후 입력값 초기화 하기 위함ㅁ 
 }
-function deleteCalendar(classList, contents, courseList, lv){
+function deleteCalendar(classList, lv, contents, courseList){
 	var sc_idnum = classList;
 	var sc_contents = contents;
 	var sc_num = courseList;
+	var sc_lv = lv;
 	var obj = $('#todoList').serializeObject();
 	obj.sc_idnum = sc_idnum; 
 	obj.sc_contents = sc_contents;
 	obj.sc_num = sc_num;
 	obj.sc_lv = sc_lv;
+	console.log(obj);
 	$.ajax({
 		type: 'post' ,
 		url: "rest/deleteScheduleAjax",
@@ -403,7 +430,7 @@ function deleteCalendar(classList, contents, courseList, lv){
 			if(json.length!=0){
     		for(var i=0; i<json.length; i++){    			
     			str.append("<tr><td>"+json[i].cl_clName+"</td><td>"+json[i].co_name+"</td><td>"+json[i].sc_contents+
-						"</td><td onclick =\"deleteCalendar('"+json[i].sc_idnum+"','"+json[i].sc_contents+"','"+json[i].sc_num+"')\">(X)</td></tr>");
+						"</td><td onclick =\"deleteCalendar('"+json[i].sc_idnum+"','"+json[i].sc_lv+"','"+json[i].sc_contents+"','"+json[i].sc_num+"')\">(X)</td></tr>");
     		}
     		str.append("</tbody></table>");
   			}else {
@@ -417,11 +444,14 @@ function deleteCalendar(classList, contents, courseList, lv){
  }
  // classList값을 통해 이벤트 발생 courseList 출력
  $('#classList').change(function(){
-	var key = $('#classList').val();
+	 console.log("shut down",$('#classList'));
+	var idnum = $('#classList').val();
+	var lv = classList[0].cl_lv;
+	console.log(lv);
 	$.ajax({
 		type:'post',
 		url:'rest/selectCourseListAjax',
-		data:{co_idnum:key},
+		data:{co_idnum:idnum, co_lv : lv},
 		dataType:'json',
 		beforeSend : function(xhr)
 		{
@@ -430,6 +460,8 @@ function deleteCalendar(classList, contents, courseList, lv){
 		},
 		success:function(json){
 			$('#courseList').html("");
+			$('#courseList').append("<input type='hidden' id='token' data-token-name='${_csrf.headerName}'" 
+					+"name = '${_csrf.parameterName}' value='${_csrf.token}' >");
 			console.log(json);
 			var cl = $('#courseList');
 			if(json.length!=0){				

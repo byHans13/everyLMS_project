@@ -53,8 +53,8 @@ public class MaterialUploadController {
 		System.out.println("select 시험자료업로드 ProblemList 페이지 이동");
 		System.out.println("컨트롤러 일련번호 = " + mu.getCl_idnum());
 		System.out.println("컨트롤러 레벨값 = " + mu.getCl_lv());
-		mav.addObject("Cl_idnum", mu.getCl_idnum());	//가희 부팀장 알랴줌.
-		mav.addObject("Cl_lv", mu.getCl_lv());	//가희 부팀장 알랴줌.
+		mav.addObject("Cl_idnum", mu.getCl_idnum());
+		mav.addObject("Cl_lv", mu.getCl_lv());
 		mav.setViewName("teacher/kyj/selectTestMaterialUploadListPage");
 		return mav;
 	}
@@ -68,6 +68,7 @@ public class MaterialUploadController {
 		return mav;
 	}
 	
+	// "강좌 리스트 확인" 클릭시 Course List 페이지 이동 및 Class List Select
 	@RequestMapping(value = "prof/selectquizmaterialclcolist", method = RequestMethod.GET)
 	public ModelAndView selectQuizMaterialClCoList(HttpSession session, MaterialUpload mu) {
 		System.out.println("퀴즈자료업로드 ClCoList select 페이지 이동");
@@ -81,11 +82,26 @@ public class MaterialUploadController {
 	// "퀴즈 작성" 클릭시 시험자료업로드 Frm 페이지 이동 및 Class Course Select
 	@RequestMapping(value = "prof/insertquizmaterialuploadpage", method = RequestMethod.GET)
 	public ModelAndView insertQuizMaterialUploadPage(HttpSession session, MaterialUpload mu) {
-		System.out.println("insert 퀴즈자료업로드 문제 입력 페이지 이동");
+		System.out.println("insert 퀴즈자료업로드 퀴즈 입력 페이지 이동");
 		System.out.println("컨트롤러 일련번호 = " + mu.getCl_idnum());
 		System.out.println("컨트롤러 레벨값 = " + mu.getCl_lv());
 		mav = new ModelAndView();
 		mav = mumm.insertQuizMaterialUploadPage(session, mu);
+		return mav;
+	}
+	
+	// "퀴즈 확인" 클릭시 시험자료업로드 Frm 페이지 이동 및 Class Course Select
+	@RequestMapping(value = "prof/selectquizmaterialuploadlistpage", method = RequestMethod.GET)
+	public ModelAndView selectQuizMaterialUploadListPage(HttpSession session, MaterialUpload mu) {
+		mav = new ModelAndView();
+		System.out.println("select 퀴즈자료업로드 퀴즈리스트 확인 페이지 이동");
+		System.out.println("컨트롤러 일련번호 = " + mu.getCl_idnum());
+		System.out.println("컨트롤러 레벨 = " + mu.getCl_lv());
+		System.out.println("컨트롤러 회차 = " + mu.getCo_num());
+		mav.addObject("Cl_idnum", mu.getCl_idnum());
+		mav.addObject("Cl_lv", mu.getCl_lv());
+		mav.addObject("Co_num", mu.getCo_num());
+		mav.setViewName("teacher/kyj/selectQuizMaterialUploadListPage");
 		return mav;
 	}
 	

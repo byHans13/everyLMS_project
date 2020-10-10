@@ -24,7 +24,7 @@ public interface RecommendDao {
 	@Select("SELECT cc_cc FROM cc where cc_id = #{id}")
 	List<Concern> CCMatchPage(String id);
 
-	@Select("SELECT * FROM Ccmat_vw where cc_cc = #{Mycc}")
+	@Select("SELECT * FROM Ccmat_vw where cl_cc = #{Mycc}")
 	List<Clasc> selectMyinterestAjax(String Mycc);
 
 	List<Clasc> searchLevelDetail(@Param("pageNum") int pageNum, @Param("search") String search,
@@ -39,7 +39,7 @@ public interface RecommendDao {
 	
 	int lnterestCount(@Param("search") String search,@Param("selvalue") String selvalue); // 관심 매칭 게시물 갯수
 
-	@Select("select * from avgmat_vw  where cc_cc = #{cc} and cl_lv > 4")
+	@Select("select * from avgmat_vw  where cl_cc = #{cc} and cl_lv > 4")
 	List<Clasc> selectMylnterestLevel(String lnterestLevel);
 
 	@Select("SELECT floor(avg(lv_lv)) FROM lv where lv_id = #{mb_id}")

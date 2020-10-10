@@ -150,12 +150,14 @@ $(document).ready(function() {
 		$layerWindow.find("#bg_layer").on('mousedown',function(evt){
 			console.log(evt);
 			$layerWindow.removeClass('open');
+			location.reload();
 		});
 		$(document).keydown(function(evt) {
 			console.log(evt);
 			if(evt.keyCode!=27) return;
 			else if($layerWindow.hasClass('open')){
 				$layerWindow.removeClass('open');
+				location.reload();
 			}
 		});//keydown End
 		}); // ready 함수 //ready 안에 function 집어넣으면 시작하자마자 바로 실행
@@ -238,7 +240,7 @@ $(document).on("click"," .selectClass",function(){
 			for(var i=0; i<data.length;i++){
 				str += "<tr><td>회차 번호</td><td>"+data[i].co_num+"</td>";
 				str += "<td>강의 이름</td><td class='lectureVideo' value='"+i+"'>"+data[i].co_name+" 클릭시 재생</td></tr>";
-				str += "<tr id='ltv"+i+"' style= 'display: none ' ><td colspan='4'   ><img src='../video/"+data[i].fl_sysname+"'></td></tr>";
+				str += "<tr id='ltv"+i+"' style= 'display: none ' > <td colspan='4'   ><video autoplay controls src='../video/"+data[i].fl_sysname+"'>형식에 맞지 않았습니당.</video></td></tr>";
 				str += "<tr ><td colspan='4'>강좌 설명</td></tr><tr><td colspan='4'>";
 				str += data[i].co_cont+"</td></tr>";
 				}		
@@ -252,7 +254,7 @@ $(document).on("click"," .selectClass",function(){
 });// end
 $(document).on("click"," .lectureVideo",function(){
 	    var aaa=$(this).attr('value');
-			$("#ltv"+aaa).css('display','block');
+			$("#ltv"+aaa).css('display','table-row');
 	    $("#ltv"+aaa).click(function(){
 	    	$("#ltv"+aaa).css('display','none');
 	    });
@@ -283,7 +285,7 @@ $(document).on("click","#lectureConfirm",function(){
 		success:function(data){
 			console.log(data);
 			alert("수락이 완료되었습니다.");
-			location.href = "rest/selectlectureconfirm";
+			location.reload();
 		},
 		error:function(err){
 			console.log(err);

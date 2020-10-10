@@ -13,10 +13,42 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
+<script type="text/javascript">
+$(document).ready
+(function() {
+	
+	console.log('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal}');
+	console.log('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.authorities}');
+	//var aut =JSON.parse("${sessionScope.SPRING_SECURITY_CONTEXT.authentication.authorities}");
+	var aut= "${aut}";
+	console.log(aut);
+	var p = aut.indexOf("ROLE_PROF");
+	var s = aut.indexOf("ROLE_STUD");
+ 	var a = aut.indexOf("ROLE_ADMI");
+	console.log("권한체크p",p);
+	console.log("권한체크s",s);
+	console.log("권한체크a",a);
+	var profCheck ="${profCheck}";
+	console.log(profCheck);
+	 var id = "${id}";
+	 console.log("hansnq3"+id);
+	if (p != -1 && a == -1 ){
+		$("#mainlogo").attr("href","/h2k5every/prof/goTeacherLoginFrm");
+	}
+	else if (p == -1 && s != -1 && a==-1){
+		$("#mainlogo").attr("href","/h2k5every/stud/goLoginFrm");
+	}else{
+		$("#mainlogo").attr("href","/h2k5every/admi/admiLogin");
+		
+	}
+});
+
+</script>
+
 <body>
 	<header>
-		<a href="#"><img src="../upload/h2k5_mainLogo.PNG"
-			id="mainlogo" width="200"></a>
+		<a id="mainlogo" href="#"><img src="../upload/h2k5_mainLogo.PNG"
+			 width="200"></a>
 	</header>
 	<nav class="navbar navbar-inverse">
 		<div class="container-fluid">

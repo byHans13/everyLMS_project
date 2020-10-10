@@ -49,7 +49,9 @@ public class ClassHomeService {
 
 	public List<ScheduleBean> selectSchedule(ScheduleBean sb, HttpSession session) {
 		sb.setSc_id(session.getAttribute("id").toString());
+		System.out.println("cb="+sb);
 		List<ScheduleBean> sList = cDao.selectSchedule(sb);
+		System.out.println("sList="+sList);
 		if (sList != null) {
 			return sList;
 		} else {
@@ -101,8 +103,10 @@ public class ClassHomeService {
 	}
 
 	public List<CourseBean> selectCourseList(CourseBean cb) {
+		System.out.println("dons cb="+cb);
 		List<CourseBean> cList;
 		cList = cDao.selectCourseList(cb);
+		System.out.println("dons test"+cList.get(0).getCo_lv());
 		if (cList != null) {
 			return cList;
 		}
@@ -697,23 +701,35 @@ public class ClassHomeService {
 			gb.setGr_idnum(pb.getPb_idnum());
 			gb.setGr_lv(pb.getPb_lv());
 			gb.setGr_num(pb.getPb_num());
-			gb.setGr_kind(2);
-			cDao.insertCourseGrade(gb);
+			if(gb.getGr_num() ==0) {
+				gb.setGr_kind("H");
+			}else {
+				gb.setGr_kind("Q");				
+			}
+			result = cDao.insertCourseGrade(gb);
 		}
 		int count = cDao.selectLastQuizCnt(pb);
-		if (defaultArr.length == count) {
-			if (cDao.insertCourseAtmk(pb)) {
-				System.out.println("출석 변경 성공");
-				gb.setGr_score(1);
-				gb.setGr_kind(1);
-				cDao.insertCourseGrade(gb);
-				// insert 출석점수
-				return 1;
+		if(gb.getGr_num()!=0) {
+			if (defaultArr.length == count) {
+				if (cDao.insertCourseAtmk(pb)) {
+					System.out.println("출석 변경 성공");
+					gb.setGr_score(1);
+					gb.setGr_kind("A");
+					cDao.insertCourseGrade(gb);
+					// insert 출석점수
+					return 1;
+				} else {
+					return 0;
+				}
 			} else {
 				return 0;
 			}
-		} else {
-			return 0;
+		}else {
+			if(result==true) {
+				return 1;
+			}else {
+				return 0;
+			}
 		}
 	}
 	public boolean insertOrientationAtmk(ProblemBean pb, HttpSession session) {
@@ -925,4 +941,14 @@ public class ClassHomeService {
 		}
 	}
 
+	public ModelAndView selectClassFinalTest(ProblemBean pb, HttpSession session) {
+		mav = new ModelAndView();
+		String view;
+		List<ProblemBean> pList;
+		pb.setPb_id(session.getAttribute("id").toString());
+		pList = cDao.selectClassFinalTest(pb);
+		mav.addObject("finalTest", new Gson().toJson(pList));
+		mav.setViewName("Student/ClassHome/ClassFinalTest");
+		return mav;
+	}
 }// classHomeService END

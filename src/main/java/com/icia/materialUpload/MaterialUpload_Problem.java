@@ -25,7 +25,7 @@ public class MaterialUpload_Problem {
 	private String pb_pbname;		//문제명
 	private String pb_pbanswer;		//해설
 	private String pb_pbexplain;	//정답
-	private String pb_pbstudans;	//학생답
+	private String pb_pbstudent;	//학생답
 	private String pb_pbdate;		//제출날짜
 	private int pb_pbchkqz;			//시험/퀴즈
 	

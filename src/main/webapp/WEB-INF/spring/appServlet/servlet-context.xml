@@ -5,7 +5,9 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-5.2.xsd
+		http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
 		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
@@ -56,6 +58,18 @@
 			<beans:bean class="com.icia.board.userClass.SessionInterceptor"/>
 		</interceptor>	
 	</interceptors> -->
+	
+	
+	
+	
+	<!-- web socket 환경설정 -->
+		<websocket:handlers>
+	<websocket:mapping  path="/ws"  handler="messageWebSocketHandler"/>
+	<websocket:handshake-interceptors>
+	<beans:bean class="com.icia.ws.WebSocketInterceotor"/>
+	</websocket:handshake-interceptors>
+	</websocket:handlers>
+	
 	
 	<security:global-method-security pre-post-annotations="enabled" secured-annotations="enabled" />
 </beans:beans>

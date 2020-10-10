@@ -12,5 +12,5 @@ public class GradeBean {
 	private int gr_num;
 	private int gr_lv;
 	private double gr_score;
-	private int gr_kind;
+	private String gr_kind;
 }

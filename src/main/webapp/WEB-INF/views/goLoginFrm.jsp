@@ -28,14 +28,17 @@ section {
     border: 1px black solid;
     float: left;
 }
+fieldset{
+	border: solid black;
 
+}
 </style>
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <body>
   <input type="hidden" id='token' data-token-name='${_csrf.headerName }' value='${_csrf.token }'/>
 <script>
-$(document).ready
+ $(document).ready
 (function() {
 	
 	console.log('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal}');
@@ -49,7 +52,7 @@ $(document).ready
 	console.log(profCheck);
 	 var id = "${id}";
 	 console.log("hansnq3"+id);
-	if (n != -1){
+/* 	if (n != -1){
 		$("#goTeacherPage").append("<p style='margin-top: auto;'><b><a href='/h2k5every/prof/goTeacherLoginFrm' style='color: white; '>강사페이지이동</a></b></p>");
 	}
 	else if (n == -1 && profCheck < 1){
@@ -57,9 +60,9 @@ $(document).ready
 	}else{
 		$("#goTeacherPage").append("<p style='margin-top: auto;'><b><a href='#' style='color: white; '>강사 신청중인 상태입니다.</a></b></p>");
 		
-	}
+	} */
 	test(id);
-});
+}); 
 </script>
 	<header>
 		<%-- <%@ include file="h2k5every_header.jsp"%><!-- 정적인 방식 --> --%>
@@ -69,7 +72,21 @@ $(document).ready
 		<jsp:include page="h2k5every_aside.jsp" />
 	</aside>
 	<section id="section" style="margin-left: 20px;">
-			<div><h3><b>추천강의</b></h3></div>
+			<fieldset>
+			<legend id="recomendLecture">
+			<h3> 
+			<b>추천강의</b>
+			</h3>
+			</legend>
+			<div>
+			<table> <thead>
+            <tr>
+                <th>시작</th>
+            </tr>
+        </thead></table>
+			
+			</div>
+			</fieldset>
 			<div id="menu"><h3><b>관심사</b></h3></div>
 			
 	</section>

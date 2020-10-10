@@ -27,7 +27,7 @@ public interface IIntroductionTeacherConfirmDao {
 	List<IntroductionTeacherConfirmBean> selectLectureConfirmYes(@Param("cl_idnum")String cl_idnum, @Param("co_lv")String co_lv);
 	@Update("UPDATE class SET cl_ct=2 WHERE cl_idnum=#{cl_idnum} and cl_lv=#{co_lv}")
 	void updateLectureConfirm(@Param("cl_idnum")String cl_idnum, @Param("co_lv")String co_lv);
-	@Insert("INSERT INTO COURSE(co_num, co_lv, co_name, co_idnum,co_cont) VALUES (0, #{co_lv}, 'All Course gogo', #{cl_idnum},'오리엔테이션'")
+	@Insert("INSERT INTO COURSE(co_num, co_lv, co_name, co_idnum,co_cont) VALUES (0, #{co_lv}, 'All Course gogo', #{cl_idnum},'오리엔테이션')")
 	void insertCourseZero(@Param("cl_idnum")String cl_idnum, @Param("co_lv")String co_lv);
 
 }

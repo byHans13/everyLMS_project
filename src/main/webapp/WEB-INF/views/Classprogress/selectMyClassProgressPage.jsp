@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -9,70 +9,70 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <style>
 .cS {
-	text-align: center;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	position: absolute;
-	padding: 5px 10px;
+   text-align: center;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   position: absolute;
+   padding: 5px 10px;
 }
 
 #goselectclasshome{
 text-align: center;
-	top: 70%;
-	left: 700px;
-	transform: translate(-50%, -50%);
-	position: absolute;
-	padding: 5px 10px;
+   top: 70%;
+   left: 700px;
+   transform: translate(-50%, -50%);
+   position: absolute;
+   padding: 5px 10px;
 }
 header {
-	/* background-color: gray; */
+   /* background-color: gray; */
 }
 
 aside {
-	/* background-color: blue; */
-	width: 300px;
-	float: left;
+   /* background-color: blue; */
+   width: 300px;
+   float: left;
 }
 
 section {
-	/* background-color: pink; */
-	width: 1000px;
-	float: left;
+   /* background-color: pink; */
+   width: 1000px;
+   float: left;
 }
 </style>
 </head>
 <body>
 <header>
-		<jsp:include page="../h2k5every_header.jsp" /><!-- 동적인 방식 -->
-	</header>
-	<aside>
-		<jsp:include page="../h2k5every_aside.jsp" />
-	</aside>
-	<section id="section" style="margin-left: 20px;">
+      <jsp:include page="../h2k5every_header.jsp" /><!-- 동적인 방식 -->
+   </header>
+   <aside>
+      <jsp:include page="../h2k5every_aside.jsp" />
+   </aside>
+   <section id="section" style="margin-left: 20px;">
 <input type='hidden' id='token' data-token-name='${_csrf.headerName}' name = '${_csrf.parameterName}' value='${_csrf.token}' />
     <input type="hidden" name = "${_csrf.parameterName}" value="${_csrf.token}" />
-	<h2>${id}</h2>
-	<select id="classList" name="classList"
-		style="width: 70px; height: 50px">
-		<option>---------</option>
-		<c:forEach var="Clasc" items="${sList}" varStatus="i">
-			<option value = "${Clasc.cl_clname}">${Clasc.cl_clname}</option>
-		</c:forEach>
-	</select>
-	<table class="cS" style="margin:auto; text-align:center;">
-		<tr bgcolor="skyblue" height="30">
-			<th width="200">회차</th>
-			<th width="200">수업이름</th>
-			<th width="200">수강여부</th>
-			<th width="200">퀴즈갯수</th>
-		</tr>
-		<tbody id="tableShow"> </tbody>
-	</table>
+   <h2>${id}</h2>
+   <select id="classList" name="classList"
+      style="width: 70px; height: 50px">
+      <option> --------------</option>
+      <c:forEach var="Clasc" items="${sList}" varStatus="i">
+         <option value = "${Clasc.cl_clname}">${Clasc.cl_clname}</option>
+      </c:forEach>
+   </select>
+   <table class="cS" style="margin:auto; text-align:center;">
+      <tr bgcolor="skyblue" height="30">
+         <th width="150">회차</th>
+         <th width="100">수업이름</th>
+         <th width="100">수강여부</th>
+         <th width="100">퀴즈여부</th>
+      </tr>
+      <tbody id="tableShow"> </tbody>
+   </table>
 </section>
 <footer>
-		<jsp:include page="../h2k5every_footer.jsp" />
-	</footer>
+      <jsp:include page="../h2k5every_footer.jsp" />
+   </footer>
 </body>
 
 
@@ -87,12 +87,12 @@ $('#classList').change(function() {
          dataType:'json',
          url:'rest/selectClassListAjax',
          beforeSend : function(xhr)
-			{
-				//이거 안하면 403 error
-				//데이터를 전송하기 전에 헤더에 csrf값을 설정한다
-				var $token = $("#token");
-				xhr.setRequestHeader($token.data("token-name"), $token.val());
-			},
+         {
+            //이거 안하면 403 error
+            //데이터를 전송하기 전에 헤더에 csrf값을 설정한다
+            var $token = $("#token");
+            xhr.setRequestHeader($token.data("token-name"), $token.val());
+         },
          contentType:'application/json; charset=UTF-8', 
          data: JSON.stringify(json),
          success:function(result){
@@ -100,15 +100,22 @@ $('#classList').change(function() {
              
              $('#cl_idnum').children('a').remove();
              str = "";
-				for (var i in result) {
-					str += "<tr><th>" + result[i].co_num + "</th>";
-					str += "<th>" + result[i].co_name + "</th>";
-					str += "<th>" + result[i].atd_atmk+"</th>";
-					str += "<th>" + result[i].pb_pbnum +"</th></tr>";
-					$("#tableShow").html(str);
+             
+            for (var i in result) {
+               str += "<tr><th>" + result[i].co_num + "</th>";
+               str += "<th>" + result[i].co_name + "</th>";
+               if(result[i].atd_atmk == 1){
+               str += "<th>수강완료</th>";                  
+               }else{                  
+               str += "<th>미수강</th>";
+               }
+               console.log(result);
+               console.log("hans check 퀴즈개수", result[i].pb_pbnum);
+               str += "<th>" + result[i].pb_pbnum +"</th></tr>";
+               $("#tableShow").html(str);
          }
-				$("#tableShow").append(
-						"<button name='goselectclasshome' style='margin:auto; float:right;'><a href='selectClassHomePage?cl_idnum="+result[i].cl_idnum+"'>강의들으러가기</a></button>");
+            $("#tableShow").append(
+                  "<button name='goselectclasshome' style='margin:auto; float:right;'><a href='selectClassHomePage?cl_idnum="+result[i].cl_idnum+"'>강의들으러가기</a></button>");
          },error : function (request, status, error) {
              alert ( "code :"+ request.status + "\ n"+ "message :"+ request.responseText + "\ n"+ "error :"+ error);}
       });// ajax

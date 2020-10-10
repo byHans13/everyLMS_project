@@ -63,11 +63,12 @@
 					$("#selectTestMaterialUploadFrm").append("<input type='hidden' id='token' data-token-name='${_csrf.headerName}' name='${_csrf.parameterName}' value='${_csfr.token}' />");
 				for( var i = 0; i < uploadInfo[0].muPbList.length; i++){
 					$("#selectTestMaterialUploadFrm").append("<table id='testMaterialUploadTable"+i+"' class='table table-border'>");
-					$("#testMaterialUploadTable").append("<thead id='testMaterialUploadThead"+i+"'>");
-					$("#testMaterialUploadThead").append("<caption id='testMaterialUploadCaption"+i+"' style='width:500px;'>");
-					$("#testMaterialUploadCaption").append("<h2>시험 업로드 자료 확인</h2>");
+					$("#testMaterialUploadTable"+i).append("<thead id='testMaterialUploadThead"+i+"'>");
+					$("#testMaterialUploadThead"+i).append("<caption id='testMaterialUploadCaption"+i+"' style='width:500px;'>");
+					$("#testMaterialUploadCaption"+i).append("<h2>시험 업로드 자료 확인</h2>");
 					$("#testMaterialUploadTable"+i).append("<tr><td id='btnTd'>"
 										 + "<input type='button' id='btnAdd' value='문제수정' onclick='uploadAddClick()'>"
+										 + "<input type='button' value='뒤로가기' onclick='location.href='/selecttestmaterialclasslist'>"
 							 			 /* + "<input type='button' value='홈으로' onclick=location.href='/h2k5every/'></td></tr>"); */
 							 			 + "<input type='button' value='홈으로' onclick=location.href='/h2k5every/prof/goTeacherLoginFrm'></td></tr>");
 					$("#testMaterialUploadTable"+i).append("<tbody id='testMaterialUploadTbody"+i+"'>");

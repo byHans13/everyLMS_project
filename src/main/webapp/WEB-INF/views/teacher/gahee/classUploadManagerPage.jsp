@@ -1,8 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<sec:authorize access="hasRole('ROLE_STUD')">
+	<script src="../script/wsocket.js"></script>
+	</sec:authorize>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <meta charset="UTF-8">
 <meta name="_csrf" content="${_csrf.token}">
@@ -179,9 +184,10 @@ function ajaxaa(cl_lv,cl_idnum,sumnum) {
 		$('#ttt').remove();
 		$('#comeErr').text("");
 		if(aaList.length!=0){
-		$('#comeAa').append("<table id='ttt'><thead><tr><th>학생ID</th><th>진도율</th></tr></thead><tbody id='aa'>");
+		$('#comeAa').append("<table id='ttt'><thead><tr><th>학생ID</th><th>진도율</th><th>쪽지보내기</th></tr></thead><tbody id='aa'>");
 		for(var i=0; i<aaList.length; i++){
-			$('#aa').append("<tr><td>"+aaList[i].aa_id+"</td><td><a onclick=\"openProgress('"+aaList[i].aa_id+"','"+cl_idnum+"','"+cl_lv+"','"+sumnum+"')\">상세보기</a></td></tr>");
+			console.log(aaList[i]);
+			$('#aa').append("<tr><td>"+aaList[i].aa_id+"</td><td><a onclick=\"openProgress('"+aaList[i].aa_id+"','"+cl_idnum+"','"+cl_lv+"','"+sumnum+"')\">상세보기</a></td><td><a onclick=\"openMsg('"+aaList[i].aa_id+"','"+cl_idnum+"')\">보내기</a></td></tr>");
 		}
 		$('#comeAa').prepend("</tbody></table>");
 		}else{
@@ -214,7 +220,7 @@ function openProgress(id, idnum, lv,sumnum) {
 			var sum = parseInt(sumnum);
 			var count =parseInt(countAt);
 		console.log(countAt);
-		 $('#contents_layer').empty();
+		// $('#contents_layer').empty();
 		 $('#articleView_layer').addClass('open');
 		 var persent =(count/sum)*100;
 		 console.log("count:  "+count);
@@ -231,6 +237,68 @@ function openProgress(id, idnum, lv,sumnum) {
 		}
 	});
 }
+
+
+
+function openMsg(aa_id, cl_idnum) {
+	
+	 $('#articleView_layer').addClass('open');
+	 $('#contents_layer').empty();
+	 $('#contents_layer').append("<center><h3>"+aa_id+"님 에게 쪽지를 남깁니다.</h3></center>내용입력: <input type='text' name='msg_text' id='msg'><button type='button' onclick=\"goMsg('"+aa_id+"')\"'>SEND</button>");
+	 $('#contents_layer').append("<input type='hidden' id='token' data-token-name='${_csrf.headerName }' value='${_csrf.token }'/>");
+}
+
+
+
+ function goMsg(aa_id) {
+	var msg = $('#msg').val();
+	$.ajax({
+		url:'rest/sendMsg?receiver='+aa_id+'&msg='+msg,
+		type:'GET',
+		dataType: 'json',
+		beforeSend : function(xhr)
+		{
+			//이거 안하면 403 error
+			//데이터를 전송하기 전에 헤더에 csrf값을 설정한다
+			var $token = $("#token");
+			xhr.setRequestHeader($token.data("token-name"), $token.val());
+		},
+		success: function(result) {
+			if(result){
+			alert('쪽지를 보내는데 성공하셨습니다.');
+			}else{
+				alert('쪽지를 보내는데 실패하셨습니다. 다시 시도 하세요');
+			}
+			location.reload();
+		},
+		error: function(err) {
+			console.log(err)
+			
+		}
+	});
+	
+	$.ajax({
+		url:'/h2k5every/prof/rest/sendMsgWeb?receiver='+aa_id+'&msg='+msg,
+		type:'GET',
+		dataType: 'json',
+		beforeSend : function(xhr)
+		{
+			//이거 안하면 403 error
+			//데이터를 전송하기 전에 헤더에 csrf값을 설정한다
+			var $token = $("#token");
+			xhr.setRequestHeader($token.data("token-name"), $token.val());
+		},
+		success: function(result) {
+		console.log(result);
+		},
+		error: function(err) {
+			console.log(err)
+			
+		}
+	}); 
+	
+ }
+
 
 
 </script>

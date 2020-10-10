@@ -59,7 +59,6 @@ public class MaterialUploadRsetController {
 	
 	//"문제 확인" 버튼 클릭시 insertTestMaterialUploadPage 이동 후 ready 펑션 시행하여 Ajax로 문제 Select
 	@RequestMapping(value = "prof/rest/selectviewtestmaterialuploadpageajax", method = RequestMethod.POST)
-//	public String selectViewTestMaterialUploadPageAjax(@RequestParam("cl_idnum")String cl_idnum, HttpSession session, MaterialUpload mu, MaterialUpload_Problem muP, MaterialUpload_DetailProblem muDP) {
 	public String selectViewTestMaterialUploadPageAjax(HttpSession session, MaterialUpload mu) {
 		System.out.println("시험자료업로드 select View Ajax");
 		System.out.println("일련번호 Ajax = " + mu.getCl_idnum());
@@ -95,6 +94,34 @@ public class MaterialUploadRsetController {
 		String json = new Gson().toJson(muList);
 		return json;
 	}
+	
+	//"문제 확인" 버튼 클릭시 insertQuizMaterialUploadPage 이동 후 ready 펑션 시행하여 Ajax로 문제 Select
+	@RequestMapping(value = "prof/rest/selectviewquizmaterialuploadpageajax", method = RequestMethod.POST)
+	public String selectViewQuizMaterialUploadPageAjax(HttpSession session, MaterialUpload mu) {
+		System.out.println("퀴즈자료업로드 select View Ajax");
+		System.out.println("일련번호 Ajax = " + mu.getCl_idnum());
+		System.out.println("레벨 Ajax = " + mu.getCl_lv());
+		System.out.println("회차 Ajax = " + mu.getCo_num());
+		List<MaterialUpload> pbList = new ArrayList<MaterialUpload>();
+		pbList = mumm.selectViewQuizMaterialUploadPageAjax(session, mu);
+		System.out.println("pbList = " + pbList);
+		String json = new Gson().toJson(pbList);
+		return json;
+	}
+	
+//	//"문제 수정" 버튼 클릭시  selectViewQuizMaterialUploadPageAjax 실행하여 문제 수정
+//	@RequestMapping(value = "prof/rest/selectviewquizmaterialuploadAddajax", method = RequestMethod.POST)
+//	public String selectViewQuizMaterialUploadAddAjax(HttpSession session, MaterialUpload mu) {
+//		System.out.println("퀴즈자료업로드 select View Ajax");
+//		System.out.println("일련번호 Ajax = " + mu.getCl_idnum());
+//		System.out.println("레벨 Ajax = " + mu.getCl_lv());
+//		System.out.println("회차 Ajax = " + mu.getCo_num());
+//		List<MaterialUpload> pbList = new ArrayList<MaterialUpload>();
+//		pbList = mumm.selectViewQuizMaterialUploadAddAjax(session, mu);
+//		System.out.println("pbList = " + pbList);
+//		String json = new Gson().toJson(pbList);
+//		return json;
+//	}
 	
 }
 

@@ -80,7 +80,7 @@ section {
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <body>
 <script>
-$(document).ready
+/* $(document).ready
 (function() {
 	//var aut =JSON.parse("${sessionScope.SPRING_SECURITY_CONTEXT.authentication.authorities}");
 	var aut= "${aut}";
@@ -91,7 +91,7 @@ $(document).ready
 	}
  
 	test(id);
-});
+}); */
 </script>
 	<header>
 		<jsp:include page="../../h2k5every_loginHeader.jsp" /><!-- 동적인 방식 -->

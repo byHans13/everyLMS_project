@@ -211,7 +211,9 @@ public class StudentMM {
 	}
 
 	public List<Clasc> selectClassListAjax(String cl_clname, HttpSession session) {
-		List<Clasc> cList = sDao.selectClassListAjax(cl_clname);
+		String id=session.getAttribute("id").toString();
+		System.out.println("mins id 추가확인 : " + id);
+		List<Clasc> cList = sDao.selectClassListAjax(cl_clname,id);
 		return cList;
 	}
 

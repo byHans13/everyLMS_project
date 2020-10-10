@@ -51,7 +51,6 @@
 	console.log("일련번호 : "+ $("#idnum").val());
 	console.log("레벨값 : " + $("#lv").val());
 	console.log("conum = "+conum);
-	console.dir("conum = "+conum);
 	$(document).ready(function(){
 		var FormData = $('#insertQuizMaterialUploadFrm').serialize();
 		$.ajax({

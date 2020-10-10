@@ -55,6 +55,33 @@ input[class*='myClassCheckbox']+label{
 </style>
 
 </head>
+<script type="text/javascript">
+$(document).ready
+(function() {
+	
+	console.log('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal}');
+	console.log('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.authorities}');
+	//var aut =JSON.parse("${sessionScope.SPRING_SECURITY_CONTEXT.authentication.authorities}");
+	var aut= "${aut}";
+	console.log(aut);
+	var n = aut.indexOf("ROLE_PROF");
+	console.log("권한체크",n);
+	var profCheck ="${profCheck}";
+	console.log(profCheck);
+	 var id = "${id}";
+	 console.log("hansnq3"+id);
+	if (n != -1){
+		$("#goTeacherPage").append("<p style='margin-top: auto;'><b><a href='/h2k5every/prof/goTeacherLoginFrm' style='color: white; '>강사페이지이동</a></b></p>");
+	}
+	else if (n == -1 && profCheck < 1){
+		$("#goTeacherPage").append("<p style='margin-top: auto;'><b><a href='/h2k5every/stud/registertoprof' style='color: white; '>강사등록하러가기</a></b></p>");
+	}else{
+		$("#goTeacherPage").append("<p style='margin-top: auto;'><b><a href='#' style='color: white; '>강사 신청중인 상태입니다.</a></b></p>");
+		
+	}
+});
+
+</script>
 
 <body>
     <div class='asideMenu'>
