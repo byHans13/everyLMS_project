@@ -10,9 +10,9 @@
 -->
 
 <mapper namespace="com.icia.materialUpload.IMaterialUploadDao">
-	<!-- 시험 문제 -->
+	<!-- 시험 -->
 	<select id="selectTestMaterialClassList" parameterType="materialUpload" resultType="materialUpload">
-		SELECT * FROM CLASS WHERE CL_ID = #{cl_id}
+		SELECT * FROM CLASS WHERE CL_ID = #{cl_id} AND Cl_CT = 2
 	</select>
 	
 	<select id="selectTestMaterialCountList" parameterType="materialUpload" resultType="int">
@@ -21,9 +21,10 @@
 	
 	<select id="insertTestMaterialUploadPage" parameterType="materialUpload" resultType="materialUpload">
 		SELECT CLASS.CL_ID, CLASS.CL_CLNAME, CLASS.CL_LCNUM, CLASS.CL_IDNUM, CLASS.CL_LV, COURSE.CO_NAME, COURSE.CO_NUM
-		FROM (SELECT * FROM CLASS WHERE CL_ID = #{cl_id}) CLASS INNER JOIN COURSE	
+		FROM (SELECT * FROM CLASS WHERE CL_ID = #{cl_id}) CLASS INNER JOIN COURSE
 		ON CLASS.CL_IDNUM = COURSE.CO_IDNUM
-		WHERE CL_IDNUM = #{cl_idnum} and CL_LV = #{cl_lv}
+		<!-- WHERE CL_IDNUM = #{cl_idnum} AND CL_LV = #{cl_lv} AND CL_CT = 2 -->
+		WHERE CL_IDNUM = #{cl_idnum} AND CL_LV = #{cl_lv}
 		ORDER BY COURSE.CO_NUM ASC
 	</select>
 
@@ -44,22 +45,23 @@
 	</select>
 	
 	<insert id="insertTestMaterialUploadProblemAjax" parameterType="materialUpload">
-		INSERT INTO PROBLEM VALUES(0, #{pb_lv}, #{pb_id}, #{pb_idnum}, #{pb_pbnum}, #{pb_pbname}, #{pb_pbanswer}, #{pb_pbexplain}, #{pb_pbanswer}, 1, default, 0)
+		INSERT INTO PROBLEM VALUES(0, #{pb_lv}, #{pb_id}, #{pb_idnum}, #{pb_pbnum}, #{pb_pbname}, #{pb_pbanswer}, #{pb_pbexplain}, #{pb_pbstudent}, 3, default, 0)
 	</insert>
 	
 	<insert id="insertTestMaterialUploadDetailProblemAjax" parameterType="materialUpload">
 		INSERT INTO DETAILPROBLEM VALUES(0, #{dp_lv}, #{dp_id}, #{dp_idnum}, #{dp_pbnum}, #{dp_pbexm}, #{dp_pbexmnum}, #{dp_coname})
+		<!-- INSERT INTO DETAILPROBLEM VALUES(0, #{dp_lv}, #{dp_id}, #{dp_idnum}, 8, #{dp_pbexm}, #{dp_pbexmnum}, #{dp_coname}) -->
 	</insert>
 	
 	<select id="selectViewTestMaterialUploadPageAjax" parameterType="materialUpload" resultMap="mapMaterialUpload">
 		SELECT PB_PBCHKQZ, PB_NUM, PB_IDNUM, PB_LV, PB_ID, PB_PBNUM, PB_PBNAME, PB_PBANSWER, PB_PBEXPLAIN, DP_PBEXMNUM, DP_PBEXM, DP_CONAME
 		FROM (SELECT * FROM PROBLEM WHERE PB_IDNUM = #{cl_idnum} AND PB_LV = #{cl_lv}) PROBLEM INNER JOIN DETAILPROBLEM
-		ON PROBLEM.PB_IDNUM = DETAILPROBLEM.DP_IDNUM AND PROBLEM.PB_PBNUM = DETAILPROBLEM.DP_PBNUM
-		WHERE PB_IDNUM = #{cl_idnum} AND PB_LV = #{cl_lv} AND PB_PBCHKQZ = 0
+		ON PROBLEM.PB_IDNUM = DETAILPROBLEM.DP_IDNUM AND PROBLEM.PB_PBNUM = DETAILPROBLEM.DP_PBNUM AND PROBLEM.PB_NUM = DETAILPROBLEM.DP_NUM
+		WHERE PB_IDNUM = #{cl_idnum} AND PB_LV = #{cl_lv} AND PB_PBCHKQZ = 0 
 		ORDER BY PB_PBNUM, DP_PBEXMNUM ASC
 	</select>
 	
-	<resultMap type="MaterialUpload" id="mapMaterialUpload">
+	<resultMap type="materialUpload" id="mapMaterialUpload">
 		<id column="PB_IDNUM" property="pb_idnum" />
 		<collection property="muPbList" javaType="java.util.ArrayList" resultMap="mapProblem"/>
 	</resultMap>
@@ -95,11 +97,14 @@
 	<select id="selectCllcnum" parameterType="materialUpload" resultType="Int">
 		SELECT CL_LCNUM FROM CLASS WHERE CL_IDNUM=#{cl_idnum} AND CL_LV=#{cl_lv}
 	</select>
+
+	<select id="selectConum" parameterType="materialUpload" resultType="Int">
+		SELECT CO_NUM FROM COURSE WHERE CO_IDNUM=#{cl_idnum} AND CO_LV=#{cl_lv} AND CO_NUM = #{pb_num}
+	</select>
 	
-	
-	<!-- 퀴즈 문제 -->
+	<!-- 퀴즈 -->
 	<select id="selectQuizMaterialClassList" parameterType="materialUpload" resultType="materialUpload">
-		SELECT * FROM CLASS WHERE CL_ID = #{cl_id}
+		SELECT * FROM CLASS WHERE CL_ID = #{cl_id} AND CL_CT = 2
 	</select>
 	
 	<select id="selectQuizMaterialCountList" parameterType="materialUpload" resultType="int">
@@ -107,18 +112,21 @@
 	</select>
 	
 	<select id="selectQuizMaterialClCoList" parameterType="materialUpload" resultType="materialUpload">
-		SELECT CLASS.CL_ID, CLASS.CL_CLNAME, CLASS.CL_IDNUM, CLASS.CL_LV, COURSE.CO_NAME, COURSE.CO_NUM
+		<!-- SELECT CLASS.CL_ID, CLASS.CL_CLNAME, CLASS.CL_IDNUM, CLASS.CL_LV, COURSE.CO_NAME, COURSE.CO_NUM
+		FROM (SELECT * FROM CLASS WHERE CL_ID = #{cl_id} AND CL_CT = 2) CLASS INNER JOIN COURSE	
 		FROM (SELECT * FROM CLASS WHERE CL_ID = #{cl_id}) CLASS INNER JOIN COURSE	
 		ON CLASS.CL_IDNUM = COURSE.CO_IDNUM
-		WHERE CL_IDNUM = #{cl_idnum} and CL_LV = #{cl_lv}
-		ORDER BY COURSE.CO_NUM ASC
+		WHERE CL_IDNUM = #{cl_idnum} AND CL_LV = #{cl_lv}
+		ORDER BY COURSE.CO_NUM ASC -->
+		SELECT * FROM CLCOLIST WHERE CL_IDNUM = #{cl_idnum} AND CL_LV = #{cl_lv}
 	</select>
 	
 	<select id="insertQuizMaterialUploadPage" parameterType="materialUpload" resultType="materialUpload">
 		SELECT CLASS.CL_ID, CLASS.CL_CLNAME, CLASS.CL_IDNUM, CLASS.CL_LV, COURSE.CO_NAME, COURSE.CO_NUM
-		FROM (SELECT * FROM CLASS WHERE CL_ID = #{cl_id}) CLASS INNER JOIN COURSE	
+		<!-- FROM (SELECT * FROM CLASS WHERE CL_ID = #{cl_id} AND CL_CT = 2) CLASS INNER JOIN COURSE -->
+		FROM (SELECT * FROM CLASS WHERE CL_ID = #{cl_id}) CLASS INNER JOIN COURSE
 		ON CLASS.CL_IDNUM = COURSE.CO_IDNUM
-		WHERE CL_IDNUM = #{cl_idnum} and CL_LV = #{cl_lv}
+		WHERE CL_IDNUM = #{cl_idnum} AND CL_LV = #{cl_lv} AND CO_NUM = #{co_num}
 		ORDER BY COURSE.CO_NUM ASC
 	</select>
 	
@@ -135,15 +143,50 @@
 	</select>
 	
 	<insert id="insertQuizMaterialUploadProblemAjax" parameterType="materialUpload">
-		INSERT INTO PROBLEM(pb_num, pb_lv, pb_id,pb_idnum, pb_pbnum, pb_pbname,pb_pbanswer, pb_pbexplain,pb_pbstudent, pb_answerchk,pb_pbdate, pb_pbchkqz) VALUES(#{pb_num}, #{pb_lv}, #{pb_id}, #{pb_idnum}, #{pb_pbnum}, #{pb_pbname}, #{pb_pbanswer}, #{pb_pbexplain}, #{pb_pbanswer}, 1, default, 1)
+		INSERT INTO PROBLEM VALUES(#{pb_num}, #{pb_lv}, #{pb_id}, #{pb_idnum}, #{pb_pbnum}, #{pb_pbname}, #{pb_pbanswer}, #{pb_pbexplain}, #{pb_pbstudent}, 3, default, 1)
 	</insert>
 	
 	<insert id="insertQuizMaterialUploadDetailProblemAjax" parameterType="materialUpload">
-		INSERT INTO DETAILPROBLEM(dp_num,dp_lv,dp_id,dp_idnum, dp_pbnum, dp_pbexm, dp_pbexmnum,dp_coname) VALUES(#{pb_num}, #{dp_lv}, #{dp_id}, #{dp_idnum}, #{dp_pbnum}, #{dp_pbexm}, #{dp_pbexmnum}, #{dp_coname})
+		INSERT INTO DETAILPROBLEM VALUES(#{pb_num}, #{dp_lv}, #{dp_id}, #{dp_idnum}, #{dp_pbnum}, #{dp_pbexm}, #{dp_pbexmnum}, #{dp_coname})
 	</insert>
 	
+	<select id="selectViewQuizMaterialUploadPageAjax" parameterType="materialUpload" resultMap="mapQuizMaterialUpload">
+		SELECT PB_PBCHKQZ, PB_NUM, PB_IDNUM, PB_LV, PB_ID, PB_PBNUM, PB_PBNAME, PB_PBANSWER, PB_PBEXPLAIN, DP_PBEXMNUM, DP_PBEXM, DP_CONAME
+		FROM (SELECT * FROM PROBLEM WHERE PB_IDNUM = #{cl_idnum} AND PB_LV = #{cl_lv}) PROBLEM INNER JOIN DETAILPROBLEM
+		ON PROBLEM.PB_IDNUM = DETAILPROBLEM.DP_IDNUM AND PROBLEM.PB_PBNUM = DETAILPROBLEM.DP_PBNUM AND PROBLEM.PB_NUM = DETAILPROBLEM.DP_NUM
+		WHERE PB_IDNUM = #{cl_idnum} AND PB_LV = #{cl_lv} AND PB_PBCHKQZ = 1 AND PB_NUM = #{co_num}
+		<!-- WHERE PB_IDNUM = #{cl_idnum} AND PB_LV = #{cl_lv} AND PB_PBCHKQZ = 1 AND PB_PBNUM = #{pb_pbnum} -->
+		ORDER BY PB_PBNUM, DP_PBEXMNUM ASC
+	</select>
 	
+	<resultMap type="materialUpload" id="mapQuizMaterialUpload">
+		<id column="PB_IDNUM" property="pb_idnum" />
+		<collection property="muPbList" javaType="java.util.ArrayList" resultMap="mapQuizProblem"/>
+	</resultMap>
 	
+	<resultMap type="muProblem" id="mapQuizProblem">	
+		<result column="PB_PBCHKQZ" property="pb_pbchkqz"/>
+		<result column="PB_NUM" property="pb_num"/>
+		<result column="PB_IDNUM" property="pb_idnum"/>
+		<result column="PB_LV" property="pb_lv"/>
+		<result column="PB_ID" property="pb_id"/>
+		<result column="PB_PBNUM" property="pb_pbnum"/>
+		<result column="PB_PBNAME" property="pb_pbname"/>
+		<result column="PB_PBANSWER" property="pb_pbanswer"/>
+		<result column="PB_PBEXPLAIN" property="pb_pbexplain"/>
+		<result column="DP_CONAME" property="dp_coname"/>
+		<collection property="muDpList" javaType="java.util.ArrayList" resultMap="mapQuizDetailProblem"/>
+	</resultMap>
+	
+	<resultMap type="muDetailProblem" id="mapQuizDetailProblem">
+		<collection property="muDpExmList" javaType="java.util.ArrayList" resultMap="muQuizDpExmList"/>
+	</resultMap>
+
+	<resultMap type="muDPExm" id="muQuizDpExmList">
+		<id column="DP_PBNUM" property="dp_pbnum"/>
+		<result column="DP_PBEXM" property="dp_pbexm"/>
+		<result column="DP_PBEXMNUM" property="dp_pbexmnum"/>
+	</resultMap>
 	
 	
 	

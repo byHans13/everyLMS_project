@@ -57,8 +57,10 @@
 		
 		var msg= '${msg}';
 		
-		if(msg!=""){
+		if(msg=="0"){
 			alert("아이디 혹은 패스워드가 일치하지 않습니다.");
+		}else if (msg!=""){
+			alert(msg);
 		}
 		
 	});

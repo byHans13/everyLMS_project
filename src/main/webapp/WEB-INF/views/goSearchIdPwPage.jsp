@@ -55,6 +55,7 @@ $(document).ready
 		<h3>아이디 찾기</h3>
 		<br>
 		<form action="idChecknumConfirm" onsubmit="return check();" method="post">
+		<input type="hidden" id="token"  data-token-name="${_csrf.headerName}" name = "${_csrf.parameterName}" value="${_csrf.token}" />
 		    <input type="hidden" name = "${_csrf.parameterName}" value="${_csrf.token}" />
 			<table>
 				<tr>
@@ -89,6 +90,7 @@ $(document).ready
 		<h3>비밀번호 찾기</h3>
 		<br>
 		<form action="pwChecknumConfirm" onsubmit="return check2();" method="post">
+		   <input type="hidden" name = "${_csrf.parameterName}" value="${_csrf.token}" />
 			<table>
 				<tr>
 					<td>아이디:</td>
@@ -176,6 +178,13 @@ $(document).ready
 			type:'post',
 			url:'rest/checkNumSend?email='+eemail1.value,
 			datatype:'json',
+   			beforeSend : function(xhr)
+   			{
+   				//이거 안하면 403 error
+   				//데이터를 전송하기 전에 헤더에 csrf값을 설정한다
+   				var $token = $("#token");
+   				xhr.setRequestHeader($token.data("token-name"), $token.val());
+   			},
 			success: function (json) {
 				console.log(json);
 				for( i in json){
@@ -201,6 +210,13 @@ $(document).ready
 			type:'post',
 			url:'rest/checkNumSend?email='+eemail.value,
 			datatype:'json',
+   			beforeSend : function(xhr)
+   			{
+   				//이거 안하면 403 error
+   				//데이터를 전송하기 전에 헤더에 csrf값을 설정한다
+   				var $token = $("#token");
+   				xhr.setRequestHeader($token.data("token-name"), $token.val());
+   			},
 			success: function (json) {
 				console.log(json);
 				for( i in json){

@@ -201,6 +201,7 @@ th, td {
 <body>
 <input type="hidden" id="token"  data-token-name="${_csrf.headerName}" name = "${_csrf.parameterName}" value="${_csrf.token}" />
 <a href="/h2k5every/"><img src="upload/h2k5_mainLogo.PNG" id="mainlogo" width="200"></a>
+<div id="container">
 <h1 align="center" style="font-size:50px;"><font color="navy"><b>오픈플랫폼</b></font></h1>
 <form name="join" onsubmit="return validate();" action="insertmemberjoin" method="post">
     <input type="hidden" name = "${_csrf.parameterName}" value="${_csrf.token}" />
@@ -208,8 +209,8 @@ th, td {
        <tr height="10" align="center">
            <td colspan="2" style="background:navy;"><font color=white><b>회원기본정보</b></font></td>
        </tr>
-       <tr>
-           <td><b>아이디:</b></td>
+                  <tr>
+<td><b>아이디:</b></td>
            <td>
            <input type="text" style="width:170px"id="id" name="mb_id" maxlength="12" />
            <input type="button" onclick="idclick()" value="중복체크">  ※4-12자의 대소문자와 숫자로만 입력
@@ -278,15 +279,20 @@ th, td {
               ex)경기 xx시 xx동 xx아파트 xxx동 xxx호
            </td>
        </tr>
-        </table>
-       <div id="map" style="width:655px;height:300px;margin-top:10px;display:none;margin-left: 625px;" ></div>
-       <br>
-       <br>
-       <div style="margin-left:630px;">
-       <input type="submit" value="회원가입" style="border-radius:5px; width: 655px; height: 50px; font-size: 20px;" id="aaa"/>
+       <tr>
+       <td colspan="2">
+       <div style="margin:10px; text-align:center;">
+       <input type="submit" value="회원가입" style="border-radius:5px; width: 300px; height: 50px; font-size: 20px;" id="aaa"/>
        </div>
+       </td>
+       </tr>
+        </table>
+       	  	<div id="map" style="width:655px;height:300px; display:none; margin: 10px auto;"></div>
+       <br>
+       <br>
        <br>
 </form>
+</div>
 
 <script>
 	

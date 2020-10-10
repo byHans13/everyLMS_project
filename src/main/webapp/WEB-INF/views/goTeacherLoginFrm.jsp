@@ -15,11 +15,15 @@ aside {
 	width: 300px;
 	float: left;
 }
-
+body{
+position: relative;
+}
 section {
 	/* background-color: pink; */
 	width: 1000px;
 	float: left;
+	transform:translate(320px,0px);
+	position: absolute;
 }
 .menu{
     margin-left: 20px;
@@ -27,6 +31,23 @@ section {
     width: 200px;
     border: 1px black solid;
     float: left;
+}
+
+.sbClassTable{
+border: black 1px solid;
+}
+
+.sbClassTh,.sbClassTd{
+border: black 1px solid;
+border-collapse: collapse;
+text-align: center;
+width: 180px;
+height: 50px;
+}
+
+.sbClassTh{
+background-color: skyblue;
+font-size: 20px;
 }
 
 </style>

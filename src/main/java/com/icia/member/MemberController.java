@@ -38,6 +38,12 @@ public class MemberController {
 
 	ModelAndView mav;
 
+	@RequestMapping(value = "/main", method = RequestMethod.GET)
+	public String main() {
+		logger.info("메인창으로 이동");
+		return "main";
+	}
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {
 		logger.info("메인창으로 이동");

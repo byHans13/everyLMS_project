@@ -15,12 +15,15 @@ aside {
 	/* background-color: blue; */
 	width: 300px;
 	float: left;
+	
 }
 
 section {
 	/* background-color: pink; */
 	width: 1000px;
 	float: left;
+	position: absolute;
+	transform:translate(180px,0px)
 }
 </style>
 </head>

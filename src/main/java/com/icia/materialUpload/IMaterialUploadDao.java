@@ -48,6 +48,10 @@ public interface IMaterialUploadDao {
 
 	boolean insertQuizMaterialUploadDetailProblemAjax(MaterialUpload mu);
 
+	MaterialUpload selectViewQuizMaterialUploadPageAjax(MaterialUpload mu);
+
+	int selectConum(MaterialUpload mu);
+
 
 
 

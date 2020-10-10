@@ -5,16 +5,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <title>H2K5 - 회원가입</title>
+<style>
+.data_table{
+border: 1px solid gray;
+}
+body{
+position: relative;
+}
+caption{
+display: none;
+}
+#container{
+transform:translate(320px,0px);
+position: absolute;
+}
+</style>
 </head>
 <body>
-	<header>
+	<div id="container">
+			<header>
 		<h1>
 			<a href="/h2k5every/"><img src="upload/h2k5_mainLogo.PNG" id="mainlogo" width="200"></a>
 			<a href="gomemberjoinpage" style="text-decoration: none;">회원가입</a>
@@ -511,7 +524,7 @@
 				</tbody>
 			</table>
 			<p class="agree_desc">
-				* EBS인터넷 서비스 제공을 위하여 필요한 최소한의 개인정보이므로 동의를 해주셔야 서비스를 이용하실 수 있습니다.<br />
+				* H2K5 인터넷 서비스 제공을 위하여 필요한 최소한의 개인정보이므로 동의를 해주셔야 서비스를 이용하실 수 있습니다.<br />
 				* 이 외 서비스 이용과정에서 별도 동의를 통해 추가정보 수집이 있을 수 있습니다.
 			</p>
 			<p class="agreement">
@@ -550,21 +563,23 @@
 		</p>
 		
 		<div class="btn_area">
-			<button type="submit" class="cssbtn big on" id="confirmButton" >
-				<span>확인</span>
-			</button>
+			<input type="button" class="cssbtn big on" id="confirmButton" value="확인">
 		</div>
 		</form>
 	</div>
+	</div>
 </body>
-<style>
-.data_table{
-border: 1px solid gray;
-}
-
-caption{
-display: none;
-}
-
-</style>
+<script>
+	$("#confirmButton").click(function(){
+		if($("#agree1").prop("checked") == true && $("#agree2").prop("checked") == true){
+			$("#confirmButton").prop("type", "submit");
+		} else {
+			console.log($("#agree1").prop("checked"));
+			console.log($("#agree2").prop("checked"));
+			alert("필수 항목을 체크해주세요.");
+			location.href="#";
+		}
+	});
+	
+</script>
 </html>
