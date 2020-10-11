@@ -894,7 +894,7 @@ td {
 	function insertClassHomeworkPage(hwList){
 		console.log(hwList);
 		console.log(hwList.hw_idnum);
-		var str +="";
+		//var str +="";
 		var hwInsertPage = $('#classRight');
 		hwInsertPage.html("");
 		hwInsertPage.append("<div id='hwInsertDiv' style='width:500px; height:652px; margin:auto; text-align:left;'></div>");
