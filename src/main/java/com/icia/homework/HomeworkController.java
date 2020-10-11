@@ -52,7 +52,7 @@ public class HomeworkController {
 		
 	}
 	
-	@RequestMapping(value = "/prof/homeworkFiledown", method = RequestMethod.GET)
+	@RequestMapping(value = "/sutd/homeworkFiledown", method = RequestMethod.GET)
 	public void homeworkFiledown(String sysFileName, HttpServletResponse response) {
 	 hm.homeworkFiledown(sysFileName,response);
 

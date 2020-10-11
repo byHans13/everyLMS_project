@@ -11,7 +11,7 @@
 <sec:authorize access="hasRole('ROLE_STUD')">
 	<script src="../script/wsocket.js"></script>
 </sec:authorize>
-</sec:authorize>
+
 <style>
 header {
 	/* background-color: gray; */
