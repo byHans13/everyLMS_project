@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.Gson;
 import com.icia.adminMainPage.AdminMainPageMM;
 
 @RestController
@@ -20,7 +21,7 @@ public class IntroductionTeacherConfirmRestController {
 	public String insertYesConfirm(String mb_id, String ct_prof){
 		System.out.println(mb_id);
 		String json = itcfMm.insertYesConfirm(mb_id,ct_prof);
-		return json;
+		return new Gson().toJson(json);
 	}
 	@PostMapping	(value="selectlectureconfirm")
 	public List<IntroductionTeacherConfirmBean> selectLectureConfirm(){

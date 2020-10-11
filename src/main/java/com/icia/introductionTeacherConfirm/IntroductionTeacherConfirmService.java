@@ -84,9 +84,10 @@ public class IntroductionTeacherConfirmService {
 	
 	public String insertYesConfirm(String mb_id, String ct_prof) {
 		String json = null;
+		int cnt=0;
 		if(ct_prof != "") {
 			System.out.println("준비된 자이옵니다.");
-			//json = ampDao.insertYesConfirm(mb_id);
+			cnt = itcDao.insertYesConfirm(mb_id);
 			 itcDao.updateYesConfirm(mb_id);
 			 json = "성공ㅋㅋ";
 		}

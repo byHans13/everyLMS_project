@@ -23,6 +23,8 @@ public interface IIntroductionTeacherConfirmDao {
 
 	List<IntroductionTeacherConfirmBean> selectLectureData(@Param("cl_idnum")String cl_idnum, @Param("co_lv")String co_lv);
 	
+	@Insert("INSERT INTO at (AT_ID,AT_AT,AT_DATE) VALUES(#{mb_id},'ROLE_PROF', default)")
+	int insertYesConfirm(String mb_id);
 
 	List<IntroductionTeacherConfirmBean> selectLectureConfirmYes(@Param("cl_idnum")String cl_idnum, @Param("co_lv")String co_lv);
 	@Update("UPDATE class SET cl_ct=2 WHERE cl_idnum=#{cl_idnum} and cl_lv=#{co_lv}")
