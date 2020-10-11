@@ -105,8 +105,11 @@ public class LectureQuizController {
 		String a= lq.getTfb_feedback().replaceAll("\r\n","<br/>");
 		System.out.println(a);
 		String b= a.replaceAll(" ","&nbsp;");
+		String c= a.replaceAll("&lt;br/&gt;","<br/>");
+		
+		System.out.println(c);
 		System.out.println(b);
-		lq.setTfb_feedback(b);
+		lq.setTfb_feedback(c);
 		
 		mav = lm.studentCommentInsert(lq, attr);
 		
@@ -124,8 +127,11 @@ public class LectureQuizController {
 		System.out.println(lq.getCl_idnum());
 		System.out.println(lq.getTfb_feedback());
 		String a= lq.getCo_name().replaceAll(",", " ");
+		String b= lq.getTfb_feedback().replaceAll("&lt;br/&gt;","<br/>");
+		lq.setTfb_feedback(b);
 		lq.setCo_name(a);
 		System.out.println(lq.getCo_name());
+		System.out.println(lq.getTfb_feedback());
 		
 		mav = lm.goStudentCommentSeePage(lq);
 		

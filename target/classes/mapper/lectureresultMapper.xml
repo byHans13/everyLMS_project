@@ -21,27 +21,27 @@
  	
  	<select id="allSelectLectureResult" parameterType="String" resultType="LectureResult">
  		SELECT *
-		FROM(SELECT cl_idnum, cl_clname, Co_name, co_num, co_lv, COUNT(gr_id) as gr_id, cl_id, gr_kind
-        		FROM  ${from}
+		FROM(SELECT cl_idnum, cl_clname, Co_name, cl_lcnum, co_lv, COUNT(gr_id) as gr_id, cl_id, gr_kind
+        		FROM lectureQuiz
         		where gr_kind=#{box1} and cl_id=#{id}
-        		group by cl_idnum, cl_clname, Co_name, co_num, co_lv, cl_id, gr_kind) 
+        		group by cl_idnum, cl_clname, Co_name, cl_lcnum, co_lv, cl_id, gr_kind) 
 		WHERE cl_clname LIKE '%${cont}%' OR Co_name LIKE '%${cont}%'
 		ORDER BY cl_clname DESC
  	</select>
  	
  	<select id="classSelectLectureResult" parameterType="String" resultType="LectureResult">
- 		SELECT cl_idnum, cl_clname, co_name, co_num, co_lv, COUNT(gr_id) AS gr_id, cl_id, gr_kind
-        FROM  ${from}
+ 		SELECT cl_idnum, cl_clname, co_name, cl_lcnum, co_lv, COUNT(gr_id) AS gr_id, cl_id, gr_kind
+        FROM lectureQuiz
         where gr_kind=#{box1} and cl_id=#{id} and cl_clname LIKE '%${cont}%'
-        group by cl_idnum, cl_clname, co_name, co_num, co_lv, cl_id, gr_kind
+        group by cl_idnum, cl_clname, co_name, cl_lcnum, co_lv, cl_id, gr_kind
         ORDER BY cl_clname DESC
  	</select>
  	
  	<select id="courseSelectLectureResult" parameterType="String" resultType="LectureResult">
- 		SELECT cl_idnum, cl_clname, co_name, co_num, co_lv, COUNT(gr_id) AS gr_id, cl_id, gr_kind
-        FROM  ${from}
+ 		SELECT cl_idnum, cl_clname, co_name, cl_lcnum, co_lv, COUNT(gr_id) AS gr_id, cl_id, gr_kind
+        FROM lectureQuiz
         where gr_kind=#{box1} and cl_id=#{id} and Co_name LIKE '%${cont}%'
-        group by cl_idnum, cl_clname, co_name, co_num, co_lv, cl_id, gr_kind
+        group by cl_idnum, cl_clname, co_name, cl_lcnum, co_lv, cl_id, gr_kind
         ORDER BY cl_clname DESC
  	</select>
  	

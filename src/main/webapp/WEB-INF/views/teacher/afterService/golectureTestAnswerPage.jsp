@@ -57,7 +57,7 @@ td{
 	
 	<form id="frm">	
 		<div style="background-color: #B7F0B1; height: 80px; ">
-			<h2 style="float: left; margin-left: 10px;margin-top: 15px;">채점 및 정답률</h2>
+			<h2 style="float: left; margin-left: 10px;margin-top: 15px;">시험 및 퀴즈 정답률</h2>
 			<button style="float: right; margin-right: 20px; margin-top: 30px; height: 30px;" 
 					type="button" onclick="contSelect()">검색</button>
 			<input style="float: right; height: 30px; margin-top: 30px;" type="text" name="cont"/> 
@@ -66,13 +66,18 @@ td{
 				<option value="1">강의명</option>
 				<option value="2">강좌명</option>
 			</select>
+			<select style="float: right; height: 30px; margin-top: 30px;" name="box1">
+				<option value="T">시험</option>
+				<option value="Q">퀴즈</option>
+			</select>
 		</div>
 	</form>	
-		
+		<button type="button" onclick="testAnswer()">시험 정답률</button>
+		<button type="button" onclick="quizAnswer()">퀴즈 정답률</button>
 		<div style="height: 100px;"></div>
 		
-		<div id="selectbox">
-			
+		<div>
+			<p id="selectbox"></p><br>
 			<table id="selectTable">
 			</table>
 		</div>
@@ -83,8 +88,9 @@ td{
 	</footer>
 
 <script>
-$(document).ready
-(function() {
+
+function testAnswer() {
+	
 	$.ajax({
 		type:'post',
 		url:'rest/selectLectureTestAnswer',
@@ -99,6 +105,10 @@ $(document).ready
 		
 		success: function (json) {
 			console.log(json);
+			
+			$("#selectbox").html("<h2>시험 정답률</h2>");
+			
+			$("#selectTable").html("");
 			$("#selectTable").append("<tr>");
 			$("#selectTable").append("<th style='text-align: center;'>강의명</th>");
 			$("#selectTable").append("<th style='text-align: center;'>강좌명</th>");
@@ -127,6 +137,7 @@ $(document).ready
 						 				 "<input type='hidden' name='cl_id' value="+json[i].cl_id+">"+
 						 				 "<input type='hidden' name='cl_idnum' value="+json[i].cl_idnum+">"+
 						 				 "<input type='hidden' name='cl_lcnum' value="+json[i].co_num+">"+
+						 				 "<input type='hidden' name='cl_lcnum' value="+json[i].gr_kind+">"+
 						 				 "<input type='hidden' id='token' data-token-name='${_csrf.headerName}' name = '${_csrf.parameterName}' value='${_csrf.token}' />"+
 										 "<button>클릭</button><td></form>");
 				$("#selectTable").append("</tr>");
@@ -139,11 +150,72 @@ $(document).ready
 		
 	});
 	
-});
+}
+
+function quizAnswer() {
+	$.ajax({
+		type:'post',
+		url:'rest/selectLectureQuizAnswer',
+		datatype:'json',
+		beforeSend : function(xhr)
+		{
+			//이거 안하면 403 error
+			//데이터를 전송하기 전에 헤더에 csrf값을 설정한다
+			var $token = $("#token");
+			xhr.setRequestHeader($token.data("token-name"), $token.val());
+		},
+		
+		success: function (json) {
+			console.log(json);
+			
+			$("#selectbox").html("<h2>퀴즈 정답률</h2>");
+			
+			$("#selectTable").html("");
+			$("#selectTable").append("<tr>");
+			$("#selectTable").append("<th style='text-align: center;'>강의명</th>");
+			$("#selectTable").append("<th style='text-align: center;'>강좌명</th>");
+			$("#selectTable").append("<th style='text-align: center;'>회차</th>");
+			$("#selectTable").append("<th style='text-align: center;'>응시인원</th>");
+			$("#selectTable").append("<th style='text-align: center;'>강사 아이디</th>");
+			$("#selectTable").append("<th style='text-align: center;'>보러가기</th>");
+			$("#selectTable").append("</tr>");
+			
+			for(var i=0; i<json.length; i++){
+				
+				var cl_clname = json[i].cl_clname.replace(/ /gi,',');
+				var co_name = json[i].co_name.replace(/ /gi,',');
+				console.log(cl_clname);
+				console.log(co_name);
+				
+				$("#selectTable").append("<tr>");
+				$("#selectTable").append("<td>"+json[i].cl_clname+"</td>");
+				$("#selectTable").append("<td>"+json[i].co_name+"</td>");
+				$("#selectTable").append("<td>"+json[i].co_num+"</td>");
+				$("#selectTable").append("<td>"+json[i].gr_id1+"</td>");
+				$("#selectTable").append("<td>"+json[i].cl_id+"</td>");
+				$("#selectTable").append("<td><form action='golectureTestAnswerShowPage' method='post'>"+
+						 				 "<input type='hidden' name='cl_clname' value="+cl_clname+">"+
+						 				 "<input type='hidden' name='co_name' value="+co_name+">"+
+						 				 "<input type='hidden' name='cl_id' value="+json[i].cl_id+">"+
+						 				 "<input type='hidden' name='cl_idnum' value="+json[i].cl_idnum+">"+
+						 				 "<input type='hidden' name='cl_lcnum' value="+json[i].co_num+">"+
+						 				 "<input type='hidden' name='cl_lcnum' value="+json[i].gr_kind+">"+
+						 				 "<input type='hidden' id='token' data-token-name='${_csrf.headerName}' name = '${_csrf.parameterName}' value='${_csrf.token}' />"+
+										 "<button>클릭</button><td></form>");
+				$("#selectTable").append("</tr>");
+			
+			}
+		},
+		error: function (err) {
+			console.log(err);
+		}
+		
+	});
+}
+
 
 function contSelect() {
 	
-	 $("#selectTable").html("");
 	 	$.ajax({
 			type:'post',
 			url:'rest/selectboxLectureTestAnswer',
@@ -158,44 +230,99 @@ function contSelect() {
 			},
 			success: function (json) {
 				console.log(json);
-				$("#selectTable").append("<tr>");
-				$("#selectTable").append("<th style='text-align: center;'>강의명</th>");
-				$("#selectTable").append("<th style='text-align: center;'>강좌명</th>");
-				$("#selectTable").append("<th style='text-align: center;'>회차</th>");
-				$("#selectTable").append("<th style='text-align: center;'>응시인원</th>");
-				$("#selectTable").append("<th style='text-align: center;'>강사 아이디</th>");
-				$("#selectTable").append("<th style='text-align: center;'>보러가기</th>");
-				$("#selectTable").append("</tr>");
-				for(var i=0; i<json.length; i++){
-					
-					var cl_clname = json[i].cl_clname.replace(/ /gi,',');
-					var co_name = json[i].co_name.replace(/ /gi,',');
-					console.log(cl_clname);
-					console.log(co_name);
-					
-					$("#selectTable").append("<tr>");
-					$("#selectTable").append("<td>"+json[i].cl_clname+"</td>");
-					$("#selectTable").append("<td>"+json[i].co_name+"</td>");
-					$("#selectTable").append("<td>"+json[i].co_num+"</td>");
-					$("#selectTable").append("<td>"+json[i].gr_id1+"</td>");
-					$("#selectTable").append("<td>"+json[i].cl_id+"</td>");
-					$("#selectTable").append("<td><form action='golectureTestAnswerShowPage' method='post'>"+
-							 				 "<input type='hidden' name='cl_clname' value="+cl_clname+">"+
-							 				 "<input type='hidden' name='co_name' value="+co_name+">"+
-							 				 "<input type='hidden' name='cl_id' value="+json[i].cl_id+">"+
-							 				 "<input type='hidden' name='cl_idnum' value="+json[i].cl_idnum+">"+
-							 				 "<input type='hidden' name='cl_lcnum' value="+json[i].co_num+">"+
-							 				 "<input type='hidden' id='token' data-token-name='${_csrf.headerName}' name = '${_csrf.parameterName}' value='${_csrf.token}' />"+
-											 "<button>클릭</button><td></form>");
-					$("#selectTable").append("</tr>");
 				
+				if(json.length==0){
+					$("#selectbox").html("<h2>검색 결과가 없습니다.</h2>");
+					$("#selectTable").html("");
+					return
+				}
+
+				
+				else if(json[0].gr_kind=='T'){
+				
+					$("#selectbox").html("<h2>시험 정답률</h2>");
+					
+					$("#selectTable").html("");
+					$("#selectTable").append("<tr>");
+					$("#selectTable").append("<th style='text-align: center;'>강의명</th>");
+					$("#selectTable").append("<th style='text-align: center;'>강좌명</th>");
+					$("#selectTable").append("<th style='text-align: center;'>회차</th>");
+					$("#selectTable").append("<th style='text-align: center;'>응시인원</th>");
+					$("#selectTable").append("<th style='text-align: center;'>강사 아이디</th>");
+					$("#selectTable").append("<th style='text-align: center;'>보러가기</th>");
+					$("#selectTable").append("</tr>");
+					
+					for(var i=0; i<json.length; i++){
+						
+						var cl_clname = json[i].cl_clname.replace(/ /gi,',');
+						var co_name = json[i].co_name.replace(/ /gi,',');
+						console.log(cl_clname);
+						console.log(co_name);
+						
+						$("#selectTable").append("<tr>");
+						$("#selectTable").append("<td>"+json[i].cl_clname+"</td>");
+						$("#selectTable").append("<td>"+json[i].co_name+"</td>");
+						$("#selectTable").append("<td>"+json[i].co_num+"</td>");
+						$("#selectTable").append("<td>"+json[i].gr_id1+"</td>");
+						$("#selectTable").append("<td>"+json[i].cl_id+"</td>");
+						$("#selectTable").append("<td><form action='golectureTestAnswerShowPage' method='post'>"+
+								 				 "<input type='hidden' name='cl_clname' value="+cl_clname+">"+
+								 				 "<input type='hidden' name='co_name' value="+co_name+">"+
+								 				 "<input type='hidden' name='cl_id' value="+json[i].cl_id+">"+
+								 				 "<input type='hidden' name='cl_idnum' value="+json[i].cl_idnum+">"+
+								 				 "<input type='hidden' name='cl_lcnum' value="+json[i].co_num+">"+
+								 				 "<input type='hidden' name='cl_lcnum' value="+json[i].gr_kind+">"+
+								 				 "<input type='hidden' id='token' data-token-name='${_csrf.headerName}' name = '${_csrf.parameterName}' value='${_csrf.token}' />"+
+												 "<button>클릭</button><td></form>");
+						$("#selectTable").append("</tr>");
+						}
+				}
+				else{
+					$("#selectbox").html("<h2>퀴즈 정답률</h2>");
+					
+					$("#selectTable").html("");
+					$("#selectTable").append("<tr>");
+					$("#selectTable").append("<th style='text-align: center;'>강의명</th>");
+					$("#selectTable").append("<th style='text-align: center;'>강좌명</th>");
+					$("#selectTable").append("<th style='text-align: center;'>회차</th>");
+					$("#selectTable").append("<th style='text-align: center;'>응시인원</th>");
+					$("#selectTable").append("<th style='text-align: center;'>강사 아이디</th>");
+					$("#selectTable").append("<th style='text-align: center;'>보러가기</th>");
+					$("#selectTable").append("</tr>");
+					
+					for(var i=0; i<json.length; i++){
+						
+						var cl_clname = json[i].cl_clname.replace(/ /gi,',');
+						var co_name = json[i].co_name.replace(/ /gi,',');
+						console.log(cl_clname);
+						console.log(co_name);
+						
+						$("#selectTable").append("<tr>");
+						$("#selectTable").append("<td>"+json[i].cl_clname+"</td>");
+						$("#selectTable").append("<td>"+json[i].co_name+"</td>");
+						$("#selectTable").append("<td>"+json[i].co_num+"</td>");
+						$("#selectTable").append("<td>"+json[i].gr_id1+"</td>");
+						$("#selectTable").append("<td>"+json[i].cl_id+"</td>");
+						$("#selectTable").append("<td><form action='golectureTestAnswerShowPage' method='post'>"+
+								 				 "<input type='hidden' name='cl_clname' value="+cl_clname+">"+
+								 				 "<input type='hidden' name='co_name' value="+co_name+">"+
+								 				 "<input type='hidden' name='cl_id' value="+json[i].cl_id+">"+
+								 				 "<input type='hidden' name='cl_idnum' value="+json[i].cl_idnum+">"+
+								 				 "<input type='hidden' name='cl_lcnum' value="+json[i].co_num+">"+
+								 				 "<input type='hidden' name='cl_lcnum' value="+json[i].gr_kind+">"+
+								 				 "<input type='hidden' id='token' data-token-name='${_csrf.headerName}' name = '${_csrf.parameterName}' value='${_csrf.token}' />"+
+												 "<button>클릭</button><td></form>");
+						$("#selectTable").append("</tr>");
+					}
+					
+				}
+			},
+				
+				error: function (err) {
+					console.log(err);
 				}
 				
-			},
-			error: function (err) {
-				console.log(err);
-			}
-		}); 
+						});
 }
 </script>
 </body>

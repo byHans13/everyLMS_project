@@ -14,10 +14,12 @@
 google.load("visualization", "1", {packages:["corechart"]});
 google.setOnLoadCallback(drawChart);
 
-var avg = ${avg};
-
+var avg = '${avg}';
+var	avg1= avg.replace(/&quot;/gi, '"');
+	avg2= JSON.parse(avg1); 
+	
 function drawChart() {
-	  var data1 = google.visualization.arrayToDataTable(avg);
+	  var data1 = google.visualization.arrayToDataTable(avg2);
 	  var options1 = {  title: '반평균 통계 (단위: 점수)', height: 500, legend: { position: "none" } };
 	  var chart1 = new google.visualization.ColumnChart(document.querySelector("#avgPercentage"));
 		  chart1.draw(data1, options1);

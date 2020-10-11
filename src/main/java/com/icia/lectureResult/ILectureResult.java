@@ -11,13 +11,13 @@ public interface ILectureResult {
 	List<LectureResult> selectLectureResult(LectureResult lr);
 
 	List<LectureResult> allSelectLectureResult(@Param("id") String id, @Param("cont") String cont,
-											   @Param("box1") String box1);
+											   @Param("box1") String box1, @Param("from") String from);//from
 
 	List<LectureResult> classSelectLectureResult(@Param("id") String id, @Param("cont") String cont,
-												 @Param("box1") String box1);
+												 @Param("box1") String box1, @Param("from") String from);
 
 	List<LectureResult> courseSelectLectureResult(@Param("id") String id, @Param("cont") String cont,
-												  @Param("box1") String box1);
+												  @Param("box1") String box1, @Param("from") String from);
 
 	List<LectureResult> goLectureResultShowPage(LectureResult lr);
 

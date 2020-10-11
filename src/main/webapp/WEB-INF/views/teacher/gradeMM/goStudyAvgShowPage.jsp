@@ -112,9 +112,9 @@ var num=${num};
 		$("#clname").html(clname+" -평균");
 		
 		$("#selectTable").append("<tr>");
-		$("#selectTable").append("<th style='text-align: center;'>등수</th>");
 		$("#selectTable").append("<th style='text-align: center;'>강좌명</th>");
 		$("#selectTable").append("<th style='text-align: center;'>회차</th>");
+		$("#selectTable").append("<th style='text-align: center;'>등수</th>");
 		$("#selectTable").append("<th style='text-align: center;'>점수</th>");
 		$("#selectTable").append("<th style='text-align: center;'>학생아이디</th>");
 		$("#selectTable").append("</tr>");
@@ -132,7 +132,6 @@ function percentageBtn() {
 	var cnt1 =0;
 	var cnt2 =0;
 	var max =0;
-	
 	
  	for(var i=0; i<maxcnt;i++){
  		max += list[i].gr_score;
@@ -177,6 +176,7 @@ function percentageBtn() {
  	console.log(arr);
  	
  	var jsonStr =JSON.stringify(  arr[0] );
+ 	console.log(jsonStr);
  	
 	$.ajax({
 		type:'get',
