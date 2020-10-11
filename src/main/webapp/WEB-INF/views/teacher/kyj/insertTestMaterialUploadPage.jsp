@@ -39,15 +39,20 @@
 	</div>
 
 	<script>
-	var cnt = 0;
+	$.urlParam = function(name){
+	    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+	    return results[1] || 0;
+	}
+	var cnt = $.urlParam('pb_num');
 	var idnum = $("#idnum").val();
 	var lv = $("#lv").val();
+	console.log("문제번호 : " + cnt);
 	console.log("일련번호 : "+ $("#idnum").val());
 	console.log("레벨값 : " + $("#lv").val());
 	$(document).ready(function(){
 		var FormData = $('#insertTestMaterialUploadFrm').serialize();
 		$.ajax({
- 			url: 'rest/inserttestmaterialuploadfrmajax?cl_idnum='+idnum+'&cl_lv='+lv,
+ 			url: 'rest/inserttestmaterialuploadfrmajax?cl_idnum='+idnum+'&cl_lv='+lv + '&pb_num='+(cnt+1),
 			type: 'post',
 			contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 			data : FormData,

@@ -10,6 +10,8 @@ public interface IMaterialUploadDao {
 	//시험문제
 	List<MaterialUpload> selectTestMaterialClassList(MaterialUpload mu);
 
+	int selectTestMaterialPbNumCount(MaterialUpload mu);
+
 	int selectTestMaterialCountList(MaterialUpload mu);
 	
 	List<MaterialUpload> insertTestMaterialUploadPage(MaterialUpload mu);
@@ -51,6 +53,7 @@ public interface IMaterialUploadDao {
 	MaterialUpload selectViewQuizMaterialUploadPageAjax(MaterialUpload mu);
 
 	int selectConum(MaterialUpload mu);
+
 
 
 

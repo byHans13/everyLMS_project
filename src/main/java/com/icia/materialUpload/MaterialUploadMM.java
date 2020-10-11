@@ -37,6 +37,7 @@ public class MaterialUploadMM {
 		System.out.println("selectTestMaterialClassList mu = " + mu);
 		muList = muDao.selectTestMaterialClassList(mu);
 		System.out.println("selectTestMaterialClassList muList = " + muList);
+		
 		StringBuilder sb = new StringBuilder();
 		if (muList != null) {
 			System.out.println("muList Cl_idnum = " + muList);
@@ -50,6 +51,8 @@ public class MaterialUploadMM {
 				mu.setCl_idnum(muList.get(i).getCl_idnum());
 				mu.setCl_lv(muList.get(i).getCl_lv());
 				int cnt;
+				int pbCnt;
+				pbCnt = muDao.selectTestMaterialPbNumCount(mu);
 				cnt = muDao.selectTestMaterialCountList(mu);
 				System.out.println("selectTestMaterialClassList cntList = " + cnt);
 				sb.append("<tr class='sbClassTr'>");
@@ -60,7 +63,7 @@ public class MaterialUploadMM {
 				sb.append("<td class='sbClassTd'>" + muList.get(i).getCl_id() + "</td>");
 				sb.append("<td class='sbClassTd'>"
 						+ "<input type='button' value='문제 작성' onclick=location.href='inserttestmaterialuploadpage?cl_idnum="
-						+ muList.get(i).getCl_idnum() + "&cl_lv=" + muList.get(i).getCl_lv() + "'><br>"
+						+ muList.get(i).getCl_idnum() + "&cl_lv=" + muList.get(i).getCl_lv() + "&pb_num=" + pbCnt + "'><br>"
 						+ "<input type='button' value='문제 확인' onclick=location.href='selecttestmaterialuploadlistpage?cl_idnum="
 						+ muList.get(i).getCl_idnum() + "&cl_lv=" + muList.get(i).getCl_lv() + "'></td></tr>");
 			}

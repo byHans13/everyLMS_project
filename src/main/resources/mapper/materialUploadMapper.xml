@@ -15,6 +15,10 @@
 		SELECT * FROM CLASS WHERE CL_ID = #{cl_id} AND Cl_CT = 2
 	</select>
 	
+	<select id="selectTestMaterialPbNumCount" parameterType="materialUpload" resultType="materialUpload">
+		SELECT COUNT(*) FROM PROBLEM WHERE PB_IDNUM = #{cl_idnum} AND PB_LV = #{cl_lv} AND pb_num = 0;
+	</select>
+	
 	<select id="selectTestMaterialCountList" parameterType="materialUpload" resultType="int">
 		SELECT COUNT(*) FROM ADMIAPPLICATION WHERE AA_IDNUM = #{cl_idnum} AND AA_LV = #{cl_lv}
 	</select>

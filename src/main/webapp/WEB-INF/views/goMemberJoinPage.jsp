@@ -11,6 +11,21 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<style>
+.data_table{
+border: 1px solid gray;
+}
+body{
+position: relative;
+}
+caption{
+display: none;
+}
+#container{
+transform:translate(320px,0px);
+position: absolute;
+}
+</style>
 <title>H2K5 - 회원가입</title>
 </head>
 <body>
