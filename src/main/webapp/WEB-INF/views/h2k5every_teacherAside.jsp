@@ -81,10 +81,10 @@ input[class*='myClassCheckbox']+label{
             <input type='checkbox' class='myClassCheckbox'name='asideMenu' id='myGradeManagement'
             onclick = "checkboxChecked2(2)">
             <label for='myGradeManagement'>성적 관리</label>
-               <div>
+              <div>
                 <div><p><a href='goStudyAvgPage'>강의 반평균</a></p></div>
                 <div><p><a href='goLectureResultPage'>강의 성적 관리</a></p></div>
-                <div><p><a href='#'>강의 피드백</a></p></div>     
+                <div><p><a href='goGradePercentagePage'>성적 백분율</a></p></div>
                </div>
             <input type='checkbox' class='myClassCheckbox' name='asideMenu' id='myAfterManagement'
             onclick = "checkboxChecked2(3)">
