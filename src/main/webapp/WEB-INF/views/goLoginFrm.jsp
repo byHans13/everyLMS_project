@@ -44,7 +44,6 @@ fieldset{
 <script>
  $(document).ready
 (function() {
-	
 	console.log('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal}');
 	console.log('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.authorities}');
 	//var aut =JSON.parse("${sessionScope.SPRING_SECURITY_CONTEXT.authentication.authorities}");
