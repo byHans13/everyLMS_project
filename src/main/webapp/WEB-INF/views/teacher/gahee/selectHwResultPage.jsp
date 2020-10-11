@@ -30,7 +30,7 @@ $('#stId').text(hwResultList[0].hw_id);
 $('#stNum').text(hwResultList[0].hw_num);
 $('#stDate').text(hwResultList[0].hw_date);
 $('#stName').text(hwResultList[0].hw_hwname);
-$('#stFl').html("<a href='homeworkFiledown?sysFileName="+hwResultList[0].fbList[0].fl_sysname+"'>"+hwResultList[0].fbList[0].fl_oriname+"다운로드</a>");
+$('#stFl').html("<a href='/h2k5every/stud/homeworkFiledown?sysFileName="+hwResultList[0].fbList[0].fl_sysname+"'>"+hwResultList[0].fbList[0].fl_oriname+"다운로드</a>");
 switch (hwResultList[0].hw_psfa) {
 case "P" :
 	$('#stResult').html("PASS    <button type='button' id='reBnt' value='pass'>수정하기</button>");
