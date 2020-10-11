@@ -52,12 +52,15 @@ public class HomeworkController {
 		
 	}
 	
-	@RequestMapping(value = "/prof/homeworkFiledown", method = RequestMethod.GET)
+	@RequestMapping(value = "/stud/homeworkFiledown")
 	public void homeworkFiledown(String sysFileName, HttpServletResponse response) {
 	 hm.homeworkFiledown(sysFileName,response);
 
 	}
-	@RequestMapping(value = "/prof/selectHwResultPage", method = RequestMethod.GET)
+	
+	
+	
+	@RequestMapping(value = "/prof/selectHwResultPage")
 	public ModelAndView selectHwResult(HomeworkBean hwb) {
 		ModelAndView mav = new ModelAndView();
 		mav = hm.selectHwResult(hwb);
