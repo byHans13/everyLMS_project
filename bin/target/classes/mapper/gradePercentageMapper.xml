@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.icia.goGradePercentagePage.IgradePercentage">
+ 	<select id="goGradePercentagePage" parameterType="String" resultType="GradePercentage">
+ 		SELECT cl_idnum, cl_clname, Co_name, co_num, co_lv, COUNT(gr_id) AS gr_id, cl_id
+		FROM lectureQuiz1
+		WHERE cl_id=#{id}
+		GROUP BY cl_idnum, cl_clname, Co_name, co_num, co_lv, cl_id
+ 	</select>
+ 	
+ 	<select id="goGradePercentageShowPage" parameterType="GradePercentage" resultType="GradePercentage">
+ 		SELECT gr_idnum, co_name, gr_num, gr_id as gr_id1  
+ 		FROM studcntavg1 
+ 		where gr_idnum=#{cl_idnum} and co_name=#{co_name} and gr_num=#{co_num} 
+		ORDER BY gr_id
+ 	</select>
+ 	
+ 	<select id="testPbMaxNum" parameterType="GradePercentage" resultType="int">
+ 		select count(*) from problem 
+		where pb_id=#{cl_id} and pb_num=0 and pb_idnum=#{cl_idnum}
+ 	</select>
+ 	
+ 	<select id="teststudPbNum" parameterType="GradePercentage" resultType="int">
+ 		select count(*) from problem 
+		where pb_id=#{gr_id1} and pb_num=0 and pb_idnum=#{cl_idnum} and pb_answerchk=1
+ 	</select>
+ 	
+ 	<select id="quizPbMaxNum" parameterType="GradePercentage" resultType="int">
+	 	select count(*) from problem 
+		where pb_id=#{cl_id} and not pb_num=0 and pb_idnum=#{cl_idnum}
+ 	</select>
+ 	
+ 	<select id="quizStudPbNum" parameterType="GradePercentage" resultType="int">
+ 		select count(*) from problem 
+		where pb_id=#{gr_id1} and not pb_num=0 and pb_idnum=#{cl_idnum} and pb_answerchk=1
+ 	</select>
+ 	
+ 	<select id="homeworkMaxNum" parameterType="GradePercentage" resultType="int">
+ 		select count(*) from homework
+		where hw_id=#{cl_id} and hw_idnum=#{cl_idnum} and hw_psfa='0'
+ 	</select>
+ 	
+ 	<select id="homeworkStudNum" parameterType="GradePercentage" resultType="int">
+	 	select count(*) from homework
+		where hw_id=#{gr_id1} and hw_idnum=#{cl_idnum} and hw_psfa='p'
+ 	</select>
+ 	
+ 	<select id="classMaxRoundNum" parameterType="GradePercentage" resultType="int">
+ 		SELECT cl_lcnum FROM CLASS
+		where cl_id=#{cl_id} and cl_idnum=#{cl_idnum}
+ 	</select>
+ 	
+ 	<select id="studAttendanceNum" parameterType="GradePercentage" resultType="int">
+ 		select count(*) from attendance
+		where at_id=#{gr_id1} and at_idnum=#{cl_idnum} and at_atmk=1  
+ 	</select>
+ 	
+ 	<select id="selectRateclass" parameterType="GradePercentage" resultType="GradePercentage">
+ 		select rc_at,rc_hw,rc_qz,rc_test from RATECLASS
+		where RC_IDNUM=#{cl_idnum}
+ 	</select>
+ </mapper>
+ 
+ 
