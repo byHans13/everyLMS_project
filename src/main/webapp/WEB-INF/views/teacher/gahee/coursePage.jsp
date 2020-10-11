@@ -54,13 +54,13 @@
 								for(var j=1; j<(co_sum+1); j++){
 									for(var z=0; z<arr.length; z++){
 										if(arr[z]==j){
-											$('#selCo').append("<a href='selectCoursePage/"+co_idnum + "/"+arr[z] + "'>"+arr[z]+"의 강의보기</a><br>");
+											$('#selCo').append("<a href='selectCoursePage/"+co_idnum + "/"+arr[z] + "'>"+arr[z]+"의 강좌보기</a><br>");
 											num=arr[z];
 										}
 									}
 									if(num!=j){
 										number = 1;
-									$('#inCo').append("<a href='insertcoursePage/"+ co_idnum + "/" + j + "'>" + j + "의 강의쓰러가기</a><br>");
+									$('#inCo').append("<a href='insertcoursePage/"+ co_idnum + "/" + j + "'>" + j + "의 강좌쓰러가기</a><br>");
 									}
 								}
 								
@@ -69,7 +69,7 @@
 								$('#selCo').append("<p style='color: red;'>업로드한 강의가 없습니다.</p>");
 								for (i = 1; i < co_sum + 1; i++) {
 									number = 1;
-									$('#inCo').append("<a href='insertcoursePage/"+ co_idnum + "/" + i+ "'>" + i+ "의 강의쓰러가기</a><br>");
+									$('#inCo').append("<a href='insertcoursePage/"+ co_idnum + "/" + i+ "'>" + i+ "의 강좌쓰러가기</a><br>");
 								}
 							}
 							if (number == 0) {

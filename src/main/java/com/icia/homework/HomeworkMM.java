@@ -131,8 +131,21 @@ public class HomeworkMM {
 	}
 
 
-	public Integer updateStHw(String hw_idnum, String hw_num, String hw_id, String hw_psfa) {
-		Integer result = hd.updateStHw(hw_id, hw_idnum, hw_num, hw_psfa);
+	public boolean updateStHw(String hw_idnum, String hw_num, String hw_id, String hw_psfa, String hw_lv) {
+		Integer result1 = hd.updateStHw(hw_id, hw_idnum, hw_num, hw_psfa);
+		boolean result=false;
+		if(result1 !=0 ) {
+			HomeworkBean hb = new HomeworkBean();
+			hb.setGr_id(hw_id);
+			hb.setGr_idnum(hw_idnum);
+			hb.setGr_num(Integer.parseInt(hw_num));
+			hb.setGr_lv(Integer.parseInt(hw_lv));
+			if(hw_psfa.equals("p")) {
+				hb.setGr_score(100);
+			}
+			 result = hd.insertGr(hb);
+			 
+		}
 		return result;
 	}
 
