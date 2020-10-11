@@ -59,7 +59,7 @@ $('#reBnt').click(function() {
 			//document.getElementsByName('aa').values;
 		//console.log(pafa);
 		$.ajax({
-			url:'rest/updateStHw?id='+hwResultList[0].hw_id+'&num='+hwResultList[0].hw_num+'&pafa='+pafa+'&idnum='+hwResultList[0].hw_idnum,
+			url:'rest/updateStHw?id='+hwResultList[0].hw_id+'&num='+hwResultList[0].hw_num+'&pafa='+pafa+'&idnum='+hwResultList[0].hw_idnum+'&lv='+hwResultList[0].hw_lv,
 			type:'GET',
 			//async: false,
 			dataType: 'json',
@@ -73,7 +73,7 @@ $('#reBnt').click(function() {
 			success: function(result) {
 				console.log(result);
 				switch (result) {
-				case 1:
+				case true:
 					alert("수정되었습니다.");
 					//history.go(-1);
 					location.href='/h2k5every/prof/selectmanagercoursehomeworkpage/'+hwResultList[0].hw_idnum;

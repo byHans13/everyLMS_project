@@ -24,19 +24,16 @@ public class HomeworkBean {
 			
 			List<CourseFilesBean> fbList; 
 			
-			
-			
+
 			String gr_seqnum; 
 			String gr_idnum;
 			String gr_id;
 			Integer gr_num;
 			Integer gr_lv;
-			Integer gr_score;
+			Integer gr_score=0;
 			String gr_kind="H";
 			
-			
-			
-			
+
 		
 			   
 }

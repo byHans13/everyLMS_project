@@ -32,8 +32,8 @@ public class HomeworkRestController {
 	}
 		
 		@RequestMapping(value = "prof/rest/updateStHw")
-		public Integer updateStHw(@RequestParam(value = "idnum")String hw_idnum,@RequestParam(value = "num")String hw_num,@RequestParam(value = "id")String hw_id,@RequestParam(value = "pafa")String hw_psfa) {
-			Integer result = hm.updateStHw(hw_idnum, hw_num, hw_id, hw_psfa);
+		public boolean updateStHw(@RequestParam(value = "idnum")String hw_idnum,@RequestParam(value = "num")String hw_num,@RequestParam(value = "id")String hw_id,@RequestParam(value = "pafa")String hw_psfa,@RequestParam(value = "lv")String hw_lv) {
+			boolean result = hm.updateStHw(hw_idnum, hw_num, hw_id, hw_psfa,hw_lv);
 			System.out.println("result:   "+result);
 			return result;
 			
