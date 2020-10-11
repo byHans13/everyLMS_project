@@ -76,7 +76,7 @@ $('#reBnt').click(function() {
 				case 1:
 					alert("수정되었습니다.");
 					//history.go(-1);
-					location.href='/h2k5every/prof/selectmanagercoursehomeworkpage?co_idnum='+hwResultList[0].hw_idnum;
+					location.href='/h2k5every/prof/selectmanagercoursehomeworkpage/'+hwResultList[0].hw_idnum;
 					break;
 				default:
 					alert("수정과정에서 문제 발생");
