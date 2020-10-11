@@ -62,7 +62,7 @@ $(document).ready
 	console.log('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal}');
 	console.log('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.authorities}');
 	//var aut =JSON.parse("${sessionScope.SPRING_SECURITY_CONTEXT.authentication.authorities}");
-	var aut= "${aut}";
+	var aut= "${sessionScope.SPRING_SECURITY_CONTEXT.authentication.authorities}";
 	console.log(aut);
 	var n = aut.indexOf("ROLE_PROF");
 	console.log("권한체크",n);
