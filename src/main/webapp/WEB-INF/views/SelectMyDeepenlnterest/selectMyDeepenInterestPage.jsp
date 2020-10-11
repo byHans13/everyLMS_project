@@ -12,16 +12,16 @@
 	text-align: center;
 	top: 50%;
 	left: 50%;
-	transform: translate(-50%, -50%);
-	position: absolute;
+/* 	transform: translate(-50%, -50%);
+	position: absolute; */
 	padding: 5px 10px;
 }
 #search {
 	text-align: center;
 	top: 85%;
 	left: 50%;
-	transform: translate(-50%, -50%);
-	position: absolute;
+/* 	transform: translate(-50%, -50%);
+	position: absolute; */
 	padding: 5px 10px;
 }
 
@@ -29,14 +29,13 @@
 	text-align: center;
 	top: 85%;
 	left: 30%;
-	transform: translate(-50%, -50%);
-	position: absolute;
+/* 	transform: translate(-50%, -50%);
+	position: absolute; */
 	padding: 5px 10px;
 }
 
 header {
 	/* background-color: gray; */
-	
 }
 
 aside {
@@ -49,6 +48,8 @@ section {
 	/* background-color: pink; */
 	width: 1000px;
 	float: left;
+	position: absolute;
+	transform:translate(300px,0px)
 }
 
 #modal {
@@ -142,10 +143,9 @@ section {
                         <th width="150"><h2>${Clasc.gpa_gpa}</h2></th>
                      </c:when>
                   </c:choose>
-						<td align="center"><a href='goSelectTasterQuestion?cl_idnum=${Clasc.cl_idnum}'>맛보기 문제</a><a
-							href='goSelectClassReport?cl_idnum=${Clasc.cl_idnum}'>강의계획서</a></td>
-						<td><a href='#'
-							onclick="openBuyPage(${Clasc.cl_idnum} , ${Clasc.cl_lv})\">수강신청
+						<td align="center"><a href='goSelectTasterQuestion?cl_idnum=${Clasc.cl_idnum}'>맛보기 문제</a>
+						<a href='goSelectClassReport?cl_idnum=${Clasc.cl_idnum}'>강의계획서</a></td>
+						<td><a href='#'onclick="openBuyPage(${Clasc.cl_idnum} , ${Clasc.cl_lv})\">수강신청
 								하러가기</a></td>
 						<td><input type='hidden' value='${Clasc.cl_clname}'
 							id="searchval"></td>
@@ -288,7 +288,7 @@ $("#modal").find('#bg_modal').on('mousedown',function(evt){
 $(document).keydown(function(evt){
 	if(evt.keyCode !=27){
 		return;
-	}else if (modal.hasClass('open')){
+	}else if($("#modal").hasClass('open')){
 		$("#modal").removeClass('open');
 	}
 }); 

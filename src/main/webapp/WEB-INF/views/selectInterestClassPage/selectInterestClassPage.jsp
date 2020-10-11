@@ -12,8 +12,8 @@
 	text-align: center;
 	top: 50%;
 	left: 50%;
-	transform: translate(-50%, -50%);
-	position: absolute;
+/* 	transform: translate(-50%, -50%);
+	position: absolute; */
 	padding: 5px 10px;
     white-space:nowrap;
 }
@@ -21,8 +21,8 @@
 	text-align: center;
 	top: 85%;
 	left: 50%;
-	transform: translate(-50%, -50%);
-	position: absolute;
+/* 	transform: translate(-50%, -50%);
+	position: absolute; */
 	padding: 5px 10px;
 }
 
@@ -30,8 +30,8 @@
 	text-align: center;
 	top: 85%;
 	left: 30%;
-	transform: translate(-50%, -50%);
-	position: absolute;
+/* 	transform: translate(-50%, -50%);
+	position: absolute; */
 	padding: 5px 10px;
 }
 header {
@@ -48,6 +48,8 @@ section {
 	/* background-color: pink; */
 	width: 1000px;
 	float: left;
+		position: absolute;
+	transform:translate(300px,0px);
 }
 
 #modal {

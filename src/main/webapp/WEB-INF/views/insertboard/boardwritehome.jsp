@@ -29,6 +29,10 @@ textarea {
 	/* background-color: gray; */
 }
 
+header {
+	/* background-color: gray; */
+}
+
 aside {
 	/* background-color: blue; */
 	width: 300px;
@@ -39,6 +43,8 @@ section {
 	/* background-color: pink; */
 	width: 1000px;
 	float: left;
+	position: absolute;
+	transform:translate(300px,0px)
 }
 </style>
 <script

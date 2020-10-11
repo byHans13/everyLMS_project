@@ -14,8 +14,8 @@
    text-align: center;
    top: 30%;
    left: 50%;
-   transform: translate(-50%, -50%);
-   position: absolute;
+/*    transform: translate(-50%, -50%);
+   position: absolute; */
    padding: 5px 10px;
 }
 
@@ -23,8 +23,8 @@
    text-align: center;
    top: 70%;
    left: 70%;
-   transform: translate(-50%, -50%);
-   position: absolute;
+/*    transform: translate(-50%, -50%);
+   position: absolute; */
    padding: 5px 10px;
 }
 
@@ -32,8 +32,8 @@
    text-align: center;
    top: 70%;
    left: 50%;
-   transform: translate(-50%, -50%);
-   position: absolute;
+/*    transform: translate(-50%, -50%);
+   position: absolute; */
    padding: 5px 10px;
 }
 
@@ -41,29 +41,35 @@
    text-align: center;
    top: 70%;
    left: 30%;
-   transform: translate(-50%, -50%);
-   position: absolute;
+/*    transform: translate(-50%, -50%);
+   position: absolute; */
    padding: 5px 10px;
 }
 header {
    /* background-color: gray; */
 }
 
+header {
+	/* background-color: gray; */
+}
+
 aside {
-   /* background-color: blue; */
-   width: 300px;
-   float: left;
+	/* background-color: blue; */
+	width: 300px;
+	float: left;
 }
 
 section {
-   /* background-color: pink; */
-   width: 1000px;
-   float: left;
+	/* background-color: pink; */
+	width: 1000px;
+	float: left;
+	position: absolute;
+	transform:translate(300px,0px)
 }
 </style>
 <body>
 <header>
-      <jsp:include page="../h2k5every_header.jsp" /><!-- 동적인 방식 -->
+      <jsp:include page="../h2k5every_loginHeader.jsp" /><!-- 동적인 방식 -->
    </header>
    <aside>
       <jsp:include page="../h2k5every_aside.jsp" />

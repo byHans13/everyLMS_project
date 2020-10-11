@@ -14,16 +14,16 @@ aside {
 	/* background-color: blue; */
 	width: 300px;
 	float: left;
-	/* position: absolute;
-	transform :translate(0px, 230px;) */
+	position: absolute;
+	transform :translate(0px, 230px;)
 }
 
 section {
 	/* background-color: pink; */
 	width: 1000px;
 	float: left;
-	/* position: absolute;
-	transform:translate(300px,0px); */
+	position: absolute;
+	transform:translate(300px,0px); 
 }
 .menu{
     margin-left: 20px;

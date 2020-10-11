@@ -14,16 +14,16 @@
 	text-align: center;
 	top: 30%;
 	left: 50%;
-	transform: translate(-50%, -50%);
-	position: absolute;
+/* 	transform: translate(-50%, -50%);
+	position: absolute; */
 	padding: 5px 10px;
 }
 
 #memoobj {
 	top: 55%;
 	left: 50%;
-	transform: translate(-50%, -50%);
-	position: absolute;
+/* 	transform: translate(-50%, -50%);
+	position: absolute; */
 	padding: 5px 10px;
 	border-style: solid
 }
@@ -31,10 +31,14 @@
 #updatemymemo {
 	top: 90%;
 	left: 75%;
-	transform: translate(-50%, -50%);
-	position: absolute;
+	/* transform: translate(-50%, -50%);
+	position: absolute; */
 	padding: 5px 10px;
 }
+header {
+	/* background-color: gray; */
+}
+
 header {
 	/* background-color: gray; */
 }
@@ -49,11 +53,13 @@ section {
 	/* background-color: pink; */
 	width: 1000px;
 	float: left;
+	position: absolute;
+	transform:translate(300px,0px)
 }
 </style>
 <body>
 <header>
-		<jsp:include page="../h2k5every_header.jsp" /><!-- 동적인 방식 -->
+		<jsp:include page="../h2k5every_loginHeader.jsp" /><!-- 동적인 방식 -->
 	</header>
 	<aside>
 		<jsp:include page="../h2k5every_aside.jsp" />
