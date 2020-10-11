@@ -5,33 +5,45 @@
  <mapper namespace="com.icia.lectureTestAnswer.ILectureTestAnswer">
  	
  	<select id="selectLectureTestAnswer" parameterType="String" resultType="LectureTestAnswer">
- 		SELECT cl_idnum, cl_clname, co_name, co_num, co_lv, COUNT(gr_id) AS gr_id1, cl_id
+ 		SELECT cl_idnum, cl_clname, co_name, co_num, co_lv, COUNT(gr_id) AS gr_id1, cl_id, gr_kind
 		FROM lectureQuiz1
 		where gr_kind='T' and cl_id=#{id}
-		group by cl_idnum, cl_clname, co_name, co_num, co_lv, cl_id
+		group by cl_idnum, cl_clname, co_name, co_num, co_lv, cl_id, gr_kind
+		ORDER BY cl_clname DESC
+ 	</select>
+ 	
+ 	<select id="selectLectureQuizAnswer" parameterType="String" resultType="LectureTestAnswer">
+ 	 	SELECT cl_idnum, cl_clname, co_name, co_num, co_lv, COUNT(gr_id) AS gr_id1, cl_id, gr_kind
+		FROM lectureQuiz
+		where gr_kind='Q' and cl_id=#{id}
+		group by cl_idnum, cl_clname, co_name, co_num, co_lv, cl_id, gr_kind
+		ORDER BY cl_clname DESC
  	</select>
  	
  	<select id="allSelectLectureTestAnswer" parameterType="String" resultType="LectureTestAnswer">
  		SELECT *
-		FROM(SELECT cl_idnum, cl_clname, co_name, co_num, co_lv, COUNT(gr_id) AS gr_id1, cl_id
-			FROM lectureQuiz1
-			where gr_kind='T' and cl_id=#{id}
-			group by cl_idnum, cl_clname, co_name, co_num, co_lv, cl_id) 
+		FROM(SELECT cl_idnum, cl_clname, co_name, co_num, co_lv, COUNT(gr_id) AS gr_id1, cl_id, gr_kind
+			FROM  ${from}
+			where cl_id=#{id}
+			group by cl_idnum, cl_clname, co_name, co_num, co_lv, cl_id, gr_kind) 
 		WHERE cl_clname LIKE '%${cont}%' OR Co_name LIKE '%${cont}%'
+		ORDER BY cl_clname DESC
  	</select>
  	
  		<select id="classSelectLectureTestAnswer" parameterType="String" resultType="LectureTestAnswer">
-		SELECT cl_idnum, cl_clname, co_name, co_num, co_lv, COUNT(gr_id) AS gr_id1, cl_id
-        FROM lectureQuiz1
-        where gr_kind='T' and cl_id=#{id} and cl_clname LIKE '%${cont}%'
-        group by cl_idnum, cl_clname, co_name, co_num, co_lv, cl_id
+		SELECT cl_idnum, cl_clname, co_name, co_num, co_lv, COUNT(gr_id) AS gr_id1, cl_id, gr_kind
+        FROM  ${from}
+        where cl_id=#{id} and cl_clname LIKE '%${cont}%'
+        group by cl_idnum, cl_clname, co_name, co_num, co_lv, cl_id, gr_kind
+        ORDER BY cl_clname DESC
 	</select>
 	
 	<select id="courseSelectLectureTestAnswer" parameterType="String" resultType="LectureTestAnswer">
-		SELECT cl_idnum, cl_clname, co_name, co_num, co_lv, COUNT(gr_id) AS gr_id1, cl_id
-        FROM lectureQuiz1
-        where gr_kind='T' and cl_id=#{id} and Co_name LIKE '%${cont}%'
-        group by cl_idnum, cl_clname, co_name, co_num, co_lv, cl_id
+		SELECT cl_idnum, cl_clname, co_name, co_num, co_lv, COUNT(gr_id) AS gr_id1, cl_id, gr_kind
+        FROM  ${from}
+        where cl_id=#{id} and Co_name LIKE '%${cont}%'
+        group by cl_idnum, cl_clname, co_name, co_num, co_lv, cl_id, gr_kind
+        ORDER BY cl_clname DESC
 	</select>
  	
  	<select id="selectlectureTestAnswerShow" parameterType="LectureTestAnswer" resultType="LectureTestAnswer">
