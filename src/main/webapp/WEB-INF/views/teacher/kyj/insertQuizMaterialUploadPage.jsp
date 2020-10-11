@@ -44,10 +44,12 @@
 	    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
 	    return results[1] || 0;
 	}
-	var cnt = 0;
+	var cnt = Number($.urlParam('pb_num'));
+	//var cnt = 0;
 	var idnum = $("#idnum").val();
 	var lv = $("#lv").val();
 	var conum = $.urlParam('co_num');
+	console.log("문제번호 : " + cnt);
 	console.log("일련번호 : "+ $("#idnum").val());
 	console.log("레벨값 : " + $("#lv").val());
 	console.log("conum = "+conum);

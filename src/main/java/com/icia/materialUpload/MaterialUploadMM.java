@@ -51,10 +51,12 @@ public class MaterialUploadMM {
 				mu.setCl_idnum(muList.get(i).getCl_idnum());
 				mu.setCl_lv(muList.get(i).getCl_lv());
 				int cnt;
-				int pbCnt;
-				pbCnt = muDao.selectTestMaterialPbNumCount(mu);
 				cnt = muDao.selectTestMaterialCountList(mu);
 				System.out.println("selectTestMaterialClassList cntList = " + cnt);
+				int pbCnt;
+				pbCnt = muDao.selectTestMaterialPbNumCount(mu);
+				muList.get(i).setPb_num(pbCnt);
+				System.out.println("selectTestMaterialClassList pbNum = " + muList.get(i).getPb_num());
 				sb.append("<tr class='sbClassTr'>");
 				sb.append("<td class='sbClassTd'>" + muList.get(i).getCl_idnum() + "</td>");
 				sb.append("<td class='sbClassTd'>" + muList.get(i).getCl_clname() + "</td>");
@@ -63,7 +65,7 @@ public class MaterialUploadMM {
 				sb.append("<td class='sbClassTd'>" + muList.get(i).getCl_id() + "</td>");
 				sb.append("<td class='sbClassTd'>"
 						+ "<input type='button' value='문제 작성' onclick=location.href='inserttestmaterialuploadpage?cl_idnum="
-						+ muList.get(i).getCl_idnum() + "&cl_lv=" + muList.get(i).getCl_lv() + "&pb_num=" + pbCnt + "'><br>"
+						+ muList.get(i).getCl_idnum() + "&cl_lv=" + muList.get(i).getCl_lv() + "&pb_num=" + muList.get(i).getPb_num() + "'><br>"
 						+ "<input type='button' value='문제 확인' onclick=location.href='selecttestmaterialuploadlistpage?cl_idnum="
 						+ muList.get(i).getCl_idnum() + "&cl_lv=" + muList.get(i).getCl_lv() + "'></td></tr>");
 			}
@@ -323,7 +325,7 @@ public class MaterialUploadMM {
 		if (muList != null) {
 			System.out.println("muList Cl_idnum = " + muList);
 			sb.append("<table class='sbClassTable'>" + "<tr class='sbClassTr'>" + "<th class='sbClassTh'>NO.</th>"
-					+ "<th class='sbClassTh'>강의명</th>" + "<th class='sbClassTh'>회차</th>"
+					+ "<th class='sbClassTh'>강의명</th>" + "<th class='sbClassTh'>총회차</th>"
 					+ "<th class='sbClassTh'>학생수</th>" + "<th class='sbClassTh'>교수명</th>"
 					+ "<th class='sbClassTh'>퀴즈작성</th>" + "</tr>");
 			for (int i = 0; i < muList.size(); i++) {
@@ -377,8 +379,13 @@ public class MaterialUploadMM {
 			for (int i = 1; i < muList.size(); i++) {
 				mu.setCl_idnum(muList.get(i).getCl_idnum());
 				mu.setCl_lv(muList.get(i).getCl_lv());
+				mu.setCo_num(muList.get(i).getCo_num());
+				int pbCnt;
+				pbCnt = muDao.selectQuizMaterialPbNumCount(mu);
+				muList.get(i).setPb_num(pbCnt);
+				System.out.println("selectQuizMaterialClassList pbNum = " + muList.get(i).getPb_num());
 				sb.append("<tr class='sbClassTr'>");
-				sb.append("<td class='sbClassTd'>" + i + "</td>");
+				sb.append("<td class='sbClassTd'>" + muList.get(i).getCl_idnum() + "</td>");
 				sb.append("<td class='sbClassTd'>" + muList.get(i).getCl_clname() + "</td>");
 				sb.append("<td class='sbClassTd'>" + muList.get(i).getCo_num() + "</td>");
 				sb.append("<td class='sbClassTd'>" + muList.get(i).getCo_name() + "</td>");
@@ -388,14 +395,12 @@ public class MaterialUploadMM {
 				System.out.println("회차 : " + muList.get(i).getCo_num());
 				sb.append("<td class='sbClassTd'>" + "<input type='button' value='퀴즈 작성'"
 						+ "onclick=location.href='insertquizmaterialuploadpage?cl_idnum=" + muList.get(i).getCl_idnum()
-						+ "&cl_lv=" + muList.get(i).getCl_lv() + "&co_num=" + muList.get(i).getCo_num() + "'><br>"
+						+ "&cl_lv=" + muList.get(i).getCl_lv() + "&co_num=" + muList.get(i).getCo_num() + "&pb_num=" + muList.get(i).getPb_num() + "'><br>"
+						//+ "&cl_lv=" + muList.get(i).getCl_lv() + "&co_num=" + muList.get(i).getCo_num() + "'><br>"
 						+ "<input type='button' value='퀴즈 확인'"
 						+ "onclick=location.href='selectquizmaterialuploadlistpage?cl_idnum="
 						+ muList.get(i).getCl_idnum() + "&cl_lv=" + muList.get(i).getCl_lv() + "&co_num="
 						+ muList.get(i).getCo_num() + "'></td></tr>");
-//				sb.append("<td class='sbClassTd'>"
-//						+ "<input type='button' value='강좌 리스트 확인' onclick=location.href='selectquizmaterialcourselist?cl_idnum="
-//						+ muList.get(i).getCl_idnum() + "&cl_lv=" + muList.get(i).getCl_lv() + "'></td></tr>");
 			}
 			sb.append("</table>");
 			System.out.println("selectQuizMaterial clcoList SELECT 성공");
