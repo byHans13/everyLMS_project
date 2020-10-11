@@ -35,8 +35,8 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/work/springWork/RealProject_semi/jarFile/javaSDK-2.2.jar"/>
-	<classpathentry kind="lib" path="C:/work/springWork/RealProject_semi/jarFile/javaSDK-2.2-sources.jar"/>
-	<classpathentry kind="lib" path="C:/work/springWork/RealProject_semi/jarFile/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/realwork/everyLMS_project/jarFile/javaSDK-2.2.jar"/>
+	<classpathentry kind="lib" path="C:/realwork/everyLMS_project/jarFile/javaSDK-2.2-sources.jar"/>
+	<classpathentry kind="lib" path="C:/realwork/everyLMS_project/jarFile/json-simple-1.1.1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
