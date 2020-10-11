@@ -12,6 +12,20 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <title>H2K5 - 회원가입</title>
+<style>
+.data_table{
+border: 1px solid gray;
+}
+
+caption{
+display: none;
+}
+#contents_body{
+margin:auto;
+text-align: center;
+}
+
+</style>
 </head>
 <body>
 	<header>
@@ -19,14 +33,18 @@
 			<a href="/h2k5every/"><img src="upload/h2k5_mainLogo.PNG" id="mainlogo" width="200"></a>
 			<a href="gomemberjoinpage" style="text-decoration: none;">회원가입</a>
 		</h1>
-		<h1>창의적인 교육 H2K5 회원가입을 환영합니다.</h1>
-		<p>H2K5회원으로 가입하시면 H2K5가 제작한 강의 및 다양한 교육 콘텐츠 서비스를 제공 받으실 수 있습니다.</p>
+		<br>
+		<center><div style="color: blue;">
+			<h1>창의적인 교육 H2K5 회원가입을 환영합니다.</h1>
+			<p>H2K5회원으로 가입하시면 H2K5가 제작한 강의 및 다양한 교육 콘텐츠 서비스를 제공 받으실 수 있습니다.</p>
+		</div></center>
+	<hr>	
 	</header>
 	<div id="contents_body" class="contents step_agree_new lang_ko">
-	<form action="gomainjoinpage" method="post" class="frmbox" name="joinForm" id="joinForm">
+	<form action="gomainjoinpage" onsubmit="return validate();" method="post" class="frmbox" name="joinForm" id="joinForm">
 	<h2>이용약관 (필수)</h2>
 		    <input type="hidden" name = "${_csrf.parameterName}" value="${_csrf.token}" />
-		<div class="termsDiv" style="border:1px solid gray; overflow:auto; overflow-y:scroll; height:250px; width:1200px;">
+		<div class="termsDiv" style="border:1px solid gray; overflow:auto; overflow-y:scroll; height:250px; width:1200px; margin:auto;">
 			<h3> 제1장 총칙</h3><br/>
 			<font>제1조 (목적)</font><br/>
 			① 이 약관은 온라인강의컨텐츠(H2K5, 이하 "공사"라 합니다)가 제공하는 H2K5 온라인 서비스(이하 "서비스"라 합니다)를 이용함에 있어 공사와 이용자의 권리, 의무 및 책임사항을 규정함을 목적으로 합니다.<br/> 
@@ -484,7 +502,7 @@
 		<label for="agree1" class="st_label01"><i></i>약관을 충분히 이해하였으며 동의 합니다.</label>
 	</p>
 	<h2>개인정보 수집 및 이용에 대한 안내 (필수)</h2>
-		<table summary="개인정보 수집 및 이용 안내 테이블. 수집목적, 수집항목, 보유기간" class="data_table">
+		<table summary="개인정보 수집 및 이용 안내 테이블. 수집목적, 수집항목, 보유기간" class="data_table" style="margin:auto; width:1200px;">
 				<caption>개인정보 수집 및 이용에 대한 안내 (필수)</caption>
 				<colgroup>
 					<col width="33.3%" />
@@ -519,7 +537,7 @@
 				<label for="agree2" class="st_label01"><i></i>개인정보 수집 및 이용(필수)에 대한 안내를 이해하였으며 동의 합니다.</label>
 			</p>
 			<h2 class="next_tit">개인정보 수집 및 이용에 대한 안내 <span>(선택)</span></h2>
-		<table summary="개인정보 수집 및 이용 안내 테이블. 수집목적, 수집항목, 보유기간" class="data_table">
+		<table summary="개인정보 수집 및 이용 안내 테이블. 수집목적, 수집항목, 보유기간" class="data_table" style="margin:auto; width:1200px;">
 			<caption>개인정보 수집 및 이용에 대한 안내 (선택)</caption>
 			<colgroup>
 				<col width="33.3%" />
@@ -550,21 +568,35 @@
 		</p>
 		
 		<div class="btn_area">
-			<button type="submit" class="cssbtn big on" id="confirmButton" >
-				<span>확인</span>
-			</button>
+			<button type="button" onclick="allOn()" style="width: 150px;height: 50px; font-size: 20px;">전체 동의</button>
+			<button type="submit" class="cssbtn big on" id="confirmButton" style="width: 150px;height: 50px; font-size: 20px;">확인</button>
 		</div>
+			<br>
 		</form>
 	</div>
+<script>
+
+function validate() {
+	var agree1=document.getElementById("agree1");
+	var agree2=document.getElementById("agree2");
+	var agree3=document.getElementById("agree3");
+	
+	if(agree1.checked==false){
+		alert("필수 항목 체크해주세요.");
+		return false;
+	}
+	if(agree2.checked==false){
+		alert("필수 항목 체크해주세요.");
+		return false;
+	} 
+	
+}
+
+function allOn() {
+		agree1.checked=true;
+		agree2.checked=true;
+		agree3.checked=true;	
+}
+</script>
 </body>
-<style>
-.data_table{
-border: 1px solid gray;
-}
-
-caption{
-display: none;
-}
-
-</style>
 </html>
