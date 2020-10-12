@@ -873,7 +873,7 @@ public class ClassHomeService {
 		}
 		return buyMap;
 	}
-
+	@Transactional
 	public boolean insertBuyClass(ClassBean cb, HttpSession session) {
 		boolean result = false;
 		String sessionId = session.getAttribute("id").toString();
@@ -901,6 +901,7 @@ public class ClassHomeService {
 						System.out.println(cb);
 						if (cDao.insertClassAdmiApplication(cb) == true) {
 							System.out.println("insert AdmiApplication query success");
+							cDao.insertClassAtmkNumZero(cb);
 							result = true;
 						} else {
 							System.out.println("admi insert fail");
