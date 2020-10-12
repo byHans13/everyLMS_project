@@ -56,17 +56,5 @@ public interface IMaterialUploadDao {
 
 	int selectConum(MaterialUpload mu);
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> origin/kyj
-
-
-
-
-
-
-
 
 }
