@@ -245,6 +245,8 @@ public interface ClassHomeDao {
 
 		//ClassHome - Homework
 		List<HomeworkBean> selectClassHomeworkList(HomeworkBean hw);
+		@Select("SELECT * FROM hw WHERE hw_id=#{hw_id} AND hw_idnum=#{hw_idnum} AND hw_lv=#{hw_lv}")
+		List<HomeworkBean> selectClassMyHomeworkList(HomeworkBean hw);
 		@Insert("INSERT INTO hw(hw_hwname, hw_id, hw_num, hw_idnum, hw_lv, hw_date, hw_psfa) VALUES"
 				+ "(#{hw_hwname}, #{hw_id}, #{hw_num}, #{hw_idnum}, #{hw_lv}, sysdate, #{hw_psfa})")
 		boolean insertHwHomework(HomeworkBean hw);

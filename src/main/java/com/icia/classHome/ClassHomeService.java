@@ -1073,13 +1073,17 @@ public class ClassHomeService {
 		}
 	}
 
-	public List<HomeworkBean> selectClassHomeworkList(HomeworkBean hw, HttpSession session) {
+	public Map<String, Object> selectClassHomeworkList(HomeworkBean hw, HttpSession session) {
 		String sessionId = session.getAttribute("id").toString();
 		List<HomeworkBean> hwList;
+		List<HomeworkBean> myHwList;
+		Map<String, Object> hwMap = new HashMap<>();
 		hw.setHw_id(sessionId);
 		hwList = cDao.selectClassHomeworkList(hw);
-
-		return hwList;
+		myHwList = cDao.selectClassMyHomeworkList(hw);
+		hwMap.put("hw", hwList);
+		hwMap.put("myHw", myHwList);
+		return hwMap;
 	}
 
 	@Transactional

@@ -200,9 +200,9 @@ public class ClassHomeRestController {
 		return result;
 	}
 	@GetMapping(value="rest/selectClassHomeworkList")
-	public List<HomeworkBean> selectClassHomeworkList (HomeworkBean hw, HttpSession session){
-		List<HomeworkBean> hwList = cs.selectClassHomeworkList(hw, session);
-		return hwList;
+	public Map<String, Object> selectClassHomeworkList (HomeworkBean hw, HttpSession session){
+		Map<String, Object> hwMap = cs.selectClassHomeworkList(hw, session);
+		return hwMap;
 	}
 	@PostMapping(value="rest/insertHomework")
 	public boolean insertHomework(MultipartHttpServletRequest multi, HttpSession session) {

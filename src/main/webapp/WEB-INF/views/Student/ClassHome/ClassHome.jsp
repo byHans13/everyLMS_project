@@ -857,27 +857,37 @@ td {
 			dataType:'json',
 			success: function(json){
 				console.log(json);
-				if(Object.keys(json).length !=0){
-					for(var i=0; i<Object.keys(json).length; i++){
+				console.log(Object.keys(json["hw"]).length);
+				console.log(json["hw"][0].hw_idnum);
+				console.log(Object.keys(json["myHw"]).length);
+				if(Object.keys(json["hw"]).length !=0){
+					for(var i=0; i<Object.keys(json["hw"]).length; i++){
 						str ="";
 						str +="<tr>";
-						str +="<td>"+json[i].hw_num+"강</td>";
-						str +="<td>"+json[i].hw_hwname+"</td>";
-						str += "<td><a href='homeworkFiledown?sysFileName="+json[i].fbList[0].fl_sysname+"'>"
-								+json[i].fbList[0].fl_oriname+"</a></td>";
-						str +="<td>"+json[i].hw_date.substring(0,10)+"</td>";
-						var hwList = JSON.stringify(json[i]);
-						var submitDate = new Date(json[i].hw_date);
+						str +="<td>"+json["hw"][i].hw_num+"강</td>";
+						str +="<td>"+json["hw"][i].hw_hwname+"</td>";
+						str += "<td><a href='homeworkFiledown?sysFileName="+json["hw"][i].fbList[0].fl_sysname+"'>"
+								+json["hw"][i].fbList[0].fl_oriname+"</a></td>";
+						str +="<td>"+json["hw"][i].hw_date.substring(0,10)+"</td>";
+						var hwList = JSON.stringify(json["hw"][i]);
+						var submitDate = new Date(json["hw"][i].hw_date);
 						var today = new Date();
-						console.log(submitDate);
-						console.log(today);
-						console.log(today<=submitDate);
-						if(today <= submitDate){
-							str +="<td onclick='insertClassHomeworkPage("+hwList+")'><a href='#;'>submit</a></td>";
-							str +="<td>제출가능</td>";							
+						var CheckSubmit =0;
+						for(var j =0; j<Object.keys(json["myHw"]).length; j++){
+							if(json["hw"][i].hw_num == json["myHw"][j].hw_num)
+								CheckSubmit +=1;
+						}
+						if(CheckSubmit !=0){
+							str +="<td onclick=\"alert('이미 파일을 제출했습니다.')\">submit</td>";
+							str +="<td>제출완료</td>";
 						}else{
-							str +="<td onclick=\"alert('제출기한이 지났습니다.')\">submit</td>";
-							str +="<td>제출불가</td>";							
+							if(today <= submitDate){
+								str +="<td onclick='insertClassHomeworkPage("+hwList+")'><a href='#;'>submit</a></td>";
+								str +="<td>제출가능</td>";							
+							}else{
+								str +="<td onclick=\"alert('제출기한이 지났습니다.')\">submit</td>";
+								str +="<td>제출불가</td>";							
+							}							
 						}
 						str +="</tr>";
 						$('#hwTable').append(str);
@@ -923,8 +933,16 @@ td {
 				xhr.setRequestHeader($token.data("token-name"), $token.val());
 			},success: function(json){
 				console.log(json);
+				if(json==true){
+					alert("과제 제출에 성공했습니다.");
+					classHomeworkSubmit();
+				}else{
+					alert("과제 제출에 실패했습니다.");
+					classHomeworkSubmit();
+				}
 			},error: function(err){
-				console.log(err);
+				alert("error:: 과제 제출에 실패했습니다. 관리자에게 문의해주세요.");
+				classHomeworkSubmit();
 			} 
 		});//ajax ED		
 	};//function insertHomework END 
