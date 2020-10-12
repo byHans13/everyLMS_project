@@ -41,8 +41,9 @@ public class FileManager {
 	
 	@Autowired
 	private IClassUpDao cud;
-	
-	String fullpath = "C:/Users/gahee/Documents/project/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/everyLMS_project/";
+	 
+	String fullpath = "C:/realwork/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/everyLMS_gahee/";
+	//String fullpath = "C:/Users/gahee/Documents/project/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/everyLMS_project/";
 	//String fullpath = "C:/work/springWork/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/RealProject_semi/";
 	//String fullpath = "C:\\work\\springWork\\RealProject_semi\\src\\main\\webapp\\video";
 	
@@ -138,6 +139,7 @@ public boolean fileUpdate(MultipartHttpServletRequest multi, CourseFilesBean cfb
 
 //파일 다운로드
 	public void download(String fullpath, String sysFileName, HttpServletResponse resp) throws Exception {
+		//String root = multi.getSession().getServletContext().getRealPath("/");
 		fullpath =this.fullpath+"video/";
 		System.out.println("fullpath: "+ fullpath);
 		// 한글파일 깨짐 방지

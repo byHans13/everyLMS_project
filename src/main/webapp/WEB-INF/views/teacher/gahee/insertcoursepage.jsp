@@ -12,16 +12,67 @@
 <sec:authorize access="hasRole('ROLE_STUD')">
 	<script src="../script/wsocket.js"></script>
 </sec:authorize>
+<style>
+table.type07 {
+    border-collapse: collapse;
+    text-align: left;
+    line-height: 1.5;
+    border: 1px solid #ccc;
+    margin: 20px 10px;
+}
+table.type07 thead {
+    border-right: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    background: #e7708d;
+}
+table.type07 thead th {
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #fff;
+}
+table.type07 tbody th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    background: #fcf1f4;
+}
+table.type07 td {
+    width: 350px;
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+}
+</style>
 </head>
 <body>
 <h1 id="n"></h1>
 <form action="insertCourse?${_csrf.parameterName }=${_csrf.token}"  method="post" enctype="multipart/form-data" id="frm">
-<h3>제목</h3>
-<input type="text" placeholder="제목을 입력하세요" name="co_name" required="required"><br>
-<h3>강의 등록</h3>
-<input type="file" name="fileName" id="files"><br>
-<h3>내용</h3>
-<textarea cols="20" rows="30" name="co_cont" placeholder="내용을 입력하세요" style="width: 300px; height: 100px; overflow: auto;" required="required" wrap="hard"></textarea><br>
+
+<table class="type07">
+    <thead>
+    <tr>
+        <th id="n"></th>
+        <th>내용</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th>제목</th>
+        <td><input type="text" placeholder="제목을 입력하세요" name="co_name"style="border: solid 1px #fff;" required="required"></td>
+    </tr>
+    <tr>
+        <th>강좌 등록<br>(비디오등록)</th>
+        <td><input type="file" name="fileName" id="files" style="border: solid 1px #fff;" required="required"></td>
+    </tr>
+    <tr>
+        <th>내용</th>
+        <td><input type="text"  name="co_cont" placeholder="내용을 입력하세요" style="border: solid 1px #fff;" required="required"></td>
+    </tr>
+    </tbody>
+</table>
 <input type="hidden" name="co_idnum" id="a">
 <input type="hidden" name="co_num" id="b">
 <input type="hidden" name="fl_num" id="c">

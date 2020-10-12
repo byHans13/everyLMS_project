@@ -135,6 +135,7 @@ section {
 </head>
 
 <body>
+<header>
 		<jsp:include page="../../h2k5every_loginHeader.jsp" /><!-- 동적인 방식 -->
 	</header>
 	<aside>

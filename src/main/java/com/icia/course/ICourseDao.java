@@ -38,6 +38,10 @@ public interface ICourseDao {
 	@Select("SELECT * FROM FL WHERE FL_IDNUM=#{fl_idnum} AND FL_LV=#{fl_lv} AND FL_NUM=#{fl_num}")
 	List<CourseFilesBean> selectDelFile(CourseFilesBean cfb);
 
+	
+	@Select("SELECT CL_LCNUM FROM CL WHERE CL_IDNUM=#{co_idnum}")
+	int getlcnum(@Param("co_idnum")String co_idnum);
+
 
 	
 	

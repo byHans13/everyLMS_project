@@ -88,7 +88,7 @@ html, body {
    color: #767676;
    line-height: normal;
    white-space: normal;
-   overflow: scroll
+   /* overflow: scroll */
 }
 aside {
 	width: 300px;
@@ -105,6 +105,42 @@ section {
     border: 1px black solid;
     float: left;
 }
+
+table.type07 {
+    border-collapse: collapse;
+    text-align: left;
+    line-height: 1.5;
+    border: 1px solid #ccc;
+    margin: 20px 10px;
+}
+table.type07 thead {
+    border-right: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    background: #e7708d;
+}
+table.type07 thead th {
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #fff;
+}
+table.type07 tbody th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    background: #fcf1f4;
+}
+table.type07 td {
+    width: 350px;
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+}
+table.type07 a{text-decoration: none; 
+ color: #333333;}
+
 </style>
 </head>
 <body>
@@ -199,10 +235,15 @@ function articleView(clname, lv, title, cont, lcnum, idnum){
 	var clNumber = parseInt(lcnum);
 	console.log(clNumber);
 	   $('#articleView_layer').addClass('open'); //모달박스 나타남
-	         $('#contents_layer').html("<h1>강의명</h1>"+clname+"<h1>강의레벨</h1>"+lv+"<h1>제목</h1>"+title+"<h1>내용</h1><textarea style='width: 100px; height: 100px;'readonly>"+pc_cont+"</textarea><br>");
-		   	$('#contents_layer').append('<a href="coursePage/'+lv+'/'+idnum+'/'+lcnum+'"><h3 style="color: black;">나의 강의</h3></a>');
-		    $('#contents_layer').append("<a id='uppc' onclick=\"updateplan('"+clname+"','"+lv+"','"+title+"','"+cont+"','"+lcnum+"','"+idnum+"')\"><h3 style='color: black;'>강의 계획서 수정</h3></a>");	
+	       
+		   //	$('#contents_layer').append("<a href='coursePage/"+lv+"/"+idnum+"/"+lcnum+"'><h3 style="color: black;">나의 강의</h3></a>');
+		    //$('#contents_layer').append("<a id='uppc' onclick=\"updateplan('"+clname+"','"+lv+"','"+title+"','"+cont+"','"+lcnum+"','"+idnum+"')\"><h3 style='color: black;'>강의 계획서 수정</h3></a>");	
 		   // $('#contents_layer').append('<a><h3 style="color: black;">강의 계획서 삭제</h3></a>');	
+		    $('#contents_layer').html("<table class='type07'><thead><tr><th>타이틀</th><th>내용</th></tr></thead>"+
+		    		"<tbody><tr><th>강의명</th><td>"+clname+"</td></tr><tr><th>강의레벨</th><td>"+lv+"LV</td></tr>"+
+		    		"<tr><th>제목</th><td>"+title+"</td></tr><tr><th>내용</th><td>"+pc_cont+"</td></tr>"+
+		    		"<tr><th>MY강좌</th><td><a href='coursePage/"+lv+"/"+idnum+"/"+lcnum+"'>보기</a></td></tr>"+
+		    		"<tr><th>계획서 수정</th><td><a id='uppc' onclick=\"updateplan('"+clname+"','"+lv+"','"+title+"','"+cont+"','"+lcnum+"','"+idnum+"')\">수정</a></td></tr></tbody></table>");
 		    
 	}//end
 	

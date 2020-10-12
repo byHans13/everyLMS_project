@@ -1,5 +1,7 @@
 package com.icia.planClass;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.icia.classup.ClassUpBean;
 
 public interface IPlanClassDao {

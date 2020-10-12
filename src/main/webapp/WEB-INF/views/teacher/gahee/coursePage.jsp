@@ -12,22 +12,172 @@
 <sec:authorize access="hasRole('ROLE_STUD')">
 	<script src="../script/wsocket.js"></script>
 </sec:authorize>
+<style>
+table,th,td{
+border: 1px solid black;
+border-collapse: collapse;
+}
+
+html, body {
+   height: 100%;
+   margin: 0
+}
+
+#articleView_layer {
+   display: none;
+   position: fixed;
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%
+}
+
+#articleView_layer.open {
+   display: block;
+   color: red;
+}
+
+#articleView_layer #bg_layer {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background: #000;
+   opacity: .5;
+   filter: alpha(opacity = 50);
+   z-index: 100
+}
+
+#contents_layer {
+   position: absolute;
+   top: 40%;
+   left: 40%;
+   width: 400px;
+   height: 400px;
+   margin: -150px 0 0 -194px;
+   padding: 28px 28px 0 28px;
+   border: 2px solid #555;
+   background: #fff;
+   font-size: 12px;
+   z-index: 200;
+   color: #767676;
+   line-height: normal;
+   white-space: normal;
+   overflow: scroll
+}
+aside {
+	width: 300px;
+	float: left;
+}
+section {
+	width: 1000px;
+	float: left;
+}
+.menu{
+    margin-left: 20px;
+    text-align:center;
+    width: 200px;
+    border: 1px black solid;
+    float: left;
+}
+table.type10 {
+    border-collapse: collapse;
+    text-align: left;
+    line-height: 1.5;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    margin: 20px 10px;
+}
+table.type10 thead th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #fff;
+    background: #e7708d;
+    margin: 20px 10px;
+}
+table.type10 tbody th {
+    width: 150px;
+    padding: 10px;
+}
+table.type10 td {
+    width: 350px;
+    padding: 10px;
+    vertical-align: top;
+}
+table.type10 .even {
+    background: #fdf3f5;
+}
+</style>
 </head>
 <body>
-	<h1>강의</h1>
+<header style="width: 1500px;">
+		<jsp:include page="../../h2k5every_loginHeader.jsp" /><!-- 동적인 방식 -->
+	</header>
+	<aside>
+		<jsp:include page="../../h2k5every_teacherAside.jsp" />
+	</aside>
+	<section id="section" style="margin-left: 20px;">
+	<center><h1 style="color: #e7708d;">나의 강좌</h1>
 
-	<h2>업로드한 강의보기</h2>
-	<div id="selCo"></div>
-	<h2 id='goCo'>강의쓰러가기</h2>
-	<div id="inCo"></div>
+	<div id="selCo">
+	<table class="type10">
+    <thead>
+    <tr>
+        <th>강좌 회차</th>
+        <th>업로드 강좌</th>
+    </tr>
+    </thead>
+    <tbody> </tbody>
+</table>
+	</div>
+
+	<div id="inCo">
+		<table class="type10">
+    <thead>
+    <tr>
+        <th >강좌 회차</th>
+        <th>작성 할 강좌</th>
+    </tr>
+    </thead>
+    <tbody>
+   <!--  <tr>
+        <th>항목명</th>
+        <td>내용이 들어갑니다.</td>
+    </tr>
+    <tr>
+        <th class="even">항목명</th>
+        <td>내용이 들어갑니다.</td>
+    </tr>
+    <tr>
+        <th>항목명</th>
+        <td>내용이 들어갑니다.</td>
+    </tr> -->
+    </tbody>
+</table>
+	</div>
+	</center>
+	
+	
 	
 <input type="hidden" name = "${_csrf.parameterName}" value="${_csrf.token}" />
 <input type="hidden" id='token' data-token-name='${_csrf.headerName }' value='${_csrf.token }'/>
 
 	<p id='result' style="color: red"></p>
 	<div id='goHome'></div>
+	</section>
+	<footer>
+		<jsp:include page="../../h2k5every_footer.jsp" />
+	</footer>
 
 	<script>
+	var msg = "${msg}";
+	if(msg!=""){
+		alert(msg);
+	}
 		var co_idnum = "${co_idnum}";
 		var co_sumStr = "${co_lcnum}";
 		var co_sum = parseInt(co_sumStr);
@@ -57,25 +207,25 @@
 								for(var j=1; j<(co_sum+1); j++){
 									for(var z=0; z<arr.length; z++){
 										if(arr[z]==j){
-											$('#selCo').append("<a href='selectCoursePage/"+co_idnum + "/"+arr[z] + "'>"+arr[z]+"의 강좌보기</a><br>");
+											$('#selCo table tbody').append("<tr><th>"+arr[z]+"회차</th><td><a href='selectCoursePage/"+co_idnum + "/"+arr[z] + "'>확인하기</a></td></tr>");
 											num=arr[z];
 										}
 									}
 									if(num!=j){
 										number = 1;
-									$('#inCo').append("<a href='insertcoursePage/"+ co_idnum + "/" + j + "'>" + j + "의 강좌쓰러가기</a><br>");
+									$('#inCo table tbody').append("<tr><th>"+j+"회차</th><td><a href='insertcoursePage/"+ co_idnum + "/" + j + "'>강좌 작성</a></td></tr>");
 									}
 								}
 								
 							} 
 				 		if (myCourseNum.length == 0) {
+				 				$('#selco').empty();
 								$('#selCo').append("<p style='color: red;'>업로드한 강의가 없습니다.</p>");
 								for (i = 1; i < co_sum + 1; i++) {
 									number = 1;
-									$('#inCo').append("<a href='insertcoursePage/"+ co_idnum + "/" + i+ "'>" + i+ "의 강좌쓰러가기</a><br>");
+									$('#inCo table tbody').append("<tr><th>"+i+"회차</th><td><a href='insertcoursePage/"+ co_idnum + "/" + i+ "'>강좌 작성</a></td></tr>");
 								}
-							}
-							if (number == 0) {
+							}else if (number == 0) {
 								$('#goCo').text("");
 								$('#inCo').after("<button type='button' onclick='go()'>관리자에게 보내기</button>");
 

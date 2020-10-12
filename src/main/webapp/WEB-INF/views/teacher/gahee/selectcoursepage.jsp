@@ -9,7 +9,6 @@
 	<script src="../script/wsocket.js"></script>
 </sec:authorize>
 <meta charset="UTF-8">
-<!-- ajax 통신을 위한 meta tag -->
 <meta name="_csrf" content="${_csrf.token}">
 <meta name="_csrf_header" content="${_csrf.headerName}">
 
@@ -19,6 +18,7 @@ video{
 width: 500px;
 height: 500px;
 }
+
 </style>
 </head>
 <body>

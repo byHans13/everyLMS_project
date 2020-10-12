@@ -15,7 +15,8 @@ header {
 	/* background-color: gray; */
 	 position: absolute; 
 	 transform:translate(0px,0px);  
-	 width: 1500px; 
+	 width: 1500px;  
+	 height: 200px;
 }
 
 aside {
@@ -32,6 +33,7 @@ section {
 	float: left;
 	position: absolute;
 	transform:translate(320px,100px);
+	margin-top: 100px;
 }
 .menu{
     margin-left: 20px;
@@ -63,14 +65,16 @@ font-size: 20px;
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <body>
 <input type="hidden" id="token"  data-token-name="${_csrf.headerName}" name = "${_csrf.parameterName}" value="${_csrf.token}" />
-	<header id = "header">
-		<%-- <%@ include file="h2k5every_header.jsp"%><!-- 정적인 방식 --> --%>
+	<header id ="header">
 		<jsp:include page="h2k5every_loginHeader.jsp" /><!-- 동적인 방식 -->
 	</header>
+	
 	<aside>
 		<jsp:include page="h2k5every_teacherAside.jsp" />
 	</aside>
+	
 	<section id="section" style="margin-left: 20px;">
+	
 			<div id="aaa"><h3><b>추천강의</b></h3></div>
 			<div style="border:solid black 1px; overflow:scroll; width: 1100px;height: 600px;">
 			${muList}
