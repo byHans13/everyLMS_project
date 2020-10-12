@@ -8,7 +8,7 @@ $(function() {
 function webSocketConnect() {
 		// 로그인했고 웹 소켓 연결이 되지 않았다면...연결
 		if(wsocket==undefined) {
-			wsocket = new WebSocket("ws://localhost:8080/h2k5every/ws");
+			wsocket = new WebSocket("ws://localhost:8088/h2k5every/ws");
 			
 				wsocket.onopen = function() {
 			console.log("wsocket연결");
