@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -104,14 +105,26 @@ public class IntroductionTeacherConfirmService {
 		return itcfList;
 	}
 
-
+@Transactional
 	public List<IntroductionTeacherConfirmBean> selectLectureConfirmYes(String cl_idnum, String co_lv) {
 		List<IntroductionTeacherConfirmBean> itcfList = itcDao.selectLectureConfirmYes(cl_idnum, co_lv);
 		if(itcfList != null) {
 			System.out.println("준비된 강의 옵니다.");
 			itcDao.updateLectureConfirm(cl_idnum,co_lv);
 			itcDao.insertCourseZero(cl_idnum,co_lv);
+			List<IntroductionTeacherConfirmBean> efList = itcDao.selectEvalFrmConfirmYes(cl_idnum, co_lv);
+			for(int i=0; i<efList.size();i++) {
+				System.out.println("평가지 작성"+efList.get(i));
+				for(int j=1;j<5;j++) {
+					int co_num = efList.get(i).getCo_num();
+					System.out.println("왜이래"+co_num);
+					System.out.println("하이고야"+cl_idnum+", "+co_lv+", "+co_num);
+			itcDao.insertEvaluationForm(cl_idnum, co_lv, co_num, j);
+			}
 		}
-		return itcfList;
+	}else {
+		System.out.println("준비된 강의가 없습니당.");
 	}
+		return itcfList;
+}
 }

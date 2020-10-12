@@ -32,4 +32,9 @@ public interface IIntroductionTeacherConfirmDao {
 	@Insert("INSERT INTO COURSE(co_num, co_lv, co_name, co_idnum,co_cont) VALUES (0, #{co_lv}, 'All Course gogo', #{cl_idnum},'오리엔테이션')")
 	void insertCourseZero(@Param("cl_idnum")String cl_idnum, @Param("co_lv")String co_lv);
 
+	List<IntroductionTeacherConfirmBean> selectEvalFrmConfirmYes(@Param("cl_idnum")String cl_idnum, @Param("co_lv")String co_lv);
+
+
+	void insertEvaluationForm(@Param("cl_idnum")String cl_idnum, @Param("co_lv")String co_lv, @Param("co_num")int co_num, @Param("j")int j);
+
 }

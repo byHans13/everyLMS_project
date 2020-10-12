@@ -133,12 +133,10 @@
 	});
 		
 	function uploadAddClick() {
-<<<<<<< HEAD
 		idnum=encodeURIComponent(idnum);
 		console.log("퀴즈추가 일련번호 : "+ $("#idnum").val());
 		console.log("퀴즈추가 레벨값 : " + $("#lv").val());
 		var FormData = $('#insertquizMaterialUploadFrm').serialize();
-=======
 		var pbname = $("#pb_pbname");
 		var pbexm1 = $("#dp_pbexm1");
 		var pbexm2 = $("#dp_pbexm2");
@@ -175,7 +173,6 @@
 			console.log("문제추가 레벨값 : " + $("#lv").val());
 			
 		var FormData = $('#insertQuizMaterialUploadFrm').serialize();
->>>>>>> origin/kyj_201012_01
 		$.ajax({
 			url: 'rest/insertselectquizmaterialuploadfrmajax?cl_idnum='+idnum+'&cl_lv='+lv,
 			type: 'post',
