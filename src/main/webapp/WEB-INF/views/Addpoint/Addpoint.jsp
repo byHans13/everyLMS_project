@@ -270,6 +270,7 @@ function selectPoint(obj) {
 	console.log(target_point);
 	target_point =Number(target_point);
 					var result = date + target_point;
+					if()
 					$('#result_pt').append("<h2>"+target_point+"원+"+date+"원="+result+"원</h2>");
 					$('#result_pt').append("<input type='hidden' name='onechk' value="+target_point+">");
 					$('#result_pt').append("<input type='hidden' name='resultpt' value="+result+">");
