@@ -105,6 +105,13 @@ section {
     border: 1px black solid;
     float: left;
 }
+img{
+	width: 100px;
+	height: 100px;
+}
+table{
+	text-align: center;
+}
 </style>
 </head>
 <body>

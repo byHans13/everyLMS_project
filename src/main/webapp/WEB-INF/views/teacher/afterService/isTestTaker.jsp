@@ -105,7 +105,7 @@ $(document).ready
 			console.log(json);
 			
 			if(json.length==0){
-				$("#comt").html("등록된 퀴즈가 없습니다.");
+				$("#comt").html("응시한 학생이 없습니다.");
 			}else{
 			
 			$("#selectTable").append("<tr>");
@@ -166,7 +166,7 @@ function contSelect() {
 				console.log(json);
 				if(json.length==0){
 					$("#comt").html("");
-					$("#comt").html("등록된 퀴즈가 없습니다.");
+					$("#comt").html("응시한 학생이 없습니다.");
 				}else{
 			
 				$("#selectTable").append("<tr>");
