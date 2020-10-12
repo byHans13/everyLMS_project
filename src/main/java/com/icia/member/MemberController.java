@@ -44,6 +44,12 @@ public class MemberController {
 		return "h2k5every";
 	}
 
+	@RequestMapping(value = "/main", method = RequestMethod.GET)
+	public String main() {
+		logger.info("메인창으로 이동");
+		return "main";
+	}
+
 	@RequestMapping(value = "/gomemberjoinpage", method = RequestMethod.GET)
 	public String goMemberJoinPage() {
 		logger.info("회원가입 약관창으로 이동");

@@ -149,7 +149,7 @@ openClass(cl_ct);
 function openClass(cl_ct) {
 	console.log("cl_ct: "+ cl_ct);
 	if(cl_ct=='1'){
-		$('#classOpen').append("<p>관리자가 검토중입니다.</p>");
+		$('#classOpen').append("<p style='text-align:center;'>관리자가 검토중입니다.</p>");
 	}
 	$.ajax({
 		url:'rest/classListVal?cl_ct='+cl_ct+'&${_csrf.parameterName }=${_csrf.token}',
@@ -164,28 +164,26 @@ function openClass(cl_ct) {
 			xhr.setRequestHeader($token.data("token-name"), $token.val());
 		},
 		success: function(classList) {
-			console.dir(classList);
 			if(classList.length !=0){
-			$("#classOpen").append('<table style="border: solid 1px;">');
-			$('table').append('<thead><tr><th>강의명</th><th>강의 시작일</th><th>강의 종료일</th><th>강의 회차</th><th>강의 가격</th><th>관심분야</th><th>강의 계획서</th><th>썸네일</th><th>나의 강좌</th></tr></thead><tbody>');
+			$("#classOpen").append('<table style="border: solid 1px;" class="table table-hover">');
+			$('table').append('<thead style="background-color:silver;"><tr><th>강의명</th><th>강의 시작일</th><th>강의 종료일</th><th>강의 회차</th><th>강의 가격</th><th>관심분야</th><th>강의 계획서</th><th>썸네일</th></tr></thead><tbody>');
 			for(var i=0; i<classList.length; i++){
 				console.log("classList[i].pi_pisysname: "+ classList[i].pi_pisysname);
 				var st = classList[i].cl_stday.split(" ");
 				var fn = classList[i].cl_fnday.split(" ");
 				if(classList[i].pc_title==undefined){
 				 $('tbody').append("<tr><td>"+classList[i].cl_clname+"</td><td>"+st[0]+"</td><td>"+fn[0]+"</td><td>"+classList[i].cl_lcnum+"</td><td>"+classList[i].cl_pt+"</td><td>"+classList[i].cl_cc+"</td><td><a id='go"+i+"'>쓰기</a></td>"
-				 +"<td><img src=\"../picture/"+classList[i].pi_pisysname+"\"></td><td>강의계획서 작성 후 이용가능합니다</td></tr></tbody></table>");
+				 +"<td><img src=\"../picture/"+classList[i].pi_pisysname+"\"></td></tr></tbody></table>");
 				 //console.log("hi");
 				 $('#go'+i).attr("href","insertplanclasspage/"+classList[i].cl_idnum+"/"+classList[i].cl_clname+"/"+classList[i].cl_lcnum+"/"+classList[i].cl_lv);
 				
 				}else{
 					//console.log(classList[i].pc_cont);
-					$('tbody').append("<tr><td>"+classList[i].cl_clname+"</td><td>"+st[0]+"</td><td>"+fn[0]+"</td><td>"+classList[i].cl_lcnum+"</td><td>"+classList[i].cl_pt+"</td><td>"+classList[i].cl_cc+"</td><td><a href='#' onclick=\"articleView('"+classList[i].cl_clname+"','"+classList[i].cl_lv+"','"+classList[i].pc_title+"','"+classList[i].pc_cont+"','"+classList[i].cl_lcnum+"','"+classList[i].cl_idnum+"')\">보기</a></td>"+
-							"<td><img src=\"../picture/"+classList[i].pi_pisysname+"\"></td><td><a href='coursePage/"+classList[i].cl_lv+"/"+classList[i].cl_idnum+"/"+classList[i].cl_lcnum+"'>상세보기</a></td></tbody></table>");	     
+					$('tbody').append("<tr><td>"+classList[i].cl_clname+"</td><td>"+st[0]+"</td><td>"+fn[0]+"</td><td>"+classList[i].cl_lcnum+"</td><td>"+classList[i].cl_pt+"</td><td>"+classList[i].cl_cc+"</td><td><a href='#' onclick=\"articleView('"+classList[i].cl_clname+"','"+classList[i].cl_lv+"','"+classList[i].pc_title+"','"+classList[i].pc_cont+"','"+classList[i].cl_lcnum+"','"+classList[i].cl_idnum+"')\">보기</a></td>"+"<td><img src=\"../picture/"+classList[i].pi_pisysname+"\"></td></tbody></table>");	     
 						}//end
 				} 
 			}else if(classList.length ==0){
-				$('#classOpen').append("<p>강의가 존재하지 않습니다.</p>");
+				$('#classOpen').append("<p style='text-align:center;'>강의가 존재하지 않습니다.</p>");
 			}
 		},
 		error: function(err) {
