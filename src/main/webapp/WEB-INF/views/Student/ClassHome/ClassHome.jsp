@@ -154,8 +154,7 @@ td {
 				<li id='classQNA' class='li' onclick='classQNA()'>Q&A</li>
 				<li id='classPostscript' class='li' onclick='classReview()'>
 					수강후기</li>
-				<li id='classReference' class='li' onclick='test()'>과제제출 </li>
-           	<li id='classFinalTest' class='li' onclick='classFinalTest()' style='color:red;'>최종시험</li>
+				<li id='classReference' class='li' onclick='classHomeworkSubmit()'>과제제출 </li>
 			</ul>
 		</div>
 		<div id='classAll' name='classAll' class='classAll'>
@@ -844,12 +843,68 @@ td {
 		});// ajax insertReviewReply END
 	}//function insertReviewReply()END
 	
-	function classFinalTest(){
-    	var idnum =el[0].cl_idnum;
-    	var lv=el[0].cl_lv;
-    	var num=0;
-    	window.open("selectClassFinalTest?pb_idnum="+idnum+"&pb_lv="+lv+"&pb_num="+num,'_blank','width=800, height=600, top=200, left=200'); 
-
-    }// function classFinalTest() END
+	function classHomeworkSubmit(){
+		var obj = {
+			'hw_idnum' : $('#classPk').val(),
+			'hw_lv' : el[0].cl_lv
+		}
+		var str ="";
+		console.log(obj);
+		$('#classRight').html("");
+		$('#classRight').append("<div id='hwDiv' style='width:1036px; height:652px;'></div>");
+		$('#hwDiv').append("<table id='hwTable' style='margin:auto; border-collapse:collapse;'></table>");
+		$('#hwTable').append("<tr><td>회차</td><td>과제명</td><td>과제확인</td><td>제출마감일</td><td>제출하기</td><td>비고</td></tr>");
+		//<a id='a"+i+"' href='homeworkFiledown?sysFileName="+courseList[i].fbList[1].fl_sysname+"'></a>
+		$.ajax({
+			type:'get',
+			url:'rest/selectClassHomeworkList',
+			data:obj,
+			dataType:'json',
+			success: function(json){
+				console.log(json);
+				if(Object.keys(json).length !=0){
+					for(var i=0; i<Object.keys(json).length; i++){
+						str ="";
+						str +="<tr>";
+						str +="<td>"+json[i].hw_num+"강</td>";
+						str +="<td>"+json[i].hw_hwname+"</td>";
+						str += "<td><a><href='homeworkFiledown?sysFileName="+json[i].fbList[0].fl_sysname+"'>"
+								+json[i].fbList[0].fl_oriname+"</a></td>";
+						str +="<td>"+json[i].hw_date.substring(0,10)+"</td>";
+						var hwList = JSON.stringify(json[i]);
+						var submitDate = new Date(json[i].hw_date);
+						var today = new Date();
+						console.log(submitDate);
+						console.log(today);
+						console.log(today<=submitDate);
+						if(today <= submitDate){
+							str +="<td onclick='insertClassHomeworkPage("+hwList+")'><a href='#;'>submit</a></td>";
+							str +="<td>제출가능</td>";							
+						}else{
+							str +="<td onclick=\"alert('제출기한이 지났습니다.')\">submit</td>";
+							str +="<td>제출불가</td>";							
+						}
+						str +="</tr>";
+						$('#hwTable').append(str);
+					}//for i
+				}else{
+					$('#hwTable').append("<tr><td colspan='5'>업로드된 과제가 없습니다.</td></tr>");
+				}
+			},error: function(err){
+				console.log(err);
+				$('#hwTable').append("<tr><td colspan='5'>업로드된 과제가 없습니다.</td></tr>");
+			}
+		});
+	}//function classHomeworkSubmit() END
+	function insertClassHomeworkPage(hwList){
+		console.log(hwList);
+		console.log(hwList.hw_idnum);
+		//var str +="";
+		var hwInsertPage = $('#classRight');
+		hwInsertPage.html("");
+		hwInsertPage.append("<div id='hwInsertDiv' style='width:500px; height:652px; margin:auto; text-align:left;'></div>");
+		
+	}// function insertClassHomeworkPage END
+	
 </script>
 </html>

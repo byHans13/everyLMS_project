@@ -118,8 +118,8 @@ section {
 	<section id="section" style="margin-left: 20px;">
 <h1>강좌</h1>
 <div>
-<table>
-<thead>
+<table class="table table-hover">
+<thead style="background-color:silver;">
 <tr>
 <th >회차</th>
 <th >강좌명</th>
@@ -130,10 +130,11 @@ section {
 <tbody id='coTbody'></tbody>
 </table>
 </div>
+<br>
 <h1>과제</h1>
 <div>
-<table>
-<thead>
+<table class="table table-hover">
+<thead style="background-color:silver;">
 <tr>
 <th>회차</th>
 <th>강좌명</th>
@@ -310,7 +311,7 @@ var subvd="";
 						console.log("stList: "+stList);
 						var number=0;
 						$('#contents_layer').empty();
-						$('#contents_layer').append(" <table><thead><tr><th>수강자</th><th>제출여부</th><th>결과</th></tr></thead><tbody id='tb'>");
+						$('#contents_layer').append(" <table class='table table-hover'><thead style='background-color:silver;'><tr><th>수강자</th><th>제출여부</th><th>결과</th></tr></thead><tbody id='tb'>");
 						if(stHWList.length!=0){
 						for(var i in stList){
 							for (var j in stHWList){
