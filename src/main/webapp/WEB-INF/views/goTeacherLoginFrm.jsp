@@ -119,7 +119,6 @@ text-align: center;
 <script>
 	var muList = $("#muListValue").val();
 	console.log("muList = "+muList);
-	console.log("muList = "+"${muList}");
 function test(id) {
 	$.ajax({
 		type:'get',
@@ -135,13 +134,12 @@ function test(id) {
 		success: function (json) {
 			console.log(json);
 			console.log(json.length);
-			if(muList != null){
-			$("#aaa").html("${muList}");
-		
 				for(var i=0; i<json.length; i++){
 					$('#menu').append("<div class='menu'><p>"+json[i]+"</p></div>");
 				}
-			}
+				if(muList != null){
+					$("#aaa").html("${muList}");
+				}
 		},
 		error: function (err) {
 			console.log(err);

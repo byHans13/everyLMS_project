@@ -71,7 +71,7 @@ public class MaterialUploadMM {
 				sb.append("<td class='sbClassTd'>" + cnt + "</td>");
 				sb.append("<td class='sbClassTd'>" + muList.get(i).getCl_id() + "</td>");
 				sb.append("<td class='sbClassTd'>"
-						+ "<input type='button'  class='btn btn-primary btn-sm' value='문제 작성' onclick=location.href='inserttestmaterialuploadpage?cl_idnum="
+						+ "<input type='button' class='btn btn-primary btn-sm' value='문제 작성' onclick=location.href='inserttestmaterialuploadpage?cl_idnum="
 						+ encodeParam + "&cl_lv=" + muList.get(i).getCl_lv() + "&pb_num=" + muList.get(i).getPb_num()
 						+ "'>&nbsp;&nbsp;"
 						+ "<input type='button' class='btn btn-default btn-sm' value='문제 확인' onclick=location.href='selecttestmaterialuploadlistpage?cl_idnum="
@@ -339,11 +339,11 @@ public class MaterialUploadMM {
 		if (muList != null) {
 			System.out.println("muList Cl_idnum = " + muList.get(0).getCl_idnum());
 			sb.append("<div><h3><b>퀴즈 자료 업로드 - 강의 리스트</b></h3></div>");
-			sb.append("<div style='width:1100px; height:600px;'>");
-			sb.append("<table class='sbClassTable'>" + "<tr class='sbClassTr'>" + "<th class='sbClassTh'>NO.</th>"
-					+ "<th class='sbClassTh'>강의명</th>" + "<th class='sbClassTh'>총회차</th>"
-					+ "<th class='sbClassTh'>학생수</th>" + "<th class='sbClassTh'>교수명</th>"
-					+ "<th class='sbClassTh'>퀴즈작성</th>" + "</tr>");
+			sb.append("<div class='container' style='width:1100px; height:600px;'>");
+			sb.append("<table class='sbClassTable table table-hover'>" + "<tr class='sbClassTr'>"
+					+ "<th class='sbClassTh'>NO.</th>" + "<th class='sbClassTh'>강의명</th>"
+					+ "<th class='sbClassTh'>총회차</th>" + "<th class='sbClassTh'>학생수</th>"
+					+ "<th class='sbClassTh'>교수명</th>" + "<th class='sbClassTh'>퀴즈작성</th>" + "</tr>");
 			for (int i = 0; i < muList.size(); i++) {
 				mu.setCl_idnum(muList.get(i).getCl_idnum());
 				mu.setCl_lv(muList.get(i).getCl_lv());
@@ -362,7 +362,7 @@ public class MaterialUploadMM {
 				sb.append("<td class='sbClassTd'>" + cnt + "</td>");
 				sb.append("<td class='sbClassTd'>" + muList.get(i).getCl_id() + "</td>");
 				sb.append("<td class='sbClassTd'>"
-						+ "<input type='button' value='강좌 리스트 확인' onclick=location.href='selectquizmaterialclcolist?cl_idnum="
+						+ "<input type='button' class='btn btn-primary btn-sm' value='강좌 리스트 확인' onclick=location.href='selectquizmaterialclcolist?cl_idnum="
 						+ encodeParam + "&cl_lv=" + muList.get(i).getCl_lv() + "'></td></tr>");
 			}
 			sb.append("</table></div>");
@@ -395,11 +395,11 @@ public class MaterialUploadMM {
 		if (muList != null) {
 			System.out.println("muList Cl_idnum = " + muList.get(0).getCl_idnum());
 			sb.append("<div><h3><b>퀴즈 자료 업로드 - 강좌 리스트</b></h3></div>");
-			sb.append("<div style='width:1100px; height:600px;'>");
-			sb.append("<table class='sbClassTable'>" + "<tr class='sbClassTr'>" + "<th class='sbClassTh'>NO.</th>"
-					+ "<th class='sbClassTh'>강의명</th>" + "<th class='sbClassTh'>회차</th>"
-					+ "<th class='sbClassTh'>강좌명</th>" + "<th class='sbClassTh'>교수명</th>"
-					+ "<th class='sbClassTh'>퀴즈작성</th>" + "</tr>");
+			sb.append("<div class='container' style='width:1100px; height:600px;'>");
+			sb.append("<table class='sbClassTable table table-hover'>" + "<tr class='sbClassTr'>"
+					+ "<th class='sbClassTh'>NO.</th>" + "<th class='sbClassTh'>강의명</th>"
+					+ "<th class='sbClassTh'>회차</th>" + "<th class='sbClassTh'>강좌명</th>"
+					+ "<th class='sbClassTh'>교수명</th>" + "<th class='sbClassTh'>퀴즈작성</th>" + "</tr>");
 			for (int i = 1; i < muList.size(); i++) {
 				mu.setCl_idnum(muList.get(i).getCl_idnum());
 				mu.setCl_lv(muList.get(i).getCl_lv());
@@ -422,11 +422,11 @@ public class MaterialUploadMM {
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
 				}
-				sb.append("<td class='sbClassTd'>" + "<input type='button' value='퀴즈 작성'"
+				sb.append("<td class='sbClassTd'>" + "<input type='button' class='btn btn-primary btn-sm' value='퀴즈 작성'"
 						+ "onclick=location.href='insertquizmaterialuploadpage?cl_idnum=" + encodeParam + "&cl_lv="
 						+ muList.get(i).getCl_lv() + "&co_num=" + muList.get(i).getCo_num() + "&pb_num="
 						+ muList.get(i).getPb_num() + "'><br>"
-						+ "<input type='button' value='퀴즈 확인'"
+						+ "<input type='button' class='btn btn-default btn-sm' value='퀴즈 확인'"
 						+ "onclick=location.href='selectquizmaterialuploadlistpage?cl_idnum=" + encodeParam + "&cl_lv="
 						+ muList.get(i).getCl_lv() + "&co_num=" + muList.get(i).getCo_num() + "'></td></tr>");
 			}
