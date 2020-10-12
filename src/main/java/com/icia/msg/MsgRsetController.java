@@ -40,8 +40,8 @@ public class MsgRsetController {
 	
 	//stud/rest/upDateSt
 	@RequestMapping(value = "/stud/rest/upDateSt")
-	public boolean upDateSt(HttpSession session, @RequestParam("msg_id")String msg_id) {
-		boolean result = mmm.upDateSt(session,msg_id);
+	public boolean upDateSt(HttpSession session, @RequestParam("msg_id")String msg_id, @RequestParam("msg_text")String msg_text) {
+		boolean result = mmm.upDateSt(session,msg_id,msg_text);
 
 		return result;
 	}

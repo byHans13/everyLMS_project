@@ -49,6 +49,30 @@
 			</div>
 		</div>
 	</nav>
+	<script>
+
+	function upDateSt(msg_id){
+	$.ajax({
+					url:'/h2k5every/stud/rest/upDateSt?msg_id='+msg_id,
+					type:'GET',
+					dataType: 'json',
+					beforeSend : function(xhr){
+						var $token = $("#token");
+						xhr.setRequestHeader($token.data("token-name"), $token.val());
+						},
+					success: function(result) {
+					alert('해당 쪽지가 읽음 처리되었습니다.'');
+
+							
+					},
+						error: function(err) {
+						console.log(err)
+				
+						}
+					
+					});
+	}
+	</script>
 </body>
 </html>
 

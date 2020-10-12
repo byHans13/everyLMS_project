@@ -20,8 +20,8 @@ public interface IMsgDao {
 	
 	
 	
-	@Update("UPDATE MESSAGE SET MSG_ST ='1' WHERE MSG_ID=#{msg_id} AND MSG_RECEIVER=#{receiver}")
-	int updateSt(@Param("msg_id")String msg_id, @Param("receiver")String receiver);
+	@Update("UPDATE MESSAGE SET MSG_ST ='1' WHERE MSG_ID=#{msg_id} AND MSG_RECEIVER=#{receiver} AND MSG_TEXT=#{msg_text}")
+	int updateSt(@Param("msg_id")String msg_id, @Param("receiver")String receiver,@Param("msg_text")String msg_text);
 	
 	
 

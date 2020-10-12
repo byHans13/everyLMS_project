@@ -26,9 +26,9 @@ public class MsgMM {
 		return result;
 	}
 
-	public boolean upDateSt(HttpSession session, String msg_id) {
+	public boolean upDateSt(HttpSession session, String msg_id, String msg_text) {
 		String receiver = session.getAttribute("id").toString();
-		int up = msd.updateSt(msg_id,receiver);
+		int up = msd.updateSt(msg_id,receiver,msg_text);
 		boolean result = false;
 		
 		if(up!=0) {
