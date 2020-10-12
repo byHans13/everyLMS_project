@@ -22,7 +22,7 @@ function webSocketConnect() {
 				var newmsg = confirm("새로운 알림이 있습니다. 확인 하시려면 확인을 눌러주세요");
 				if(newmsg){
 					alert(data[0]+"님의 메세지입니다.\n내용: "+data[1]);
-					upDateSt(data[0]);	
+					upDateSt(data[0],data[1]);	
 				
 		}
 }
@@ -32,4 +32,33 @@ function webSocketConnect() {
 	
 	webSocketConnect();	
 });
+
+
+
+	function upDateSt(msg_id,msg_text){
+	$.ajax({
+					url:'/h2k5every/stud/rest/upDateSt?msg_id='+msg_id+'&msg_text='+msg_text,
+					type:'GET',
+					dataType: 'json',
+					beforeSend : function(xhr){
+						var $token = $("#token");
+						xhr.setRequestHeader($token.data("token-name"), $token.val());
+						},
+					success: function(result) {
+					alert('해당 쪽지가 읽음 처리되었습니다.');
+
+							
+					},
+						error: function(err) {
+						console.log(err)
+				
+						}
+					
+					});
+	}
+
+
+
+
+
 
