@@ -863,7 +863,7 @@ td {
 						str +="<tr>";
 						str +="<td>"+json[i].hw_num+"강</td>";
 						str +="<td>"+json[i].hw_hwname+"</td>";
-						str += "<td><a><href='homeworkFiledown?sysFileName="+json[i].fbList[0].fl_sysname+"'>"
+						str += "<td><a href='homeworkFiledown?sysFileName="+json[i].fbList[0].fl_sysname+"'>"
 								+json[i].fbList[0].fl_oriname+"</a></td>";
 						str +="<td>"+json[i].hw_date.substring(0,10)+"</td>";
 						var hwList = JSON.stringify(json[i]);
@@ -894,12 +894,39 @@ td {
 	function insertClassHomeworkPage(hwList){
 		console.log(hwList);
 		console.log(hwList.hw_idnum);
-		//var str +="";
+		var str ="";
 		var hwInsertPage = $('#classRight');
 		hwInsertPage.html("");
 		hwInsertPage.append("<div id='hwInsertDiv' style='width:500px; height:652px; margin:auto; text-align:left;'></div>");
-		
+		str += "<h4>"+hwList.hw_num+"강 과제: "+hwList.hw_hwname+" 업로드</h4><hr>"
+			str += "<form method='post' id='insertHw' enctype='multipart/form-data'>";
+			str += "<input type='hidden' id='idnum' name='hw_idnum' value='"+hwList.hw_idnum+"'>";
+			str += "<input type='hidden' id='lv' name='hw_lv' value='"+hwList.hw_lv+"'>";
+			str += "<input type='hidden' id='num' name= hw_num value='"+hwList.hw_num+"'>";
+			str += "<input type='text' id='name' name='hw_hwname' placeholder='과제 제목을 입력해주세요.'><hr/>";
+			str += " <input type='file' id='file' name='fl_oriname' multiple='false'><hr/>";
+			str += "<input type='button' value='작성하기' onclick='insertHomework()'></form>";	
+			$('#hwInsertDiv').append(str);
 	}// function insertClassHomeworkPage END
-	
+	function insertHomework(){
+		var data = $('#insertHw')[0];
+		var formData = new FormData(data);
+		$.ajax({
+			type:'post',
+			url:'rest/insertHomework',
+			data:formData,
+			dataType:'json',
+		    processData: false,
+		    contentType: false,
+		    beforeSend : function(xhr) {
+				var $token = $("#token");
+				xhr.setRequestHeader($token.data("token-name"), $token.val());
+			},success: function(json){
+				console.log(json);
+			},error: function(err){
+				console.log(err);
+			} 
+		});//ajax ED		
+	};//function insertHomework END 
 </script>
 </html>

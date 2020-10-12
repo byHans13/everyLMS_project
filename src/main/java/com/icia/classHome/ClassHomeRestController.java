@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.icia.classHome.ClassBean;
 import com.icia.classHome.CourseBean;
@@ -202,5 +203,10 @@ public class ClassHomeRestController {
 	public List<HomeworkBean> selectClassHomeworkList (HomeworkBean hw, HttpSession session){
 		List<HomeworkBean> hwList = cs.selectClassHomeworkList(hw, session);
 		return hwList;
+	}
+	@PostMapping(value="rest/insertHomework")
+	public boolean insertHomework(MultipartHttpServletRequest multi, HttpSession session) {
+		boolean result = cs.insertHomework(multi, session);
+		return result;
 	}
 }

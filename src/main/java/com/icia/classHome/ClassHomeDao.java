@@ -242,8 +242,15 @@ public interface ClassHomeDao {
 		@Insert("INSERT INTO pb(pb_num, pb_lv, pb_id, pb_idnum, pb_pbnum, pb_pbname, pb_pbanswer, pb_pbexplain, pb_pbstudent, pb_answerchk, pb_pbdate, pb_pbchkqz"
 				+ "VALUES(#{pb_num}, #{pb_lv}, #{pb_id},#{pb_idnum},#{pb_pbnum},#{pb_pbname},#{pb_pbanswer},#{pb_pbexplain},#{pb_pbstudent},#{pb_answerchk},default,#{pb_pbchkqz})")
 		boolean insertClassFinalTestForceStop();
-		List<HomeworkBean> selectClassHomeworkList(HomeworkBean hw);
 
+		//ClassHome - Homework
+		List<HomeworkBean> selectClassHomeworkList(HomeworkBean hw);
+		@Insert("INSERT INTO hw(hw_hwname, hw_id, hw_num, hw_idnum, hw_lv, hw_date, hw_psfa) VALUES"
+				+ "(#{hw_hwname}, #{hw_id}, #{hw_num}, #{hw_idnum}, #{hw_lv}, sysdate, #{hw_psfa})")
+		boolean insertHwHomework(HomeworkBean hw);
+		@Insert("INSERT INTO fl(fl_subvd, fl_sysname, fl_oriname, fl_num, fl_id, fl_idnum, fl_lv) VALUES"
+				+ "(#{fl_subvd}, #{fl_sysname}, #{fl_oriname}, #{fl_num}, #{fl_id}, #{fl_idnum}, #{fl_lv})")
+		boolean insertFlHomework(FileBean fl);
 
 
 
