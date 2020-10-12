@@ -16,8 +16,9 @@
 	<script src="../script/wsocket.js"></script>
 </sec:authorize>
 
-<link rel="stylesheet"
-   href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <style>
 * {box-sizing: border-box}
@@ -95,8 +96,8 @@ section {
    </aside>
    <section id="section" style="margin-left: 20px;">
    <div class="tab">
-  <button class="tablinks" onclick="openCity(event, 'London')" id="defaultOpen">총 메일</button>
-  <button class="tablinks" onclick="openCity(event, 'Paris')">안읽은 메일</button>
+  <button class="tablinks" onclick="openCity(event, 'London')" id="defaultOpen">총 메일<span class="badge"></span></button>
+  <button class="tablinks" onclick="openCity(event, 'Paris')">안읽은 메일<span class="badge"></span></button>
   <button class="tablinks" onclick="openCity(event, 'Tokyo')">읽은메일</button>
 </div>
 
@@ -146,6 +147,7 @@ section {
    
    function all() {
 	   var num=aaclmsg.length;
+	   var st=0;
 	   $('#London').append("<center><table id='aa'><tr ><th>글번호</th><th>알림</th><th>보낸시간</th><th>읽음여부</th></tr>");
 	   for(var i=0; i<aaclmsg.length; i++){
 	   $('#aa').append("<tr><td>"+(i)+"</td><td><a style='text-decoration: none; color: black;' onclick=\"readMsg('"+aaclmsg[i].msg_id+"','"+aaclmsg[i].msg_text+"','"+aaclmsg[i].msg_st+"')\">"+aaclmsg[i].msg_id+"님의 쪽지를 보냈습니다.</a></td><td>"+aaclmsg[i].msg_date+"</td><td id='re"+i+"'></td></tr>");
@@ -154,9 +156,11 @@ section {
 		   $('#re'+i).text('읽음');
 	   }else{
 		   $('#re'+i).text('안읽음');
+		   st=st+1;
 	   }
 	   }
 	   $('#London').prepend("</table></center>");
+	   $('.badge').text(st);
 	   
 }
    
@@ -206,6 +210,7 @@ section {
 	  				dataType: 'json',
 	  				success: function(result) {
 	  					alert("해당쪽지가 읽음처리 되었습니다.");	
+	  					location.reload();
 	  				},
 	  					error: function(err) {
 	  					console.log(err)
