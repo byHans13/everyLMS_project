@@ -3,7 +3,7 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.icia.board.BoardDao">
-	<select id="Boardlist" resultType="cobs"> <!-- 첫 게시판 페이징 -->
+	<select id="Boardlist" resultType="cob"> <!-- 첫 게시판 페이징 -->
 	     <![CDATA[
 	     SELECT *
 	     FROM (
@@ -15,10 +15,9 @@
 			]]>
 
 	</select>
-	<insert id="boardWriteSelectKey" parameterType="cobs"
+	<insert id="boardWriteSelectKey" parameterType="cob"
 		useGeneratedKeys="true" keyProperty="cob_bonum">
-		INSERT INTO COB
-		VALUES(#{cob_idnum},{},#{cob_num},#{cob_id},#{cob_bonum},#{b_title},#{cob_cont}#{cob_date},#{cob_kind});
+		INSERT INTO COB VALUES(#{cob_idnum},{},#{cob_num},#{cob_id},#{cob_bonum},#{b_title},#{cob_cont}#{cob_date},#{cob_kind});
 		</insert>
 
 </mapper>

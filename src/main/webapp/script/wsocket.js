@@ -8,7 +8,7 @@ $(function() {
 function webSocketConnect() {
 		// 로그인했고 웹 소켓 연결이 되지 않았다면...연결
 		if(wsocket==undefined) {
-			wsocket = new WebSocket("ws://localhost:8088/h2k5every/ws");
+			wsocket = new WebSocket("ws://localhost:8080/h2k5every/ws");
 			
 				wsocket.onopen = function() {
 			console.log("wsocket연결");
@@ -39,10 +39,6 @@ function upDateSt(msg_id,msg_text){
 				url:'/h2k5every/stud/rest/upDateSt?msg_id='+msg_id+'&msg_text='+msg_text,
 				type:'GET',
 				dataType: 'json',
-				beforeSend : function(xhr){
-					var $token = $("#token");
-					xhr.setRequestHeader($token.data("token-name"), $token.val());
-					},
 				success: function(result) {
 					alert("해당쪽지가 읽음처리 되었습니다.");	
 				},
