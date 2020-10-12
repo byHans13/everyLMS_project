@@ -9,37 +9,46 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <meta name="_csrf" content="${_csrf.token}">
 <meta name="_csrf_header" content="${_csrf.headerName}">
+<!-- boot -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-<h1>강의 계획서</h1>
- <form action="insertplanclass?${_csrf.parameterName }=${_csrf.token}" method="post">
-        <table>
-        <tr>
-                <th>강의 명</th>
-                <td><input type="text" value="${cl_name}" readonly="readonly"></td>
-            </tr>
-             <tr>
-                <th>강의 총 회차</th>
-                <td><input type="text" value="${cl_lcnum}" readonly="readonly" >회차</td>
-            </tr>
-            <tr>
-                <th>강의 레벨</th>
-                <td><input type="number" name='pc_lv'  value="${cl_lv}" readonly="readonly"></td>
-            </tr>
-            <tr>
-                <th>개요</th>
-                <td><input type="text" name='pc_title' placeholder="개요입력"></td>
-            </tr>
-            <tr>
-                <th>내용</th>
-                <td><textarea style="overflow: auto;" placeholder="내용입력" name='pc_cont' id="pc_cont"></textarea></td>
-            </tr>
-        </table>
+<h1 style="text-align: center;margin-top: 10%;">강의 계획서</h1>
+ <form action="insertplanclass?${_csrf.parameterName }=${_csrf.token}" method="post" class="container">
+        <div class="container" style="margin-left: 10%; padding-left:20px; position: absolute;">
+        <br><br>
+        <div class="form-group">
+				<label for="inputEmail3"class="control-label col-sm-2">강의명</label>
+              <input type="text" value="${cl_name}" readonly="readonly" placeholder="강의명 ">
+        </div>
+        <div class="form-group">
+				<label for="inputEmail3"class="control-label col-sm-2">강의 총 회차</label>
+               <input type="text" value="${cl_lcnum}" readonly="readonly" placeholder="회차">
+        </div>
+         <div class="form-group">
+				<label for="inputEmail3"class="control-label col-sm-2">강의 레벨</label>
+                <input type="number" name='pc_lv'  value="${cl_lv}" readonly="readonly">
+          </div>
+         <div class="form-group">
+				<label for="inputEmail3"class="control-label col-sm-2">개요</label>
+               <input type="text" name='pc_title' placeholder="개요입력">
+           </div>
+         <div class="form-group">
+				<label for="inputEmail3"class="control-label col-sm-2">내용</label>
+              <textarea style="overflow: auto;" placeholder="내용입력" name='pc_cont' id="pc_cont"></textarea>
+         </div>
         <p id='errP'></p>
-        <button type="button" id='insertPlanClassBnt'>등록하기</button> ||  <button type="reset">취소</button>
+        <br><br>
+        <div style="float: inherit; margin-left: 25%;">
+        <button type="button" id='insertPlanClassBnt' class="btn btn-success">등록하기</button> 
+        <button type="reset" class="btn btn-default">취소</button>
+        </div>
         <input type="hidden" name = "${_csrf.parameterName}" value="${_csrf.token}" />
         <input type="hidden" id='token' data-token-name='${_csrf.headerName }' value='${_csrf.token }'/>
         <input type="hidden" value="${idNum}" name="pc_idnum">
+        </div>
     </form>
     
     <script>

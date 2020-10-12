@@ -46,6 +46,28 @@
     	where rownum < 4 AND pb_lv=#{pb_lv} and cl_cc=#{cl_cc}
     	]]>
 	</select>
+	<select id="selectClassHomeworkList" parameterType="com.icia.homework.HomeworkBean" resultMap="hwBean">
+		SELECT * FROM HWFL WHERE HW_LV= #{hw_lv} AND HW_IDNUM=#{hw_idnum} AND HW_PSFA='0' 
+	</select>
+	<resultMap type="com.icia.homework.HomeworkBean" id="hwBean">
+   		<id column="HW_IDNUM" property="hw_idnum"/>
+   		<result column="HW_HWNAME" property="hw_hwname"/>
+   		<result column="HW_ID" property="hw_id"/>
+   		<result column="HW_NUM" property="hw_num"/>
+   		<result column="HW_LV" property="hw_lv"/>
+   		<result column="HW_DATE" property="hw_date"/>
+   		<result column="HW_PSFA" property="hw_psfa"/>
+   		<collection property="fbList" javaType="ArrayList" resultMap="fbList"/>
+	</resultMap>
+	<resultMap type="com.icia.course.CourseFilesBean" id="fbList">
+   		<id column="FL_IDNUM" property="fl_idnum"/>
+   		<result column="FL_SUBVD" property="fl_subvd"/>
+   		<result column="FL_SYSNAME" property="fl_sysname"/>
+   		<result column="FL_ORINAME" property="fl_oriname"/>
+   		<result column="FL_NUM" property="fl_num"/>
+   		<result column="FL_ID" property="fl_id"/>
+   		<result column="FL_LV" property="fl_lv"/>
+	</resultMap>
 </mapper>
 		 	
 	
