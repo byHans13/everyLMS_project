@@ -76,10 +76,14 @@ td{
 			</select>
 		</div>
 	</form>
-	<div style="height: 100px;"></div>	
-	<button type="button" onclick="testLectureResult('T')">시험성적관리</button>
-	<button type="button" onclick="quizLectureResult('Q')">퀴즈성적관리</button>
-	<div style="height: 100px;"></div>
+	<div style="height: 30px;"></div>	
+	<button type="button" onclick="testLectureResult('T')" 
+	style="border: none; width: 200px; height: 30px; font-size: 20px; background-color: blue; color: white;">
+	시험성적관리</button>
+	<button type="button" onclick="quizLectureResult('Q')"
+	style="border: none; width: 200px; height: 30px; font-size: 20px; background-color: blue; color: white;">
+	퀴즈성적관리</button>
+	<div style="height: 30px;"></div>
 		
 		<div>
 			<p id="selectbox"></p><br>
