@@ -71,9 +71,8 @@
 					$("#testMaterialUploadThead"+i).append("<caption id='testMaterialUploadCaption"+i+"' style='width:500px;'>");
 					$("#testMaterialUploadCaption"+i).append("<h2>시험 업로드 자료 확인</h2>");
 					$("#testMaterialUploadTable"+i).append("<tr><td id='btnTd'>"
-										 + "<input type='button' id='btnAdd' value='문제수정' onclick='uploadAddClick()'>"
-										 + "<input type='button' value='뒤로가기' onclick='location.href='/selecttestmaterialclasslist'>"
-							 			 /* + "<input type='button' value='홈으로' onclick=location.href='/h2k5every/'></td></tr>"); */
+										 /* + "<input type='button' id='btnAdd' value='문제수정' onclick='uploadAddClick()'>" */
+										 + "<input type='button' value='뒤로가기' onclick=location.href='/h2k5every/prof/selecttestmaterialclasslist'>"
 							 			 + "<input type='button' value='홈으로' onclick=location.href='/h2k5every/prof/goTeacherLoginFrm'></td></tr>");
 					$("#testMaterialUploadTable"+i).append("<tbody id='testMaterialUploadTbody"+i+"'>");
 					$("#testMaterialUploadTbody"+i).append("<tr><td><h1>"+(i+1)+"번 문제</h1></td></tr>");
