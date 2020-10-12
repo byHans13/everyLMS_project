@@ -29,25 +29,23 @@ public class MaterialUploadMM {
 		String view = null;
 		SecurityContext context = SecurityContextHolder.getContext();
 		User user = (User) context.getAuthentication().getPrincipal();
-		System.out.println("session id = " + user.getUsername());
 		mu.setCl_id(user.getUsername());
 		System.out.println("Class id = " + mu.getCl_id());
 		List<MaterialUpload> muList = new ArrayList<MaterialUpload>();
-		System.out.println("selectTestMaterialClassList mu = " + mu);
 		muList = muDao.selectTestMaterialClassList(mu);
 		System.out.println("selectTestMaterialClassList muList = " + muList);
-		
+
 		StringBuilder sb = new StringBuilder();
 		if (muList != null) {
 			System.out.println("muList Cl_idnum = " + muList);
-			//search 기능 활용 및 추천 강의 삭제 방법.문의
+			// search 기능 활용 및 추천 강의 삭제 방법.문의
 //			sb.append("<form action='searchclass' method='post'><input type='text' name='searchClass' placeholder='search'><input type='submit' value='검색'></form>");
 			sb.append("<div><h3><b>시험 자료 업로드</b></h3></div>");
-			sb.append("<div style='width:1100px; height:600px;'>");
-			sb.append("<table class='sbClassTable'>" + "<tr class='sbClassTr'>" + "<th class='sbClassTh'>NO.</th>"
+			sb.append("<div class='container' style='width:1100px; height:600px;'>");
+			sb.append("<table class='sbClassTable table table-hover'>" + "<tr class='sbClassTr'>" + "<th class='sbClassTh'>NO.</th>"
 					+ "<th class='sbClassTh'>강의명</th>" + "<th class='sbClassTh'>회차</th>"
 					+ "<th class='sbClassTh'>학생수</th>" + "<th class='sbClassTh'>교수명</th>"
-					+ "<th class='sbClassTh'>문제작성</th>" + "</tr>");
+					+ "<th class='sbClassTh'>작성 / 확인</th>" + "</tr>");
 			for (int i = 0; i < muList.size(); i++) {
 				mu.setCl_idnum(muList.get(i).getCl_idnum());
 				mu.setCl_lv(muList.get(i).getCl_lv());
@@ -65,9 +63,10 @@ public class MaterialUploadMM {
 				sb.append("<td class='sbClassTd'>" + cnt + "</td>");
 				sb.append("<td class='sbClassTd'>" + muList.get(i).getCl_id() + "</td>");
 				sb.append("<td class='sbClassTd'>"
-						+ "<input type='button' value='문제 작성' onclick=location.href='inserttestmaterialuploadpage?cl_idnum="
-						+ muList.get(i).getCl_idnum() + "&cl_lv=" + muList.get(i).getCl_lv() + "&pb_num=" + muList.get(i).getPb_num() + "'><br>"
-						+ "<input type='button' value='문제 확인' onclick=location.href='selecttestmaterialuploadlistpage?cl_idnum="
+						+ "<input type='button'  class='btn btn-primary btn-sm' value='문제 작성' onclick=location.href='inserttestmaterialuploadpage?cl_idnum="
+						+ muList.get(i).getCl_idnum() + "&cl_lv=" + muList.get(i).getCl_lv() + "&pb_num="
+						+ muList.get(i).getPb_num() + "'>&nbsp;&nbsp;"
+						+ "<input type='button' class='btn btn-default btn-sm' value='문제 확인' onclick=location.href='selecttestmaterialuploadlistpage?cl_idnum="
 						+ muList.get(i).getCl_idnum() + "&cl_lv=" + muList.get(i).getCl_lv() + "'></td></tr>");
 			}
 			sb.append("</table>");
@@ -276,7 +275,8 @@ public class MaterialUploadMM {
 					if (muDao.insertTestMaterialUploadDetailProblemAjax(mu)) {
 						System.out.println("DetailProblem insert 성공");
 //						view = "redirect:/prof/selecttestmaterialuploadlistpage?cl_idnum=" + mu.getDp_idnum() + "&cl_lv=" + mu.getDp_lv();
-						view = "redirect:/prof/selecttestmaterialclasslist?cl_idnum=" + mu.getDp_idnum() + "&cl_lv=" + mu.getDp_lv();
+						view = "redirect:/prof/selecttestmaterialclasslist?cl_idnum=" + mu.getDp_idnum() + "&cl_lv="
+								+ mu.getDp_lv();
 					} else {
 						view = "inserttestmaterialuploadpage";
 						System.out.println("DetailProblem insert 실패");
@@ -291,7 +291,7 @@ public class MaterialUploadMM {
 		return mav;
 	}
 
-	// "문제 확인" 버튼 클릭시 
+	// "문제 확인" 버튼 클릭시
 	public List<MaterialUpload> selectViewTestMaterialUploadPageAjax(HttpSession session, MaterialUpload mu) {
 		List<MaterialUpload> pbList = new ArrayList<MaterialUpload>();
 		MaterialUpload materialUpload = muDao.selectViewTestMaterialUploadPageAjax(mu);
@@ -400,8 +400,10 @@ public class MaterialUploadMM {
 				System.out.println("회차 : " + muList.get(i).getCo_num());
 				sb.append("<td class='sbClassTd'>" + "<input type='button' value='퀴즈 작성'"
 						+ "onclick=location.href='insertquizmaterialuploadpage?cl_idnum=" + muList.get(i).getCl_idnum()
-						+ "&cl_lv=" + muList.get(i).getCl_lv() + "&co_num=" + muList.get(i).getCo_num() + "&pb_num=" + muList.get(i).getPb_num() + "'><br>"
-						//+ "&cl_lv=" + muList.get(i).getCl_lv() + "&co_num=" + muList.get(i).getCo_num() + "'><br>"
+						+ "&cl_lv=" + muList.get(i).getCl_lv() + "&co_num=" + muList.get(i).getCo_num() + "&pb_num="
+						+ muList.get(i).getPb_num() + "'><br>"
+						// + "&cl_lv=" + muList.get(i).getCl_lv() + "&co_num=" +
+						// muList.get(i).getCo_num() + "'><br>"
 						+ "<input type='button' value='퀴즈 확인'"
 						+ "onclick=location.href='selectquizmaterialuploadlistpage?cl_idnum="
 						+ muList.get(i).getCl_idnum() + "&cl_lv=" + muList.get(i).getCl_lv() + "&co_num="
@@ -503,7 +505,7 @@ public class MaterialUploadMM {
 		String[] dp_pbexmArr = dp_pbexm.split(",");
 		String[] dp_pbexmnumArr = dp_pbexmnumSt.split(",");
 		System.out.println("학생답 : " + mu.getPb_pbstudent());
-		
+
 		System.out.println("if문 시작전");
 		if (dp_pbexm.contains(",") || dp_pbexmnumSt.contains(",")) {
 			System.out.println(", 있데");
@@ -587,7 +589,7 @@ public class MaterialUploadMM {
 			System.out.println("강의 레벨 : " + mu.getPb_lv());
 		}
 		System.out.println("insertSelect Ajax muList = " + muList);
-		
+
 		String dp_pbexm = mu.getDp_pbexm();
 		String dp_pbexmnumSt = mu.getDp_pbexmnumSt();
 		mu.setPb_pbnum(Integer.parseInt(mu.getPb_pbnumSt()));
@@ -595,7 +597,7 @@ public class MaterialUploadMM {
 		String[] dp_pbexmArr = dp_pbexm.split(",");
 		String[] dp_pbexmnumArr = dp_pbexmnumSt.split(",");
 		System.out.println("학생답 : " + mu.getPb_pbstudent());
-		
+
 		System.out.println("if문 시작전");
 		if (dp_pbexm.contains(",") || dp_pbexmnumSt.contains(",")) {
 			System.out.println(", 있데");

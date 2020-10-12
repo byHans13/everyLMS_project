@@ -6,6 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- css -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 <sec:authorize access="hasRole('ROLE_STUD')">
 	<script src="../script/wsocket.js"></script>
 </sec:authorize>
@@ -41,19 +46,30 @@ section {
     float: left;
 }
 
-
-
-.sbClassTh,.sbClassTd{
-border: black 1px solid;
-border-collapse: collapse;
+.sbClassTh, .sbClassTd{
+/* 	border-bottom: 1px solid #999; */
+/* 	color: #666; */
+/* 	border-collapse: collapse; */
+/* 	table-layout::fixed; */
+/* 	text-align: center; */
+/* 	width: 180px; */
+/* 	height: 50px; */
 text-align: center;
-width: 180px;
-height: 50px;
 }
 
 .sbClassTh{
-background-color: skyblue;
-font-size: 20px;
+	border-top: solid 1px #999;
+	border-bottom: solid 1px #b2b2b2;
+	background-color: #cce6ff;
+	color: #333;
+	font-weight: bold;
+	line-height: 20px;
+	vertical-align: center;
+	font-size: 20px;
+}
+
+.btn-outline-primary{
+	background-color: :#cce6ff;
 }
 
 </style>
@@ -74,7 +90,6 @@ font-size: 20px;
 				<b>추천강의</b>
 			</h3>
 		</div>
-		<!-- <div style="border: solid black 1px; overflow: scroll; width: 1100px; height: 600px;"></div> -->
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		<input type="hidden" id="muListValue" value="${muList}">
 		<div id="menu">

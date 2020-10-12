@@ -80,8 +80,8 @@
 					$("#quizMaterialUploadThead"+i).append("<caption id='quizMaterialUploadCaption"+i+"' style='width:500px;'>");
 					$("#quizMaterialUploadCaption"+i).append("<h2>시험 업로드 자료 확인</h2>");
 					$("#quizMaterialUploadTable"+i).append("<tr><td id='btnTd'>"
-										 + "<input type='button' id='btnAdd' value='퀴즈수정' onclick='uploadAddClick()'>"
-							 			 /* + "<input type='button' value='홈으로' onclick=location.href='/h2k5every/'></td></tr>"); */
+										 /* + "<input type='button' id='btnAdd' value='퀴즈수정' onclick='uploadAddClick()'>" */
+										 + "<input type='button' value='뒤로가기' onclick=location.href='/h2k5every/prof/selectquizmaterialclcolist'>"
 							 			 + "<input type='button' value='홈으로' onclick=location.href='/h2k5every/prof/goTeacherLoginFrm'></td></tr>");
 					$("#quizMaterialUploadTable"+i).append("<tbody id='quizMaterialUploadTbody"+i+"'>");
 					$("#quizMaterialUploadTbody"+i).append("<tr><td><h1>" + uploadInfo[0].muPbList[i].dp_coname + "&nbsp;-&nbsp;" + (i+1) + "번 문제</h1></td></tr>");
