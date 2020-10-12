@@ -64,11 +64,34 @@ section {
 .plan {
 	background: gray;
 	color: #ddaf35;
-	float: right;
-	width: 360px;
+	float: left;
+	width: 460px;
 	height: 600px;
 	padding: 90px 20px 20px 0;
 }
+table.type05 {
+    border-collapse: separate;
+    border-spacing: 1px;
+    text-align: left;
+    line-height: 1.5;
+    border-top: 1px solid #ccc;
+    margin: 20px 10px;
+}
+table.type05 th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    background: #efefef;
+}
+table.type05 td {
+    width: 350px;
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+}
+
 </style>
 </head>
 <body>
@@ -106,22 +129,34 @@ $(document).ready
 				<div class="todayPlan">
 					<!-- 요일별 todoList input & output -->
 					<form id='todoList' name='todoList' class='todoList' method="post">
-						<div class="plan-title">Today Plan</div>
+						<div class="plan-title">Insert Plan</div>
 						<div class="plan-input">
+							<table class='type05'>
+								<tr>
+									<th style='color:black;'>강의</th>
+									<td style='color:black;'>
+									<select name='Sc_idnum' id='classList'></select> 									
+									</td>
+								</tr>
+								<tr>
+									<th style='color:black;'>회차</th>
+									<td style='color:black;'><select name='Sc_num' id='courseList' ></select></td>
+								</tr>
+								<tr>
+									<th style='color:black;'>일정</th>
+									<td style='color:black;'>
+							 			<input type="text" placeholder="일정을 적어주세요" id="contents" name='Sc_contents' class="contents">
+									</td>
+								</tr>
+							</table>
+								<input type='button' value='일정 입력' onclick="insertCalendar()"
+								class='input-data' id='input-data' style='color:black;'>
 							<input type='hidden' id='token' data-token-name='${_csrf.headerName}' 
 									name = '${_csrf.parameterName}' value='${_csrf.token}' >
 							<input type="hidden" name='Sc_year' id='hiddenYear' value=''>
 							<input type="hidden" name='Sc_month' id='hiddenMonth' value=''>
 							<input type="hidden" name='Sc_date' id='hiddenDate' value=''>
-							<select name='Sc_idnum' id='classList' >
-								<!--강의리스트 -->
-							</select> 
-							<select name='Sc_num' id='courseList' >
-							</select>
 							<br/>
-							 <input type="text" placeholder="일정을 적어주세욥." id="contents" name='Sc_contents' class="contents"> 
-								<input type='button' value='일정 입력' onclick="insertCalendar()"
-								class='input-data' id='input-data'>
 						</div>
 					</form>
 					<br/>
@@ -210,7 +245,11 @@ function showCalendar(){
                 $tr.appendChild($td);     
             }else{
                 var $td = document.createElement('td');
+                var todaytoday = new Date();
                 $td.textContent = cnt;
+                if(cnt == todaytoday.getDate()){
+                	$td.style.backgroundColor='yellow';
+                }
                 $td.setAttribute('id', cnt); //db에 넣을 pk값 +sessionID                  
             	//$td.setAttribute('onclick', test(cnt));
                 $td.addEventListener('click', test);
@@ -277,6 +316,7 @@ function next(){
     showCalendar(); 
     showMain();    
 }//next End // 다음달로 넘어가기 위한 함수
+
 function showMain(){ // 시작했을 때,날짜 변경시 실행
 	var option = $('#classList');
 	var courseOption = $('#courseList');
@@ -312,8 +352,6 @@ function showMain(){ // 시작했을 때,날짜 변경시 실행
 		  console.log("serialObject hans= ",obj);
 		  return obj;
 		}
-    
-    
     var obj = jQuery('#todoList').serializeObject();
     console.log(obj);
     $.ajax({ //일정 select하기
@@ -327,23 +365,31 @@ function showMain(){ // 시작했을 때,날짜 변경시 실행
 			xhr.setRequestHeader($token.data("token-name"), $token.val());
 		},
     	success: function(json){
-    		console.log(json);
     		$('#plan-output').html("");
-  			if(json!=""){  				
-    		var str=$('#plan-output');  
-    		str.append("<table><tbody>");
-    		for(var i=0; i<json.length; i++){
-    			console.log("dddddddddddddddddddd"+json[i].sc_lv);
-
-				str.append("<tr><td>"+json[i].cl_clName+"</td><td>"+json[i].co_name+"</td><td>"+json[i].sc_contents+
-						"</td><td onclick =\"deleteCalendar('"+json[i].sc_idnum+"','"+json[i].sc_lv+"','"+json[i].sc_contents+"','"+json[i].sc_num+"')\">(X)</td></tr>");
-    		}
-    		str.append("</tbody></table>");
-    		str.append("<input type='hidden' id='token' data-token-name='${_csrf.headerName}'" 
+  			if(json!=""){
+    			var str=$('#plan-output');  
+    			var build="";
+    			build += "<table class='type05'>";
+    			for(var i=0; i<json.length; i++){
+    				console.log(json);
+					build += "<tr>";
+					build += "<td style='color:black;'>"+json[i].cl_clName+"</td>";	
+					build += "<td style='color:black;'>"+json[i].co_name+"</td>";
+					build += "<td style='color:black;'>"+json[i].sc_contents+"</td>";
+					build += "<td onclick =\"deleteCalendar('"+json[i].sc_idnum+"','"
+							+json[i].sc_lv+"','"+json[i].sc_contents+"','"+json[i].sc_num+"')\"><a href='#;' style='color:black;'>일정 삭제</a></td>";
+					build +="<td><a href='/h2k5every/stud/classHome?cl_idnum="
+							+json[i].sc_idnum+"&cl_lv="+json[i].sc_lv+
+							"' style='color:black;'>강의실로 이동</a></td>"
+					build += "</tr>";
+				}
+    			build += "</table>";
+    			str.append(build);
+    			str.append("<input type='hidden' id='token' data-token-name='${_csrf.headerName}'" 
 					+"name = '${_csrf.parameterName}' value='${_csrf.token}' >");
   			}else {
-  			$('#plan-output').html("일정을 추가해주세요.");
-  			$('#plan-output').append("<input type='hidden' id='token' data-token-name='${_csrf.headerName}'" 
+  				$('#plan-output').html("일정을 추가해주세요.");
+  				$('#plan-output').append("<input type='hidden' id='token' data-token-name='${_csrf.headerName}'" 
 					+"name = '${_csrf.parameterName}' value='${_csrf.token}' >");
   			}
     	},error: function(err){
@@ -384,13 +430,24 @@ function insertCalendar(){
 			} // selectBox에 강의 일련번호 = value 강의 이름 = name 넣어주기위한 반복문
 			
 			if(json.length !=0){
-    		str.append("<table><tbody>");
-    		for(var i=0; i<json.length; i++){
-    			console.log("dddddddddddddddddddd"+json[i].sc_lv);
-    			str.append("<tr><td>"+json[i].cl_clName+"</td><td>"+json[i].co_name+"</td><td>"+json[i].sc_contents+
-						"</td><td onclick =\"deleteCalendar('"+json[i].sc_idnum+"','"+json[i].sc_lv+"','"+json[i].sc_contents+"','"+json[i].sc_num+"'')\">(X)</td></tr>");
-    		}
-    		str.append("</tbody></table>");
+    			var build="";
+    			build += "<table class='type05'>";
+    			for(var i=0; i<json.length; i++){
+    				console.log(json);
+					build += "<tr>";
+					build += "<td style='color:black;'>"+json[i].cl_clName+"</td>";	
+					build += "<td style='color:black;'>"+json[i].co_name+"</td>";
+					build += "<td style='color:black;'>"+json[i].sc_contents+"</td>";
+					build += "<td onclick =\"deleteCalendar('"+json[i].sc_idnum+"','"
+							+json[i].sc_lv+"','"+json[i].sc_contents+"','"+json[i].sc_num+"')\"><a href='#;' style='color:black;'>일정 삭제</a></td>";
+					build +="<td><a href='/h2k5every/stud/classHome?cl_idnum="
+							+json[i].sc_idnum+"&cl_lv="+json[i].sc_lv+
+							"' style='color:black;'>강의실로 이동</a></td>"
+					build += "</tr>";
+				}
+    			build += "</table>";
+    			str.append(build);
+
   			}else {
 	  			$('#plan-output').html("일정을 추가해주세요.");
 			}
@@ -426,17 +483,26 @@ function deleteCalendar(classList, lv, contents, courseList){
 		success: function(json){
 			$('#plan-output').html("");
 			var str=$('#plan-output');
-    		str.append("<table><tbody>");
 			if(json.length!=0){
+				var build="";
+				build += "<table class='type05'>";
     		for(var i=0; i<json.length; i++){    			
-    			str.append("<tr><td>"+json[i].cl_clName+"</td><td>"+json[i].co_name+"</td><td>"+json[i].sc_contents+
-						"</td><td onclick =\"deleteCalendar('"+json[i].sc_idnum+"','"+json[i].sc_lv+"','"+json[i].sc_contents+"','"+json[i].sc_num+"')\">(X)</td></tr>");
-    		}
-    		str.append("</tbody></table>");
+    			build += "<tr>";
+				build += "<td style='color:black;'>"+json[i].cl_clName+"</td>";	
+				build += "<td style='color:black;'>"+json[i].co_name+"</td>";
+				build += "<td style='color:black;'>"+json[i].sc_contents+"</td>";
+				build += "<td onclick =\"deleteCalendar('"+json[i].sc_idnum+"','"
+						+json[i].sc_lv+"','"+json[i].sc_contents+"','"+json[i].sc_num+"')\"><a href='#;' style='color:black;'>일정 삭제</a></td>";
+				build +="<td><a href='/h2k5every/stud/classHome?cl_idnum="
+						+json[i].sc_idnum+"&cl_lv="+json[i].sc_lv+
+						"' style='color:black;'>강의실로 이동</a></td>"
+				build += "</tr>";
+			}
+			build += "</table>";
+			str.append(build);
   			}else {
 		 	$('#plan-output').html("일정을 추가해주세요.");
 			}
-			
 		}, error: function(err){
 			console.log(err);
 		}
