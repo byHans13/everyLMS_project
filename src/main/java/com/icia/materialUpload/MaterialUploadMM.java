@@ -26,7 +26,6 @@ public class MaterialUploadMM {
 	ModelAndView mav;
 
 	// "시험자료업로드" 클릭시 Class List 페이지 이동 및 Class List Select
-//	public ModelAndView selectTestMaterial(HttpSession session, MaterialUpload mu) {
 	public ModelAndView selectTestMaterialClassList(HttpSession session, MaterialUpload mu) {
 		mav = new ModelAndView();
 		String view = null;
@@ -44,7 +43,9 @@ public class MaterialUploadMM {
 		if (muList != null) {
 			System.out.println("muList Cl_idnum = " + muList);
 			//search 기능 활용 및 추천 강의 삭제 방법.문의
-			sb.append("<form action='searchclass' method='post'><input type='text' name='searchClass' placeholder='search'><input type='submit' value='검색'></form>");
+//			sb.append("<form action='searchclass' method='post'><input type='text' name='searchClass' placeholder='search'><input type='submit' value='검색'></form>");
+			sb.append("<div><h3><b>시험 자료 업로드</b></h3></div>");
+			sb.append("<div style='width:1100px; height:600px;'>");
 			sb.append("<table class='sbClassTable'>" + "<tr class='sbClassTr'>" + "<th class='sbClassTh'>NO.</th>"
 					+ "<th class='sbClassTh'>강의명</th>" + "<th class='sbClassTh'>회차</th>"
 					+ "<th class='sbClassTh'>학생수</th>" + "<th class='sbClassTh'>교수명</th>"
@@ -326,6 +327,8 @@ public class MaterialUploadMM {
 		StringBuilder sb = new StringBuilder();
 		if (muList != null) {
 			System.out.println("muList Cl_idnum = " + muList);
+			sb.append("<div><h3><b>퀴즈 자료 업로드 - 강의 리스트</b></h3></div>");
+			sb.append("<div style='width:1100px; height:600px;'>");
 			sb.append("<table class='sbClassTable'>" + "<tr class='sbClassTr'>" + "<th class='sbClassTh'>NO.</th>"
 					+ "<th class='sbClassTh'>강의명</th>" + "<th class='sbClassTh'>총회차</th>"
 					+ "<th class='sbClassTh'>학생수</th>" + "<th class='sbClassTh'>교수명</th>"
@@ -346,7 +349,7 @@ public class MaterialUploadMM {
 						+ "<input type='button' value='강좌 리스트 확인' onclick=location.href='selectquizmaterialclcolist?cl_idnum="
 						+ muList.get(i).getCl_idnum() + "&cl_lv=" + muList.get(i).getCl_lv() + "'></td></tr>");
 			}
-			sb.append("</table>");
+			sb.append("</table></div>");
 			System.out.println("selectQuizMaterial ClassList SELECT 성공");
 			view = "goTeacherLoginFrm";
 			mav.addObject("muList", sb.toString() + "");
@@ -374,6 +377,8 @@ public class MaterialUploadMM {
 		StringBuilder sb = new StringBuilder();
 		if (muList != null) {
 			System.out.println("muList Cl_idnum = " + muList.get(0).getCl_idnum());
+			sb.append("<div><h3><b>퀴즈 자료 업로드 - 강좌 리스트</b></h3></div>");
+			sb.append("<div style='width:1100px; height:600px;'>");
 			sb.append("<table class='sbClassTable'>" + "<tr class='sbClassTr'>" + "<th class='sbClassTh'>NO.</th>"
 					+ "<th class='sbClassTh'>강의명</th>" + "<th class='sbClassTh'>회차</th>"
 					+ "<th class='sbClassTh'>강좌명</th>" + "<th class='sbClassTh'>교수명</th>"

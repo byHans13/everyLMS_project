@@ -1,5 +1,9 @@
 Manifest-Version: 1.0
+<<<<<<< HEAD
 Built-By: HanSeungHo
+=======
+Built-By: kyj-n
+>>>>>>> origin/kyj_201012_01
 Build-Jdk: 1.8.0_251
 Created-By: Maven Integration for Eclipse
 

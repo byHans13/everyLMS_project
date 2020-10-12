@@ -41,9 +41,7 @@ section {
     float: left;
 }
 
-.sbClassTable{
-border: black 1px solid;
-}
+
 
 .sbClassTh,.sbClassTd{
 border: black 1px solid;
@@ -71,19 +69,28 @@ font-size: 20px;
 		<jsp:include page="h2k5every_teacherAside.jsp" />
 	</aside>
 	<section id="section" style="margin-left: 20px;">
-			<div id="aaa"><h3><b>추천강의</b></h3></div>
-			<div style="border:solid black 1px; overflow:scroll; width: 1100px;height: 600px;">
-			${muList}
-			</div>
-			    <input type="hidden" name = "${_csrf.parameterName}" value="${_csrf.token}" /></div>
-			<div id="menu"><h3><b>관심사</b></h3></div>
-			
+		<div id="aaa">
+			<h3>
+				<b>추천강의</b>
+			</h3>
+		</div>
+		<!-- <div style="border: solid black 1px; overflow: scroll; width: 1100px; height: 600px;"></div> -->
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+		<input type="hidden" id="muListValue" value="${muList}">
+		<div id="menu">
+			<h3>
+				<b>관심사</b>
+			</h3>
+		</div>
 	</section>
 	<footer>
 		<jsp:include page="h2k5every_footer.jsp" />
 	</footer>
 		
 <script>
+	var muList = $("#muListValue").val();
+	console.log("muList = "+muList);
+	console.log("muList = "+"${muList}");
 function test(id) {
 	$.ajax({
 		type:'get',
@@ -99,11 +106,13 @@ function test(id) {
 		success: function (json) {
 			console.log(json);
 			console.log(json.length);
+			if(muList != null){
+			$("#aaa").html("${muList}");
 		
-			for(var i=0; i<json.length; i++){
-				$('#menu').append("<div class='menu'><p>"+json[i]+"</p></div>");
+				for(var i=0; i<json.length; i++){
+					$('#menu').append("<div class='menu'><p>"+json[i]+"</p></div>");
+				}
 			}
-			
 		},
 		error: function (err) {
 			console.log(err);

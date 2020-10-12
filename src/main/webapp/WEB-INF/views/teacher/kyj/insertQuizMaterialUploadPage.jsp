@@ -71,17 +71,16 @@
 			}, success: function(uploadInfo){
 				console.log(uploadInfo);
 				$("#container").html("<input type='hidden' id='token' data-token-name='${_csrf.headerName}' name='${_csrf.parameterName}' value='${_csfr.token}' />");
-				//$("#container").append("<form id='insertquizMaterialUploadFrm' action='insertquizmaterialupload?${_csrf.parameterName}=${_csrf.token}&cl_idnum='"+idnum+"'&cl_lv='"+lv+"' method='post' encType='multipart/form-data'>");
-				$("#container").append("<form id='insertquizMaterialUploadFrm' action='insertquizmaterialupload?${_csrf.parameterName}=${_csrf.token}' method='post' encType='multipart/form-data'>");
-				$("#insertquizMaterialUploadFrm").append("<input type='hidden' id='token' data-token-name='${_csrf.headerName}' name='${_csrf.parameterName}' value='${_csfr.token}' />");
-				$("#insertquizMaterialUploadFrm").append("<table id='quizMaterialUploadTable' class='table table-border'>");
+				$("#container").append("<form id='insertQuizMaterialUploadFrm' action='insertquizmaterialupload?${_csrf.parameterName}=${_csrf.token}' method='post' encType='multipart/form-data'>");
+				$("#insertQuizMaterialUploadFrm").append("<input type='hidden' id='token' data-token-name='${_csrf.headerName}' name='${_csrf.parameterName}' value='${_csfr.token}' />");
+				$("#insertQuizMaterialUploadFrm").append("<table id='quizMaterialUploadTable' class='table table-border'>");
 				$("#quizMaterialUploadTable").append("<thead id='quizMaterialUploadThead'>");
 				$("#quizMaterialUploadThead").append("<caption id='quizMaterialUploadCaption' style='width:500px;'>");
 				$("#quizMaterialUploadCaption").append("<h2>퀴즈 자료 업로드</h2>");
 				$("#quizMaterialUploadTable").append("<tr><td id='btnTd'>"
 									 + "<input type='button' id='btnAdd' onclick='uploadAddClick()' value='퀴즈 추가'>"
 									 /* + "<input type='button' id='btnCntAfter' onclick='cntAfter()' value='다음 퀴즈'>" */
-									 + "<input type='submit' value='업로드 완료'></td></tr>");
+									 + "<input type='button' id='btnUploadComplet' onclick='uploadComplet()' value='업로드 완료'></td></tr>");
 				$("#quizMaterialUploadTable").append("<tbody id='quizMaterialUploadTbody'>");					
 				$("#quizMaterialUploadTbody").append("<tr><td><h1>"+(cnt+1)+"번 퀴즈</h1>");
 				$("#quizMaterialUploadTbody").append("<input type='hidden' name='pb_idnum' value='"+idnum+"'>");
@@ -89,44 +88,43 @@
 				$("#quizMaterialUploadTbody").append("<tr><td class='muSmall'><b>교수명 : </b>"
 					 				 + "<input type='text' name='pb_id' placeholder='교수명' value='"+ uploadInfo[0].cl_id +"' readonly='readonly'></td>"
 									 + "<td class='muSmall'><b>회차 : </b>"
-									 //문자열을 정수로 변환해주기.
 									 + "<input type='text' name='pb_num' value='"+ conum +"' readonly='readonly'></td><tr>");
 				$("#quizMaterialUploadTbody").append("<tr><td><b>강의명 : </b><input type='text' name='cl_clname' value='"+ uploadInfo[0].cl_clname +"' readonly='readonly'></td>"
 									 + "<td><b>강좌명 : </b><input type='text' name='dp_coname' value='"+ uploadInfo[0].co_name +"' readonly='readonly'></td></tr>");
 				$("#quizMaterialUploadTbody").append("<tr>"
-									 + "<td style='width:500px'><b>퀴즈) </b><input type='text' name='pb_pbname' placeholder='퀴즈명' style='width:500px;'></td>"
+									 + "<td style='width:500px'><b>퀴즈) </b><input type='text' id='pb_pbname' name='pb_pbname' placeholder='퀴즈명' style='width:500px;'></td>"
 									 + "<td class='muSmall'><input type='hidden' name='pb_pbnumSt' placeholder='퀴즈번호' value='"+(cnt+1)+"'></td></tr>");
 				$("#quizMaterialUploadTbody").append("<tr><td colspan='2'><b>보기)<br><span>"
 									 + "<label for='dp_pbexmnum1'>1&nbsp;</label>"
-									 + "<input type='text' class='dp_pbexm' name='dp_pbexm' placeholder='1번 보기'>"
+									 + "<input type='text' id='dp_pbexm1' class='dp_pbexm' name='dp_pbexm' placeholder='1번 보기'>"
 									 + "<input type='hidden' class='dp_pbexmnum' name='dp_pbexmnumSt' value='1'>"
 									 + "<label for='dp_pbexmnum2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;</label>"
-									 + "<input type='text' class='dp_pbexm' name='dp_pbexm' placeholder='2번 보기'>"
+									 + "<input type='text' id='dp_pbexm2' class='dp_pbexm' name='dp_pbexm' placeholder='2번 보기'>"
 									 + "<input type='hidden' class='dp_pbexmnum' name='dp_pbexmnumSt' value='2'>"
 									 + "<label for='dp_pbexmnum3'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3&nbsp;</label>"
-									 + "<input type='text' class='dp_pbexm' name='dp_pbexm' placeholder='3번 보기'>"
+									 + "<input type='text' id='dp_pbexm3' class='dp_pbexm' name='dp_pbexm' placeholder='3번 보기'>"
 									 + "<input type='hidden' class='dp_pbexmnum' name='dp_pbexmnumSt' value='3'>"
 									 + "<label for='dp_pbexmnum4'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4&nbsp;</label>"
-									 + "<input type='text' class='dp_pbexm' name='dp_pbexm' placeholder='4번 보기'>"
+									 + "<input type='text' id='dp_pbexm4' class='dp_pbexm' name='dp_pbexm' placeholder='4번 보기'>"
 									 + "<input type='hidden' class='dp_pbexmnum' name='dp_pbexmnumSt' value='4'>"
 									 + "</span></td></tr>");
 				$("#quizMaterialUploadTbody").append("<tr><td colspan='2'>"
 									 + "<b>정답 : </b><br>"
 									 + "<label for='pb_pbexplain1'>&nbsp;&nbsp;1번&nbsp;</label>"
-									 + "<input type='radio' class='pb_pbexplain' name='pb_pbexplain' value='1'><br>"
+									 + "<input type='radio' id='pb_pbexplain1' class='pb_pbexplain' name='pb_pbexplain' value='1'><br>"
 									 + "<label for='pb_pbexplain2'>&nbsp;&nbsp;2번&nbsp;</label>"
-									 + "<input type='radio' class='pb_pbexplain' name='pb_pbexplain' value='2'><br>"
+									 + "<input type='radio' id='pb_pbexplain2' class='pb_pbexplain' name='pb_pbexplain' value='2'><br>"
 									 + "<label for='pb_pbexplain3'>&nbsp;&nbsp;3번&nbsp;</label>"
-									 + "<input type='radio' class='pb_pbexplain' name='pb_pbexplain' value='3'><br>"
+									 + "<input type='radio' id='pb_pbexplain3' class='pb_pbexplain' name='pb_pbexplain' value='3'><br>"
 									 + "<label for='pb_pbexplain4'>&nbsp;&nbsp;4번&nbsp;</label>"
-									 + "<input type='radio' class='pb_pbexplain' name='pb_pbexplain' value='4'><br>"
+									 + "<input type='radio' id='pb_pbexplain4' class='pb_pbexplain' name='pb_pbexplain' value='4'><br>"
 									 + "</td></tr>");
 				$("#quizMaterialUploadTbody").append("<tr>"
 									 + "<td colspan='2'>"
 									 + "<label for='pb_pbanswer'>해설</label><br>"
-									 + "<textarea class='pb_pbanswer' name='pb_pbanswer' style='width: 800px; height:500px';></textarea>"
+									 + "<textarea  id='pb_pbanswer' class='pb_pbanswer' name='pb_pbanswer' style='width: 800px; height:500px';></textarea>"
 									 + "</td></tr>");
-				cnt++;
+					cnt++;
 		},
 			error : function(err){
 				console.log(err);
@@ -135,10 +133,49 @@
 	});
 		
 	function uploadAddClick() {
+<<<<<<< HEAD
 		idnum=encodeURIComponent(idnum);
 		console.log("퀴즈추가 일련번호 : "+ $("#idnum").val());
 		console.log("퀴즈추가 레벨값 : " + $("#lv").val());
 		var FormData = $('#insertquizMaterialUploadFrm').serialize();
+=======
+		var pbname = $("#pb_pbname");
+		var pbexm1 = $("#dp_pbexm1");
+		var pbexm2 = $("#dp_pbexm2");
+		var pbexm3 = $("#dp_pbexm3");
+		var pbexm4 = $("#dp_pbexm4");
+		var pbexplain = $(":input:radio[name=pb_pbexplain]:checked").val();
+		var pbanswer = $(".pb_pbanswer");
+		console.log("pbexplain 값 = "+pbexplain);
+		if(pbname.val() == '' || pbname.val() == null
+			&& pbexm1.val() == '' || pbexm1.val() == null
+			&& pbexm2.val() == '' || pbexm2.val() == null
+			&& pbexm3.val() == '' || pbexm3.val() == null
+			&& pbexm4.val() == '' || pbexm4.val() == null
+			&& pbexplain == '' || pbexplain == null
+			&& pbanswer.val() == '' || pbanswer.val() == null){
+			alert("모든 입력란을 입력해주세요.");
+		} else if(pbname.val() == '' || pbname.val() == null){
+			alert("퀴즈명을 입력해주세요.");
+		} else if(pbexm1.val() == '' || pbexm1.val() == null){
+			alert("1번 보기를 입력해주세요.");
+		} else if(pbexm2.val() == '' || pbexm2.val() == null){
+			alert("2번 보기를 입력해주세요.");
+		} else if(pbexm3.val() == '' || pbexm3.val() == null){
+			alert("3번 보기를 입력해주세요.");
+		} else if(pbexm4.val() == '' || pbexm4.val() == null){
+			alert("4번 보기를 입력해주세요.");
+		} else if(pbexplain == '' || pbexplain == null){
+			alert("정답을 체크해주세요.");
+		} else if(pbanswer.val() == '' || pbanswer.val() == null){
+			alert("해설을 입력해주세요.");
+		} else {
+
+			console.log("문제추가 일련번호 : "+ $("#idnum").val());
+			console.log("문제추가 레벨값 : " + $("#lv").val());
+			
+		var FormData = $('#insertQuizMaterialUploadFrm').serialize();
+>>>>>>> origin/kyj_201012_01
 		$.ajax({
 			url: 'rest/insertselectquizmaterialuploadfrmajax?cl_idnum='+idnum+'&cl_lv='+lv,
 			type: 'post',
@@ -151,17 +188,16 @@
 			}, success: function(uploadInfo){
 				console.log(uploadInfo);
 				$("#container").html("<input type='hidden' id='token' data-token-name='${_csrf.headerName}' name='${_csrf.parameterName}' value='${_csfr.token}' />");
-				//$("#container").append("<form id='insertquizMaterialUploadFrm' action='insertquizmaterialupload?${_csrf.parameterName}=${_csrf.token}&cl_idnum='"+idnum+"'&cl_lv='"+lv+"' method='post' encType='multipart/form-data'>");
-				$("#container").append("<form id='insertquizMaterialUploadFrm' action='insertquizmaterialupload?${_csrf.parameterName}=${_csrf.token}' method='post' encType='multipart/form-data'>");
-				$("#insertquizMaterialUploadFrm").append("<input type='hidden' id='token' data-token-name='${_csrf.headerName}' name='${_csrf.parameterName}' value='${_csfr.token}' />");
-				$("#insertquizMaterialUploadFrm").append("<table id='quizMaterialUploadTable' class='table table-border'>");
+				$("#container").append("<form id='insertQuizMaterialUploadFrm' action='insertquizmaterialupload?${_csrf.parameterName}=${_csrf.token}' method='post' encType='multipart/form-data'>");
+				$("#insertQuizMaterialUploadFrm").append("<input type='hidden' id='token' data-token-name='${_csrf.headerName}' name='${_csrf.parameterName}' value='${_csfr.token}' />");
+				$("#insertQuizMaterialUploadFrm").append("<table id='quizMaterialUploadTable' class='table table-border'>");
 				$("#quizMaterialUploadTable").append("<thead id='quizMaterialUploadThead'>");
 				$("#quizMaterialUploadThead").append("<caption id='quizMaterialUploadCaption' style='width:500px;'>");
 				$("#quizMaterialUploadCaption").append("<h2>퀴즈 자료 업로드</h2>");
 				$("#quizMaterialUploadTable").append("<tr><td id='btnTd'>"
 									 + "<input type='button' id='btnAdd' onclick='uploadAddClick()' value='퀴즈 추가'>"
 									 /* + "<input type='button' id='btnCntAfter' onclick='cntAfter()' value='다음 퀴즈'>" */
-									 + "<input type='submit' value='업로드 완료'></td></tr>");
+									 + "<input type='button' id='btnUploadComplet' onclick='uploadComplet()' value='업로드 완료'></td></tr>");
 				$("#quizMaterialUploadTable").append("<tbody id='quizMaterialUploadTbody'>");					
 				$("#quizMaterialUploadTbody").append("<tr><td><h1>"+(cnt+1)+"번 퀴즈</h1>");
 				$("#quizMaterialUploadTbody").append("<input type='hidden' name='pb_idnum' value='"+idnum+"'>");
@@ -173,44 +209,81 @@
 				$("#quizMaterialUploadTbody").append("<tr><td><b>강의명 : </b><input type='text' name='cl_clname' value='"+ uploadInfo[0].cl_clname +"' readonly='readonly'></td>"
 									 + "<td><b>강좌명 : </b><input type='text' name='dp_coname' value='"+ uploadInfo[0].co_name +"' readonly='readonly'></td></tr>");
 				$("#quizMaterialUploadTbody").append("<tr>"
-									 + "<td style='width:500px'><b>퀴즈) </b><input type='text' name='pb_pbname' placeholder='퀴즈명' style='width:500px;'></td>"
+									 + "<td style='width:500px'><b>퀴즈) </b><input type='text' id='pb_pbname' name='pb_pbname' placeholder='퀴즈명' style='width:500px;'></td>"
 									 + "<td class='muSmall'><input type='hidden' name='pb_pbnumSt' placeholder='퀴즈번호' value='"+(cnt+1)+"'></td></tr>");
 				$("#quizMaterialUploadTbody").append("<tr><td colspan='2'><b>보기)<br><span>"
 									 + "<label for='dp_pbexmnum1'>1&nbsp;</label>"
-									 + "<input type='text' class='dp_pbexm' name='dp_pbexm' placeholder='1번 보기'>"
+									 + "<input type='text' id='dp_pbexm1' class='dp_pbexm' name='dp_pbexm' placeholder='1번 보기'>"
 									 + "<input type='hidden' class='dp_pbexmnum' name='dp_pbexmnumSt' value='1'>"
 									 + "<label for='dp_pbexmnum2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;</label>"
-									 + "<input type='text' class='dp_pbexm' name='dp_pbexm' placeholder='2번 보기'>"
+									 + "<input type='text' id='dp_pbexm2' class='dp_pbexm' name='dp_pbexm' placeholder='2번 보기'>"
 									 + "<input type='hidden' class='dp_pbexmnum' name='dp_pbexmnumSt' value='2'>"
 									 + "<label for='dp_pbexmnum3'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3&nbsp;</label>"
-									 + "<input type='text' class='dp_pbexm' name='dp_pbexm' placeholder='3번 보기'>"
+									 + "<input type='text' id='dp_pbexm3' class='dp_pbexm' name='dp_pbexm' placeholder='3번 보기'>"
 									 + "<input type='hidden' class='dp_pbexmnum' name='dp_pbexmnumSt' value='3'>"
 									 + "<label for='dp_pbexmnum4'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4&nbsp;</label>"
-									 + "<input type='text' class='dp_pbexm' name='dp_pbexm' placeholder='4번 보기'>"
+									 + "<input type='text' id='dp_pbexm4' class='dp_pbexm' name='dp_pbexm' placeholder='4번 보기'>"
 									 + "<input type='hidden' class='dp_pbexmnum' name='dp_pbexmnumSt' value='4'>"
 									 + "</span></td></tr>");
 				$("#quizMaterialUploadTbody").append("<tr><td colspan='2'>"
 									 + "<b>정답 : </b><br>"
 									 + "<label for='pb_pbexplain1'>&nbsp;&nbsp;1번&nbsp;</label>"
-									 + "<input type='radio' class='pb_pbexplain' name='pb_pbexplain' value='1'><br>"
+									 + "<input type='radio' id='pb_pbexplain1' class='pb_pbexplain' name='pb_pbexplain' value='1'><br>"
 									 + "<label for='pb_pbexplain2'>&nbsp;&nbsp;2번&nbsp;</label>"
-									 + "<input type='radio' class='pb_pbexplain' name='pb_pbexplain' value='2'><br>"
+									 + "<input type='radio' id='pb_pbexplain2' class='pb_pbexplain' name='pb_pbexplain' value='2'><br>"
 									 + "<label for='pb_pbexplain3'>&nbsp;&nbsp;3번&nbsp;</label>"
-									 + "<input type='radio' class='pb_pbexplain' name='pb_pbexplain' value='3'><br>"
+									 + "<input type='radio' id='pb_pbexplain3' class='pb_pbexplain' name='pb_pbexplain' value='3'><br>"
 									 + "<label for='pb_pbexplain4'>&nbsp;&nbsp;4번&nbsp;</label>"
-									 + "<input type='radio' class='pb_pbexplain' name='pb_pbexplain' value='4'><br>"
+									 + "<input type='radio' id='pb_pbexplain4' class='pb_pbexplain' name='pb_pbexplain' value='4'><br>"
 									 + "</td></tr>");
 				$("#quizMaterialUploadTbody").append("<tr>"
 									 + "<td colspan='2'>"
 									 + "<label for='pb_pbanswer'>해설</label><br>"
-									 + "<textarea class='pb_pbanswer' name='pb_pbanswer' style='width: 800px; height:500px';></textarea>"
+									 + "<textarea  id='pb_pbanswer' class='pb_pbanswer' name='pb_pbanswer' style='width: 800px; height:500px';></textarea>"
 									 + "</td></tr>");
-				cnt++;
-		},
-			error : function(err){
-				console.log(err);
-			}
-		});
+					cnt++;
+			},
+				error : function(err){
+					console.log(err);
+				}
+			});
+		}
+	}
+	
+	function uploadComplet() {
+		var pbname = $("#pb_pbname");
+		var pbexm1 = $("#dp_pbexm1");
+		var pbexm2 = $("#dp_pbexm2");
+		var pbexm3 = $("#dp_pbexm3");
+		var pbexm4 = $("#dp_pbexm4");
+		var pbexplain = $(":input:radio[name=pb_pbexplain]:checked").val();
+		var pbanswer = $(".pb_pbanswer");
+		console.log("pbexplain 값 = "+pbexplain);
+		if(pbname.val() == '' || pbname.val() == null
+			&& pbexm1.val() == '' || pbexm1.val() == null
+			&& pbexm2.val() == '' || pbexm2.val() == null
+			&& pbexm3.val() == '' || pbexm3.val() == null
+			&& pbexm4.val() == '' || pbexm4.val() == null
+			&& pbexplain == '' || pbexplain == null
+			&& pbanswer.val() == '' || pbanswer.val() == null){
+			alert("모든 입력란을 입력해주세요.");
+		} else if(pbname.val() == '' || pbname.val() == null){
+			alert("퀴즈명을 입력해주세요.");
+		} else if(pbexm1.val() == '' || pbexm1.val() == null){
+			alert("1번 보기를 입력해주세요.");
+		} else if(pbexm2.val() == '' || pbexm2.val() == null){
+			alert("2번 보기를 입력해주세요.");
+		} else if(pbexm3.val() == '' || pbexm3.val() == null){
+			alert("3번 보기를 입력해주세요.");
+		} else if(pbexm4.val() == '' || pbexm4.val() == null){
+			alert("4번 보기를 입력해주세요.");
+		} else if(pbexplain == '' || pbexplain == null){
+			alert("정답을 체크해주세요.");
+		} else if(pbanswer.val() == '' || pbanswer.val() == null){
+			alert("해설을 입력해주세요.");
+		} else {
+			$("#insertQuizMaterialUploadFrm").submit();
+		}
 	}
 	
 	</script>
