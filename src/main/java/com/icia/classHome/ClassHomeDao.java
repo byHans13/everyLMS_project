@@ -204,7 +204,9 @@ public interface ClassHomeDao {
 		boolean insertPointBreakdown(PointBean pb);
 		@Insert("INSERT INTO aa(aa_idnum, aa_lv, aa_id) VALUES(#{cl_idnum}, #{cl_lv}, #{cl_id})")
 		boolean insertClassAdmiApplication(ClassBean cb);
-		
+		@Insert("INSERT INTO atd(atd_atmk, atd_num, atd_id, atd_idnum, atd_lv) VALUES"
+				+ "(1, 0, #{cl_id}, #{cl_idnum}, #{cl_lv})")
+		void insertClassAtmkNumZero(ClassBean cb);
 		//LevelCheckPage
 		@Select("SELECT * FROM cc WHERE cc_id=#{sessionId} AND cc_check=1")
 		List<ConcernBean> selectLevelCheckPage(String sessionId);
@@ -253,6 +255,7 @@ public interface ClassHomeDao {
 		@Insert("INSERT INTO fl(fl_subvd, fl_sysname, fl_oriname, fl_num, fl_id, fl_idnum, fl_lv) VALUES"
 				+ "(#{fl_subvd}, #{fl_sysname}, #{fl_oriname}, #{fl_num}, #{fl_id}, #{fl_idnum}, #{fl_lv})")
 		boolean insertFlHomework(FileBean fl);
+		
 
 
 
