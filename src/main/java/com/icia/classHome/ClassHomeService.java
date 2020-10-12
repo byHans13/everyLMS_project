@@ -806,7 +806,7 @@ public class ClassHomeService {
 			int size = myClassList.size();
 			for (int x = 0; x < size; x++) {
 				aaBean = myClassList.get(x);
-				aaBean.setAt_atmkCnt(cDao.selectCountMyClassAtmk(aaBean));
+				aaBean.setAt_atmkCnt(cDao.selectCountMyClassAtmk(aaBean));//
 				myClassList.set(x, aaBean);
 			}
 			if (myClassList != null) {

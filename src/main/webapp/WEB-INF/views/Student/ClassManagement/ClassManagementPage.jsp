@@ -80,7 +80,28 @@ section {
    white-space: normal;
    overflow: scroll
 }
-
+table.type11 {
+    border-collapse: separate;
+    border-spacing: 1px;
+    text-align: center;
+    line-height: 1.5;
+    margin: 20px 10px;
+}
+table.type11 th {
+    width: 155px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #fff;
+    background: black ;
+}
+table.type11 td {
+    width: 155px;
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    background: #eee;
+}
 </style>
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -122,12 +143,13 @@ var myClassList = ${myClassList};
 var myLikeList = ${myLikeList};
 var section = $('#section');
 var modal = $('#modal');
-
+console.log(myLikeList);
 function startClassManagementPage(){
 	section.append("<div id='classList'><h3>수강 중인 과목</h3><br/></div>");	
 	section.append("<div id='likeList'><h3>나의 관심 강의</h3><br/></div>");	
 	//create myClassList Table 
-	var str="<table id='tableCL'><tr><td>강의명</td><td>진도율</td><td>강의실로 이동</td></tr>";
+	var str="<table id='tableCL' class='type11'><thead><tr><th>강의명</th><th>진도율</th><th>강의실로 이동</th></thead></tr>";
+		str+="<tbody>";
 	if(Object.keys(myClassList).length !=0){		
 		console.log(myClassList);
 		for(var i in myClassList){
@@ -143,12 +165,13 @@ function startClassManagementPage(){
 	}else{
 		str +="<tr><td colspan='3'>수강 중인 강의가 없습니다.</td></tr>";
 	}
-	str +="</table>";
+	str +="</tbody></table>";
 	$('#classList').append(str);
 	//create myLikeList Table
-	str="<table id='tableLL'><tr><td>강의명</td><td>강사명</td><td>강의계획서 보기</td><td>수강신청</td></tr>";
+	str="<table id='tableLL' class='type11'><thead><tr><th>강의명</th><th>강사명</th><th>강의계획서 보기</th><th>수강신청</th></tr></thead>";
 	console.log(Object.keys(myLikeList).length);
 	console.log(myLikeList);
+	str+="<tbody>";
 	if(Object.keys(myLikeList).length!=0){
 		for(var j in myLikeList){
 			str+="<tr><td>"+myLikeList[j].cl_clName+"</td>";
@@ -159,13 +182,14 @@ function startClassManagementPage(){
 	}else{
 		str +="<tr><td colspan='4'>관심설정한 강의가 없습니다.</td></tr>";
 	}
-	str +="</table>";
+	str +="</tbody></table>";
 	$('#likeList').append(str);
 };//startClassManagementPage END
 
 function openBuyPage(idnum, lv){
 	modal.addClass('open');
 	var m_contents=$('#contents_modal');
+	m_contents.html("");
 	var obj = {"cl_idnum":idnum, "cl_lv":lv};
 	$.ajax({
 		type:'get',

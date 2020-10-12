@@ -23,7 +23,7 @@ public interface ClassHomeDao {
 	
 		
 		//scheduel select, delete, insert -lv값 수정 완료  // test 못함
-		@Select("SELECT * FROM aaCl WHERE aa_id = #{aa_id}")
+		@Select("SELECT * FROM aaCl WHERE aa_id = #{aa_id} AND cl_ct=2")
 		List<AdmiApplicationBean> selectMyCalendar(AdmiApplicationBean ab);
 		List<ScheduleBean> selectSchedule(ScheduleBean sb);
 		boolean insertSchedule(ScheduleBean cb);
@@ -186,7 +186,7 @@ public interface ClassHomeDao {
 		boolean updateClassLike(LikeBean lb);
 		
 		//classManagementPage로 이동 
-		@Select("SELECT * FROM likes WHERE likes_id=#{sessionId} AND likes_check=1")
+		@Select("SELECT * FROM likeCt WHERE likes_id=#{sessionId} AND likes_check='1' AND cl_ct='2'")
 		List<LikeBean> selectMyLikeList(String sessionId);
 		@Select("SELECT * FROM classInfo WHERE cl_idnum=#{likes_idnum} AND cl_lv=#{likes_lv}")
 		ClassBean selectMyLikeListInfo(LikeBean likeBean);
