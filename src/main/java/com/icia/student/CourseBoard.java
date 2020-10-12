@@ -9,7 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-@Alias("cob")
+@Alias("cobs")
 @Accessors(chain=true)
 @Data
 public class CourseBoard {
