@@ -9,6 +9,9 @@
 	<script src="../script/wsocket.js"></script>
 	</sec:authorize>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <meta charset="UTF-8">
 <meta name="_csrf" content="${_csrf.token}">
 <meta name="_csrf_header" content="${_csrf.headerName}">
@@ -164,7 +167,7 @@ var managerClassList =${manager_classList};
 
 if(managerClassList.length !=0){
 	console.dir(managerClassList);
-	$('#comeClass').append("<table><thead><tr><th>강의명</th><th>난이도</th><th>시작날짜</th><th>종료날짜</th><th>강의계획서</th><th>강좌및과제관리</th><th>수강자관리</th></tr></thead><tbody>");
+	$('#comeClass').append("<table class='table table-hover'><thead style='background-color:silver;'><tr><th>강의명</th><th>난이도</th><th>시작날짜</th><th>종료날짜</th><th>강의계획서</th><th>강좌및과제관리</th><th>수강자관리</th></tr></thead><tbody>");
 	for(var i=0; i<managerClassList.length; i++){
 		console.log("sumnum= "+managerClassList[i].cl_lcnum);
 		//sumnum=managerClassList[i].cl_lcnum;
@@ -183,7 +186,7 @@ function openClassPlan(pc_title,pc_cont,cl_cc,cl_lcnum) {
 	 $('#articleView_layer').addClass('open');
 	//console.log(pc_title+pc_cont+cl_cc+cl_lcnum);
 	//var cont = pc_cont.replace(/(<br>|<br\/>|<br \/>)/g, '\r\n');
-	$('#contents_layer').append("<center><h3>강의계획서</h3><table><tr><th>계획서 개요</th><th>"+pc_title+"</th></tr><tr><th>계획서 내용</th><th>"+pc_cont+"</th></tr><tr><th>관심사</th><th>"+cl_cc+"</th></tr><tr><th>총강좌회차</th><th>"+cl_lcnum+"</th></tr></table></center>");
+	$('#contents_layer').append("<center class='table table-bordered'><h3>강의계획서</h3><table><tr><th>계획서 개요</th><th>"+pc_title+"</th></tr><tr><th>계획서 내용</th><th>"+pc_cont+"</th></tr><tr><th>관심사</th><th>"+cl_cc+"</th></tr><tr><th>총강좌회차</th><th>"+cl_lcnum+"</th></tr></table></center>");
 	
 	
 }
@@ -214,7 +217,7 @@ function ajaxaa(cl_lv,cl_idnum,sumnum) {
 		$('#ttt').remove();
 		$('#comeErr').text("");
 		if(aaList.length!=0){
-		$('#comeAa').append("<table id='ttt'><thead><tr><th>학생ID</th><th>진도율</th><th>쪽지보내기</th></tr></thead><tbody id='aa'>");
+		$('#comeAa').append("<table id='ttt' class='table table-hover'><thead style='background-color:silver;'><tr><th>학생ID</th><th>진도율</th><th>쪽지보내기</th></tr></thead><tbody id='aa'>");
 		for(var i=0; i<aaList.length; i++){
 			console.log(aaList[i]);
 			$('#aa').append("<tr><td>"+aaList[i].aa_id+"</td><td><a onclick=\"openProgress('"+aaList[i].aa_id+"','"+cl_idnum+"','"+cl_lv+"','"+sumnum+"')\">상세보기</a></td><td><a onclick=\"openMsg('"+aaList[i].aa_id+"','"+cl_idnum+"')\">보내기</a></td></tr>");

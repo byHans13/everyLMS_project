@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.icia.classup.IClassUpDao">
+<insert id="insertclassupload" parameterType="com.icia.classup.ClassUpBean">
+INSERT INTO CLASS(cl_idnum,cl_lv,cl_clname,cl_id,cl_fnday,cl_stday,cl_pt,cl_lcnum,cl_cc,cl_ct) VALUES(#{cl_idnum},#{cl_lv},#{cl_clname},#{cl_id},#{cl_fnday},#{cl_stday},#{cl_pt},#{cl_lcnum},#{cl_cc}, DEFAULT)
+</insert>
+<select id="classList" parameterType="String" resultType="com.icia.classup.ClassUpBean">
+	SELECT * FROM CLPC WHERE CL_ID=#{id}
+</select>
+
+
+
+</mapper>

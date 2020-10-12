@@ -8,6 +8,9 @@
 <meta name="_csrf_header" content="${_csrf.headerName}">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script>
 $(function(){  
 	   
@@ -39,7 +42,7 @@ border-collapse: collapse;
 
 html, body {
    height: 100%;
-   margin: 0
+   margin: 0;
 }
 
 #articleView_layer {
@@ -145,7 +148,7 @@ openClass(cl_ct);
 function openClass(cl_ct) {
 	console.log("cl_ct: "+ cl_ct);
 	if(cl_ct=='1'){
-		$('#classOpen').append("<p>관리자가 검토중입니다.</p>");
+		$('#classOpen').append("<p style='text-align:center;'>관리자가 검토중입니다.</p>");
 	}
 	$.ajax({
 		url:'rest/classListVal?cl_ct='+cl_ct+'&${_csrf.parameterName }=${_csrf.token}',
@@ -161,8 +164,8 @@ function openClass(cl_ct) {
 		},
 		success: function(classList) {
 			if(classList.length !=0){
-			$("#classOpen").append('<table style="border: solid 1px;">');
-			$('table').append('<thead><tr><th>강의명</th><th>강의 시작일</th><th>강의 종료일</th><th>강의 회차</th><th>강의 가격</th><th>관심분야</th><th>강의 계획서</th><th>썸네일</th></tr></thead><tbody>');
+			$("#classOpen").append('<table style="border: solid 1px;" class="table table-hover">');
+			$('table').append('<thead style="background-color:silver;"><tr><th>강의명</th><th>강의 시작일</th><th>강의 종료일</th><th>강의 회차</th><th>강의 가격</th><th>관심분야</th><th>강의 계획서</th><th>썸네일</th></tr></thead><tbody>');
 			for(var i=0; i<classList.length; i++){
 				console.log("classList[i].pi_pisysname: "+ classList[i].pi_pisysname);
 				var st = classList[i].cl_stday.split(" ");
@@ -179,7 +182,7 @@ function openClass(cl_ct) {
 						}//end
 				} 
 			}else if(classList.length ==0){
-				$('#classOpen').append("<p>강의가 존재하지 않습니다.</p>");
+				$('#classOpen').append("<p style='text-align:center;'>강의가 존재하지 않습니다.</p>");
 			}
 		},
 		error: function(err) {
@@ -195,8 +198,8 @@ function articleView(clname, lv, title, cont, lcnum, idnum){
 	var clNumber = parseInt(lcnum);
 	console.log(clNumber);
 	   $('#articleView_layer').addClass('open'); //모달박스 나타남
-	         $('#contents_layer').html("<h1>강의명</h1>"+clname+"<h1>강의레벨</h1>"+lv+"<h1>제목</h1>"+title+"<h1>내용</h1><textarea style='width: 100px; height: 100px;'readonly>"+pc_cont+"</textarea><br>");
-		   	$('#contents_layer').append('<a href="coursePage/'+lv+'/'+idnum+'/'+lcnum+'"><h3 style="color: black;">나의 강의</h3></a>');
+	        $('#contents_layer').html("<h1>강의명</h1>"+clname+"<h1>강의레벨</h1>"+lv+"<h1>제목</h1>"+title+"<h1>내용</h1><textarea style='width: 100px; height: 100px;'readonly>"+pc_cont+"</textarea><br>");
+	   $('#contents_layer').append('<a href="coursePage/'+lv+'/'+idnum+'/'+lcnum+'"><h3 style="color: black;">나의 강의</h3></a>');
 		    $('#contents_layer').append("<a id='uppc' onclick=\"updateplan('"+clname+"','"+lv+"','"+title+"','"+cont+"','"+lcnum+"','"+idnum+"')\"><h3 style='color: black;'>강의 계획서 수정</h3></a>");	
 		   // $('#contents_layer').append('<a><h3 style="color: black;">강의 계획서 삭제</h3></a>');	
 		    
