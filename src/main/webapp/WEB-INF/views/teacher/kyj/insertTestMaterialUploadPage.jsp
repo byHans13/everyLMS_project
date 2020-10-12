@@ -8,17 +8,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>시험 자료 업로드</title>
 <!-- Latest compiled and minified CSS -->
-<<<<<<< HEAD
+
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="../resources/js/jquery.serializeObject.js"></script>
-=======
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <sec:authorize access="hasRole('ROLE_STUD')">
 	<script src="../script/wsocket.js"></script>
 </sec:authorize>
 	<script src="../resources/js/jquery.serializeObject.js"></script>
->>>>>>> origin/last_gahee_1
+
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -74,7 +74,6 @@
 			}, success: function(uploadInfo){
 				console.log(uploadInfo);
 				$("#container").html("<input type='hidden' id='token' data-token-name='${_csrf.headerName}' name='${_csrf.parameterName}' value='${_csfr.token}' />");
-				//$("#container").html("<input type='hidden' id='token' data-token-name='${_csrf.headerName}' name='${_csrf.parameterName}&cl_idnum='"+idnum+"'&cl_lv='"+lv+"' value='${_csfr.token}' />");
 				$("#container").append("<form id='insertTestMaterialUploadFrm' action='inserttestmaterialupload?${_csrf.parameterName}=${_csrf.token}' method='post' encType='multipart/form-data'>");
 				$("#insertTestMaterialUploadFrm").append("<input type='hidden' id='token' data-token-name='${_csrf.headerName}' name='${_csrf.parameterName}' value='${_csfr.token}' />");
 				$("#insertTestMaterialUploadFrm").append("<table id='testMaterialUploadTable' class='table table-border'>");
@@ -82,7 +81,7 @@
 				$("#testMaterialUploadThead").append("<caption id='testMaterialUploadCaption' style='width:500px;'>");
 				$("#testMaterialUploadCaption").append("<h2>시험 자료 업로드</h2>");
 				$("#testMaterialUploadTable").append("<tr><td id='btnTd'><button id='btnAdd' type='button' onclick='uploadAddClick()'>문제 추가</button>"
-									 + "<button type='submit'>업로드 완료</button></td></tr>");
+									 + "<input type='button' id='btnUploadComplet' onclick='uploadComplet()' value='업로드 완료'></td></tr>");
 				$("#testMaterialUploadTable").append("<tbody id='testMaterialUploadTbody'>");					
 				$("#testMaterialUploadTbody").append("<tr><td><h1>"+(cnt+1)+"번 문제</h1>");
 				$("#testMaterialUploadTbody").append("<input type='hidden' name='pb_idnum' value='"+idnum+"'>");
@@ -145,10 +144,6 @@
 		var pbexm3 = $("#dp_pbexm3");
 		var pbexm4 = $("#dp_pbexm4");
 		var pbexplain = $(":input:radio[name=pb_pbexplain]:checked").val();
-		//var pbexplain1 = $("#pb_pbexplain1");
-		//var pbexplain2 = $("#pb_pbexplain2");
-		//var pbexplain3 = $("#pb_pbexplain3");
-		//var pbexplain4 = $("#pb_pbexplain4");
 		var pbanswer = $(".pb_pbanswer");
 		console.log("pbexplain 값 = "+pbexplain);
 		if(pbname.val() == '' || pbname.val() == null
@@ -156,10 +151,6 @@
 			&& pbexm2.val() == '' || pbexm2.val() == null
 			&& pbexm3.val() == '' || pbexm3.val() == null
 			&& pbexm4.val() == '' || pbexm4.val() == null
-			//&& pbexplain1.val() == '' || pbexplain1.val() == null
-			//&& pbexplain2.val() == '' || pbexplain2.val() == null
-			//&& pbexplain3.val() == '' || pbexplain3.val() == null
-			//&& pbexplain4.val() == '' || pbexplain4.val() == null
 			&& pbexplain == '' || pbexplain == null
 			&& pbanswer.val() == '' || pbanswer.val() == null){
 			alert("모든 입력란을 입력해주세요.");
@@ -173,8 +164,6 @@
 			alert("3번 보기를 입력해주세요.");
 		} else if(pbexm4.val() == '' || pbexm4.val() == null){
 			alert("4번 보기를 입력해주세요.");
-		//} else if(pbexplain.val() == '' || pbexplain.val() == null){
-		//} else if(pbexplain1.val() == null && pbexplain2.val() == null && pbexplain3.val() == null && pbexplain4.val() == null ){
 		} else if(pbexplain == '' || pbexplain == null){
 			alert("정답을 체크해주세요.");
 		} else if(pbanswer.val() == '' || pbanswer.val() == null){
@@ -205,7 +194,7 @@
 					$("#testMaterialUploadThead").append("<caption id='testMaterialUploadCaption' style='width:500px;'>");
 					$("#testMaterialUploadCaption").append("<h2>시험 자료 업로드</h2>");
 					$("#testMaterialUploadTable").append("<tr><td id='btnTd'><button id='btnAdd' type='button' onclick='uploadAddClick()'>문제 추가</button>"
-										 + "<button type='submit'>업로드 완료</button></td></tr>");
+										 + "<input type='button' id='btnUploadComplet' onclick='uploadComplet()' value='업로드 완료'></td></tr>");
 					$("#testMaterialUploadTable").append("<tbody id='testMaterialUploadTbody'>");					
 					$("#testMaterialUploadTbody").append("<tr><td><h1>"+(cnt+1)+"번 문제</h1>");
 					$("#testMaterialUploadTbody").append("<input type='hidden' name='pb_idnum' value='"+idnum+"'>");
@@ -260,6 +249,42 @@
 					console.log(err);
 				}
 			});
+		}
+	}
+	
+	function uploadComplet() {
+		var pbname = $("#pb_pbname");
+		var pbexm1 = $("#dp_pbexm1");
+		var pbexm2 = $("#dp_pbexm2");
+		var pbexm3 = $("#dp_pbexm3");
+		var pbexm4 = $("#dp_pbexm4");
+		var pbexplain = $(":input:radio[name=pb_pbexplain]:checked").val();
+		var pbanswer = $(".pb_pbanswer");
+		console.log("pbexplain 값 = "+pbexplain);
+		if(pbname.val() == '' || pbname.val() == null
+			&& pbexm1.val() == '' || pbexm1.val() == null
+			&& pbexm2.val() == '' || pbexm2.val() == null
+			&& pbexm3.val() == '' || pbexm3.val() == null
+			&& pbexm4.val() == '' || pbexm4.val() == null
+			&& pbexplain == '' || pbexplain == null
+			&& pbanswer.val() == '' || pbanswer.val() == null){
+			alert("모든 입력란을 입력해주세요.");
+		} else if(pbname.val() == '' || pbname.val() == null){
+			alert("퀴즈명을 입력해주세요.");
+		} else if(pbexm1.val() == '' || pbexm1.val() == null){
+			alert("1번 보기를 입력해주세요.");
+		} else if(pbexm2.val() == '' || pbexm2.val() == null){
+			alert("2번 보기를 입력해주세요.");
+		} else if(pbexm3.val() == '' || pbexm3.val() == null){
+			alert("3번 보기를 입력해주세요.");
+		} else if(pbexm4.val() == '' || pbexm4.val() == null){
+			alert("4번 보기를 입력해주세요.");
+		} else if(pbexplain == '' || pbexplain == null){
+			alert("정답을 체크해주세요.");
+		} else if(pbanswer.val() == '' || pbanswer.val() == null){
+			alert("해설을 입력해주세요.");
+		} else {
+			$("#insertTestMaterialUploadFrm").submit();
 		}
 	}
 	
