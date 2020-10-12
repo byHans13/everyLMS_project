@@ -171,6 +171,27 @@ td {
 	</footer>
 </body>
 <script>
+jQuery.fn.serializeObject = function() {
+	  var obj = null;
+	  try {
+	    if(this[0].tagName && this[0].tagName.toUpperCase() == "FORM" ) {
+	      var arr = this.serializeArray();
+	      if(arr){
+	        obj = {};    
+	        jQuery.each(arr, function() {
+	        obj[this.name] = this.value;
+	        });             
+	      }
+	    }
+	  }catch(e) {
+	    alert(e.message);
+	  }finally  {}
+	  console.log("serialObject hans= ",obj);
+	  return obj;
+	}
+
+
+
 	var sessionID = "${sessionScope.id}";
 	var el = ${classInfo}; //포워딩으로 보내준 Gson값 받음
 	var infoReview = ${infoReview};

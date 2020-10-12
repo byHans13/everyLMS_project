@@ -4,26 +4,28 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.icia.student.StudentDao">
 
+	<select id='selectClassHome' parameterType='cl'
+		resultType='cl'>
+		SELECT * FROM classInfo WHERE cl_idnum = #{cl_idnum} AND cl_lv=#{cl_lv}
+	</select>
 	<select id="getsearchqnaList" resultType="cl"> <!-- 첫 게시판 페이징 -->
 	     <![CDATA[
 	     SELECT *
 	     FROM (
 				SELECT /*+INDEX_DESC(qna_vw cob_date)*/ ROWNUM RN, qna_vw.*
 				FROM qna_vw
-				WHERE ROWNUM<=#{pageNum}*10 and CL_CLNAME = #{search})
+				WHERE ROWNUM<=#{pageNum}*10 and cl_clname LIKE '%'||#{search}||'%')
 			WHERE RN>=#{pageNum}*10-9
 			
 			]]>
 
 	</select>
-	
-	
 
 	<select id="searchClassQnaDetail" resultType="cl"> <!-- 검색시 페이징 -->
 	<![CDATA[
 	SELECT * 
 	FROM 
-( SELECT /*+INDEX_DESC(qna_vw cl_idnum)*/ ROWNUM RN, qna_vw.* 
+( SELECT /*+INDEX_DESC(qna_vw cob_date)*/ ROWNUM RN, qna_vw.* 
 FROM qna_vw 
 WHERE ROWNUM<=#{pageNum}*10)
 ]]>
@@ -64,9 +66,9 @@ RN>=#{pageNum}*9-10 and cob_title LIKE '%'||#{search}||'%'
 	     <![CDATA[
 	     SELECT *
 	     FROM (
-				SELECT /*+INDEX_DESC(review_vw cob_bonum)*/ ROWNUM RN, review_vw.*
+				SELECT /*+INDEX_DESC(review_vw cob_date)*/ ROWNUM RN, review_vw.*
 				FROM review_vw
-				WHERE ROWNUM<=#{pageNum}*10 and cl_clname = #{search})
+				WHERE ROWNUM<=#{pageNum}*10 and cl_clname LIKE '%'||#{search}||'%')
 			WHERE RN>=#{pageNum}*10-9
 			]]>
 	</select>
@@ -127,12 +129,10 @@ RN>=#{pageNum}*9-10 and cob_title LIKE '%'||#{search}||'%'
 		WHERE mo_id = #{mo_id} and cl_idnum = #{cl_idnum} and
 		CO_NAME = #{co_name}
 	</select>
-	
-	
-	<select id='selectClassHome' parameterType='cl'
-      resultType='cl'>
-      SELECT * FROM classInfo WHERE cl_idnum = #{cl_idnum} AND cl_lv=#{cl_lv}
-   </select>
-	
+	<select id="UpdateMyPoint" parameterType="String" resultType="String">
+		UPDATE POINT SET
+		point_pt = #{resultpt}
+		WHERE POINT_ID=#{id}
+	</select>
 
 </mapper>

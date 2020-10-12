@@ -13,4 +13,9 @@ public class GradeBean {
 	private int gr_lv;
 	private double gr_score;
 	private String gr_kind;
+	
+	
+	private String aa_idnum;
+	private String aa_id;
+	private int aa_lv;
 }

@@ -630,7 +630,7 @@ public class MaterialUploadMM {
 								+ mu.getCl_lv();
 					} else {
 						System.out.println("DetailProblem insert 실패");
-						view = "redirect:/prof/insertquizmaterialuploadpage?cl_idnum=" + mu.getCl_idnum() + "&cl_lv="
+						view = "redirect:/prof/insertquizmaterialuploadpage?cl_idnum=" + encodeParam + "&cl_lv="
 								+ mu.getCl_lv() + "&co_num=" + mu.getCo_num();
 					}
 				}

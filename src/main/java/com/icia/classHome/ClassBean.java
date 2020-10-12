@@ -21,4 +21,5 @@ private String cl_cc; // 관심사
 
 private String pi_pisysname;
 private String mb_name; // view로 인해 추가 
+private int atd_atmk;
 }

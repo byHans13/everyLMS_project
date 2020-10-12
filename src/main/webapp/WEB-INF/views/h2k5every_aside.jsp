@@ -90,6 +90,7 @@ $(document).ready
         <div>
             <div><p><a href='#'>공지사항</a></p></div>
             <div><p><a href='insertcounselboard'>상담게시판</a></p></div>
+            <div><p><a href='Addpoint'>포인트 충전소</a></p></div>
             <div><p><a href='#'>내 정보 관리</a></p></div>
         </div>
       

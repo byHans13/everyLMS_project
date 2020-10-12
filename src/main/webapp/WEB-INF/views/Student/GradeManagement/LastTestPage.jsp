@@ -158,17 +158,23 @@ section {
 		var body = $('#testTable');
 		body.append("<h3>Final Test List</h3>");
 		str += "<table><tr><td>강의명</td><td>LV</td><td>강사명</td><td>강의종료일</td><td>finalTest</td></tr>";
-		if (ft != 0) {
-			for (var i = 0; i < ft.length; i++) {
+			console.log("ft.length="+Object.keys(ft).length);
+		if (Object.keys(ft).length !=0) {
+			for (var i = 0; i < Object.keys(ft).length; i++) {
 				var date = new Date(ft[i].cl_fnDay);
 				date.setDate(date.getDate()-5);
 				var fnDay = new Date(ft[i].cl_fnDay);
 				var today = new Date();
+				console.log("ft[i].atd_atmk: )"+ft[i].atd_atmk+" vs ft[i].cl_lcnum:"+ft[i].cl_lcnum);
 				if(ft[i].atd_atmk == ft[i].cl_lcnum || date <= today && today <= fnDay ){
+					console.log("atmk lcnum값 통과");
 					if(gr.length != 0){
+						console.log("gr.length 통과");
 						for (var j = 0; j < gr.length; j++) {
-							if (ft[i].cl_idnum == gr[j].aa_idnum
-							&& ft[i].cl_lv == gr[j].aa_lv && gr[j].gr_kind == 0) {
+							console.log("cl_idnum:"+ft[i].cl_idnum+"vs aa_idnum:"+gr[j].aa_idnum);
+							console.log("cl_lv:"+ft[i].cl_lv+"vs aa_lv:"+gr[j].aa_lv);
+							console.log("gr[j].gr_kind="+gr[j].gr_kind);
+							if (ft[i].cl_idnum == gr[j].aa_idnum && ft[i].cl_lv == gr[j].aa_lv && gr[j].gr_kind == 0) {
 								str += "<tr>";
 								str += "<td>" + ft[i].cl_clName + "</td>";
 								str += "<td>" + ft[i].cl_lv + "</td>";
@@ -197,12 +203,13 @@ section {
 					}
 				}//if date==true or lcnum==atmk
 			}//for i
+			console.log(str);
+			console.log(tableCount);
 			if (tableCount != 0) {
 				str += "</table>";
 			} else {
 				str += "<tr><td colspan='5'>조건을 만족하는 시험 일정이 없습니다.</td></tr></table>";
 			}
-			//}else{ if tableCount 감싸면 됨}
 		} else {
 			str += "<tr><td colspan='5'>조건을 만족하는 시험 일정이 없습니다.</td></tr></table>";
 		}
@@ -296,10 +303,11 @@ section {
     			var $token = $("#token");
     			xhr.setRequestHeader($token.data("token-name"), $token.val());
     		},success: function(json){
+    			console.log(json);
     			var body = $('#ftBody');
     			body.html("");
     			body.append("<br/><br/>");
-    			body.append(pbnum+"번) "+json[0].pb_pbname + "<br/>");
+    			body.append(""+pbnum+"번) "+json[0].pb_pbname+"<br/>");
     			for(var i in json){
     				if(json[i].pb_id =='${id}'){
     					var str="";

@@ -214,8 +214,8 @@ public interface ClassHomeDao {
 		List<ProblemBean> selectLevelCheckRandomQuizInfo(ProblemBean pb);
 		@Select("SELECT * FROM detailProblemCC WHERE pb_idnum=#{pb_idnum} AND pb_lv=#{pb_lv} AND pb_num=#{pb_num} AND pb_pbnum=#{pb_pbnum}")
 		List<ProblemBean> selectLevelCheckQuizDetail(ProblemBean problemBean);
-		@Insert("INSERT INTO grade(gr_idnum, gr_id, gr_num, gr_lv, gr_score, gr_kind) "
-				+ "VALUES(#{gr_idnum}, #{gr_id}, #{gr_num}, #{gr_lv}, #{gr_score}, #{gr_kind})")
+		@Insert("INSERT INTO grade(gr_seqnum, gr_idnum, gr_id, gr_num, gr_lv, gr_score, gr_kind) "
+				+ "VALUES(#{gr_kind}||LPAD(kind_seq.NEXTVAL,4,0), #{gr_idnum}, #{gr_id}, #{gr_num}, #{gr_lv}, #{gr_score}, #{gr_kind})")
 		boolean insertCourseGrade(GradeBean gb);
 		@Update("UPDATE pb SET pb_answerchk=#{pb_answerchk} WHERE pb_idnum=#{pb_idnum} AND pb_lv=#{pb_lv} "
 				+ "AND pb_num=#{pb_num} AND pb_pbnum=#{pb_pbnum} AND pb_id=#{pb_id}")

@@ -50,8 +50,6 @@ public interface StudentDao {
 	@Delete("DELETE FROM COB WHERE COB_BONUM=#{cob_bonum}")
 	void cobdelete(HashMap<String, Object> cobdelete);
 
-	@Select("SELECT point_pt FROM POINT WHERE POINT_ID = #{MB_ID}")
-	List<Point> selectMypoint(String id);
 
 	List<Clasc> selectClassHome(Clasc cb);
 
@@ -60,5 +58,11 @@ public interface StudentDao {
 
 	@Select("SELECT * FROM (SELECT * FROM cobKindAndGpa ORDER BY gpa_gpa DESC) WHERE cob_idnum=#{cl_idnum} AND cob_lv=#{cl_lv} AND ROWNUM <= 2")
 	List<CourseBoard> selectInfoReview(Clasc cb);
+
+	@Select ("SELECT point_pt FROM POINT WHERE POINT_ID = #{MB_ID}")
+	   String selectMypoint(String id);
+	@Select("SELECT point_pt FROM POINT WHERE POINT_ID=#{MB_ID}")
+	String selectMyPointAjax(String pt_id);
+	String UpdateMyPoint(@Param("resultpt")String resultpt,@Param("id")String id);
 
 }
