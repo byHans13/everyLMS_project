@@ -19,6 +19,7 @@ import com.icia.classHome.CourseBean;
 import com.icia.classHome.CourseBoardBean;
 import com.icia.classHome.MemoBean;
 import com.icia.classHome.ScheduleBean;
+import com.icia.homework.HomeworkBean;
 
 @RequestMapping(value="/stud")
 @RestController
@@ -196,5 +197,10 @@ public class ClassHomeRestController {
 	public boolean insertFinalTestForceStop(ProblemBean pb, HttpSession session) {
 		boolean result = cs.insertFinalTestPbnum(pb, session);
 		return result;
+	}
+	@GetMapping(value="rest/selectClassHomeworkList")
+	public List<HomeworkBean> selectClassHomeworkList (HomeworkBean hw, HttpSession session){
+		List<HomeworkBean> hwList = cs.selectClassHomeworkList(hw, session);
+		return hwList;
 	}
 }

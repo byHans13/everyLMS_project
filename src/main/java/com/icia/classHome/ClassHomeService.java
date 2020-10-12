@@ -23,6 +23,7 @@ import com.icia.classHome.FileBean;
 import com.icia.classHome.MemoBean;
 import com.icia.classHome.ProblemBean;
 import com.icia.classHome.ScheduleBean;
+import com.icia.homework.HomeworkBean;
 import com.icia.member.Member;
 import com.google.gson.Gson;
 
@@ -1060,5 +1061,14 @@ public class ClassHomeService {
 		}else {
 			return false;
 		}
+	}
+
+	public List<HomeworkBean> selectClassHomeworkList(HomeworkBean hw, HttpSession session) {
+		String sessionId = session.getAttribute("id").toString();
+		List<HomeworkBean> hwList;
+		hw.setHw_id(sessionId);
+		hwList = cDao.selectClassHomeworkList(hw);
+		
+		return hwList;
 	}
 }// classHomeService END

@@ -15,6 +15,7 @@ import com.icia.classHome.FileBean;
 import com.icia.classHome.MemoBean;
 import com.icia.classHome.ProblemBean;
 import com.icia.classHome.ScheduleBean;
+import com.icia.homework.HomeworkBean;
 import com.icia.member.Member;
 
 
@@ -241,6 +242,7 @@ public interface ClassHomeDao {
 		@Insert("INSERT INTO pb(pb_num, pb_lv, pb_id, pb_idnum, pb_pbnum, pb_pbname, pb_pbanswer, pb_pbexplain, pb_pbstudent, pb_answerchk, pb_pbdate, pb_pbchkqz"
 				+ "VALUES(#{pb_num}, #{pb_lv}, #{pb_id},#{pb_idnum},#{pb_pbnum},#{pb_pbname},#{pb_pbanswer},#{pb_pbexplain},#{pb_pbstudent},#{pb_answerchk},default,#{pb_pbchkqz})")
 		boolean insertClassFinalTestForceStop();
+		List<HomeworkBean> selectClassHomeworkList(HomeworkBean hw);
 
 
 
