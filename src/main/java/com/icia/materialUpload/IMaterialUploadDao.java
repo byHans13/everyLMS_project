@@ -10,6 +10,8 @@ public interface IMaterialUploadDao {
 	//시험문제
 	List<MaterialUpload> selectTestMaterialClassList(MaterialUpload mu);
 
+	int selectTestMaterialPbNumCount(MaterialUpload mu);
+
 	int selectTestMaterialCountList(MaterialUpload mu);
 	
 	List<MaterialUpload> insertTestMaterialUploadPage(MaterialUpload mu);
@@ -35,6 +37,8 @@ public interface IMaterialUploadDao {
 	List<MaterialUpload> selectQuizMaterialClassList(MaterialUpload mu);
 
 	int selectQuizMaterialCountList(MaterialUpload mu);
+	
+	int selectQuizMaterialPbNumCount(MaterialUpload mu);
 
 	List<MaterialUpload> selectQuizMaterialClCoList(MaterialUpload mu);
 
@@ -52,6 +56,11 @@ public interface IMaterialUploadDao {
 
 	int selectConum(MaterialUpload mu);
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> origin/kyj
 
 
 
