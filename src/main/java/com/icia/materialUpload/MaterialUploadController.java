@@ -1,5 +1,9 @@
 package com.icia.materialUpload;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -60,22 +64,36 @@ public class MaterialUploadController {
 	}
 
 	// "퀴즈자료업로드" 클릭시 Class List 페이지 이동 및 Class List Select
-	@RequestMapping(value = "prof/selectquizmaterialclasslist", method = RequestMethod.GET)
-	public ModelAndView selectQuizMaterialClassList(HttpSession session, MaterialUpload mu) {
+	@RequestMapping(value = "prof/selectquizmaterialclasslist", method = RequestMethod.GET , produces = {"text/plain;charset=utf-8", "application/json;charset=utf-8"})
+	public ModelAndView selectQuizMaterialClassList(HttpSession session, MaterialUpload mu, HttpServletRequest request) {
 		System.out.println("퀴즈자료업로드 ClassList select 페이지 이동");
-		mav = new ModelAndView();
-		mav = mumm.selectQuizMaterialClassList(session, mu);
+		try {
+			request.setCharacterEncoding("UTF-8");
+			mav = new ModelAndView();
+			mav = mumm.selectQuizMaterialClassList(session, mu);
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return mav;
 	}
 	
 	// "강좌 리스트 확인" 클릭시 Course List 페이지 이동 및 Class List Select
-	@RequestMapping(value = "prof/selectquizmaterialclcolist", method = RequestMethod.GET)
-	public ModelAndView selectQuizMaterialClCoList(HttpSession session, MaterialUpload mu) {
+	@RequestMapping(value = "prof/selectquizmaterialclcolist", method = RequestMethod.GET, produces = {"text/plain;charset=utf-8", "application/json;charset=utf-8"})
+	public ModelAndView selectQuizMaterialClCoList(HttpSession session, MaterialUpload mu, HttpServletRequest request) {
 		System.out.println("퀴즈자료업로드 ClCoList select 페이지 이동");
 		mav = new ModelAndView();
-		System.out.println(mu.getCl_idnum());
-		System.out.println(mu.getCl_lv());
-		mav = mumm.selectQuizMaterialClCoList(session, mu);
+		try {
+			request.setCharacterEncoding("UTF-8");
+			String encodedParam = URLEncoder.encode(mu.getCl_idnum(), "UTF-8");
+			System.out.println("----------------------");
+			System.out.println(encodedParam);
+			System.out.println(mu.getCl_lv());
+			mav = mumm.selectQuizMaterialClCoList(session, mu);
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return mav;
 	}
 	

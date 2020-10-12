@@ -1,5 +1,7 @@
 package com.icia.materialUpload;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -592,11 +594,13 @@ public class MaterialUploadMM {
 		System.out.println("학생답 : " + mu.getPb_pbstudent());
 		
 		System.out.println("if문 시작전");
+		String encodeParam = null;
 		if (dp_pbexm.contains(",") || dp_pbexmnumSt.contains(",")) {
 			System.out.println(", 있데");
 			if (muDao.insertQuizMaterialUploadProblemAjax(mu)) {
 				mu.setDp_lv(mu.getPb_lv());
 				mu.setDp_id(mu.getPb_id());
+				
 				mu.setDp_idnum(mu.getPb_idnum());
 				mu.setDp_pbnum(Integer.parseInt(mu.getPb_pbnumSt()));
 
@@ -614,10 +618,15 @@ public class MaterialUploadMM {
 					System.out.println("dp_pbnum : " + mu.getDp_pbnum());
 					System.out.println("dp_pbexm : " + mu.getDp_pbexm());
 					System.out.println("dp_pbexmnum : " + mu.getDp_pbexmnum());
-
+					try {
+						encodeParam = URLEncoder.encode(mu.getCl_idnum(), "UTF-8");
+					} catch (UnsupportedEncodingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					if (muDao.insertQuizMaterialUploadDetailProblemAjax(mu)) {
 						System.out.println("DetailProblem insert 성공");
-						view = "redirect:/prof/selectquizmaterialclcolist?cl_idnum=" + mu.getCl_idnum() + "&cl_lv="
+						view = "redirect:/prof/selectquizmaterialclcolist?cl_idnum=" + encodeParam + "&cl_lv="
 								+ mu.getCl_lv();
 					} else {
 						System.out.println("DetailProblem insert 실패");

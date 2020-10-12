@@ -135,6 +135,7 @@
 	});
 		
 	function uploadAddClick() {
+		idnum=encodeURIComponent(idnum);
 		console.log("퀴즈추가 일련번호 : "+ $("#idnum").val());
 		console.log("퀴즈추가 레벨값 : " + $("#lv").val());
 		var FormData = $('#insertquizMaterialUploadFrm').serialize();
