@@ -75,7 +75,7 @@ td{
 	<div style="height: 100px;"></div>	
 		
 		<div>
-			<p id="selectbox"></p><br>
+			<h2 id="selectbox"></h2><br>
 			<table id="selectTable">
 			</table>
 		</div>
@@ -87,6 +87,10 @@ td{
 var glist= ${glist};
 	console.log(glist);
 	console.log(glist.length);
+	
+	if(glist.length==0){
+		$("#selectbox").html("시험을 본 학생이 없습니다.");
+	}else{
 	$("#selectTable").append("<tr>");
 	$("#selectTable").append("<th style='text-align: center;'>강의명</th>");
 	$("#selectTable").append("<th style='text-align: center;'>강좌명</th>");
@@ -121,7 +125,7 @@ var glist= ${glist};
 				"<button>클릭</button></form></td>");
 		$("#selectTable").append("</tr>");
 	} 
-	
+  }
 </script>
 </body>
 </html>
