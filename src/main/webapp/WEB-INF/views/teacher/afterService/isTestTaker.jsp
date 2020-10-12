@@ -23,7 +23,7 @@ aside {
 
 section {
 	/* background-color: pink; */
-	/* width: 1000px; */ 
+	width: 1200px;
 	float: left;
 }
 .menu{
@@ -33,20 +33,16 @@ section {
     border: 1px black solid;
     float: left;
 }
-table{
-	width: 1100px;
-	margin:auto;
-/* 	border: 1px solid black; */
-	border-collapse: collapse;
-	text-align: center;
-}
-th, td {
-	font-size: 30px;
-	/* border: 1px solid black; */
-}
-td{
-	/* border: 1px solid black; */
-}
+.tg  {border-collapse:collapse;border-color:#9ABAD9;border-spacing:0;}
+.tg td{background-color:#EBF5FF;border-color:#9ABAD9;border-style:solid;border-width:0px;color:#444;
+  font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{background-color:#409cff;border-color:#9ABAD9;border-style:solid;border-width:0px;color:#fff;
+  font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-tns0{font-size:32px;font-weight:bold;text-align:center;vertical-align:top}
+.tg .tg-qncv{font-size:32px;text-align:left;vertical-align:top}
+.tg .tg-g9xd{background-color:#D2E4FC;font-size:32px;text-align:left;vertical-align:top}
+.tg .tg-dlxr{background-color:#D2E4FC;font-size:32px;text-align:center;vertical-align:top}
+.tg .tg-j32n{font-size:32px;text-align:center;vertical-align:top}
 </style>
 </head>
 <body>
@@ -61,8 +57,8 @@ td{
 	<section id="section" style="margin-left: 20px;">
 	
 	<form id="frm">	
-		<div style="background-color: #B7F0B1; height: 80px; ">
-			<h2 style="float: left; margin-left: 10px;margin-top: 15px;">시험 응시 or 미응시 관리</h2>
+		<div style="background-color: #409cff; height: 80px; ">
+			<h2 style="float: left; margin-left: 10px;margin-top: 15px;color: white; font-size: 35px;"><b>시험 응시 or 미응시 관리</b></h2>
 			<button style="float: right; margin-right: 20px; margin-top: 30px; height: 30px;" 
 					type="button" onclick="contSelect()">검색</button>
 			<input style="float: right; height: 30px; margin-top: 30px;" type="text" name="cont"/> 
@@ -74,11 +70,11 @@ td{
 		</div>
 	</form>	
 		
-		<div style="height: 100px;"></div>
+		<div style="height: 100px;" style="overflow: auto; height: 500px;"></div>
 		
 		<div id="selectbox">
-			<h2 id='comt'></h2>
-			<table id="selectTable">
+			
+			<table id="selectTable" class="tg" style="width: 1200px;">
 			</table>
 		</div>
 		
@@ -105,38 +101,38 @@ $(document).ready
 			console.log(json);
 			
 			if(json.length==0){
-				$("#comt").html("등록된 퀴즈가 없습니다.");
+				$("#comt").html("응시한 학생이 없습니다.");
 			}else{
 			
-			$("#selectTable").append("<tr>");
-			$("#selectTable").append("<th style='text-align: center;'>강의명</th>");
-			$("#selectTable").append("<th style='text-align: center;'>강좌명</th>");
-			$("#selectTable").append("<th style='text-align: center;'>회차</th>");
-			$("#selectTable").append("<th style='text-align: center;'>강사 아이디</th>");
-			$("#selectTable").append("<th style='text-align: center;'>응시확인</th>");
-			$("#selectTable").append("</tr>");
-			
-			for(var i=0; i<json.length; i++){
-				
-				var cl_clname = json[i].cl_clname.replace(/ /gi,',');
-				var co_name = json[i].co_name.replace(/ /gi,',');
-				console.log(cl_clname);
-				console.log(co_name);
-				
 				$("#selectTable").append("<tr>");
-				$("#selectTable").append("<td>"+json[i].cl_clname+"</td>");
-				$("#selectTable").append("<td>"+json[i].co_name+"</td>");
-				$("#selectTable").append("<td>"+json[i].co_num+"</td>");
-				$("#selectTable").append("<td>"+json[i].cl_id+"</td>");
-				$("#selectTable").append("<td><form action='goisTestTakerShowPage' method='post'>"+
-						 				 "<input type='hidden' name='cl_clname' value="+cl_clname+">"+
-						 				 "<input type='hidden' name='co_name' value="+co_name+">"+
-						 				 "<input type='hidden' name='cl_lcnum' value="+json[i].co_num+">"+
-						 				 "<input type='hidden' id='token' data-token-name='${_csrf.headerName}' name = '${_csrf.parameterName}' value='${_csrf.token}' />"+
-										 "<button>클릭</button><td></form>");
+				$("#selectTable").append("<th class='tg-tns0'>강의명</th>");
+				$("#selectTable").append("<th class='tg-tns0'>강좌명</th>");
+				$("#selectTable").append("<th class='tg-tns0'>회차</th>");
+				$("#selectTable").append("<th class='tg-tns0'>강사 아이디</th>");
+				$("#selectTable").append("<th class='tg-tns0'>응시확인</th>");
 				$("#selectTable").append("</tr>");
-							
-			}
+				
+				for(var i=0; i<json.length; i++){
+					
+					var cl_clname = json[i].cl_clname.replace(/ /gi,',');
+					var co_name = json[i].co_name.replace(/ /gi,',');
+					console.log(cl_clname);
+					console.log(co_name);
+					
+					$("#selectTable").append("<tr>");
+					$("#selectTable").append("<td class='tg-g9xd'>"+json[i].cl_clname+"</td>");
+					$("#selectTable").append("<td class='tg-dlxr'>"+json[i].co_name+"</td>");
+					$("#selectTable").append("<td class='tg-dlxr'>"+json[i].co_num+"</td>");
+					$("#selectTable").append("<td class='tg-dlxr'>"+json[i].cl_id+"</td>");
+					$("#selectTable").append("<td class='tg-dlxr'><form action='goisTestTakerShowPage' method='post'>"+
+							 				 "<input type='hidden' name='cl_clname' value="+cl_clname+">"+
+							 				 "<input type='hidden' name='co_name' value="+co_name+">"+
+							 				 "<input type='hidden' name='cl_lcnum' value="+json[i].co_num+">"+
+							 				 "<input type='hidden' id='token' data-token-name='${_csrf.headerName}' name = '${_csrf.parameterName}' value='${_csrf.token}' />"+
+											 "<button class='btn btn-primary'>클릭</button><td></form>");
+					$("#selectTable").append("</tr>");
+								
+				}
 		  }
 		},
 		error: function (err) {
@@ -166,38 +162,38 @@ function contSelect() {
 				console.log(json);
 				if(json.length==0){
 					$("#comt").html("");
-					$("#comt").html("등록된 퀴즈가 없습니다.");
+					$("#comt").html("응시한 학생이 없습니다.");
 				}else{
 			
-				$("#selectTable").append("<tr>");
-				$("#selectTable").append("<th style='text-align: center;'>강의명</th>");
-				$("#selectTable").append("<th style='text-align: center;'>강좌명</th>");
-				$("#selectTable").append("<th style='text-align: center;'>회차</th>");
-				$("#selectTable").append("<th style='text-align: center;'>강사 아이디</th>");
-				$("#selectTable").append("<th style='text-align: center;'>응시확인</th>");
-				$("#selectTable").append("</tr>");
-				
-				for(var i=0; i<json.length; i++){
-					
-					var cl_clname = json[i].cl_clname.replace(/ /gi,',');
-					var co_name = json[i].co_name.replace(/ /gi,',');
-					console.log(cl_clname);
-					console.log(co_name);
-					
 					$("#selectTable").append("<tr>");
-					$("#selectTable").append("<td>"+json[i].cl_clname+"</td>");
-					$("#selectTable").append("<td>"+json[i].co_name+"</td>");
-					$("#selectTable").append("<td>"+json[i].co_num+"</td>");
-					$("#selectTable").append("<td>"+json[i].cl_id+"</td>");
-					$("#selectTable").append("<td><form action='goisTestTakerShowPage' method='post'>"+
-											 "<input type='hidden' name='cl_clname' value="+cl_clname+">"+
-											 "<input type='hidden' name='co_name' value="+co_name+">"+
-											 "<input type='hidden' name='cl_lcnum' value="+json[i].co_num+">"+
-											 "<input type='hidden' id='token' data-token-name='${_csrf.headerName}' name = '${_csrf.parameterName}' value='${_csrf.token}' />"+
-											 "<button>클릭</button><td></form>");
+					$("#selectTable").append("<th class='tg-tns0'>강의명</th>");
+					$("#selectTable").append("<th class='tg-tns0'>강좌명</th>");
+					$("#selectTable").append("<th class='tg-tns0'>회차</th>");
+					$("#selectTable").append("<th class='tg-tns0'>강사 아이디</th>");
+					$("#selectTable").append("<th class='tg-tns0'>응시확인</th>");
 					$("#selectTable").append("</tr>");
 					
-				}  
+					for(var i=0; i<json.length; i++){
+						
+						var cl_clname = json[i].cl_clname.replace(/ /gi,',');
+						var co_name = json[i].co_name.replace(/ /gi,',');
+						console.log(cl_clname);
+						console.log(co_name);
+						
+						$("#selectTable").append("<tr>");
+						$("#selectTable").append("<td class='tg-g9xd'>"+json[i].cl_clname+"</td>");
+						$("#selectTable").append("<td class='tg-dlxr'>"+json[i].co_name+"</td>");
+						$("#selectTable").append("<td class='tg-dlxr'>"+json[i].co_num+"</td>");
+						$("#selectTable").append("<td class='tg-dlxr'>"+json[i].cl_id+"</td>");
+						$("#selectTable").append("<td class='tg-dlxr'><form action='goisTestTakerShowPage' method='post'>"+
+												 "<input type='hidden' name='cl_clname' value="+cl_clname+">"+
+												 "<input type='hidden' name='co_name' value="+co_name+">"+
+												 "<input type='hidden' name='cl_lcnum' value="+json[i].co_num+">"+
+												 "<input type='hidden' id='token' data-token-name='${_csrf.headerName}' name = '${_csrf.parameterName}' value='${_csrf.token}' />"+
+												 "<button class='btn btn-primary'>클릭</button><td></form>");
+						$("#selectTable").append("</tr>");
+						
+					}  
 			  }
 			},
 			error: function (err) {

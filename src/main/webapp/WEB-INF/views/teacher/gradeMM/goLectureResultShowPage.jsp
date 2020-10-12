@@ -33,20 +33,16 @@ section {
     border: 1px black solid;
     float: left;
 }
-table{
-	width: 1100px;
-	margin:auto;
-/* 	border: 1px solid black; */
-	border-collapse: collapse;
-	text-align: center;
-}
-th, td {
-	font-size: 30px;
-	/* border: 1px solid black; */
-}
-td{
-	/* border: 1px solid black; */
-}
+.tg  {border-collapse:collapse;border-color:#9ABAD9;border-spacing:0;}
+.tg td{background-color:#EBF5FF;border-color:#9ABAD9;border-style:solid;border-width:0px;color:#444;
+  font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{background-color:#409cff;border-color:#9ABAD9;border-style:solid;border-width:0px;color:#fff;
+  font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-tns0{font-size:32px;font-weight:bold;text-align:center;vertical-align:top}
+.tg .tg-qncv{font-size:32px;text-align:left;vertical-align:top}
+.tg .tg-g9xd{background-color:#D2E4FC;font-size:32px;text-align:left;vertical-align:top}
+.tg .tg-dlxr{background-color:#D2E4FC;font-size:32px;text-align:center;vertical-align:top}
+.tg .tg-j32n{font-size:32px;text-align:center;vertical-align:top}
 </style>
 </head>
 <body>
@@ -60,16 +56,16 @@ td{
 	<section id="section" style="margin-left: 20px;">
 	
 	<form id="frm">	
-		<div style="background-color: #B7F0B1; height: 80px; ">
+		<div style="background-color: #409cff; height: 80px; color: white; font-size: 35px;">
 			<h2 id="cmthtml" style="float: left; margin-left: 10px;margin-top: 15px;"></h2>
 		</div>
 	</form>	
 		
 		<div style="height: 100px;"></div>
 		
-		<div id="selectbox">
+		<div id="selectbox" style="height: 500px; overflow: auto;">
 			
-			<table id="selectTable">
+			<table id="selectTable" class="tg" style="width: 1200px;">
 			</table>
 		</div>
 		
@@ -85,19 +81,19 @@ var kind=0;
 	console.log(clname);
 	
 	if(list[0].gr_kind=='T'){
-		$("#cmthtml").html(clname+" 시험 성적관리");
+		$("#cmthtml").html("<b>"+clname+" 시험 성적관리</b>");
 		kind=0;
 	}else{
-		$("#cmthtml").html(clname+" 퀴즈 성적관리");
+		$("#cmthtml").html("<b>"+clname+" 퀴즈 성적관리</b>");
 		kind=1;
 	}
 	
 	$("#selectTable").append("<tr>");
-	$("#selectTable").append("<th style='text-align: center;'>강좌명</th>");
-	$("#selectTable").append("<th style='text-align: center;'>회차</th>");
-	$("#selectTable").append("<th style='text-align: center;'>학생</th>");
-	$("#selectTable").append("<th style='text-align: center;'>점수</th>");
-	$("#selectTable").append("<th style='text-align: center;'>문제보기</th>");
+	$("#selectTable").append("<th class='tg-tns0'>강좌명</th>");
+	$("#selectTable").append("<th class='tg-tns0'>회차</th>");
+	$("#selectTable").append("<th class='tg-tns0'>학생</th>");
+	$("#selectTable").append("<th class='tg-tns0'>점수</th>");
+	$("#selectTable").append("<th class='tg-tns0'>문제보기</th>");
 	$("#selectTable").append("</tr>");
 	
 	for(var i=0;i<list.length;i++){
@@ -106,11 +102,11 @@ var kind=0;
 		var co_name = test2.replace(/ /gi,',');
 		
 		$("#selectTable").append("<tr>");
-		$("#selectTable").append("<td>"+list[i].co_name+"</td>");
-		$("#selectTable").append("<td>"+list[i].gr_num+"</td>");
-		$("#selectTable").append("<td>"+list[i].gr_id1+"</td>");
-		$("#selectTable").append("<td>"+list[i].gr_score+"</td>");
-		$("#selectTable").append("<td> <form action='goLectureResultUpdatePage' method='post'>"+
+		$("#selectTable").append("<td class='tg-g9xd'>"+list[i].co_name+"</td>");
+		$("#selectTable").append("<td class='tg-dlxr'>"+list[i].gr_num+"</td>");
+		$("#selectTable").append("<td class='tg-dlxr'>"+list[i].gr_id1+"</td>");
+		$("#selectTable").append("<td class='tg-dlxr'>"+list[i].gr_score+"</td>");
+		$("#selectTable").append("<td class='tg-dlxr'> <form action='goLectureResultUpdatePage' method='post'>"+
 				"<input type='hidden' name='cl_clname' value="+clname+">"+
 				"<input type='hidden' name='co_name' value="+co_name+">"+
 				"<input type='hidden' name='cl_lcnum' value="+list[i].gr_num+">"+
@@ -118,7 +114,7 @@ var kind=0;
 				"<input type='hidden' name='gr_id1' value="+list[i].gr_id1+">"+
 				"<input type='hidden' name='pb_pbchkqz' value="+kind+">"+
 				"<input type='hidden' id='token' data-token-name='${_csrf.headerName}' name = '${_csrf.parameterName}' value='${_csrf.token}' />"+
-				"<button>클릭</button></form></td>");
+				"<button class='btn btn-primary'>클릭</button></form></td>");
 		$("#selectTable").append("</tr>");
 	}
 	

@@ -23,7 +23,7 @@ aside {
 
 section {
 	/* background-color: pink; */
-	/* width: 1000px; */ 
+	width: 1200px; 
 	float: left;
 }
 .menu{
@@ -33,20 +33,16 @@ section {
     border: 1px black solid;
     float: left;
 }
-table{
-	width: 1100px;
-	margin:auto;
-/* 	border: 1px solid black; */
-	border-collapse: collapse;
-	text-align: center;
-}
-th, td {
-	font-size: 30px;
-	/* border: 1px solid black; */
-}
-td{
-	/* border: 1px solid black; */
-}
+.tg  {border-collapse:collapse;border-color:#9ABAD9;border-spacing:0;}
+.tg td{background-color:#EBF5FF;border-color:#9ABAD9;border-style:solid;border-width:0px;color:#444;
+  font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{background-color:#409cff;border-color:#9ABAD9;border-style:solid;border-width:0px;color:#fff;
+  font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-tns0{font-size:32px;font-weight:bold;text-align:center;vertical-align:top}
+.tg .tg-qncv{font-size:32px;text-align:left;vertical-align:top}
+.tg .tg-g9xd{background-color:#D2E4FC;font-size:32px;text-align:left;vertical-align:top}
+.tg .tg-dlxr{background-color:#D2E4FC;font-size:32px;text-align:center;vertical-align:top}
+.tg .tg-j32n{font-size:32px;text-align:center;vertical-align:top}
 </style>
 </head>
 <body>
@@ -60,8 +56,8 @@ td{
 	<section id="section" style="margin-left: 20px;">
 	
 	<form id="frm">	
-		<div style="background-color: #B7F0B1; height: 80px; ">
-			<h2 style="float: left; margin-left: 10px;margin-top: 15px;">성적 백분율 페이지</h2>
+		<div style="background-color: #409cff; height: 80px; ">
+			<h2 style="float: left; margin-left: 10px;margin-top: 15px;color: white; font-size: 35px;"><b>성적 백분율 페이지</b></h2>
 			<button style="float: right; margin-right: 20px; margin-top: 30px; height: 30px;" 
 					type="button" onclick="contSelect()">검색</button>
 			<input style="float: right; height: 30px; margin-top: 30px;" type="text" name="cont"/> 
@@ -74,9 +70,9 @@ td{
 	</form>
 	<div style="height: 100px;"></div>	
 		
-		<div>
+		<div style="overflow: auto; height: 500px;" >
 			<h2 id="selectbox"></h2><br>
-			<table id="selectTable">
+			<table id="selectTable" class="tg" style="width: 1200px;">
 			</table>
 		</div>
 	</section>
@@ -91,41 +87,41 @@ var glist= ${glist};
 	if(glist.length==0){
 		$("#selectbox").html("시험을 본 학생이 없습니다.");
 	}else{
-	$("#selectTable").append("<tr>");
-	$("#selectTable").append("<th style='text-align: center;'>강의명</th>");
-	$("#selectTable").append("<th style='text-align: center;'>강좌명</th>");
-	$("#selectTable").append("<th style='text-align: center;'>회차</th>");
-	$("#selectTable").append("<th style='text-align: center;'>학생수</th>");
-	$("#selectTable").append("<th style='text-align: center;'>교수명</th>");
-	$("#selectTable").append("<th style='text-align: center;'>상세보기</th>");
-	$("#selectTable").append("</tr>");
-	
- 	for(var i=0; i<glist.length; i++){
-		var test = glist[i].cl_clname;
-		console.log(test);
-		var clname = test.replace(/ /gi,',');
-		console.log(clname);
-		var test2 = glist[i].co_name;
-		console.log(test);
-		var co_name = test2.replace(/ /gi,',');
-		console.log(co_name);
- 		
 		$("#selectTable").append("<tr>");
-		$("#selectTable").append("<td>"+glist[i].cl_clname+"</td>");
-		$("#selectTable").append("<td>"+glist[i].co_name+"</td>");
-		$("#selectTable").append("<td>"+glist[i].co_num+"</td>");
-		$("#selectTable").append("<td>"+glist[i].gr_id+"</td>");
-		$("#selectTable").append("<td>"+glist[i].cl_id+"</td>");
-		$("#selectTable").append("<td> <form action='goGradePercentageShowPage' method='post'>"+
-				"<input type='hidden' name='cl_clname' value="+clname+">"+
-				"<input type='hidden' name='co_name' value="+co_name+">"+
-				"<input type='hidden' name='co_num' value="+glist[i].co_num+">"+
-				"<input type='hidden' name='cl_idnum' value="+glist[i].cl_idnum+">"+
-				"<input type='hidden' id='token' data-token-name='${_csrf.headerName}' name = '${_csrf.parameterName}' value='${_csrf.token}' />"+
-				"<button>클릭</button></form></td>");
+		$("#selectTable").append("<th class='tg-tns0'>강의명</th>");
+		$("#selectTable").append("<th class='tg-tns0'>강좌명</th>");
+		$("#selectTable").append("<th class='tg-tns0'>회차</th>");
+		$("#selectTable").append("<th class='tg-tns0'>학생수</th>");
+		$("#selectTable").append("<th class='tg-tns0'>교수명</th>");
+		$("#selectTable").append("<th class='tg-tns0'>상세보기</th>");
 		$("#selectTable").append("</tr>");
-	} 
-  }
-</script>
-</body>
-</html>
+		
+	 	for(var i=0; i<glist.length; i++){
+			var test = glist[i].cl_clname;
+			console.log(test);
+			var clname = test.replace(/ /gi,',');
+			console.log(clname);
+			var test2 = glist[i].co_name;
+			console.log(test);
+			var co_name = test2.replace(/ /gi,',');
+			console.log(co_name);
+	 		
+			$("#selectTable").append("<tr>");
+			$("#selectTable").append("<td class='tg-g9xd'>"+glist[i].cl_clname+"</td>");
+			$("#selectTable").append("<td class='tg-dlxr'>"+glist[i].co_name+"</td>");
+			$("#selectTable").append("<td class='tg-dlxr'>"+glist[i].co_num+"</td>");
+			$("#selectTable").append("<td class='tg-dlxr'"+glist[i].gr_id+"</td>");
+			$("#selectTable").append("<td class='tg-dlxr'>"+glist[i].cl_id+"</td>");
+			$("#selectTable").append("<td class='tg-dlxr'> <form action='goGradePercentageShowPage' method='post'>"+
+					"<input type='hidden' name='cl_clname' value="+clname+">"+
+					"<input type='hidden' name='co_name' value="+co_name+">"+
+					"<input type='hidden' name='co_num' value="+glist[i].co_num+">"+
+					"<input type='hidden' name='cl_idnum' value="+glist[i].cl_idnum+">"+
+					"<input type='hidden' id='token' data-token-name='${_csrf.headerName}' name = '${_csrf.parameterName}' value='${_csrf.token}' />"+
+					"<button class='btn btn-primary'>클릭</button></form></td>");
+			$("#selectTable").append("</tr>");
+		} 
+		
+	</script>
+	</body>
+	</html>

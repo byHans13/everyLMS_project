@@ -33,20 +33,15 @@ section {
     border: 1px black solid;
     float: left;
 }
-table{
-	width: 1100px;
-	margin:auto;
-/* 	border: 1px solid black; */
-	border-collapse: collapse;
-	text-align: center;
-}
-th, td {
-	font-size: 30px;
-	/* border: 1px solid black; */
-}
-td{
-	/* border: 1px solid black; */
-}
+.tg  {border-collapse:collapse;border-color:#9ABAD9;border-spacing:0;}
+.tg td{background-color:#EBF5FF;border-color:#9ABAD9;border-style:solid;border-width:0px;color:#444;
+  font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{background-color:#409cff;border-color:#9ABAD9;border-style:solid;border-width:0px;color:#fff;
+  font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-i74k{border-color:#9abad9;font-size:32px;text-align:center;vertical-align:top}
+.tg .tg-nejw{border-color:#68a0d7;font-size:32px;text-align:center;vertical-align:top}
+.tg .tg-dlxr{background-color:#D2E4FC;font-size:32px;text-align:center;vertical-align:top}
+.tg .tg-j32n{font-size:32px;text-align:center;vertical-align:top}
 </style>
 </head>
 <body>
@@ -60,12 +55,12 @@ td{
 	</aside>
 	
 	<div style="height: 50px;"></div>
-	<section id="section" style="margin-left: 20px; background-color: #B7F0B1; height: 80px;">
-		<h1 id="cmt"></h1>
+	<section id="section" style="margin-left: 20px; background-color: #409cff; height: 80px;">
+		<h1 style="color: white; font-size: 35px;" id="cmt"></h1>
 		<div style="height: 100px;"></div>
-		<div>
+		<div style="overflow: auto; height: 500px;">
 			<form action='goStudentCommentUpdatePage' method="post">
-			<table id="infoTable">
+			<table id="infoTable" class="tg" style="width: 1200px;">
 
 			</table>
 			</form>
@@ -74,6 +69,7 @@ td{
 	<footer>
 		<jsp:include page="../../h2k5every_footer.jsp" />
 	</footer>
+
 
 <script>
 $(document).ready
@@ -88,17 +84,17 @@ $(document).ready
 	}else{
 		var co_name= lq.co_name.replace(/ /gi,',');
 		
-		$("#cmt").html(lq.co_name+" -코멘트 쓰기");
+		$("#cmt").html("<b>"+lq.co_name+" -코멘트 쓰기</b>");
 		$("#infoTable").append("<tr>");
-		$("#infoTable").append("<th style='text-align: center;'>강좌명 : "+lq.co_name+"</th>");
-		$("#infoTable").append("<th style='text-align: center;'>강좌 레벨 : "+lq.co_lv+"</th>");
-		$("#infoTable").append("<th style='text-align: center;'>회차 : "+lq.cl_lcnum+"</th>");
-		$("#infoTable").append("<th style='text-align: center;'>아이디 : "+lq.gr_id1+"</th>");
-		$("#infoTable").append("<th style='text-align: center;'>점수 : "+lq.gr_score+"</th>");
+		$("#infoTable").append("<th class='tg-nejw'>강좌명 : "+lq.co_name+"</th>");
+		$("#infoTable").append("<th class='tg-i74k'>강좌 레벨 : "+lq.co_lv+"</th>");
+		$("#infoTable").append("<th class='tg-nejw'>회차 : "+lq.cl_lcnum+"</th>");
+		$("#infoTable").append("<th class='tg-i74k'>아이디 : "+lq.gr_id1+"</th>");
+		$("#infoTable").append("<th class='tg-nejw'>점수 : "+lq.gr_score+"</th>");
 		$("#infoTable").append("</tr>");
-		$("#infoTable").append("<tr><td colspan='5'>코멘트</td></tr>");
-		$("#infoTable").append("<tr><td colspan='5'><p>"+lq.tfb_feedback+"</p></td></tr>");
-		$("#infoTable").append("<tr><td colspan='5'>"+
+		$("#infoTable").append("<tr><td class='tg-dlxr' colspan='5'>코멘트</td></tr>");
+		$("#infoTable").append("<tr><td class='tg-j32n' colspan='5'><p>"+lq.tfb_feedback+"</p></td></tr>");
+		$("#infoTable").append("<tr><td class='tg-dlxr' colspan='5'>"+
 									"<input type='hidden' name='co_name' value="+co_name+">"+
 									"<input type='hidden' name='cl_idnum' value="+lq.cl_idnum+">"+
 				   					"<input type='hidden' name='co_lv' value="+lq.co_lv+">"+
@@ -106,7 +102,7 @@ $(document).ready
 				   					"<input type='hidden' name='gr_id1' value="+lq.gr_id1+">"+
 				   					"<input type='hidden' name='tfb_feedback' value='"+lq.tfb_feedback+"'>"+
 				   					"<input type='hidden' id='token' data-token-name='${_csrf.headerName}' name = '${_csrf.parameterName}' value='${_csrf.token}' />"+
-				   					"<button>수정</button></td></tr>");
+				   					"<button class='btn btn-primary'>수정</button></td></tr>");
 			
 	}
 });

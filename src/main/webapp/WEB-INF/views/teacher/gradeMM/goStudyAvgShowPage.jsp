@@ -35,20 +35,16 @@ section {
     border: 1px black solid;
     float: left;
 }
-table{
-	width: 1100px;
-	margin:auto;
-/* 	border: 1px solid black; */
-	border-collapse: collapse;
-	text-align: center;
-}
-th, td {
-	font-size: 30px;
-	/* border: 1px solid black; */
-}
-td{
-	/* border: 1px solid black; */
-}
+.tg  {border-collapse:collapse;border-color:#9ABAD9;border-spacing:0;}
+.tg td{background-color:#EBF5FF;border-color:#9ABAD9;border-style:solid;border-width:0px;color:#444;
+  font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{background-color:#409cff;border-color:#9ABAD9;border-style:solid;border-width:0px;color:#fff;
+  font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-tns0{font-size:32px;font-weight:bold;text-align:center;vertical-align:top}
+.tg .tg-qncv{font-size:32px;text-align:left;vertical-align:top}
+.tg .tg-g9xd{background-color:#D2E4FC;font-size:32px;text-align:left;vertical-align:top}
+.tg .tg-dlxr{background-color:#D2E4FC;font-size:32px;text-align:center;vertical-align:top}
+.tg .tg-j32n{font-size:32px;text-align:center;vertical-align:top}
 </style>
 </head>
 <body>
@@ -62,8 +58,8 @@ td{
 	<section id="section" style="margin-left: 20px;">
 	
 	<form id="frm">	
-		<div style="background-color: #B7F0B1; height: 80px; ">
-			<h2 id="clname" style="float: left; margin-left: 10px;margin-top: 15px;"></h2>
+		<div style="background-color: #409cff; height: 80px; ">
+			<h2 id="clname" style="float: left; margin-left: 10px;margin-top: 15px;color: white; font-size: 35px;"></h2>
 		</div>
 	</form>	
 		
@@ -71,12 +67,12 @@ td{
 		
 		<div id="selectbox" style="height: 200px; overflow: auto;">
 			
-			<table id="selectTable">
+			<table id="selectTable"class="tg"style="width: 1200px;">
 			</table>
 		</div>
 		<hr>
-		<button id="btnon" type="button" onclick="percentageBtn()">성적 그래프 보기</button>
-		<button id="btnoff" type="button" onclick="percentageBtnOff()" style="display: none;">성적 그래프 접기</button>
+		<button id="btnon" type="button" onclick="percentageBtn()" class="btn btn-primary">성적 그래프 보기</button>
+		<button id="btnoff" type="button" onclick="percentageBtnOff()" style="display: none;" class="btn btn-primary">성적 그래프 접기</button>
 		
 		<div id="percentage"></div>
 	</section>
@@ -93,34 +89,34 @@ var num=${num};
 	console.log(list);
 	
 	if(num==1){
-		$("#clname").html(clname+" -평균");
+		$("#clname").html("<b>"+clname+" -평균</b>");
 		
 		$("#selectTable").append("<tr>");
-		$("#selectTable").append("<th style='text-align: center;'>강좌명</th>");
-		$("#selectTable").append("<th style='text-align: center;'>회차</th>");
-		$("#selectTable").append("<th style='text-align: center;'>등수</th>");
-		$("#selectTable").append("<th style='text-align: center;'>점수</th>");
-		$("#selectTable").append("<th style='text-align: center;'>학생아이디</th>");
+		$("#selectTable").append("<th class='tg-tns0'>강좌명</th>");
+		$("#selectTable").append("<th class='tg-tns0'>회차</th>");
+		$("#selectTable").append("<th class='tg-tns0'>등수</th>");
+		$("#selectTable").append("<th class='tg-tns0'>점수</th>");
+		$("#selectTable").append("<th class='tg-tns0'>학생아이디</th>");
 		$("#selectTable").append("</tr>");
 		for(var i=0; i<list.length; i++){
 			$("#selectTable").append("<tr>");
-			$("#selectTable").append("<td style='text-align: center;'>"+list[i].co_name+"</td>");
-			$("#selectTable").append("<td style='text-align: center;'>"+list[i].gr_num+"</td>");
-			$("#selectTable").append("<td style='text-align: center;'>"+list[i].ranking+"</td>");
-			$("#selectTable").append("<td style='text-align: center;'>"+list[i].gr_score+"</td>");
-			$("#selectTable").append("<td style='text-align: center;'>"+list[i].gr_id1+"</td>");
+			$("#selectTable").append("<td class='tg-g9xd'>"+list[i].co_name+"</td>");
+			$("#selectTable").append("<td class='tg-dlxr'>"+list[i].gr_num+"</td>");
+			$("#selectTable").append("<td class='tg-dlxr'>"+list[i].ranking+"</td>");
+			$("#selectTable").append("<td class='tg-dlxr'>"+list[i].gr_score+"</td>");
+			$("#selectTable").append("<td class='tg-dlxr'>"+list[i].gr_id1+"</td>");
 			$("#selectTable").append("</tr>");
 		}
 		
 	}else{
-		$("#clname").html(clname+" -평균");
+		$("#clname").html("<b>"+clname+" -평균</b>");
 		
 		$("#selectTable").append("<tr>");
-		$("#selectTable").append("<th style='text-align: center;'>강좌명</th>");
-		$("#selectTable").append("<th style='text-align: center;'>회차</th>");
-		$("#selectTable").append("<th style='text-align: center;'>등수</th>");
-		$("#selectTable").append("<th style='text-align: center;'>점수</th>");
-		$("#selectTable").append("<th style='text-align: center;'>학생아이디</th>");
+		$("#selectTable").append("<th class='tg-tns0'>강좌명</th>");
+		$("#selectTable").append("<th class='tg-tns0'>회차</th>");
+		$("#selectTable").append("<th class='tg-tns0'>등수</th>");
+		$("#selectTable").append("<th class='tg-tns0'>점수</th>");
+		$("#selectTable").append("<th class='tg-tns0'>학생아이디</th>");
 		$("#selectTable").append("</tr>");
 		
 		alert("보여줄 정보가없습니다.");
