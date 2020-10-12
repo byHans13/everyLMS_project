@@ -31,12 +31,12 @@ public class MsgController {
 	MsgMM msgm;
 	
 
-//	@RequestMapping(value = "/prof/insertplanclass", method = RequestMethod.POST)
-//	public ModelAndView insertplanclass(HttpSession session, HttpServletRequest request, ClassUpBean cb,RedirectAttributes attr) {
-//		ModelAndView mav=pcm.insertplanclass(session,cb,request,attr);
-//		return mav;
-//		
-//	}
+	@RequestMapping(value = "stud/selectMsg")
+	public ModelAndView selectMsg(HttpSession session) {
+		ModelAndView mav=msgm.selectMsg(session);
+		return mav;
+		
+	}
 //	
 //
 //	@RequestMapping(value = "/prof/updateplanclass")

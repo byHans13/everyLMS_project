@@ -48,47 +48,4 @@ public class MsgRsetController {
 	
 	
 	
-	
-	
-	
-	
-//	
-//	@RequestMapping(value = "/rest/idclick", produces = "application/json;charset=utf-8")
-//	public int idclick(@RequestParam("id") String id ) {
-//		int cnt=mm.selectIdclick(id);
-//		
-//		return cnt;
-//	}
-//	
-////	@RequestMapping(value = "checkNumSend", produces = "application/json;charset=utf-8")
-////	public String checkNumSend(Email em , String email) {
-////		System.out.println("인증번호 발송페이지");
-////		System.out.println(email);
-////		List list=mm.checkNumSend(em,email);
-////		String json=new Gson().toJson(list);
-////		
-////		return json;
-////	}
-//	
-//	@RequestMapping(value = "/stud/rest/updateMyinfo")
-//	public String updateMyinfo(HttpSession session,String name,String loe) {
-//		String result = mm.updateMyinfo(session, name,loe);
-//		return result;
-//		
-//	}
-//	@RequestMapping(value = "/stud/rest/goupphone")
-//	public boolean goupphone(HttpSession session,String phone) {
-//		boolean result = mm.goupphone(session, phone);
-//		return result;
-//		
-//	}
-//	
-//	@RequestMapping(value = "/stud/rest/goupemailbtn")
-//	public boolean goupemailbtn(HttpSession session,String email) {
-//		boolean result = mm.goupemailbtn(session, email);
-//		return result;
-//		
-//	}
-	
-	
 }
