@@ -73,7 +73,7 @@ td{
 		<div style="height: 100px;"></div>
 		
 		<div id="selectbox">
-			
+			<h2 id='comt'></h2>
 			<table id="selectTable">
 			</table>
 		</div>
@@ -101,7 +101,11 @@ $(document).ready
 		success: function (json) {
 			console.log(json);
 			console.log(json.length);
-			console.log(json[0].cl_clname);
+			
+			if(json.length==0){
+				$("#comt").html("등록된 퀴즈가 없습니다.");
+			}else{
+			
 			$("#selectTable").append("<tr>");
 			$("#selectTable").append("<th style='text-align: center;'>강의명</th>");
 			$("#selectTable").append("<th style='text-align: center;'>강좌명</th>");
@@ -126,7 +130,8 @@ $(document).ready
 										"'><button type='button'>클릭</button></a></td>");
 				$("#selectTable").append("</tr>");
 				
-			}  
+			}
+		  }
 		},
 		error: function (err) {
 			console.log(err);
@@ -155,6 +160,11 @@ $(document).ready
 		success: function (json) {
 			console.log(json);
 			
+			if(json.length==0){
+				$("#comt").html("");
+				$("#comt").html("등록된 퀴즈가 없습니다.");
+			}else{
+			
 			$("#selectTable").append("<tr>");
 			$("#selectTable").append("<th style='text-align: center;'>강의명</th>");
 			$("#selectTable").append("<th style='text-align: center;'>강좌명</th>");
@@ -180,7 +190,7 @@ $(document).ready
 				$("#selectTable").append("</tr>");
 				
 			}  
-			
+		  }
 		},
 		error: function (err) {
 			console.log(err);

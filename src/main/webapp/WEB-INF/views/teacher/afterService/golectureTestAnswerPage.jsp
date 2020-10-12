@@ -71,10 +71,18 @@ td{
 				<option value="Q">퀴즈</option>
 			</select>
 		</div>
-	</form>	
-		<button type="button" onclick="testAnswer()">시험 정답률</button>
-		<button type="button" onclick="quizAnswer()">퀴즈 정답률</button>
-		<div style="height: 100px;"></div>
+	</form>
+		<br><br>
+		<div>
+			<button type="button" onclick="testAnswer()"
+					style="border: none; width: 200px; height: 30px; font-size: 20px; background-color: blue; color: white;">
+			시험 정답률</button>
+			<button type="button" onclick="quizAnswer()"
+					style="border: none; width: 200px; height: 30px; font-size: 20px; background-color: blue; color: white;">
+			퀴즈 정답률</button>
+		</div>
+		
+		<div style="height: 30px;"></div>
 		
 		<div>
 			<p id="selectbox"></p><br>

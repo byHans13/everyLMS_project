@@ -7,32 +7,10 @@
 <meta name="_csrf" content="${_csrf.token}">
 <meta name="_csrf_header" content="${_csrf.headerName}">
 <title>Insert title here</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-	crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!-- 차트 링크 -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-<!-- 부트스트랩 -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-	crossorigin="anonymous"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-	crossorigin="anonymous"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-	crossorigin="anonymous"></script>
 
-<!-- bootstrap -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <style>
 html, body {
 	height: 100%;
@@ -87,40 +65,40 @@ section {
 			class="container">
 				<div class="form-group">
 				<label for="inputEmail3"class="control-label col-sm-2">강의명</label>
-					<input type="text" placeholder="강의명을 입력하시오" name='cl_clname' class="form-control" style="width: 20%;">
+					<input type="text" class='si' placeholder="강의명을 입력하시오" name='cl_clname' class="form-control" style="width: 20%;">
 				</div>
 				<div class="form-group">
 					<label for="inputEmail3" class="col-sm-2 control-label">썸네일</label>
-					<input type="file" placeholder="썸네일을 입력하시오" name="fileName" id="files" class="form-control" style="width: 20%;">
+					<input type="file" class='si' placeholder="썸네일을 입력하시오" name="fileName" id="files" class="form-control" style="width: 20%;">
 				</div>
 				<div class="form-group">
 					<label for="inputEmail3" class="col-sm-2 control-label">시작날짜<br>(ex.2020/08/22)</label>
-						<input type="date" name='cl_stday' class="form-control" style="width: 20%;">
+						<input type="date" name='cl_stday' class="form-control si" style="width: 20%;">
 				</div>
 				<div class="form-group">
 					<label for="inputEmail3" class="col-sm-2 control-label">종료날짜<br>(ex.2020/08/22)</label>
-					<input type="date" name='cl_fnday' class="form-control" style="width: 20%;">
+					<input type="date" name='cl_fnday' class="form-control si" style="width: 20%;">
 				</div>
 				<div class="form-group">
 					<label for="inputEmail3" class="col-sm-2 control-label">강의 가격<br>(ex.100point=>100)</label>
-					<input type="number" placeholder="강의가격을 입력하시오" name='cl_pt' class="form-control" style="width: 20%;">
+					<input type="number" placeholder="강의가격을 입력하시오" name='cl_pt' class="form-control si" style="width: 20%;">
 				</div>
 				<div class="form-group">
 					<label for="inputEmail3" class="col-sm-2 control-label">강좌 회차</label>
-					<input type="number" placeholder="강의회차를 입력하시오" name='cl_lcnum' class="form-control" style="width: 20%;">
+					<input type="number" placeholder="강의회차를 입력하시오" name='cl_lcnum' class="form-control si" style="width: 20%;">
 				</div>
 				<div class="form-group">
 					<label for="inputEmail3" class="col-sm-2 control-label">레벨</label>
-					<input type="number" placeholder="레벨을 설정하시오(1~5)" name='cl_lv' class="form-control" style="width: 20%;">
+					<input type="number" placeholder="레벨을 설정하시오(1~5)" name='cl_lv' class="form-control si" style="width: 20%;">
 				</div>
 				<div class="form-group">
 					<label for="inputEmail3" class="col-sm-2 control-label">관심사</label>
 					<div class="radio">
-					<label><input type="radio" value="여행" name='cl_cc'>여행</label>
-					<label><input type="radio" value="영화감상" name='cl_cc'>영화감상 </label>
-					<label><input type="radio" value="음악감상" name='cl_cc'>음악감상</label>
-					<label><input type="radio" value="인터넷" name='cl_cc'>인터넷 </label>
-					<label><input type="radio" value="컴퓨터" name='cl_cc'>컴퓨터</label>
+					<label><input type="radio" value="여행" name='cl_cc' class='si'>여행</label>
+					<label><input type="radio" value="영화감상" name='cl_cc' class='si'>영화감상 </label>
+					<label><input type="radio" value="음악감상" name='cl_cc' class='si'>음악감상</label>
+					<label><input type="radio" value="인터넷" name='cl_cc' class='si'>인터넷 </label>
+					<label><input type="radio" value="컴퓨터" name='cl_cc' class='si'>컴퓨터</label>
 					</div>
 				</div>
 				<br>
@@ -136,10 +114,9 @@ section {
 					<input type="number" id="rc_test" name="rc_test" class="form-control" style="width: 20%;"><br>
 					<p id='rateErr' style="color: red;">
 					<br>
-					<button type="button" onclick="openRateChart()" class="btn btn-warning">백분율 확인하기</button>
-					<button type="button" id='insertClassBnt' class="btn btn-success">등록하기</button>
-					<button type="reset"  class="btn btn-primary">취소</button>
+					
 				</div>
+				
 			<div class="container" id='rateChart'>
 				<div class="card" style="height: 300px; width: 500px; margin-left: -130px;">
 					<div class="card-body">
@@ -147,8 +124,10 @@ section {
 					</div>
 				</div>
 			</div>
-<!-- 			<button type="button" id='insertClassBnt' class="btn btn-default">등록하기</button> -->
-<!-- 			<button type="reset" class="btn btn-default">취소</button> -->
+			<button type="button" onclick="openRateChart()" class="btn btn-warning">백분율 확인하기</button>
+					<button type="button" id='insertClassBnt' class="btn btn-success">등록하기</button>
+					<button type="reset"  class="btn btn-primary">취소</button>
+
 		</form>
 		<input type="hidden" id='token' data-token-name='${_csrf.headerName }'
 			value='${_csrf.token }' />
@@ -165,8 +144,8 @@ section {
 		$('#insertClassBnt').click(
 				function() {
 					num = 0;
-
-					var $input = $('table input');
+						//class='si'
+					var $input = $('input.si');
 					console.dir($input[0]);
 
 					for (var i = 0; i < $input.length; i++) {
@@ -246,7 +225,7 @@ section {
 						break;
 					}
 
-				})
+				});
 
 		function daycal() {
 
