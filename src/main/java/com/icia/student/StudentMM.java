@@ -274,11 +274,19 @@ public class StudentMM {
 		Point = sDao.selectMypoint(id);
 		onechk = req.getParameter("onechk").toString();
 		resultpt = req.getParameter("resultpt").toString();
+		if(onechk != null) {
+			
 		mav.addObject("id", id);
 		mav.addObject("Point",Point);		
 		mav.addObject("resultpt",resultpt);		
 		mav.addObject("onechk", onechk);
 		view = "Addpoint/PointCharge";
+		}else {
+			mav.addObject("id", id);
+			mav.addObject("Point",Point);		
+			mav.addObject("resultpt",resultpt);	
+			view = "Addpoint/PointCharge";
+		}
 		mav.setViewName(view);
 		return mav;
 	}

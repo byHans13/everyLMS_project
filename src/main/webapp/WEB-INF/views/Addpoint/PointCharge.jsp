@@ -207,7 +207,6 @@ div.point_charge {
 					<button id="modal_btn" onclick="send()">인증번호받기</button></td>
 			</tr>
 		</table>
-		<form action="PointCharge">
 			<div class="black_bg"></div>
 			<div class="modal_wrap">
 				<div class="modal_close">
@@ -242,6 +241,7 @@ div.point_charge {
 					</tr>
 				</table>
 			</div>
+		<form action="PointCharge">
 			<button id="btn-danger" class="btn btn-danger"
 				style="position: absolute; margin-top: 150px; font-size: xx-large;">완료</button>
 			<input type="hidden" id="hidid" name="hidid" value="${id}" /> <input

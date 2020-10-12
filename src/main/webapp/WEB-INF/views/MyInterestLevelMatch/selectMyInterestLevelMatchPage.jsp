@@ -14,32 +14,29 @@
 </sec:authorize>
 <style>
 .cS {
-   text-align: center;
-   top: 50%;
-   left: 50%;
-   transform: translate(-50%, -50%);
-   position: absolute;
-   padding: 5px 10px;
+	text-align: center;
+	top: 50%;
+	left: 50%;
+/* 	transform: translate(-50%, -50%);
+	position: absolute; */
+	padding: 5px 10px;
 }
 #search {
-   text-align: center;
-   top: 80%;
-   left: 50%;
-   transform: translate(-50%, -50%);
-   position: absolute;
-   padding: 5px 10px;
+	text-align: center;
+	top: 85%;
+	left: 50%;
+/* 	transform: translate(-50%, -50%);
+	position: absolute; */
+	padding: 5px 10px;
 }
 
 #Paging {
-   text-align: center;
-   top: 80%;
-   left: 30%;
-   transform: translate(-50%, -50%);
-   position: absolute;
-   padding: 5px 10px;
-}
-header {
-   /* background-color: gray; */
+	text-align: center;
+	top: 85%;
+	left: 30%;
+/* 	transform: translate(-50%, -50%);
+	position: absolute; */
+	padding: 5px 10px;
 }
 
 header {
@@ -58,6 +55,51 @@ section {
 	float: left;
 	position: absolute;
 	transform:translate(300px,0px)
+}
+
+#modal {
+	display: none;
+	position: fixed;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%
+}
+
+#modal.open {
+	display: block;
+	color: red;
+}
+
+#modal #bg_modal {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: #000;
+	opacity: .5;
+	filter: alpha(opacity = 50);
+	z-index: 100
+}
+
+#contents_modal {
+	position: absolute;
+	top: 40%;
+	left: 40%;
+	width: 600px;
+	height: 500px;
+	margin: -150px 0 0 -194px;
+	padding: 28px 28px 0 28px;
+	border: 2px solid #555;
+	background: #fff;
+	font-size: 12px;
+	z-index: 200;
+	color: #767676;
+	line-height: normal;
+	white-space: normal;
+	overflow: scroll
 }
 </style>
 </head>
@@ -121,6 +163,10 @@ section {
    </form>
    </div>
    <div id="Paging">${Paging}</div>
+   <div id='modal'>
+			<div id='bg_modal'></div>
+			<div id='contents_modal'></div>
+		</div>
    </section>
    <footer>
       <jsp:include page="../h2k5every_footer.jsp" />
@@ -132,10 +178,12 @@ section {
    $('#AVGLEVEL')
          .change(
                function() {
+            	   
                   var select_sub = $('#AVGLEVEL').val();
                   var json = new Object();
                   json.lv_lv = select_sub;
                   console.log(select_sub);
+                  
                   $
                         .ajax({
                            type : 'post',
@@ -177,10 +225,7 @@ section {
                               }
                            },
                            error : function(request, status, error) {
-                              alert("code :" + request.status + "\ n"
-                                    + "message :"
-                                    + request.responseText + "\ n"
-                                    + "error :" + error);
+                             console.log(error);
                            }
                         });// ajax
                });

@@ -37,7 +37,7 @@ public interface StudentDao {
 
 	int getreviewDetailCount(@Param("search") String search, @Param("selvalue") String selvalue);
 
-	@Select("SELECT  * FROM vw_class WHERE CL_CLNAME = #{cl_clname} and aa_id = #{id} order by Co_NUM asc")
+	@Select("SELECT  * FROM vw_class WHERE CL_CLNAME = #{cl_clname} and AA_ID = #{id} order by Co_NUM asc")
 	List<Clasc> selectClassListAjax(@Param("cl_clname") String cl_clname, @Param("id") String id);
 
 	@Select("SELECT  * FROM co WHERE Co_idnum = #{Cl_idnum} order by Co_NAME asc")

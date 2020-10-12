@@ -102,19 +102,20 @@ section {
 </form>
       <table class="cS" id="cS">
          <tr bgcolor="skyblue" height="30">
-            <th width="150">수업명</th>
-            <th width="150">제목</th>
-            <th width="250">작성자</th>
+            <td width="150">수업명</td>
+            <td width="150">작성자</td>
+            <td width="250">제목</td>
             <td width="250">종강날짜|삭제</td>
          </tr>
          <tbody id="tableShow">
             <c:forEach var="Clasc" items="${cList}">
                <tr height="25">
                   <td align="center">${Clasc.cl_clname}</td>
-                  <td align="center">${Clasc.cob_title}</td>
-                  <td align="center"><a href='selectClassReviewDetailAjax?cob_bonum=${Clasc.cob_bonum}'>${Clasc.cob_id}</a></td>
+                  <td align="center">${Clasc.cob_id}</td>
+                  <td align="center"><a href='selectClassReviewDetailAjax?cob_bonum=${Clasc.cob_bonum}'>${Clasc.cob_title}</a></td>
                   <td align="center">${Clasc.cl_fnday}<input type='checkbox'
                      id="btncheck" value='${Clasc.cob_bonum}'></td>
+                     <td><input type='hidden'value='${Clasc.cl_clname}'id="searchval"></td>
                </tr>
             </c:forEach> <!-- 게시판 -->
          </tbody>
@@ -144,6 +145,7 @@ function dtncheck(click) {
    var selval = $('#selval').val();
    var page = $('#page').val();
    var sch = $('#searchval').val();
+   var searval = $('#searval').val();
    console.log(page);
    console.log(selval);
    console.log(sch);
@@ -169,7 +171,7 @@ function dtncheck(click) {
       if(selval == null){         
       location.href = "reviewselectbtn?search="+sch+"&pageNum="+page+"";
       }else if(selval != null){
-      location.href = "searchClassreviewDetail?selvalue="+selval+"&search="+sch+"&pageNum="+page+"";
+      location.href = "searchClassreviewDetail?selvalue="+selval+"&search="+searval+"&pageNum="+page+"";
 }
    } else if (confirm_test == false) {
       alert("삭제가 취소되었습니다.")

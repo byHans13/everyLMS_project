@@ -127,12 +127,12 @@ section {
 	<div id="cs">
 	<table style="margin: auto; text-align: center;">
 		<tr bgcolor="skyblue" height="30">
-			<th width="150">관심사</th>
-			<th width="150">사진</th>
-			<th width="150">강좌명|교수명|강의수|level</th>			
-			<th width="150">평점</th>
-			<th width="150">강의계획서</th>
-			<th width="150">수강신청</th>
+			<td width="150">관심사</td>
+			<td width="150">사진</td>
+			<td width="150">강좌명|교수명|강의수|level</td>			
+			<td width="150">평점</td>
+			<td width="150">강의계획서</td>
+			<td width="150">수강신청</td>
 		</tr>
 		<tbody id="tableShow">
 		<c:forEach var="Clasc" items="${cList}">
@@ -142,10 +142,10 @@ section {
 					<td align="center"><h2>${Clasc.cl_clname}</h2>${Clasc.cl_id} | ${Clasc.co_num} |${Clasc.cl_lv}</td>
 					  <c:choose>
                      <c:when test="${Clasc.gpa_gpa eq 0}">
-                        <th><h3>등록된 강의가 없습니다.</h3></th>
+                        <td><h3>등록된 강의가 없습니다.</h3></td>
                      </c:when>
                      <c:when test="${Clasc.gpa_gpa ne 0}">
-                        <th width="150"><h2>${Clasc.gpa_gpa}</h2></th>
+                        <td width="150"><h2>${Clasc.gpa_gpa}</h2></td>
                      </c:when>
                   </c:choose>
 

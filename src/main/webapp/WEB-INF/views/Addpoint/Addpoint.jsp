@@ -157,7 +157,14 @@ dd {
 		<input type="hidden" id="hidid" name="hidid" value="${id}" />
 		<input type="hidden" id="hidmypt" name="hidmypt" value="${Point}" />
 		<h2 style="text-align: right;" id="getpt">
-			나의 포인트 =${Point}
+			 <c:choose>
+                     <c:when test="${Point eq 0}">
+                        <td><h3>"0"</h3></td>
+                     </c:when>
+                     <c:when test="${Clasc.gpa_gpa ne 0}">
+                        <td><h2>나의 포인트 =${Point}</h2></td>
+                     </c:when>
+                  </c:choose>
 		</h2>
 		<form action="Payment">
 		<h2>${id }</h2>

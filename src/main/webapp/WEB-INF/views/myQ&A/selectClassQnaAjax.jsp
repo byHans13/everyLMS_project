@@ -97,10 +97,10 @@ section {
    </form>
    <table class="cS" id="cS">
       <tr bgcolor="skyblue" height="30">
-         <th width="150">회차</th>
-         <th width="150">강좌명</th>
-         <th width="150">제목</th>
-         <th width="250">작성자 | 삭제</th>
+         <td width="150">회차</td>
+         <td width="150">강좌명</td>
+         <td width="150">제목</td>
+         <td width="250">작성자 | 삭제</td>
          <td width="250">날짜</td>
       </tr>
       <tbody id="tableShow">
@@ -113,6 +113,7 @@ section {
                <td align="center">${Clasc.cob_id}<input type='checkbox'
                   id="btncheck" value='${Clasc.cob_bonum}'></td>
                <td align="center">${Clasc.cob_date}</td>
+               <td><input type='hidden'value='${Clasc.cl_clname}'id="searchval"></td>
             </tr>
          </c:forEach>
       </tbody>
@@ -142,6 +143,7 @@ section {
       var selval = $('#selval').val();
       var page = $('#page').val();
       var sch = $('#searchval').val();
+      var searval = $('#searval').val();
       var schUrl = encodeURIComponent(sch);
   
          var json = new Object();
@@ -167,7 +169,7 @@ section {
                 	      console.log(json);
                   location.href = "searchbtn?search="+schUrl+"&pageNum="+page+"";
                   }else if(selval != null){
-                  location.href = "searchClassQnaDetail?selvalue="+selval+"&search="+sch+"&pageNum="+page+"";
+                  location.href = "searchClassQnaDetail?selvalue="+selval+"&search="+searval+"&pageNum="+page+"";
             }
                } else if (confirm_test == false) {
                   alert("삭제가 취소되었습니다.")

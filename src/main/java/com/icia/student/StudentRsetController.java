@@ -73,4 +73,9 @@ cobdelete.put("cob_bonum", cob_bonum.get("cob_bonum").toString());
 mm.cobdelete(cobdelete, session);
 		return 1;
 }
+	   @PostMapping(value = "/selectMyPointAjax", produces = "application/json;charset=utf-8") // 포인트
+	   public String selectMyPointAjax(@RequestBody JSONObject pt_id, HttpSession session) {
+	      String pt_pt = mm.selectMyPointAjax(pt_id.get("pt_id").toString(),session);
+	      return pt_pt;
+	   }
 }
