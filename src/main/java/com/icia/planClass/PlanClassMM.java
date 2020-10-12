@@ -54,8 +54,9 @@ public class PlanClassMM {
 	}
 
 
-	public ModelAndView updateplanclass(HttpSession session, ClassUpBean cub, RedirectAttributes attr) {
+	public ModelAndView updateplanclass(HttpSession session, ClassUpBean cub, RedirectAttributes attr, String lv) {
 		ModelAndView mav = new ModelAndView();
+		cub.setPc_lv(Integer.parseInt(lv));
 		boolean result = pcd.updateplanclass(cub);
 		
 		if(result) {

@@ -26,7 +26,7 @@ public class ClassUpBean {
 	
 	//강의계획서
 	String pc_idnum;
-	int pc_lv;
+	Integer pc_lv;
 	String pc_title;
 	String pc_cont;
 	

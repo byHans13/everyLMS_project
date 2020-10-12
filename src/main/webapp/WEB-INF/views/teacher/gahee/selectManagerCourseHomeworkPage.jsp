@@ -176,6 +176,7 @@ var subvd="";
 	for(var i=0; i<courseList.length; i++){
 		//console.log(courseList[i].fbList[0].fl_subvd);
 		subvd = courseList[i].fbList[0].fl_subvd;
+		
 		if(subvd=="course"){//강의파일	
 			$('#coTbody').append("<tr><td>"+courseList[i].co_num+"회차</td><td>"+courseList[i].co_name+"</td><td onclick=\"openFiles('"+courseList[i].fbList[0].fl_sysname+"')\">"+courseList[i].fbList[0].fl_oriname+"</td><td>"+courseList[i].co_cont+"</td></tr>");																			
 		}
@@ -183,7 +184,7 @@ var subvd="";
 		$('#hoTbody').append("<tr id='tr"+i+"'><td>"+courseList[i].co_num+"회차</td><td>"+courseList[i].co_name+"</td>");	
 		if(courseList[i].fbList.length>1){
 			
-			$('#tr'+i).append("<td><a id='a"+i+"' href='/h2k5every/stud/homeworkFiledown?sysFileName="+courseList[i].fbList[0].fl_sysname+"'></a></td><td id='td"+i+"'></td><td><a onclick=\"openAaList('"+courseList[i].co_lv+"','"+courseList[i].co_idnum+"','"+courseList[i].co_num+"')\">상세보기</td></tr>");
+			$('#tr'+i).append("<td><a id='a"+i+"' href='/h2k5every/stud/homeworkFiledown?sysFileName="+courseList[i].fbList[1].fl_sysname+"'></a></td><td id='td"+i+"'></td><td><a onclick=\"openAaList('"+courseList[i].co_lv+"','"+courseList[i].co_idnum+"','"+courseList[i].co_num+"')\">상세보기</td></tr>");
 			homeworkList(courseList[i].co_num,courseList[i].co_lv,courseList[i].co_idnum,i);
 			//var arrHome = homeworkList(courseList[i].co_num,courseList[i].co_lv,courseList[i].co_idnum,i);
 			//console.dir(arrHome);

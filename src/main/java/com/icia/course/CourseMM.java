@@ -1,6 +1,8 @@
 package com.icia.course;
 
  
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -70,12 +72,30 @@ public class CourseMM {
 			cfb.setFl_lv(lv.get(0).getCl_lv());
 			boolean fiResult = fm.fileUp(multi, cfb);
 			if(fiResult) {
-				System.out.println("성공::   "+fiResult);
-				mav.addObject("cl_ct", 0);
-				 mav.setViewName("redirect:/prof/classmain/0/1");
+				String co_idnum="";
+				String msg ="";
+				try {
+					co_idnum = URLEncoder.encode(cb.getCo_idnum(), "UTF-8");
+					msg =  URLEncoder.encode("강좌등록에성공하셨습니다.", "UTF-8");
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				String co_lv =cb.getCo_lv().toString();
+				
+				//String co_idnum = cb.getCo_idnum();
+				//System.out.println("co_lcnum!!!!!!!!!!!!1"+co_lcnum);
+				int co_lcnum = cod.getlcnum(cb.getCo_idnum());
+				System.out.println("co_lcnum:    "+co_lcnum);
+				//attr.addFlashAttribute("msg","강좌등록에 성공하셨습니다.");
+				//session.setAttribute("msg", "강좌등록에 성공하셨습니다.");
+				
+				System.out.println("성공:   "+fiResult);
+				 mav.setViewName("redirect:/prof/coursePage/"+co_lv+"/"+co_idnum+"/"+co_lcnum+"/"+msg);
+				 //coursePage/{co_lv}/{co_idnum}/{co_lcnum}
 				session.removeAttribute("co_idnum");
 				session.removeAttribute("co_num");
-			}}}
+							}}}
 		
 		return mav;
 	}
