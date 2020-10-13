@@ -61,6 +61,9 @@ public interface StudentDao {
 
 	@Select ("SELECT mb_point FROM mb WHERE mb_ID = #{MB_ID}")
 	   String selectMypoint(String id);
+	void insertMyPoint(@Param("onechk")String onechk,@Param("id")String id);
+
+
 	@Select("SELECT mb_point FROM mb WHERE mb_ID = #{MB_ID}")
 	String selectMyPointAjax(String pt_id);
 	String UpdateMyPoint(@Param("resultpt")String resultpt,@Param("id")String id);

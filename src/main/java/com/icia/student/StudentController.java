@@ -102,19 +102,22 @@ public class StudentController {
 	}
 
 	@RequestMapping(value = "stud/PointCharge")
-	public ModelAndView PointCharge(String id,String resultpt,String phonearea,HttpServletRequest req,HttpServletResponse response) throws IOException {
+	public ModelAndView PointCharge(String id,String resultpt,String phonearea,String chk_box,String onechk,HttpServletRequest req,HttpServletResponse response) throws IOException {
+		System.out.println(chk_box);
+		System.out.println(onechk);
 	PrintWriter out = response.getWriter();
 		response.setContentType("text/html; charset=UTF-8");
 		if(phonearea == "") {
-			out.println("<script>alert('번호를 설정해주세요!!')</script>");
+			out.println("<script>alert('핸드폰인증을 해주세요.')</script>");
+			out.flush();
+		}else if(chk_box == null) {
+			out.println("<script>alert('필수사항 체크가 안되어있습니다.')</script>");
 			out.flush();
 		}else {
-		mav = mm.PointCharge(id,resultpt,phonearea,req,response);
-		System.out.println(phonearea);
+		mav = mm.PointCharge(id,resultpt,phonearea, onechk,req,response);
 		}
 		return mav;
 	}
-
 	@RequestMapping(value = "stud/complete")
 	public ModelAndView complete(String id, String resultpt, HttpServletRequest req, HttpSession session) {
 		mav = mm.complete(id, resultpt, req, session);

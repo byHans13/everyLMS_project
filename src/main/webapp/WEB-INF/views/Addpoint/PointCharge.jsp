@@ -157,9 +157,9 @@ div.point_charge {
 	<section id="section" style="margin-left: 20px;">
 		<input type='hidden' id='token' data-token-name='${_csrf.headerName}'
 			name='${_csrf.parameterName}' value='${_csrf.token}' />
-		<h2 id="chakind" style="text-align: center;"></h2>
-		<h2 id="id" style="text-align: left;">${hidid}</h2>
 		<form action="PointCharge">
+		<input type="hidden" name="onechk" value='${onechk}'>
+		<h2 id="id" style="text-align: left;">${hidid}</h2>
 			<div
 				style="width: 400px; margin-left: 25%; border: 1px solid #034267;">
 				<table id="table1">
@@ -207,7 +207,7 @@ div.point_charge {
 							id="modal_btn" onclick="send()" value="인증번호받기" /></td>
 					</tr>
 					<tr>
-						<td><input type='checkbox' id="chk_box"> <a
+						<td><input type='checkbox' id="chk_box" name="chk_box"> <a
 							id="provision" style="text-align: center;"> 개인정보 수집 · 이용에
 								동의합니다.(필수)</a></td>
 					</tr>
@@ -216,7 +216,7 @@ div.point_charge {
 							onclick="detailview()">자세히보기</a>></td>
 					</tr>
 					<tr>
-						<td><input type='checkbox' id="chk_box"> <a
+						<td><input type='checkbox' id="chk_box"name="chk_box"> <a
 							id="provision" style="text-align: center;">이용약관에 동의합니다.(필수)</a></td>
 
 					</tr>

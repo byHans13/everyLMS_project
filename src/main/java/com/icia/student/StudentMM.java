@@ -284,12 +284,14 @@ public class StudentMM {
 		return mav;
 	}
 
-	public ModelAndView PointCharge(String id, String resultpt, String phonearea, HttpServletRequest req,
+	public ModelAndView PointCharge(String id, String resultpt, String onechk ,String phonearea, HttpServletRequest req,
 			HttpServletResponse response) {
 		mav = new ModelAndView();
 		String view = null;
+		onechk = req.getParameter("onechk").toString();
 		id = req.getSession().getAttribute("id").toString();
 		resultpt = req.getParameter("resultpt").toString();
+		sDao.insertMyPoint(onechk,id);
 	    sDao.UpdateMyPoint(resultpt,id);
 		mav.addObject("id", id);
 		mav.addObject("resultpt", resultpt);
