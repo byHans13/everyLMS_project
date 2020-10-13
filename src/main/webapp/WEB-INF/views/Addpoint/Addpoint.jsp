@@ -157,9 +157,8 @@ dd {
 			type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		<input type="hidden" id="hidid" name="hidid" value="${id}" /> <input
 			type="hidden" id="hidmypt" name="hidmypt" value="${Point}" />
-		<h2 style="text-align: right;" id="getpt">나의 포인트 =${Point}</h2>
+		<h3 id="getpt" style="margin-left: 200px; color: gray;">${id}님의 보유POINT =>  ${Point}POINT</h3>
 		<form action="Payment">
-			<h2>${id}</h2>
 			<dl>
 				<dt style="margin-left: 30%;">충전 페이지 입니다.^ㅁ^+</dt>
 				<div class="point_charge_row">
@@ -267,8 +266,8 @@ dd {
 						target_point = Number(target_point);
 						var result = date + target_point;
 						$('#result_pt').append(
-								"<h2>" + target_point + "원+" + date + "원="
-										+ result + "원</h2>");
+								"<h2>" + target_point  +"+"+ date + "="
+										+ result + "POINT</h2>");
 						$('#result_pt')
 								.append(
 										"<input type='hidden' name='onechk' value="+target_point+">");

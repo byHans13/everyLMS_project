@@ -17,25 +17,7 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	
 <style type="text/css">
-/* header{
-	position : absolute;
-	transform:translate(0px,60px);
-}
-nav{
-	position: absolute;
-	transform:translate(0px,60px);
-	height : 50px;
-}
-li{
-	position : absolute;
-	height : 48px;
-}
-ul li a{
-	posiotion : absolute;
-	} */
-	/* .container-fluid{
-	height: 200px;
-	} */
+
 	
 	.navbar navbar-inverse{
 	
@@ -108,7 +90,6 @@ $(document).ready
 								class="glyphicon glyphicon-log-in"></span>로그아웃</a></li>
 						</form>
 						<li><a href="/h2k5every/stud/myinfopage"><span class="glyphicon glyphicon-user"></span>마이페이지</a></li>
-						<li><a href="#"><span></span>고객센터</a></li>
 					</ul>
 			</div>
 		</div>

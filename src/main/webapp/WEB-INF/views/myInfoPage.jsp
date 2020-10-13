@@ -150,7 +150,7 @@ if(myInfo.length == 0){
 			"<button onclick='emailbtn()' id='ee' class='button3'>수정하기</button><p id='kk11'></p></td></tr>"+
 			"<tr><th class='even'>보유포인트</th><td class='even'><p>"+myInfo[0].mb_point+"POINT</p>"+
 			   "<p style='font-size: 13px;'>강의등록시 차감되는 포인트 입니다.</p>"+
-			   "<button class='button3'>충전하기</button></td></tr></tbody></table>");
+			   "<button class='button3'><a href='Addpoint'>충전하기</a></button></td></tr></tbody></table>");
 }
 
 function info(phone) {
