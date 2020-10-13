@@ -63,9 +63,6 @@ section {
 div > #paging {
       text-align: center;
     }
-#boot {
-      background-color: #b3c6ff;
-    }
 </style>
 <body>
 	<header>
@@ -105,8 +102,7 @@ div > #paging {
 					<tr>
 						<td align="center">${Clasc.co_num}</td>
 						<td align="center">${Clasc.co_name}</td>
-						<td align="center"><a
-							href='SelectClassDetail?cob_bonum=${Clasc.cob_bonum}'>${Clasc.cob_title}</a></td>
+						<td align="center"><a href='SelectClassDetail?cob_bonum=${Clasc.cob_bonum}'>${Clasc.cob_title}</a></td>
 						<td align="center">${Clasc.cob_id}</td>
 						<td align="center">${Clasc.cob_date}|<input type='checkbox'
 							name="dtncheck" id="btncheck" value='${Clasc.cob_bonum}'

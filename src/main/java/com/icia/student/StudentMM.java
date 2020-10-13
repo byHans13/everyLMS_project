@@ -339,21 +339,18 @@ public class StudentMM {
 	      return mav;
 	   }
 
-	public ModelAndView SelectClassDetail(String cob_bonum, Integer pageNum, HttpServletRequest req,
-			HttpSession session) { // 상세보기
+	public ModelAndView SelectClassDetail(String cob_bonum, Integer pageNum, HttpServletRequest req, HttpSession session) { // 상세보기
 			mav = new ModelAndView();
 			String view = null;
 			List<CourseBoard> cblist = null;
 			List<Reply> rList = null;
-			pageNum = (pageNum == null) ? 1 : pageNum;
 			cblist = sDao.getBoardList(cob_bonum);
 			rList = sDao.getBoardreply(cob_bonum);
 			session.setAttribute("cob_bonum", cob_bonum);
 			if (cob_bonum != null) {
 				mav.addObject("cblist", cblist);
 				mav.addObject("rList", rList);
-				mav.addObject("paging", searchgetPaging(pageNum)); // 페이징
-				view = "SelectVeiwDetail/SelectClassDetail";
+				view = "SelectViewDetail/SelectClassDetail";
 			} else {
 				view = "stud/goLoginFrm";
 			}
@@ -361,13 +358,15 @@ public class StudentMM {
 			return mav;
 		}
 
-	private String searchgetPaging(Integer pageNum ) {
-		int maxNum = sDao.getboardCount();
-		int listCount = 10; // 페이지당 글의 개수
-		int pageCount = 9; // 그룹당 페이지 개수
-		String boardName = "SelectClassDetail";
-		NomPaging paging = new NomPaging(maxNum, pageNum, listCount, pageCount, boardName);
-		return paging.makeHtmlPaging();
+	public List<Reply> replyselect(String cob_bonum) {
+		List<Reply> rList = sDao.getBoardreply(cob_bonum);
+		return rList;
+	}
+
+	public int replyinsert(HashMap<String, Object> replylist) {
+		sDao.insertreply(replylist);
+		System.out.println(replylist);
+		return 0;
 	}
 
 	

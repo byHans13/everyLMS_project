@@ -78,4 +78,22 @@ mm.cobdelete(cobdelete, session);
 	      String pt_pt = mm.selectMyPointAjax(pt_id.get("pt_id").toString(),session);
 	      return pt_pt;
 	   }
+	   @PostMapping(value = "/replyselect", produces = "application/json;charset=utf-8") // 포인트
+	   public List<Reply> replyselect(@RequestBody JSONObject cob_bonum) {
+		   List<Reply> rList = mm.replyselect(cob_bonum.get("cob_bonum").toString());
+		   return rList;
+	   }
+	   @PostMapping(value = "/replyinsert", produces = "application/json;charset=utf-8") // 포인트
+	   public int replyinsert(@RequestBody JSONObject crList) {
+		   HashMap<String , Object>replylist = new HashMap<String , Object>();
+		   replylist.put("cr_idnum",crList.get("cr_idnum").toString());
+		   replylist.put("cr_lv",crList.get("cr_lv").toString());
+		   replylist.put("cr_num",crList.get("cr_num").toString());
+		   replylist.put("cr_id",crList.get("cr_id").toString());
+		   replylist.put("cr_bnum",crList.get("cr_bnum").toString());
+		   replylist.put("cr_Reply",crList.get("cr_Reply").toString());
+		   System.out.println(replylist);
+		   mm.replyinsert(replylist);
+		   return 1;
+	   }
 }

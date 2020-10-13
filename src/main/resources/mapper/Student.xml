@@ -136,6 +136,12 @@ RN>=#{pageNum}*9-10 and cob_title LIKE '%'||#{search}||'%'
 	</select>
 	<insert id="insertMyPoint" parameterType="String">
 	INSERT INTO Point VALUES(SYSDATE,#{onechk},#{id})
+	</insert>
 	
+	<insert id="insertreply" parameterType="hashmap">
+	<![CDATA[
+		
+INSERT INTO CR VALUES (#{cr_idnum},#{cr_lv},#{cr_num},#{cr_id},#{cr_bnum},#{cr_Reply},DEFAULT)
+		]]>
 	</insert>
 </mapper>
