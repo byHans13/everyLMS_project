@@ -1,12 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+ <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<sec:authorize access="hasRole('ROLE_STUD')">
+	<script src="../script/wsocket.js"></script>
+</sec:authorize>
 <style>
 header {
 	/* background-color: gray; */
@@ -203,7 +208,7 @@ div.point_charge {
 					</tr>
 					<tr>
 						<td colspan="2"><input type='text' placeholder="-없이 핸드폰 번호입력"
-							name="phonearea" class="phone_box"> <input type="button"
+							name="phonearea" class="phone_box" id='PhoneNum'> <input type="button"
 							id="modal_btn" onclick="send()" value="인증번호받기" /></td>
 					</tr>
 					<tr>
@@ -241,8 +246,8 @@ div.point_charge {
 				</div>
 				<input type="hidden" id="hidid" name="hidid" value="${id}" /> <input
 					type="hidden" id="resultpt" name="resultpt" value="${resultpt}" />
-				<button id="btn-danger" class="btn btn-danger"
-					style="margin-left: 40%;">완료</button>
+				<div id='sess' style="display: none;"><button id="btn-danger" class="btn btn-danger"
+					style="margin-left: 40%;">완료</button></div>
 			</div>
 			<div id="detailview" style="text-align: center;"></div>
 		</form>
@@ -299,33 +304,26 @@ div.point_charge {
 		}
 
 		document.getElementById('modal_btn').addEventListener('click', onClick);
-		document.querySelector('.modal_close').addEventListener('click',
-				offClick);
+		document.querySelector('.modal_close').addEventListener('click',offClick);
 
 	};
 
 	function send() {
-		$("#gosms").empty()
 		var number; //모르는 숫자 보내는것.
 		number = Math.floor(Math.random() * 100000) + 100000;
 		if (number > 100000) {
 			number = number - 10000;
 		}
-		$
-				.ajax({
-					url : "sendSms?to=" + $("#PhoneNum").val() + "&num="
-							+ number,
+		$.ajax({
+					url : "sendSms?to=" + $("#PhoneNum").val() + "&num="+ number,
 					success : function(sms) {
 						if (sms != '1') {
 							alert("해당 휴대폰으로 인증번호에 실패하셨습니다. 다시시도해주십시오");
 						} else if (sms == '1') {
 							alert("해당 휴대폰으로 인증번호를 발송했습니다");
 							number = number;
-							$('#gosms')
-									.append(
-											"<input type='text' placeholder='인증번호' id='f'><tr><input type='button' onclick='gonum("
-													+ number
-													+ ")'; value='확인'></tr>");
+							$('#gosms').append("<input type='text' placeholder='인증번호' id='f'><tr><input type='button' onclick='gonum("+
+									number+ ")'; value='확인'></tr>");
 
 						}
 					},
@@ -334,6 +332,22 @@ div.point_charge {
 
 				});
 	}
+	
+	function gonum(number) {
+		var mynum = $('#f').val();
+		console.log("mynum: "+mynum);
+		console.log("number: "+number);
+		if(mynum==number){
+			alert("휴대폰 인증에 성공하셨습니다.");
+			$('#sess').css("display","block");
+			document.querySelector('.modal_wrap').style.display = 'none';
+			document.querySelector('.black_bg').style.display = 'none';
+
+		}else{
+			alert("휴대폰 인증번호가 일치하지 않습니다. 다시시도해주십시오");
+		}
+	}
+	
 </script>
 
 

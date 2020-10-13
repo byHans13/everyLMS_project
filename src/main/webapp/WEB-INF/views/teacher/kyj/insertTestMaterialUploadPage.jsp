@@ -12,8 +12,6 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="../resources/js/jquery.serializeObject.js"></script>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <sec:authorize access="hasRole('ROLE_STUD')">
 	<script src="../script/wsocket.js"></script>
 </sec:authorize>

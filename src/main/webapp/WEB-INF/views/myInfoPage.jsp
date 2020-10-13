@@ -121,7 +121,7 @@ table.type07 td {
 		<center><div id='gosms' style="display: none;"></div></center>
 		<center><div id='updateInfo' style="display: none;"></div></center>
 		</div>
-		<a href='/h2k5every/stud/goLoginFrm'><button>홈으로</button></a>
+		<center><a href='/h2k5every/stud/goLoginFrm'><button class='button3'>홈으로</button></a></center>
 </section>
 <footer>
 	<jsp:include page="h2k5every_footer.jsp" />
@@ -150,9 +150,8 @@ if(myInfo.length == 0){
 			"<button onclick='emailbtn()' id='ee' class='button3'>수정하기</button><p id='kk11'></p></td></tr>"+
 			"<tr><th class='even'>보유포인트</th><td class='even'><p>"+myInfo[0].mb_point+"POINT</p>"+
 			   "<p style='font-size: 13px;'>강의등록시 차감되는 포인트 입니다.</p>"+
-			   "<button class='button3'>충전하기</button></td></tr></tbody></table>");
+			   "<button class='button3'><a href='Addpoint'>충전하기</a></button></td></tr></tbody></table>");
 }
-update();
 
 function info(phone) {
 	var go = confirm("기존 전화번호랑 일치하나요? 맞으면 '확인'  틀리면 '취소'를 눌러주세요");

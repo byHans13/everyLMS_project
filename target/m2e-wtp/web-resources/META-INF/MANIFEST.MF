@@ -1,6 +1,10 @@
 Manifest-Version: 1.0
 <<<<<<< HEAD
+<<<<<<< HEAD
 Built-By: HanSeungHo
+=======
+Built-By: gahee
+>>>>>>> origin/realLast_gahee
 Build-Jdk: 1.8.0_251
 =======
 Built-By: Jung suhyun

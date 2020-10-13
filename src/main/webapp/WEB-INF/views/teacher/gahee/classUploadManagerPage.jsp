@@ -8,9 +8,7 @@
 <sec:authorize access="hasRole('ROLE_STUD')">
 	<script src="../script/wsocket.js"></script>
 	</sec:authorize>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <meta charset="UTF-8">
 <meta name="_csrf" content="${_csrf.token}">
@@ -228,7 +226,6 @@ if(managerClassList.length !=0){
 function openClassPlan(pc_title,pc_cont,cl_cc,cl_lcnum) {
 	 $('#contents_layer').empty();
 	 $('#articleView_layer').addClass('open');
-	//$('#contents_layer').append("<center class='table table-bordered'><h3>강의계획서</h3><table><tr><th>계획서 개요</th><th>"+pc_title+"</th></tr><tr><th>계획서 내용</th><th>"+pc_cont+"</th></tr><tr><th>관심사</th><th>"+cl_cc+"</th></tr><tr><th>총강좌회차</th><th>"+cl_lcnum+"</th></tr></table></center>");
 	 $('#articleView_layer').addClass('open'); //모달박스 나타남
 	    $('#contents_layer').html("<table class='type07'><thead><tr><th>강의계획서</th><th>내용</th></tr></thead>"+
 	    		"<tbody><tr><th>개요</th><td>"+pc_title+"</td></tr><tr><th>내용</th><td>"+pc_cont+"LV</td></tr>"+

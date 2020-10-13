@@ -1,12 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+ <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<sec:authorize access="hasRole('ROLE_STUD')">
+	<script src="../script/wsocket.js"></script>
+	</sec:authorize>
 <style>
 .cS {
 	text-align: center;
@@ -152,9 +157,8 @@ dd {
 			type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		<input type="hidden" id="hidid" name="hidid" value="${id}" /> <input
 			type="hidden" id="hidmypt" name="hidmypt" value="${Point}" />
-		<h2 style="text-align: right;" id="getpt">나의 포인트 =${Point}</h2>
-		<form action="Payment">
-			<h2>${id}</h2>
+		<h3 id="getpt" style="margin-left: 200px; color: gray;">${id}님의 보유POINT =>  ${Point}POINT</h3>
+		<form action="Payment" method="post">
 			<dl>
 				<dt style="margin-left: 30%;">충전 페이지 입니다.^ㅁ^+</dt>
 				<div class="point_charge_row">
@@ -262,8 +266,8 @@ dd {
 						target_point = Number(target_point);
 						var result = date + target_point;
 						$('#result_pt').append(
-								"<h2>" + target_point + "원+" + date + "원="
-										+ result + "원</h2>");
+								"<h2>" + target_point  +"+"+ date + "="
+										+ result + "POINT</h2>");
 						$('#result_pt')
 								.append(
 										"<input type='hidden' name='onechk' value="+target_point+">");

@@ -23,23 +23,11 @@
 			</div>
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="#">Main</a></li>
-				<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">강의관리<!-- <span class="caret"></span> --></a>
-				<!-- <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">강의관리<span class="caret"></span></a> -->
-					<!-- <ul class="dropdown-menu">
-						<li><a href="#">세부내역 1-1</a></li>
-						<li><a href="#">세부내역 1-2</a></li>
-						<li><a href="#">세부내역 1-3</a></li>
-					</ul></li> -->
+				<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">강의관리</a>
 				<li><a href="#">성적 관리</a></li>
 				<li><a href="#">FeedBack 관리</a></li>
 			</ul>
 			<div class="container">
-				<!-- <form class="navbar-form navbar-left" action="#">
-					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Search">
-					</div>
-						<button type="submit" class="btn btn-default">검색</button>
-				</form> -->
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="gologinpage"><span class="glyphicon glyphicon-log-in"></span>로그인</a></li>
 					<li><a href="gomemberjoinpage"><span class="glyphicon glyphicon-user"></span>회원가입</a></li>
