@@ -203,7 +203,7 @@ $(document).ready(function() {
   			 	$('tbody').append("<tr><td>"+json[i].ct_id+"</td>"+"<td><a href='#"+json[i].ct_id+"' class='intro' id="+json[i].ct_id
   						+" value='"+json[i].ct_id+","+json[i].ct_prof+"'>"+json[i].ct_id+" 님의 강사소개서"+"</a></td>"+"<td><a href='#"
   						+json[i].ct_id+"' class='certi'  value='"+json[i].ct_id+","+json[i].ct_prof+"'><input type='hidden' id='ct_id"+i
-  						+"' name='ctf_check1' value='0'>"+json[i].ct_prof+"</a></td>"+"<td><button id='certiConfirm' value='"+json[i].ct_id+","+json[i].ct_prof+"'>"+"확인"
+  						+"' name='ctf_check1' value='0'>"+json[i].ct_prof+"</a></td>"+"<td><button class='certiConfirm' value='"+json[i].ct_id+","+json[i].ct_prof+"'>"+"확인"
   						+"</button></td><td><button id='certiReject'>"+"거절"+"</button></td></tr>");
   				$('#ct_id'+i).val(ct_id);
   				console.log("ct_id",$('#ct_id'+i).val()); 
@@ -232,7 +232,7 @@ $(document).ready(function() {
 	   
 });
 
-$(document).on("click","#certiConfirm",function(){
+$(document).on("click"," .certiConfirm",function(){
 	var aaa=$(this).attr('value');
 	console.log(aaa);
 	var str=aaa.split(",");

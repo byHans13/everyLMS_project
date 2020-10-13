@@ -14,7 +14,7 @@
 <sec:authorize access="hasRole('ROLE_STUD')">
 	<script src="../script/wsocket.js"></script>
 </sec:authorize>
-<title>Insert title here</title>
+<title>h2k5every</title>
 <style>
 header {
 	/* background-color: gray; */
@@ -28,17 +28,22 @@ aside {
 	/* background-color: blue; */
 	width: 300px;
 	float: left;
-	 position : absolute;
-	 transform:translate(0px,230px);  
+	position : absolute;
+	transform:translate(0px,112px);  
 }
 
 section {
 	/* background-color: pink; */
-	width: 1000px;
+	margin-top: 20px;
+	width: 1100px;
 	float: left;
 	position: absolute;
+<<<<<<< HEAD
 	transform:translate(320px,100px);
 	margin-top: 100px;
+=======
+	transform:translate(320px,110px);
+>>>>>>> origin/kyj_201013_04
 }
 .menu{
     margin-left: 20px;
@@ -89,9 +94,6 @@ text-align: center;
 	
 	<section id="section" style="margin-left: 20px;">
 		<div id="aaa">
-			<h3>
-				<b>추천강의</b>
-			</h3>
 		</div>
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		<input type="hidden" id="muListValue" value="${muList}">
@@ -125,11 +127,11 @@ function test(id) {
 		success: function (json) {
 			console.log(json);
 			console.log(json.length);
-				for(var i=0; i<json.length; i++){
-					$('#menu').append("<div class='menu'><p>"+json[i]+"</p></div>");
-				}
 				if(muList != null){
 					$("#aaa").html("${muList}");
+				}
+				for(var i=0; i<json.length; i++){
+					$('#menu').append("<div class='menu'><p>"+json[i]+"</p></div>");
 				}
 		},
 		error: function (err) {
