@@ -65,13 +65,14 @@ section {
 	width: 1075px;
 	height: 65px;
 	text-align: center;
+	background: #eee;
 }
 
 .li {
 	list-style: none;
 	display: inline-block;
 	margin-left: 20px;
-	margin-top: 10px;
+	margin-top: 20px;
 	margin-right: 20px;
 }
 
@@ -98,25 +99,98 @@ section {
 	text-align: center;
 	overflow: scroll;
 }
-
-.classInfoTable {
-	text-align: center;
-	border-bottom: 1px solid black;
-	margin-left: 50px;
-	font-size: medium;
+table.type02 {
+    border-collapse: separate;
+    border-spacing: 0;
+    text-align: left;
+    line-height: 1.5;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+  	margin : 20px 10px;
+}
+table.type02 th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #fff;
+    border-left: 1px solid #fff;
+    background: #eee;
+}
+table.type02 td {
+    width: 350px;
+    padding: 10px;
+    vertical-align: top;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+table.type11 {
+    border-collapse: separate;
+    border-spacing: 1px;
+    text-align: center;
+    line-height: 1.5;
+    margin:auto;
+    margin-top:30px;
+}
+table.type11 th {
+    width: 240px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #fff;
+    background:black;
+}
+table.type11 td {
+    width: 155px;
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    background: #eee;
+}
+.btn_like {
+  position: relative;
+  display: block;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #e8e8e8;
+  border-radius: 44px;
+  font-family: notokr-bold,sans-serif;
+  font-size: 14px;
+  line-height: 16px;
+  background-color: #fff;
+  transition: border .2s ease-out,box-shadow .1s ease-out,background-color .4s ease-out;
+}
+.btn_unlike .img_emoti {
+    background-position: -30px -120px;
 }
 
-td {
-	text-align: left;
-	padding: 14px;
+.img_emoti {
+    display: inline-block;
+    overflow: hidden;
+    font-size: 0;
+    line-height: 0;
+    background: url(https://mk.kakaocdn.net/dn/emoticon/static/images/webstore/img_emoti.png?v=20180410) no-repeat;
+    text-indent: -9999px;
+    vertical-align: top;
+    width: 20px;
+    height: 17px;
+    margin-top: 1px;
+    background-position: 0px -120px;
+    text-indent: 0;
+}
+.ani_heart_m.hi {
+    -webkit-background-size: 9000px 125px;
+    background-size: 9000px 125px;
+}
+
+.ani_heart_m.bye {
+    background-size: 8250px 125px;
 }
 </style>
 </head>
-
-
 <body>
-
-
 	<header>
 		<%-- <%@ include file="h2k5every_header.jsp"%><!-- 정적인 방식 --> --%>
 		<jsp:include page="../../h2k5every_loginHeader.jsp" /><!-- 동적인 방식 -->
@@ -132,11 +206,16 @@ td {
 			<ul class='ul'>
 				<li id='classInfo'></li>
 				<li id='className'></li>
-				<li id='classLikeBtn'><input type='button' value='좋아요'
-					onclick='classLike()'></li>
+				<li id='classLikeBtn'>
+					<button type='button' onclick='classLike()' class='btn_like'>
+						<span class="img_emoti">좋아요</span>
+						<span class="ani_heart_m"></span>
+					</button>
+				</li>
 			</ul>
 			<input type='hidden' value='' name='cl_idnum' id='classPk'
-				class='classPk'> <input type='hidden' value=''
+				class='classPk'> 
+			<input type='hidden' value=''
 				name='cob_kind' id='boardKind' class='boardKind'>
 		</div>
 		<div id='classNav' name='classNav' class='classNav'>
@@ -154,8 +233,8 @@ td {
 		</div>
 		<div id='classAll' name='classAll' class='classAll'>
 			<div id='classLeft' name='classLeft' class="classLeft">
-				<h4>강의정보</h4>
-				<table class='classInfoTable' id='classInfoTable'>
+				<h4><b>강의정보</b></h4>
+				<table class='type02' id='classInfoTable' >
 				</table>
 			</div>
 			<div class='classRight' name='classRight' id='classRight'></div>
@@ -170,7 +249,10 @@ td {
 	var el = ${classInfo}; //포워딩으로 보내준 Gson값 받음
 	var infoReview = ${infoReview};
 	var avg = ${avgNum};
+	var likeNum= ${likeNum};
+	console.log("likelikelikeNum="+likeNum);
 	classInfoAjax(); //강의실 들어오자마자 강좌소개에 필요한 값 ajax 밑 div 찍어주기 위한 함수 실행
+	
 	function test() {
 		alert('성공');
 	};
@@ -184,10 +266,10 @@ td {
 			$('#classImg').html("<img src='../picture/"+el[i].pi_pisysname+"' width='150px' height='200px'>");
 			$('#classInfo').html("<h5>" + el[i].cl_cc + " | LV " + el[i].cl_lv + " | "+ el[i].mb_name + " 강사</h5>");
 			$('#className').html("<h2>" + el[i].cl_clName + "</h2>");
-			cInfo.append("<tr><td>과목명</td><td>" + el[i].cl_clName	+ "</td></tr>");
-			cInfo.append("<tr><td>학습레벨</td><td>LV " + el[i].cl_lv	+ "</td></tr>");
-			cInfo.append("<tr><td>강수</td><td>" + el[i].cl_lcnum+ "강</td></tr>");
-			cInfo.append("<tr><td>강의평점</td><td>" + avg + "점</td></tr>");
+			cInfo.append("<tr><th>과목명</th><td>" + el[i].cl_clName	+ "</td></tr>");
+			cInfo.append("<tr><th>학습레벨</th><td>LV " + el[i].cl_lv	+ "</td></tr>");
+			cInfo.append("<tr><th>강수</th><td>" + el[i].cl_lcnum+ "강</td></tr>");
+			cInfo.append("<tr><th>강의평점</th><td>" + avg + "점</td></tr>");
 		}
 		//ajax하기 전 초기화 
 		$("#classRight").html("");
@@ -229,7 +311,12 @@ td {
 			classReviews += "<div>" + infoReview[i].cob_cont+ "</div></div><br/>";
 		}
 		str.append(classReviews);
-
+		if(likeNum !=0){
+		    $('button').addClass('btn_unlike');
+		    $('.ani_heart_m').addClass('hi');
+		}else{
+		    $('.ani_heart_m').addClass('bye');
+		}
 	}//classInfoAjax() END
 	function classLike() {
 		var obj = {
@@ -249,13 +336,15 @@ td {
 			success : function(json) {
 				console.log(json);
 				if (json) {
-					alert("관심강의에 등록되었습니다. 수강신청관리 페이지에서 확인하실 수 있습니다.")
+					likeNum =1;
+					alert("관심강의에 등록되었습니다. 수강신청관리 페이지에서 확인하실 수 있습니다.");
 				} else {
-					alert("좋아요가 취소되었습니다.")
+					likeNum =0;
+					alert("좋아요가 취소되었습니다.");
 				}
 			},
 			error : function(json) {
-				alert("error: 새로고침이나 브라우저를 다시 실행해주세요.")
+				alert("error: 새로고침이나 브라우저를 다시 실행해주세요.");
 			}
 		});//ajaxEND
 	}//function classLike()END
@@ -288,29 +377,22 @@ td {
 							alert("로그인 후 이용해주세요.");
 							classInfoAjax();
 						} else {
-							lectureList.append("<div id='lectureDiv' style='width:1036px; height:652px;'><table id='lectureTable' style='margin:auto; border-collapse:collapse;'></table></div>");
-							$('#lectureTable').append("<tr><td>회차</td><td>강좌명</td><td>수강여부</td></tr>");
+							var str="";
+							lectureList.append("<div id='lectureDiv' style='width:1036px; height:652px;'><table id='lectureTable' class='type11'></table></div>");
+							str +="<thead><tr><th>회차</th><th>강좌명</th><th>수강여부</th></tr></thead><tbody>";
 							for ( var i in json) {
 								console.log("atmk=" + json[i].atd_atmk);
 								if (json[i].atd_atmk != null) {
-									$('#lectureTable').append("<tr style='border-bottom:1px solid black;'><td>"
-															+ json[i].co_num
-															+ "강</td><td><a href='selectClassLectureVideoPage?co_idnum="
-															+ json[i].co_idnum
-															+ "&co_lv="
-															+ json[i].co_lv
-															+ "&co_num="
-															+ json[i].co_num
-															+ "&atd_atmk="
-															+ json[i].atd_atmk
-															+ "' target='_blank'>"
-															+ json[i].co_name
-															+ "</a></td><td>수강완료</td></tr>");
+									str +="<tr><td>"+json[i].co_num+"강</td>";
+									str +="<td><a href='selectClassLectureVideoPage?co_idnum="+json[i].co_idnum+"&co_lv="+json[i].co_lv+"&co_num="
+										+json[i].co_num+"&atd_atmk="+json[i].atd_atmk+"'target='_blank'>"+json[i].co_name+"</a></td><td>수강완료</td></tr>";
 								} else {
-									$('#lectureTable').append("<tr style='border-bottom:1px solid black;'><td>"+ json[i].co_num+ "강</td><td><a href='selectClassLectureVideoPage?co_idnum="
-															+ json[i].co_idnum+ "&co_lv="+ json[i].co_lv+ "&co_num="+ json[i].co_num+ "' target='_blank'>"+ json[i].co_name	+ "</a></td><td>미수강</td></tr>");
+									str +="<tr><td>"+ json[i].co_num+ "강</td>";
+									str +="<td><a href='selectClassLectureVideoPage?co_idnum="+json[i].co_idnum+ "&co_lv="
+										+json[i].co_lv+"&co_num="+json[i].co_num+"'target='_blank'>"+ json[i].co_name+"</a></td><td>미수강</td></tr>";
 								}
 							}//for 
+							$('#lectureTable').append(str);
 						}// 로그인 if else에서 else문 end
 					},
 					error : function(err) {
@@ -946,5 +1028,19 @@ td {
 			} 
 		});//ajax ED		
 	};//function insertHomework END 
+	
+	
+	$('button').click(function(){
+		  if($(this).hasClass('btn_unlike')){
+		    $(this).removeClass('btn_unlike');
+		    $('.ani_heart_m').removeClass('hi');
+		    $('.ani_heart_m').addClass('bye');
+		  }
+		  else{
+		    $(this).addClass('btn_unlike');
+		    $('.ani_heart_m').addClass('hi');
+		    $('.ani_heart_m').removeClass('bye');
+		  }
+		});
 </script>
 </html>

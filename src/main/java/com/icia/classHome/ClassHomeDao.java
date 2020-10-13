@@ -37,6 +37,8 @@ public interface ClassHomeDao {
 		String selectClassAvgNum(ClassBean cb);
 		@Select("SELECT * FROM (SELECT * FROM cobKindAndGpa ORDER BY gpa_gpa DESC) WHERE cob_idnum=#{cl_idnum} AND cob_lv=#{cl_lv} AND ROWNUM <= 2")
 		List<CourseBoardBean> selectInfoReview(ClassBean cb);
+		@Select("SELECT likes_check FROM likes WHERE likes_idnum=#{cl_idnum} AND likes_lv=#{cl_lv} AND likes_id=#{cl_id}")
+		Integer selectClassLikeDefault(ClassBean cb);
 		
 		//강의목록 들어갔을 때, 출석값, course 출력위해 - lv 수정, test 완료
 		@Select("SELECT * FROM courseAttend WHERE co_idnum=#{co_idnum} AND co_lv=#{co_lv} AND aa_id = #{aa_id}")

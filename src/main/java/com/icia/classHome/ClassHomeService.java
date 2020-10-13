@@ -140,6 +140,14 @@ public class ClassHomeService {
 			view = "./";
 			rList = null;
 		}
+		cb.setCl_id(session.getAttribute("id").toString());
+		System.out.println("cb="+cb);
+		Integer likeNum = cDao.selectClassLikeDefault(cb);
+		System.out.println("likeNum");
+		if(likeNum == null) {
+			likeNum = 0;
+		}
+		mav.addObject("likeNum", likeNum);
 		mav.addObject("classInfo", new Gson().toJson(cList));
 		mav.addObject("avgNum", avgNum);
 		mav.addObject("infoReview", new Gson().toJson(rList));
