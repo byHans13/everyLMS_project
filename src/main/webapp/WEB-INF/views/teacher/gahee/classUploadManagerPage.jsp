@@ -235,7 +235,7 @@ function openCoursePage(cl_lv,cl_idnum) {
 }
 
 
-function ajaxaa(cl_lv,cl_idnum,sumnum) {
+function ajaxaa(cl_lv,cl_idnum,cl_lcsum) {
 	$.ajax({
 		url:'rest/aaList?cl_lv='+cl_lv+'&cl_idnum='+cl_idnum,
 		type:'GET',
@@ -256,7 +256,7 @@ function ajaxaa(cl_lv,cl_idnum,sumnum) {
 		$('#comeAa').append("<table id='ttt' class='table table-hover'><thead style='background-color:silver;'><tr><th>학생ID</th><th>진도율</th><th>쪽지보내기</th></tr></thead><tbody id='aa'>");
 		for(var i=0; i<aaList.length; i++){
 			console.log(aaList[i]);
-			$('#aa').append("<tr><td>"+aaList[i].aa_id+"</td><td><a onclick=\"openProgress('"+aaList[i].aa_id+"','"+cl_idnum+"','"+cl_lv+"','"+sumnum+"')\">상세보기</a></td><td><a onclick=\"openMsg('"+aaList[i].aa_id+"','"+cl_idnum+"')\">보내기</a></td></tr>");
+			$('#aa').append("<tr><td>"+aaList[i].aa_id+"</td><td><a onclick=\"openProgress('"+aaList[i].aa_id+"','"+cl_idnum+"','"+cl_lv+"','"+cl_lcsum+"')\">상세보기</a></td><td><a onclick=\"openMsg('"+aaList[i].aa_id+"','"+cl_idnum+"')\">보내기</a></td></tr>");
 		}
 		$('#comeAa').prepend("</tbody></table>");
 		}else{
@@ -272,7 +272,7 @@ function ajaxaa(cl_lv,cl_idnum,sumnum) {
 }
 
 
-function openProgress(id, idnum, lv,sumnum) {
+function openProgress(id, idnum, lv,cl_lcsum) {
 	$.ajax({
 		url:'rest/countAt?atd_id='+id+'&atd_idnum='+idnum+'&atd_lv='+lv,
 		type:'GET',
@@ -286,8 +286,8 @@ function openProgress(id, idnum, lv,sumnum) {
 			xhr.setRequestHeader($token.data("token-name"), $token.val());
 		},
 		success: function(countAt) {
-			var sum = parseInt(sumnum);
-			var count =parseInt(countAt);
+			var sum = parseInt(cl_lcsum);
+			var count =(parseInt(countAt))-1;
 		console.log(countAt);
 		// $('#contents_layer').empty();
 		 $('#articleView_layer').addClass('open');
@@ -296,7 +296,7 @@ function openProgress(id, idnum, lv,sumnum) {
 		 console.log("sum:  "+sum);
 		 console.log("persent:  "+persent);
 		 $('#contents_layer').empty();
-		 $('#contents_layer').append("<table><tr><td>"+id+"</td><td></div><div id='graph'><span id='sp'>"+persent+"</span></div></tr></table>");
+		 $('#contents_layer').append(id+"님의 진도율입니다.<table><tr><td>"+id+"</td><td></div><div id='graph'><span id='sp'>"+persent+"</span></div></tr></table>");
 		 $('#sp').css("width",persent+"%");
 		 $('style').append(" @keyframes stack{0%{ width: 0; color: rgba(255, 255, 255, 0);} 50%{ color:  rgba(255, 255, 255, 1); } 100%{  width: "+persent+"%;}}");
 		},
