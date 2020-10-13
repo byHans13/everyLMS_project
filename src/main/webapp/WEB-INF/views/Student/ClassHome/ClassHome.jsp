@@ -43,12 +43,11 @@ section {
 	display: flex;
 	margin: 5px;
 	border: 1px solid black;
-	background: #eee;	
+	background: #AACEE2;	
 	width :1075px;
 }
 
 #classInfo {
-	background: #eee;
 	list-style: none;
 	margin-top: 40px;
 	margin-left: 20px;
@@ -92,7 +91,7 @@ section {
 }
 
 .classLeft {
-	background: #eee;
+	background: #AACEE2;
 	border: 1px solid black;
 	width: 300px;
 	height: 650px;
@@ -100,7 +99,7 @@ section {
 }
 
 .classRight {
-	background: #eee;
+	background: white;
 	border: 1px solid black;
 	width: 775px;
 	height: 650px;
@@ -141,7 +140,6 @@ table.type11 {
     border-spacing: 1px;
     text-align: center;
     line-height: 1.5;
-    margin:auto;
     margin-top:30px;
 }
 table.type11 th {
@@ -328,8 +326,8 @@ jQuery.fn.serializeObject = function() {
 		str.append(rightInfo);
 		// 수강후기 ajax 타고와서 table 찍어줌
 		var classReviews = "";
-		classReviews += "<div style='width:745px; height:300px; transform :translate(0px, 230px);'><br/><br/><div>수강후기 ";
-		classReviews += "<input type='button' value='+더보기' onclick='classReview()' id='prevBtn'><hr style='width:100px; border-color:black;'></div><br/>";
+		classReviews += "<div style='width:745px; height:300px; transform :translate(0px, 230px);'><br/><div>수강후기 ";
+		classReviews += "<input type='button' value='+더보기' onclick='classReview()' id='prevBtn'><hr style='width:100px; border-color:black;'></div>";
 		for ( var i in infoReview) {
 			if (infoReview[i].cob_id.length > 2) {
 				var name = infoReview[i].cob_id.split('');
@@ -353,9 +351,10 @@ jQuery.fn.serializeObject = function() {
 				var rename = name.join('');
 			}
 			classReviews += "<div style='width:745px;' onclick=\"classReviewDetail('"+ infoReview[i].cob_bonum+ "','"	+ infoReview[i].gpa_gpa	+ "','" + infoReview[i].cob_kind + "')\">";
-			classReviews += "<div>" + infoReview[i].gpa_gpa + "점 || " + rename+ " || " + infoReview[i].cob_date + "</div>";
-			classReviews += "<h4>" + infoReview[i].cob_title + "</h4>";
-			classReviews += "<div>" + infoReview[i].cob_cont+ "</div></div><br/>";
+			classReviews += "<table class='type02' style='margin:auto;'>";
+			classReviews += "<tr><td colspan='2' style='background-color:black; color:white;'>"+ infoReview[i].gpa_gpa + "점 || " + rename+ " || " + infoReview[i].cob_date +"</td></tr>"
+			classReviews += "<tr><td style='width:100px;'>제목</td><td>" + infoReview[i].cob_title + "</td></tr>";
+			classReviews += "<tr><td style='width:100px;'>내용</td><td>" + infoReview[i].cob_cont+"</td></tr></table></div>";
 		}
 		str.append(classReviews);
 		if(likeNum !=0){
@@ -469,9 +468,9 @@ jQuery.fn.serializeObject = function() {
 						//console.log(json);
 						var notice = $('#classRight');
 						notice.html("");
-						notice.append("<div id='noticeDiv' style='width:1036px; height:652px;'><table id='noticeTable' style='margin:auto; border-collapse:collapse;'></table></div>");
+						notice.append("<div id='noticeDiv' style='width:1036px; height:652px;'><table class='type02' id='noticeTable' style='margin:auto; border-collapse:collapse;'></table></div>");
 						var noticeTable = $('#noticeTable');
-						noticeTable	.append("<tr><td>번호</td><td>구분</td><td>제목</td><td>등록일</td></tr>");
+						noticeTable	.append("<tr><th>번호</th><th>구분</th><th>제목</th><th>등록일</th></tr>");
 						if (json != "") {
 							for ( var i in json) {
 								//console.log("1=",json[i]);
@@ -503,7 +502,7 @@ jQuery.fn.serializeObject = function() {
 		noticeDetail.append("<div id='noticeDetailDiv' style='width:800px; height:300px; margin:auto; text-align:left;'></div>");
 		//$('#noticeDetailDiv').append("<table style='margin:auto; border-collapse:collapse; border:1px;'><tr><td>"+info.bk_boardName+"</td><td>"+info.cob_title+"</td><td>"+info.cob_date+"</td></tr></table>")
 		$('#noticeDetailDiv').append("<h4>" + info.bk_boardName + "</h4><hr>");
-		$('#noticeDetailDiv').append("<table id='noticeDetailTable' style='margin:auto; border-collapse:collapse; float:left;'><tr><td>제목:</td><td>"+ info.cob_title + "</td></tr></table>");
+		$('#noticeDetailDiv').append("<table class='type11' id='noticeDetailTable' style='margin:auto; border-collapse:collapse;'><tr><td>제목:</td><td>"+ info.cob_title + "</td></tr></table>");
 		$('#noticeDetailTable').append("<tr><td>강사명</td><td>" + classInfo[0].mb_name + "</td></tr>");
 		$('#noticeDetailTable').append("<tr><td>작성일</td><td>" + info.cob_date + "</td></tr>");
 		$('#noticeDetailDiv').append("<div style='float:left; margin:auto; width:800px; height:300px;'><hr><br/>"+ info.cob_cont + "</div>");
@@ -519,9 +518,9 @@ jQuery.fn.serializeObject = function() {
 		}
 		$('#classRight').html("");
 		$('#classRight').append("<div id='QNADiv' style='width:1036px; height:652px;'></div>");
-		$('#QNADiv').append("<table id='QNATable' style='margin:auto; border-collapse:collapse;'></table>");
-		$('#QNATable').append("<tr><td>번호</td><td>구분</td><td>강좌</td><td>제목</td><td>등록일</td></tr>");
-		$('#QNADiv').append("<input type='button' value='Q&A 작성' onclick='classInsertViewQNA()'>");
+		$('#QNADiv').append("<table id='QNATable' style='margin:auto; border-collapse:collapse;' class='type11'></table>");
+		$('#QNATable').append("<tr><th>번호</th><th>구분</th><th>강좌</th><th>제목</th><th>등록일</th></tr>");
+		$('#QNADiv').append("<br/><br/><input type='button' id='prevBtn' value='Q&A 작성' onclick='classInsertViewQNA()'>");
 		$.ajax({	type : 'post',
 					url : 'rest/selectClassQNA',
 					data : obj,
@@ -579,14 +578,14 @@ jQuery.fn.serializeObject = function() {
 						str += "<input type='hidden' name='cob_idnum' value='"+json[0].co_idnum+"'>";
 						str += "<input type='hidden' name='cob_lv' value='"+json[0].co_lv+"'><br/>"
 						str += "<input type='hidden' name= cob_kind value='"+ $('#boardKind').val() + "'>";
-						str += "<select id='cob_num' name='cob_num'><option value=''>강좌를 선택해주세요.</option>";
+						str += "<select id='cob_num' name='cob_num'><option value='default'>회차를 선택해주세요.</option>";
 						for ( var i in json) {
 							str += "<option value='"+json[i].co_num+"'>"+ json[i].co_name + "</option>";
 						}
-						str += "</select><br/><hr>";
-						str += "<input type='text' placeholder='제목을 입력해주세요.' name='cob_title'><br/><br/>";
-						str += "<textarea id='cob_cont' name='cob_cont' cols='40' rows='20'></textarea><br/>";
-						str += "<input type='button' value='작성하기' onclick='insertQNA()'></form>";
+						str += "</select><p id='errMsg'></p><hr>";
+						str += "<input type='text' placeholder='제목을 입력해주세요.' name='cob_title' id='ttitle'><p id='errTitle'></p><br/>";
+						str += "<textarea id='cob_cont' name='cob_cont' cols='40' rows='20'></textarea><p id='errCont'></p><br/>";
+						str += "<input type='button' id='prevBtn' value='작성하기' onclick='insertQNA()'></form>";
 						iDiv.append(str);
 					},
 					error : function(err) {
@@ -596,6 +595,25 @@ jQuery.fn.serializeObject = function() {
 	}//function classInsertQNA() END
 
 	function insertQNA() {
+		if($('#cob_num').val() =='default'){
+			$('#errTitle').html("");
+			$('#errCont').html("");
+			$('#errMsg').attr("style","color:red");
+			$('#errMsg').html("회차를 선택해주세요.");
+			return;
+		}else if($('#ttitle').val() ==""){
+			$('#errMsg').html("");
+			$('#errCont').html("");
+			$('#errTitle').attr("style","color:red");
+			$('#errTitle').html("제목을 선택해주세요.");
+			return;
+		}else if($('#cob_cont').val()=="" || $('#cob_cont').val() == undefined){
+			$('#errMsg').html("");
+			$('#errTitle').html("");
+			$('#errCont').attr("style","color:red");
+			$('#errCont').html("내용을 선택해주세요.");
+			return;
+		}
 		var $confirm = confirm("Q&A를 작성하시겠습니까?");
 		if ($confirm == true) {
 			var obj = $('#insertFrmQNA').serializeObject();
@@ -647,19 +665,20 @@ jQuery.fn.serializeObject = function() {
 						xhr.setRequestHeader($token.data("token-name"), $token.val());
 					},success : function(json) {
 						var QnaDetail = $('#classRight');
+						var str="";
 						QnaDetail.html("");
-						QnaDetail.append("<div id='QnaDetailDiv' style='width:800px; height:300px; margin:auto; text-align:left;'></div>");
-						$('#QnaDetailDiv').append("<h4>" + json[0].bk_boardName + "</h4><hr>");
-						$('#QnaDetailDiv').append("<table id='QnaDetailTable' style='margin:auto; border-collapse:collapse; float:left;'><tr><td>제목:</td><td>"+ json[0].cob_title+ "</td></tr></table>");
-						$('#QnaDetailTable').append("<tr><td>작성자</td><td>"+json[0].cob_id+ "</td></tr>");
-						$('#QnaDetailTable').append("<tr><td>작성일</td><td>" + json[0].cob_date+ "</td></tr>");
-						console.log(json[0].cob_cont);
-						$('#QnaDetailDiv').append("<div style='float:left; margin:auto; width:800px; height:300px;'><hr><br/>"
-										+ json[0].cob_cont + "</div>");
-						$('#QnaDetailDiv').append("<div style='float:left; marign:auto width:800px; height:300px;' id='replyDiv'></div>");
-						$('#replyDiv').append("<hr><h4>댓글</h4><hr>");
+						str +="<div id='QnaDetailDiv' style='width:800px; overflow:scroll; margin:auto; text-align:left;'>";
+						str +="<h4>"+json[0].bk_boardName+"</h4><hr/>";
+						str +="<table id='QnaDetailTable' class='type02' style='float:left; margin:auto; border-collapse:collapse; transform :translate(0px, 0px);'>";
+						str +="<tr><th>제목:</th><td>"+ json[0].cob_title+ "</td></tr>";
+						str +="<tr><th>작성자</th><td>"+json[0].cob_id+ "</td></tr>";
+						str +="<tr><th>작성일</th><td>" + json[0].cob_date+ "</td></tr>";
+						str +="<div style='float:left; margin:auto; width:800px; height:300px;'><hr><br/>"+json[0].cob_cont +"</div>";
+						str +="<div style='float:left; marign:auto width:800px; height:600px;' id='replyDiv'></div></div>";
+						QnaDetail.append(str);
+						$('#replyDiv').append("<hr/><h4>댓글</h4><hr/>");
 						console.log(json[0].reply);
-						var str = "";
+						str = "";
 						if (json[0].cr_reply != undefined) {
 							for ( var i in json) {
 								str += "<div><div style='margin:10px;'><b>"
@@ -676,7 +695,7 @@ jQuery.fn.serializeObject = function() {
 						str += "<textarea rows='3px' cols='80px' name='cr_reply'></textarea><br/>";
 						str += "<input type='hidden' value='"+json[0].cob_bonum+"' name='cob_bonum'>";
 						str += "<input type='button' value='댓글 작성' onclick='insertQnaReply()'><br/><br/><br/></form>";
-						$('#QnaDetailDiv').append("<input type='button' value='돌아가기' onclick='classQNA()'>");
+						$('#QnaDetailDiv').append("<input type='button' id='prevBtn' value='돌아가기' onclick='classQNA()'>");
 						$('#replyDiv').append(str);
 					},
 					error : function(err) {
