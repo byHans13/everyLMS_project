@@ -25,35 +25,11 @@ section {
 	float: left;
 }
 
-#nomalmypt {
-	margin: 50px 100px;
-	font-family: Consolas, monospace;
-	font-style: italic;
-	font-size: 55px;
-	width: 150px;
-	height: 150px;
-	border: 5pt groove #707070;
-	font-family: Consolas, monospace;
-}
-
-#resultmypt {
-	margin: 50px 100px;
-	font-family: Consolas, monospace;
-	font-style: italic;
-	font-size: 55px;
-	width: 100px;
-	height: 100px;
-	border: 5pt groove #707070;
-	font-family: Consolas, monospace;
-}
-#resultview{
-margin-top:500px;
-	width: 1000px;
-}
-#resultimg{
-	position: absolute;
-	margin-left: 250px;
-}
+table{
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  border-bottom: 1px solid white;
+  }
 </style>
 </head>
 <body>
@@ -67,15 +43,22 @@ margin-top:500px;
 		<input type='hidden' id='token' data-token-name='${_csrf.headerName}'
 			name='${_csrf.parameterName}' value='${_csrf.token}' /> <input
 			type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-		<h2 style="text-align: center;">충전 성공!</h2>
-			<img src="../upload/h2k5_payview.png" style = "width:450px;height:450px;" id="resultimg"/>
-		<table id="resultview">
-		<tr></tr>
-	<tr>
-			<td><a href="../stud/goLoginFrm"><button class = "btn btn-danger">홈으로</button></a></td>
-	</tr>
-		</table>
-				<h2>${resultpt}</h2>
+			<table
+				style="height: 100%; width: 70%; margin-left: 20%; margin-top: 20%;">
+				<tr>
+					<td colspan="2" style="text-align: center;border-bottom: none;"><h2>감사합니다!</h2></td>
+				</tr>
+				<tr>
+					<td colspan="2"><img src="../upload/h2k5_mainLogo.PNG" id="resultimg" style="text-align: center; margin-left: 80px;"/></td>
+				</tr>
+				<tr>
+					<td colspan="2" style="text-align: center;"><h2>${resultpt}원</h2></td>
+				</tr>
+				<tr>
+					<td colspan="2" style="text-align: center;"><h2>충전이 완료되었습니다.</h2></td>
+				</tr>
+			</table>
+			<a href="../stud/goLoginFrm"><button class="btn btn-dangger" style="margin-left: 50%">홈으로</button></a>
 	</section>
 </body>
 </html>

@@ -1,11 +1,13 @@
 package com.icia.student;
 //회원관리 서비스 클래스
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -241,7 +243,6 @@ public class StudentMM {
 		sDao.cobdelete(cobdelete);
 
 	}
-
 	public ModelAndView Addpoint(String id, HttpSession session) {
 		mav = new ModelAndView();
 		String view = null;
@@ -266,35 +267,28 @@ public class StudentMM {
 		return pt_pt;
 	}
 
-	public ModelAndView Payment(String id, String onechk, HttpSession session, HttpServletRequest req , String resultpt) {
+	public ModelAndView Payment(String id, String onechk, HttpServletResponse response, HttpServletRequest req , String resultpt) throws IOException {
 		mav = new ModelAndView();
 		String view = null;
-		id = session.getAttribute("id").toString();
+		id = req.getSession().getAttribute("id").toString();
 		String Point = null;
 		Point = sDao.selectMypoint(id);
 		onechk = req.getParameter("onechk").toString();
 		resultpt = req.getParameter("resultpt").toString();
-		if(onechk != null) {
-			
 		mav.addObject("id", id);
 		mav.addObject("Point",Point);		
 		mav.addObject("resultpt",resultpt);		
 		mav.addObject("onechk", onechk);
 		view = "Addpoint/PointCharge";
-		}else {
-			mav.addObject("id", id);
-			mav.addObject("Point",Point);		
-			mav.addObject("resultpt",resultpt);	
-			view = "Addpoint/PointCharge";
-		}
 		mav.setViewName(view);
 		return mav;
 	}
 
-	public ModelAndView PointCharge(String id, String resultpt, HttpServletRequest req,HttpSession session) {
+	public ModelAndView PointCharge(String id, String resultpt, String phonearea, HttpServletRequest req,
+			HttpServletResponse response) {
 		mav = new ModelAndView();
 		String view = null;
-		id = session.getAttribute("id").toString();
+		id = req.getSession().getAttribute("id").toString();
 		resultpt = req.getParameter("resultpt").toString();
 	    sDao.UpdateMyPoint(resultpt,id);
 		mav.addObject("id", id);
@@ -303,7 +297,19 @@ public class StudentMM {
 		mav.setViewName(view);
 		return mav;
 	}
-	
+	public ModelAndView complete(String id, String resultpt, HttpServletRequest req,
+			HttpSession session) {
+		mav = new ModelAndView();
+		String view = null;
+		id = session.getAttribute("id").toString();
+		resultpt = req.getParameter("hidgetpt").toString();
+	 resultpt = sDao.selectMypoint(id);
+		mav.addObject("id", id);
+		mav.addObject("resultpt", resultpt);
+		view = "Addpoint/complete";
+		mav.setViewName(view);
+		return mav;
+	}
 	 public ModelAndView selectClassHomePage(Clasc cb, HttpSession session) {
 	      List<Clasc> cList;
 	      List<CourseBoard> rList;

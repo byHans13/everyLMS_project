@@ -39,7 +39,7 @@ public interface RecommendDao {
 	
 	int lnterestCount(@Param("search") String search,@Param("selvalue") String selvalue); // 관심 매칭 게시물 갯수
 
-	@Select("select * from avgmat_vw  where cl_cc = #{cc} and cl_lv > 4")
+	@Select("select * from avgmat_vw  where cl_cc = #{cc}")
 	List<Clasc> selectMylnterestLevel(String lnterestLevel);
 
 	@Select("SELECT floor(avg(lv_lv)) FROM lv where lv_id = #{mb_id}")
