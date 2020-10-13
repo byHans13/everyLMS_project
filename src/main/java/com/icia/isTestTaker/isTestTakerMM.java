@@ -60,7 +60,7 @@ public class isTestTakerMM {
 	public ModelAndView goisTestTakerShowPage(isTestTaker it) {
 		mav= new ModelAndView();
 		String view=null;
-		
+		System.out.println(it.getCl_idnum());
 		List<isTestTaker> numlist= iDao.selectnumlist(it);
 		
 		if(numlist!=null) {
@@ -84,10 +84,10 @@ public class isTestTakerMM {
 		return mav;
 	}
 
-	public List<isTestTaker> isTestTakerSelect(String co_name, Integer gr_num) {
+	public List<isTestTaker> isTestTakerSelect(String cl_idnum, Integer gr_num) {
 		isTestTaker it = new isTestTaker();
 		
-		it.setCo_name(co_name);
+		it.setCl_idnum(cl_idnum);
 		it.setGr_num(gr_num);
 		System.out.println(it.getGr_num());
 		

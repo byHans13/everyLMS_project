@@ -121,7 +121,7 @@ var glist= ${glist};
 					"<button class='btn btn-primary'>클릭</button></form></td>");
 			$("#selectTable").append("</tr>");
 		} 
-		
-	</script>
-	</body>
-	</html>
+	}	
+</script>
+</body>
+</html>
