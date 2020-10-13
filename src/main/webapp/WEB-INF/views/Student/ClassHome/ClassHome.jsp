@@ -77,9 +77,9 @@ section {
 .li {
 	list-style: none;
 	display: inline-block;
-	margin-left: 20px;
-	margin-top: 20px;
-	margin-right: 20px;
+/* 	margin-left: 20px; */
+	margin-top: 12px;
+/* 	margin-right: 20px; */
 }
 
 .classAll {
@@ -241,15 +241,15 @@ background-color: black;;
 		</div>
 		<div id='classNav' name='classNav' class='classNav'>
 			<ul>
-				<li id='classInfoAjax' class='li' onclick='classInfoAjax()'>
+				<li id='classInfoAjax' class='li' onclick='classInfoAjax()' style='color:white;background-color:black;padding:10px 12px 10px 12px;border-radius: 8px;'>
 					강의소개</li>
-				<li id='classVideoTableAjax' class='li' onclick='classLectureAjax()'>
+				<li id='classVideoTableAjax' class='li' onclick='classLectureAjax()'  style='color:white;background-color:black;padding:10px 12px 10px 12px;border-radius: 8px;'>
 					강의목록</li>
-				<li id='classNotice' class='li' onclick='classNotice()'>공지사항</li>
-				<li id='classQNA' class='li' onclick='classQNA()'>Q&A</li>
-				<li id='classPostscript' class='li' onclick='classReview()'>
+				<li id='classNotice' class='li' onclick='classNotice()' style='color:white;background-color:black;padding:10px 12px 10px 12px;border-radius: 8px;'>공지사항</li>
+				<li id='classQNA' class='li' onclick='classQNA()' style='color:white;background-color:black;padding:10px 12px 10px 12px;border-radius: 8px;'>Q&A</li>
+				<li id='classPostscript' class='li' onclick='classReview()' style='color:white;background-color:black;padding:10px 12px 10px 12px;border-radius: 8px;'>
 					수강후기</li>
-				<li id='classReference' class='li' onclick='classHomeworkSubmit()'>과제제출 </li>
+				<li id='classReference' class='li' onclick='classHomeworkSubmit()' style='color:white;background-color:black;padding:10px 12px 10px 12px;border-radius: 8px;'>과제제출 </li>
 			</ul>
 		</div>
 		<div id='classAll' name='classAll' class='classAll'>
@@ -319,15 +319,15 @@ jQuery.fn.serializeObject = function() {
 		var str = $("#classRight");
 		var rightInfo="";
 		rightInfo+="<div style='width:745px; height:80px; position: absolute;'>";
-		rightInfo+="<h3>해당강의 맛보기 문제 풀어보기</h3><hr style='width:350px; border-color:black;'>";
-		rightInfo+="<div>해당 강의의 맛보기 문제를 풀어볼 수 있습니다.<br/>해당 강의와 level이 맞지 않으면 맛보기 문제를 풀어주세요.</div>";
-		rightInfo+="<br/><input type='button' onclick='previewQuiz()' value='맛보기문제 풀러가기' id='prevBtn'>";
+		rightInfo+="<div style='color:white;background-color:black;position: relative;padding:5px 4px 4px 4px;height:80%; padding-bottom:10%; width:70%; margin-left:17%'><h3>해당강의 맛보기 문제 풀어보기</h3><hr style='width:350px; border-color:black;'></div>";
+		rightInfo+="<div style='margin-top:5%;'>해당 강의의 맛보기 문제를 풀어볼 수 있습니다.<br/>해당 강의와 level이 맞지 않으면 맛보기 문제를 풀어주세요.</div>";
+		rightInfo+="<br/><input type='button' onclick='previewQuiz()' value='맛보기문제 풀러가기' style='border-radius: 8px;' id='prevBtn'>";
 		rightInfo+="<br/><br/><hr style='width:350px; border-color:black;'></div>";
 		str.append(rightInfo);
 		// 수강후기 ajax 타고와서 table 찍어줌
 		var classReviews = "";
-		classReviews += "<div style='width:745px; height:300px; transform :translate(0px, 230px);'><br/><div>수강후기 ";
-		classReviews += "<input type='button' value='+더보기' onclick='classReview()' id='prevBtn'><hr style='width:100px; border-color:black;'></div>";
+		classReviews += "<div style='width:745px; height:300px; transform :translate(0px, 230px); margin-top:2%;'><br/><div>수강후기&nbsp; ";
+		classReviews += "<input type='button' value='+&nbsp;더보기' onclick='classReview()' style='border-radius: 8px;' id='prevBtn'><hr style='width:100px; border-color:black;'></div>";
 		for ( var i in infoReview) {
 			if (infoReview[i].cob_id.length > 2) {
 				var name = infoReview[i].cob_id.split('');
@@ -353,8 +353,8 @@ jQuery.fn.serializeObject = function() {
 			classReviews += "<div style='width:745px;' onclick=\"classReviewDetail('"+ infoReview[i].cob_bonum+ "','"	+ infoReview[i].gpa_gpa	+ "','" + infoReview[i].cob_kind + "')\">";
 			classReviews += "<table class='type02' style='margin:auto;'>";
 			classReviews += "<tr><td colspan='2' style='background-color:black; color:white;'>"+ infoReview[i].gpa_gpa + "점 || " + rename+ " || " + infoReview[i].cob_date +"</td></tr>"
-			classReviews += "<tr><td style='width:100px;'>제목</td><td>" + infoReview[i].cob_title + "</td></tr>";
-			classReviews += "<tr><td style='width:100px;'>내용</td><td>" + infoReview[i].cob_cont+"</td></tr></table></div>";
+			classReviews += "<tr><td style='width:100px; background-color:gray;'>제목</td><td>" + infoReview[i].cob_title + "</td></tr>";
+			classReviews += "<tr><td style='width:100px; background-color:lightgray;'>내용</td><td>" + infoReview[i].cob_cont+"</td></tr></table></div>";
 		}
 		str.append(classReviews);
 		if(likeNum !=0){
@@ -693,7 +693,7 @@ jQuery.fn.serializeObject = function() {
 		                  str += "<div style='float:left'>" + sessionID+ "</div><br/>";
 		                  str += "<textarea rows='3px' cols='80px' name='cr_reply'></textarea><br/>";
 		                  str += "<input type='hidden' value='"+json[0].cob_bonum+"' name='cob_bonum'>";
-		                  str += "<input type='button' value='댓글 작성' onclick='insertQnaReply()'><br/><br/><br/></form>";
+		                  str += "<input type='button' value='댓글 작성' id='prevBtn' onclick='insertQnaReply()'><br/><br/><br/></form>";
 		                  $('#QnaDetailDiv').append("<input type='button' value='돌아가기' onclick='classQNA()'>");
 		                  $('#replyDiv').append(str);
 					},
