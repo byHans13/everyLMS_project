@@ -38,10 +38,12 @@ section {
 	display: flex;
 	margin: 5px;
 	border: 1px solid black;
+	background: #eee;	
 	width :1075px;
 }
 
 #classInfo {
+	background: #eee;
 	list-style: none;
 	margin-top: 40px;
 	margin-left: 20px;
@@ -85,6 +87,7 @@ section {
 }
 
 .classLeft {
+	background: #eee;
 	border: 1px solid black;
 	width: 300px;
 	height: 650px;
@@ -92,6 +95,7 @@ section {
 }
 
 .classRight {
+	background: #eee;
 	border: 1px solid black;
 	width: 775px;
 	height: 650px;
@@ -117,7 +121,8 @@ table.type02 th {
     border-bottom: 1px solid #ccc;
     border-top: 1px solid #fff;
     border-left: 1px solid #fff;
-    background: #eee;
+    background-color: black;
+    color:white
 }
 table.type02 td {
     width: 350px;
@@ -188,6 +193,19 @@ table.type11 td {
 .ani_heart_m.bye {
     background-size: 8250px 125px;
 }
+#prevBtn{
+border-top-left-radius: 5px; 
+border-bottom-left-radius: 5px; 
+margin-right:-4px;
+border: 1px solid black; 
+background-color: rgba(0,0,0,0); 
+color: black; 
+padding: 5px;
+}
+#prevBtn:hover{
+color:white; 
+background-color: black;;
+}
 </style>
 </head>
 <body>
@@ -207,7 +225,7 @@ table.type11 td {
 				<li id='classInfo'></li>
 				<li id='className'></li>
 				<li id='classLikeBtn'>
-					<button type='button' onclick='classLike()' class='btn_like'>
+					<button type='button' onclick='classLike()' class='btn_like' id='classLike'>
 						<span class="img_emoti">좋아요</span>
 						<span class="ani_heart_m"></span>
 					</button>
@@ -275,14 +293,17 @@ table.type11 td {
 		$("#classRight").html("");
 		//classRight에 값 찍어주기, 수강후기는 ajax 타고 와야함 
 		var str = $("#classRight");
-		str.append("<div style='width:745px; height:80px;'><h3>해당강의 맛보기 문제 풀어보기</h3><hr style='width:350px;'>");
-		str.append("<div>해당강의의 맛보기 문제를 풀어볼 수 있습니다.</div><div>해당강의와 level이 맞지 않으면 맛보기 문제를 풀어주세요.</div>");
-		str.append("<br><input type='button' onclick='previewQuiz()' value='맛보기문제 풀러가기'>");
-		str.append("<br><br><hr style='width:350px;'></div>");
+		var rightInfo="";
+		rightInfo+="<div style='width:745px; height:80px; position: absolute;'>";
+		rightInfo+="<h3>해당강의 맛보기 문제 풀어보기</h3><hr style='width:350px; border-color:black;'>";
+		rightInfo+="<div>해당 강의의 맛보기 문제를 풀어볼 수 있습니다.<br/>해당 강의와 level이 맞지 않으면 맛보기 문제를 풀어주세요.</div>";
+		rightInfo+="<br/><input type='button' onclick='previewQuiz()' value='맛보기문제 풀러가기' id='prevBtn'>";
+		rightInfo+="<br/><br/><hr style='width:350px; border-color:black;'></div>";
+		str.append(rightInfo);
 		// 수강후기 ajax 타고와서 table 찍어줌
 		var classReviews = "";
-		classReviews += "<div style='width:745px; height:300px;'><br><br><div>수강후기 ";
-		classReviews += "<input type='button' value='+더보기' onclick='classReview()'><hr style='width:100px;'></div><br/>";
+		classReviews += "<div style='width:745px; height:300px; transform :translate(0px, 230px);'><br/><br/><div>수강후기 ";
+		classReviews += "<input type='button' value='+더보기' onclick='classReview()' id='prevBtn'><hr style='width:100px; border-color:black;'></div><br/>";
 		for ( var i in infoReview) {
 			if (infoReview[i].cob_id.length > 2) {
 				var name = infoReview[i].cob_id.split('');
