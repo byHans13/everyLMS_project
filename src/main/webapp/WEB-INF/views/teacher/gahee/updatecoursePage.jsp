@@ -64,6 +64,16 @@ table.type07 td {
     vertical-align: top;
     border-bottom: 1px solid #ccc;
 }
+.button3 {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #f44336;
+  margin-top: 8px;
+}
+.button3:hover {
+  background-color: #f44336;
+  color: white;
+}
 </style>
 </head>
 <body>
@@ -102,9 +112,10 @@ table.type07 td {
 <input type="hidden" id='uidnum' name=co_idnum>
 <input type="hidden" id='ulv' name='co_lv'>
 <input type="hidden" id='unum' name='co_num'>
-<button type="button" id="btn">강의 수정하기</button>
+<button type="button" id="btn" class='button3'>강의 수정하기</button>
+<button type="reset" class='button3'>취소</button>
 </form> 
-<button type="reset">취소</button>
+
 </section>
 	<footer>
 		<jsp:include page="../../h2k5every_footer.jsp" />

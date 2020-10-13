@@ -38,10 +38,6 @@ $(function(){
 </script>
 
 <style>
-table,th,td{
-border: 1px solid black;
-border-collapse: collapse;
-}
 
 html, body {
    height: 100%;
@@ -164,6 +160,19 @@ table.type07 td {
 }
 table.type07 a{text-decoration: none; 
  color: #333333;}
+ 
+ .button3 {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #f44336;
+  margin-top: 8px;
+}
+.button3:hover {
+  background-color: #f44336;
+  color: white;
+}
+ 
+
         
 </style>
 </head>
@@ -287,7 +296,10 @@ function openProgress(id, idnum, lv,cl_lcsum) {
 		},
 		success: function(countAt) {
 			var sum = parseInt(cl_lcsum);
-			var count =(parseInt(countAt))-1;
+			var count =(parseInt(countAt));
+			if(count>0){
+				count+1;
+			}
 		console.log(countAt);
 		// $('#contents_layer').empty();
 		 $('#articleView_layer').addClass('open');
@@ -296,7 +308,7 @@ function openProgress(id, idnum, lv,cl_lcsum) {
 		 console.log("sum:  "+sum);
 		 console.log("persent:  "+persent);
 		 $('#contents_layer').empty();
-		 $('#contents_layer').append(id+"님의 진도율입니다.<table><tr><td>"+id+"</td><td></div><div id='graph'><span id='sp'>"+persent+"</span></div></tr></table>");
+		 $('#contents_layer').append(id+"님의 진도율<table><tr><td>"+id+"</td><td></div><div id='graph'><span id='sp'>"+persent+"</span></div></tr></table>");
 		 $('#sp').css("width",persent+"%");
 		 $('style').append(" @keyframes stack{0%{ width: 0; color: rgba(255, 255, 255, 0);} 50%{ color:  rgba(255, 255, 255, 1); } 100%{  width: "+persent+"%;}}");
 		},
@@ -313,7 +325,7 @@ function openMsg(aa_id, cl_idnum) {
 	
 	 $('#articleView_layer').addClass('open');
 	 $('#contents_layer').empty();
-	 $('#contents_layer').append("<center><h3>"+aa_id+"님 에게 쪽지를 남깁니다.</h3></center>내용입력: <input type='text' name='msg_text' id='msg'><button type='button' onclick=\"goMsg('"+aa_id+"')\"'>SEND</button>");
+	 $('#contents_layer').append("<center><h3>"+aa_id+"<br>님 에게 쪽지를 남깁니다.</h3></center>내용입력: <input type='text' name='msg_text' id='msg'><button type='button' class='button3' onclick=\"goMsg('"+aa_id+"')\"'>SEND</button>");
 	 $('#contents_layer').append("<input type='hidden' id='token' data-token-name='${_csrf.headerName }' value='${_csrf.token }'/>");
 }
 

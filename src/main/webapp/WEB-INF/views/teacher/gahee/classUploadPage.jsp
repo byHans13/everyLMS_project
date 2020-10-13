@@ -45,6 +45,7 @@ section {
 	border: 1px black solid;
 	float: left;
 }
+
 </style>
 </head>
 <body>

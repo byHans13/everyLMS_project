@@ -91,8 +91,8 @@ html, body {
    overflow: scroll
 }
 video{
-width: 500px;
-height: 500px;
+width: 300px;
+height: 300px;
 }
 
         aside {
