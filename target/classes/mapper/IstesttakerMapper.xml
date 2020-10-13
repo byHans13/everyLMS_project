@@ -39,11 +39,11 @@
 		FROM studcntavg, 
 		(SELECT PB_ID,pb_idnum FROM problem where pb_pbchkqz=0) problem 
 		WHERE problem.pb_id(+)=studcntavg.gr_id and problem.pb_idnum(+)=studcntavg.gr_idnum 
-		and studcntavg.co_name=#{co_name} and studcntavg.gr_num =#{gr_num}
+		and studcntavg.gr_idnum=#{cl_idnum} and studcntavg.gr_num =#{gr_num}
 		group by studcntavg.gr_idnum, studcntavg.co_name,studcntavg.gr_num, studcntavg.gr_id, problem.PB_ID
 	</select>
 	
 	<select id="selectnumlist" parameterType="istesttaker" resultType="istesttaker">
-		SELECT gr_num FROM studcntavg WHERE co_name=#{co_name}
+		SELECT gr_num FROM studcntavg WHERE gr_idnum=#{cl_idnum}
 	</select>
  </mapper>

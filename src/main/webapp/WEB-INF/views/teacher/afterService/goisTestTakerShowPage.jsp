@@ -127,7 +127,7 @@ function isTestTaker(cnt) {
 	console.log("All");
  	$.ajax({
 		type:'post',
-		url:'rest/isTestTakerSelect?co_name='+it.co_name+'&gr_num='+it.gr_num,
+		url:'rest/isTestTakerSelect?cl_idnum='+it.cl_idnum+'&gr_num='+it.gr_num,
 		datatype:'json',
 		beforeSend : function(xhr)
 		{
@@ -147,7 +147,7 @@ function isTestTaker(cnt) {
 			$("#infoTable").append("<th class='tg-tns0'>학생</th>");
 			$("#infoTable").append("<th class='tg-tns0'>응시여부</th>");
 			$("#infoTable").append("</tr>");
-			
+			console.log(cnt);
 			switch (cnt) {
 			case 1:
 				for(var i=0; i<json.length; i++){

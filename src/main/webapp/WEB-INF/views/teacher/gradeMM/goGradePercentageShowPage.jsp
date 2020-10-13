@@ -144,12 +144,23 @@ $("#pct").html("");
 	},
 	success: function (json) {
 		console.log(json);
-		
+		console.log(json.homeworkStudNum/json.homeworkMaxNum);
 		var attendance= Math.floor((json.studAttendanceNum/json.classMaxRoundNum)*json.rc_at);
 		var quiz=		Math.floor((json.quizStudPbNum/json.quizPbMaxNum)*json.rc_qz);
 		var homework=	Math.floor((json.homeworkStudNum/json.homeworkMaxNum)*json.rc_hw);
 		var test=		Math.floor((json.teststudPbNum/json.testPbMaxNum)*json.rc_test);
-		var tot= attendance+quiz+homework+test;
+		console.log("과제       :"+isNaN(homework));
+		console.log("퀴즈       :"+isNaN(quiz));
+		
+		if(isNaN(homework)){
+			if(json.homeworkStudNum==0 && json.homeworkMaxNum==0){
+				homework=0;
+				var tot= attendance+quiz+homework+test;
+			}			
+		}else{
+			var tot= attendance+quiz+homework+test;
+		}
+		
 		
 		var Arr1= new Array(5);
 		var Arr2= new Array(5);

@@ -67,12 +67,12 @@ public class GradePercentageMM {
 		String id= user.getUsername();
 		gp.setCl_id(id);
 		
-		System.out.println(gp.getCl_id());
-		System.out.println(gp.getCl_clname());
-		System.out.println(gp.getCo_num());
-		System.out.println(gp.getCo_name());
-		System.out.println(gp.getGr_id1());
-		System.out.println(gp.getCl_idnum());
+		System.out.println(gp.getCl_id());//
+		System.out.println(gp.getCl_clname());//cl_clname
+		System.out.println(gp.getCo_num());//co_num
+		System.out.println(gp.getCo_name());//co_name
+		System.out.println(gp.getGr_id1());//
+		System.out.println(gp.getCl_idnum());//cl_idnum
 		
 	 	Integer testPbMaxNum=gDao.testPbMaxNum(gp);//시험 교수 총문제 
 	 	Integer teststudPbNum=gDao.teststudPbNum(gp);//시험 학생 맞춘 총문제 
