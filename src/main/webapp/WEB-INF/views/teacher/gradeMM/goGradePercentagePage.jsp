@@ -110,7 +110,7 @@ var glist= ${glist};
 			$("#selectTable").append("<td class='tg-g9xd'>"+glist[i].cl_clname+"</td>");
 			$("#selectTable").append("<td class='tg-dlxr'>"+glist[i].co_name+"</td>");
 			$("#selectTable").append("<td class='tg-dlxr'>"+glist[i].co_num+"</td>");
-			$("#selectTable").append("<td class='tg-dlxr'"+glist[i].gr_id+"</td>");
+			$("#selectTable").append("<td class='tg-dlxr'>"+glist[i].gr_id+"</td>");
 			$("#selectTable").append("<td class='tg-dlxr'>"+glist[i].cl_id+"</td>");
 			$("#selectTable").append("<td class='tg-dlxr'> <form action='goGradePercentageShowPage' method='post'>"+
 					"<input type='hidden' name='cl_clname' value="+clname+">"+
