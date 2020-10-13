@@ -55,14 +55,14 @@ public class isTestTakerRestController {
 	}
 	
 	@RequestMapping(value = "isTestTakerSelect", produces = "application/json;charset=utf-8")
-	public String selectIsTestTaker(@RequestParam("co_name")String co_name,
+	public String selectIsTestTaker(@RequestParam("cl_idnum")String cl_idnum,
 									@RequestParam("gr_num") Integer gr_num) {
 		System.out.println("응시 미응시 전체검색");
 		
-		System.out.println(co_name);
+		System.out.println(cl_idnum);
 		System.out.println(gr_num);
 		
-		List<isTestTaker> list= im.isTestTakerSelect(co_name,gr_num);
+		List<isTestTaker> list= im.isTestTakerSelect(cl_idnum,gr_num);
 		String Json = new Gson().toJson(list);
 		
 		
