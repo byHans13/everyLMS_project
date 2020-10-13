@@ -93,7 +93,7 @@ var pctArr=null;
 $("#clname").html("<b>"+clname+"- 수강생 백분율 보기</b>");
 
 $("#selectTable").append("<tr>");
-$("#selectTable").append("<th class='tg-tns0'>강좌명</th>");
+$("#selectTable").append("<th class='tg-tns0'>강의명</th>");
 $("#selectTable").append("<th class='tg-tns0'>회차</th>");
 $("#selectTable").append("<th class='tg-tns0'>학생아이디</th>");
 $("#selectTable").append("<th class='tg-tns0'>백분율</th>");
@@ -110,7 +110,7 @@ var co_name = test.replace(/ /gi,',');
 	console.log(glist[i].gr_id1);
 
 $("#selectTable").append("<tr>");
-$("#selectTable").append("<td class='tg-g9xd'>"+glist[i].co_name+"</td>");
+$("#selectTable").append("<td class='tg-dlxr'>"+clname+"</td>");
 $("#selectTable").append("<td class='tg-dlxr'>"+glist[i].gr_num+"</td>");
 $("#selectTable").append("<td class='tg-dlxr'>"+glist[i].gr_id1+"</td>");
 $("#selectTable").append("<td class='tg-dlxr'> <form id='gradepercentage"+i+"'>"+
@@ -229,7 +229,7 @@ $("#pct").html("");
 		$("#percentageTable").append("</tr>");
 		
 		$("#percentageTable").append("<tr>");
-		$("#percentageTable").append("<td class='tg-g9xd'>"+json.studId+"</td>");
+		$("#percentageTable").append("<td class='tg-dlxr'>"+json.studId+"</td>");
 		$("#percentageTable").append("<td class='tg-dlxr'>"+attendance+"</td>");
 		$("#percentageTable").append("<td class='tg-dlxr'>"+quiz+"</td>");
 		$("#percentageTable").append("<td class='tg-dlxr'>"+homework+"</td>");
