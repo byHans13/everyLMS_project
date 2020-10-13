@@ -63,7 +63,7 @@ fieldset{
 	 console.log("hansnq3"+id);
 	 var obj = {"cc_id": id};
 	 console.log("hansObj",obj);
-		$.ajax({
+		/* $.ajax({
 			type:'get',
 			url:'rest/selectmainstudentview',
 			data : obj,
@@ -71,14 +71,25 @@ fieldset{
 			success: function (json) {
 				console.log(json);
 				console.log(json.length);
-			
-				
+			for(var j=0; j<6;i++){
+				for(var i=0; i<6;i++){
+				var str="<tr>";
+				if(i%3!=0){
+				str +="<td><img class='detailLecture' src=\"../picture/"+json[i].pi_pisysname+"\"></td>";
+				}else{
+					str +="</tr><tr><td><img class='detailLecture' src=\"../picture/"+json[i].pi_pisysname+"\"></td>";
+				}
+				}
+		              		 
+			}
+				str += "</tr>";
+				$("#rcmLecture").html(str);
 			},
 			error: function (err) {
 				console.log(err);
 			}
 			
-		});
+		}); */
 	 
 	 
 }); 
@@ -98,11 +109,14 @@ fieldset{
 			</h3>
 			</legend>
 			<div>
-			<table> <thead>
-            <tr>
-                <th>시작</th>
-            </tr>
-        </thead></table>
+			<table><tbody id="rcmLecture">
+			
+			
+			
+			</tbody>
+	        
+	        
+	        </table>
 			
 			</div>
 			</fieldset>
