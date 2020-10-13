@@ -54,7 +54,7 @@ public class WSUserService {
 		for(WSUser user:list) {
 			System.out.println(user.getUsername());
 			if(user.getUsername().equals(receiver)) {
-				user.sendMessage(sender + "의 메시지 : " + msg);
+				user.sendMessage(sender +":" + msg);
 				System.out.println(sender + "의 메시지 : " + msg);
 			}
 		}

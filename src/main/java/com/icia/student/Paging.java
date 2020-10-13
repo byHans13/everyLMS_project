@@ -67,7 +67,7 @@ public class Paging {
 				sb.append("</font>");
 				sb.append("<input type='hidden' id='page'value="+i+">");
 				sb.append("<input type='hidden' id='selval'value="+selvalue+">");
-				sb.append("<input type='hidden' id='searchval'value="+search+">");
+				sb.append("<input type='hidden' id='searval'value="+search+">");
 			}
 		}
 		if (end != totalPage) {

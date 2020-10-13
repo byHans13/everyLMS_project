@@ -1,10 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<sec:authorize access="hasRole('ROLE_STUD')">
+	<script src="../script/wsocket.js"></script>
+</sec:authorize>
 <title>Insert title here</title>
 <style>
 header {
@@ -29,20 +33,16 @@ section {
     border: 1px black solid;
     float: left;
 }
-table{
-	width: 1100px;
-	margin:auto;
-/* 	border: 1px solid black; */
-	border-collapse: collapse;
-	text-align: center;
-}
-th, td {
-	font-size: 30px;
-	/* border: 1px solid black; */
-}
-td{
-	/* border: 1px solid black; */
-}
+.tg  {border-collapse:collapse;border-color:#9ABAD9;border-spacing:0;}
+.tg td{background-color:#EBF5FF;border-color:#9ABAD9;border-style:solid;border-width:0px;color:#444;
+  font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{background-color:#409cff;border-color:#9ABAD9;border-style:solid;border-width:0px;color:#fff;
+  font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-tns0{font-size:32px;font-weight:bold;text-align:center;vertical-align:top}
+.tg .tg-qncv{font-size:32px;text-align:left;vertical-align:top}
+.tg .tg-g9xd{background-color:#D2E4FC;font-size:32px;text-align:left;vertical-align:top}
+.tg .tg-dlxr{background-color:#D2E4FC;font-size:32px;text-align:center;vertical-align:top}
+.tg .tg-j32n{font-size:32px;text-align:center;vertical-align:top}
 </style>
 </head>
 <body>
@@ -56,11 +56,11 @@ td{
 	</aside>
 	
 	<div style="height: 50px;"></div>
-	<section id="section" style="margin-left: 20px; background-color: #B7F0B1; height: 80px;">
-		<h1>${clname} -상세보기</h1>
+	<section id="section" style="margin-left: 20px; background-color: #409cff; height: 80px;">
+		<h1 style="color: white; font-size: 35px;"><b>${clname} -상세보기</b></h1>
 		<div style="height: 100px;"></div>
-		<div>
-			<table id="infoTable">
+		<div style="overflow: auto; height: 500px;">
+			<table id="infoTable" class="tg" style="width: 1200px;">
 			</table>
 		</div>
 	</section>
@@ -79,12 +79,12 @@ $(document).ready
 	}else{
 		
 		$("#infoTable").append("<tr>");
-		$("#infoTable").append("<th style='text-align: center;'>강좌명</th>");
-		$("#infoTable").append("<th style='text-align: center;'>강좌 레벨</th>");
-		$("#infoTable").append("<th style='text-align: center;'>회차</th>");
-		$("#infoTable").append("<th style='text-align: center;'>학생 아이디</th>");
-		$("#infoTable").append("<th style='text-align: center;'>학생 점수</th>");
-		$("#infoTable").append("<th style='text-align: center;'>피드백</th>");
+		$("#infoTable").append("<th class='tg-tns0'>강좌명</th>");
+		$("#infoTable").append("<th class='tg-tns0'>강좌 레벨</th>");
+		$("#infoTable").append("<th class='tg-tns0'>회차</th>");
+		$("#infoTable").append("<th class='tg-tns0'>학생 아이디</th>");
+		$("#infoTable").append("<th class='tg-tns0'>학생 점수</th>");
+		$("#infoTable").append("<th class='tg-tns0'>피드백</th>");
 		$("#infoTable").append("</tr>");
 		
 		
@@ -95,13 +95,13 @@ $(document).ready
 			console.log(Object.keys(qlist[i]).length);
 			
 			$("#infoTable").append("<tr>");
-			$("#infoTable").append("<td>"+qlist[i].co_name+"</td>");
-			$("#infoTable").append("<td>"+qlist[i].co_lv+"</td>");
-			$("#infoTable").append("<td>"+qlist[i].co_num+"</td>");
-			$("#infoTable").append("<td>"+qlist[i].gr_id1+"</td>");
-			$("#infoTable").append("<td>"+qlist[i].gr_score+"</td>");
+			$("#infoTable").append("<td class='tg-g9xd'>"+qlist[i].co_name+"</td>");
+			$("#infoTable").append("<td class='tg-dlxr'>"+qlist[i].co_lv+"</td>");
+			$("#infoTable").append("<td class='tg-dlxr'>"+qlist[i].co_num+"</td>");
+			$("#infoTable").append("<td class='tg-dlxr'>"+qlist[i].gr_id1+"</td>");
+			$("#infoTable").append("<td class='tg-dlxr'>"+qlist[i].gr_score+"</td>");
 			if(Object.keys(qlist[i]).length!=8){
-			$("#infoTable").append("<td><form action='goStudentCommentInputPage' method='post'>"+
+			$("#infoTable").append("<td class='tg-dlxr'><form action='goStudentCommentInputPage' method='post'>"+
 								   "<input type='hidden' name='cl_idnum' value="+qlist[i].cl_idnum+">"+
 								   "<input type='hidden' name='co_name' value="+co_name+">"+
 								   "<input type='hidden' name='co_lv' value="+qlist[i].co_lv+">"+
@@ -109,9 +109,9 @@ $(document).ready
 								   "<input type='hidden' name='gr_id1' value="+qlist[i].gr_id1+">"+
 								   "<input type='hidden' name='gr_score' value="+qlist[i].gr_score+">"+
 								   "<input type='hidden' id='token' data-token-name='${_csrf.headerName}' name = '${_csrf.parameterName}' value='${_csrf.token}' />"+
-								   "<button>작성</button><td></form>");
+								   "<button class='btn btn-primary'>작성</button><td></form>");
 			}else{
-				$("#infoTable").append("<td><form action='goStudentCommentSeePage' method='post'>"+
+				$("#infoTable").append("<td class='tg-dlxr'><form action='goStudentCommentSeePage' method='post'>"+
 						   "<input type='hidden' name='cl_idnum' value="+qlist[i].cl_idnum+">"+
 						   "<input type='hidden' name='co_name' value="+co_name+">"+
 						   "<input type='hidden' name='co_lv' value="+qlist[i].co_lv+">"+
@@ -120,7 +120,7 @@ $(document).ready
 						   "<input type='hidden' name='gr_score' value="+qlist[i].gr_score+">"+
 						   "<input type='hidden' name='tfb_feedback' value='"+qlist[i].tfb_feedback+"'>"+
 						   "<input type='hidden' id='token' data-token-name='${_csrf.headerName}' name = '${_csrf.parameterName}' value='${_csrf.token}' />"+
-						   "<button>보기</button><td></form>");
+						   "<button class='btn btn-primary'>보기</button><td></form>");
 			}
 				
 			$("#infoTable").append("</tr>");

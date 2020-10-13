@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icia.student.StudentDao">
+
+	<select id="getsearchqnaList" resultType="cl"> <!-- 첫 게시판 페이징 -->
+	     <![CDATA[
+	     SELECT *
+	     FROM (
+				SELECT /*+INDEX_DESC(qna_vw cob_date)*/ ROWNUM RN, qna_vw.*
+				FROM qna_vw
+				WHERE ROWNUM<=#{pageNum}*10 and CL_CLNAME = #{search})
+			WHERE RN>=#{pageNum}*10-9
+			
+			]]>
+
+	</select>
+	
+	
+
+	<select id="searchClassQnaDetail" resultType="cl"> <!-- 검색시 페이징 -->
+	<![CDATA[
+	SELECT * 
+	FROM 
+( SELECT /*+INDEX_DESC(qna_vw cl_idnum)*/ ROWNUM RN, qna_vw.* 
+FROM qna_vw 
+WHERE ROWNUM<=#{pageNum}*10)
+]]>
+		<where>
+			<if test="selvalue.equals('searchWriter')">
+	<![CDATA[
+RN>=#{pageNum}*9-10 and cob_id LIKE '%'||#{search}||'%'
+]]>
+			</if>
+			<if test="selvalue.equals('searchTitle')">
+	<![CDATA[
+RN>=#{pageNum}*9-10 and cob_title LIKE '%'||#{search}||'%'
+]]>
+			</if>
+			<if test="selvalue.equals('searchCont')">
+			<![CDATA[
+				RN>=#{pageNum}*9-10 and cob_cont LIKE '%'||#{search}||'%'
+				]]>
+			</if>
+		</where>
+	</select>
+	<select id="getqnaDetailCount" resultType="int">
+		SELECT COUNT(*) FROM QNA_VW
+		<where>
+			<if test="selvalue.equals('searchWriter')">
+				cob_id LIKE '%'||#{search}||'%'
+			</if>
+			<if test="selvalue.equals('searchTitle')">
+				cob_title LIKE '%'||#{search}||'%'
+			</if>
+			<if test="selvalue.equals('searchCont')">
+				cob_cont LIKE '%'||#{search}||'%'
+			</if>
+		</where>
+	</select>
+
+<select id="reviewlist" resultType="cl">
+	     <![CDATA[
+	     SELECT *
+	     FROM (
+				SELECT /*+INDEX_DESC(review_vw cob_bonum)*/ ROWNUM RN, review_vw.*
+				FROM review_vw
+				WHERE ROWNUM<=#{pageNum}*10 and cl_clname = #{search})
+			WHERE RN>=#{pageNum}*10-9
+			]]>
+	</select>
+
+	<select id="searchClassReviewDetail" resultType="cl">
+	<![CDATA[
+	SELECT * 
+	FROM 
+( SELECT /*+INDEX_DESC(review_vw cob_bonum)*/ ROWNUM RN, review_vw.* 
+FROM review_vw 
+WHERE ROWNUM<=#{pageNum}*10)
+]]>
+		<where>
+			<if test="selvalue.equals('searchWriter')">
+	<![CDATA[
+RN>=#{pageNum}*9-10 and cob_id LIKE '%'||#{search}||'%'
+]]>
+			</if>
+			<if test="selvalue.equals('searchTitle')">
+	<![CDATA[
+RN>=#{pageNum}*9-10 and cob_title LIKE '%'||#{search}||'%'
+]]>
+			</if>
+			<if test="selvalue.equals('searchCont')">
+			<![CDATA[
+				RN>=#{pageNum}*9-10 and cob_cont LIKE '%'||#{search}||'%'
+				]]>
+			</if>
+		</where>
+	</select>
+
+
+	<select id="getreviewDetailCount" resultType="int">
+		SELECT COUNT(*) FROM REVIEW_VW
+		<where>
+			<if test="selvalue.equals('searchWriter')">
+				cob_id LIKE '%'||#{search}||'%'
+			</if>
+			<if test="selvalue.equals('searchTitle')">
+				cob_title LIKE '%'||#{search}||'%'
+			</if>
+			<if test="selvalue.equals('searchCont')">
+				cob_cont LIKE '%'||#{search}||'%'
+			</if>
+		</where>
+	</select>
+	<update id="updatemymemo" parameterType="hashmap">
+ <![CDATA[
+		UPDATE memo SET 
+		mo_contents=#{mo_contents}
+		WHERE mo_num = #{mo_num} and mo_id = #{mo_id}
+  ]]>
+	</update>
+
+	<select id="Memo" parameterType="hashmap" resultType="cl">
+		SELECT *
+		FROM MEMO_VW
+		WHERE mo_id = #{mo_id} and cl_idnum = #{cl_idnum} and
+		CO_NAME = #{co_name}
+	</select>
+	
+	
+	<select id='selectClassHome' parameterType='cl'
+      resultType='cl'>
+      SELECT * FROM classInfo WHERE cl_idnum = #{cl_idnum} AND cl_lv=#{cl_lv}
+   </select>
+	
+
+</mapper>

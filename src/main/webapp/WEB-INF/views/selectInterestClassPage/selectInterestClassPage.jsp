@@ -1,12 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<sec:authorize access="hasRole('ROLE_STUD')">
+	<script src="../script/wsocket.js"></script>
+</sec:authorize>
 <style>
 #cs {
 	text-align: center;
@@ -122,12 +127,12 @@ section {
 	<div id="cs">
 	<table style="margin: auto; text-align: center;">
 		<tr bgcolor="skyblue" height="30">
-			<th width="150">관심사</th>
-			<th width="150">사진</th>
-			<th width="150">강좌명|교수명|강의수|level</th>			
-			<th width="150">평점</th>
-			<th width="150">강의계획서</th>
-			<th width="150">수강신청</th>
+			<td width="150">관심사</td>
+			<td width="150">사진</td>
+			<td width="150">강좌명|교수명|강의수|level</td>			
+			<td width="150">평점</td>
+			<td width="150">강의계획서</td>
+			<td width="150">수강신청</td>
 		</tr>
 		<tbody id="tableShow">
 		<c:forEach var="Clasc" items="${cList}">
@@ -137,10 +142,10 @@ section {
 					<td align="center"><h2>${Clasc.cl_clname}</h2>${Clasc.cl_id} | ${Clasc.co_num} |${Clasc.cl_lv}</td>
 					  <c:choose>
                      <c:when test="${Clasc.gpa_gpa eq 0}">
-                        <th><h3>등록된 강의가 없습니다.</h3></th>
+                        <td><h3>등록된 강의가 없습니다.</h3></td>
                      </c:when>
                      <c:when test="${Clasc.gpa_gpa ne 0}">
-                        <th width="150"><h2>${Clasc.gpa_gpa}</h2></th>
+                        <td width="150"><h2>${Clasc.gpa_gpa}</h2></td>
                      </c:when>
                   </c:choose>
 
@@ -225,40 +230,85 @@ section {
 									}
 								});// ajax
 					});
-	 function openBuyPage(idnum, lv){
+	function openBuyPage(idnum, lv){
 		$("#modal").addClass('open');
-		var m_contents=$('#contents_modal');
-		var obj = {"cl_idnum":idnum, "cl_lv":lv};
-		console.log(obj);
-		$.ajax({
-			type:'get',
-			url: "rest/selectBuyClass",
-			data:obj,
-			dataType:'json',
-			success:function(json){
-				if(Object.keys(json).length!=0){				
-					m_contents.append("<h3>강의 구매<h3>");
-					m_contents.append("<p>강의명: "+json.cb.cl_clName+"</p>");
-					m_contents.append("<p>학습레벨: lv"+json.cb.cl_lv+"</p>");
-					m_contents.append("<p>강수: "+json.cb.cl_lcnum+"강</p>");
-					m_contents.append("<p>수강기간: "+json.cb.cl_stDay.substring(0,10)+" ~ "+json.cb.cl_fnDay.substring(0,10)+"</p>");
-					m_contents.append("<p>강의가격: <input type='text' value='"+json.cb.cl_pt+"' readonly> point</p>");
-					m_contents.append("<p>나의 보유 포인트: <input type='text' value='"+json.mb.mb_point+"' readonly> point</p>");
-					var deductPoint = json.mb.mb_point - json.cb.cl_pt;
-					m_contents.append("<p>차감 후 남는 포인트: <input type='' value='"+deductPoint+"' readonly> point</p><br/>");
-					var booleanPoint = deductPoint>=0;
-					m_contents.append("<input type='checkbox'id='mustChk'/><b> 위 상품 정보 및 거래 조건을 확인하였으며, 구매 진행에 동의합니다.(필수)</b>");
-					m_contents.append("<p id='err'></p>");
-					m_contents.append("<input type='button' value='구매하기' onclick=\"insertBuyClass('"+json.cb.cl_idnum+"','"+json.cb.cl_lv+"','"+json.cb.cl_pt+"','"+booleanPoint+"')\">");
-				}else{
-					alert("구매하기창 불러오기에 실패했습니다.");
-				}
-			},error: function(err){
-				console.log(err);
+	var m_contents=$('#contents_modal');
+	var obj = {"cl_idnum":idnum, "cl_lv":lv};
+	console.log(obj);
+	$.ajax({
+		type:'get',
+		url: "rest/selectBuyClass",
+		data:obj,
+		dataType:'json',
+		success:function(json){
+			if(Object.keys(json).length!=0){				
+				m_contents.append("<h3>강의 구매<h3>");
+				m_contents.append("<p>강의명: "+json.cb.cl_clName+"</p>");
+				m_contents.append("<p>학습레벨: lv"+json.cb.cl_lv+"</p>");
+				m_contents.append("<p>강수: "+json.cb.cl_lcnum+"강</p>");
+				m_contents.append("<p>수강기간: "+json.cb.cl_stDay.substring(0,10)+" ~ "+json.cb.cl_fnDay.substring(0,10)+"</p>");
+				m_contents.append("<p>강의가격: <input type='text' value='"+json.cb.cl_pt+"' readonly> point</p>");
+				m_contents.append("<p>나의 보유 포인트: <input type='text' value='"+json.mb.mb_point+"' readonly> point</p>");
+				var deductPoint = json.mb.mb_point - json.cb.cl_pt;
+				m_contents.append("<p>차감 후 남는 포인트: <input type='' value='"+deductPoint+"' readonly> point</p><br/>");
+				var booleanPoint = deductPoint>=0;
+				m_contents.append("<input type='checkbox'id='mustChk'/><b> 위 상품 정보 및 거래 조건을 확인하였으며, 구매 진행에 동의합니다.(필수)</b>");
+				m_contents.append("<p id='err'></p>");
+				m_contents.append("<input type='button' value='구매하기' onclick=\"insertBuyClass('"+json.cb.cl_idnum+"','"+json.cb.cl_lv+"','"+json.cb.cl_pt+"','"+booleanPoint+"')\">");
+			}else{
+				alert("구매하기창 불러오기에 실패했습니다.");
 			}
-		});//ajaxEND
-	};//openBuyPage END
-$("#modal").find('#bg_modal').on('mousedown',function(evt){
+		},error: function(err){
+			console.log(err);
+		}
+	});//ajaxEND
+};//openBuyPage END
+
+
+function insertBuyClass(idnum, lv, point, bool){
+	   var obj= {"cl_idnum":idnum,"cl_lv":lv, "cl_pt":point};
+	   console.log(obj);
+	   var chkbox = $("input:checkbox[id=mustChk]").is(":checked");
+	   if(chkbox == true){
+	      if(bool == 'true'){
+	         $.ajax({
+	            type:'post',
+	            url:'rest/insertBuyClass',
+	            data:obj,
+	            dataType:'json',
+	            beforeSend : function(xhr){
+	               var $token = $("#token");
+	               xhr.setRequestHeader($token.data("token-name"), $token.val());
+	            },
+	            success: function(json){
+	               console.log(json);
+	               if(json == true){
+	                  alert("수강신청이 완료되었습니다.");
+	                  location.replace("selectMyClassManagementPage");
+	               }else{
+	                  alert("수강신청에 실패했습니다. 관리자에게 문의해주세요.");
+	                  location.replace("selectMyClassManagementPage");
+	               }
+	            },error: function(err){
+	               console.log(err);
+	               alert("err: 수강신청 오류 강의정보 오류");
+	            }
+	         });
+	      }else{
+	         if(confirm("포인트가 부족합니다. 포인트 구매창으로 이동하시겠습니까?")){
+	            alert("페이지 구현 중!");
+	         }else{
+	            alert("창을 종료합니다.");
+	            modal.removeClass('open');
+	         }
+	      }
+	   }else{
+	      $('#err').attr("style","color:red");
+	      $('#err').html("체크 후 구매하기를 진행하실 수 있습니다.");
+	   }
+	};// function insertBuyClass END
+	
+	$("#modal").find('#bg_modal').on('mousedown',function(evt){
 		console.log(evt);
 		$("#modal").removeClass('open'); 
 	});// modal mousesdown end

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.taglibs.standard.lang.jstl.test.beans.PublicBean1;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,6 +41,7 @@ public class HomeworkController {
 	@RequestMapping(value = "/prof/inserthomework", method = RequestMethod.POST, produces = {"text/plain;charset=utf-8", "application/json;charset=utf-8"})
 	public ModelAndView insertHomework(HttpServletRequest request, HttpSession session, MultipartHttpServletRequest multi,RedirectAttributes attr) {
 		ModelAndView mav = new ModelAndView();
+		
 		try {
 			request.setCharacterEncoding("UTF-8");
 			
@@ -52,15 +54,20 @@ public class HomeworkController {
 		
 	}
 	
-	@RequestMapping(value = "/prof/homeworkFiledown", method = RequestMethod.GET)
+	@RequestMapping(value = "/stud/homeworkFiledown")
 	public void homeworkFiledown(String sysFileName, HttpServletResponse response) {
 	 hm.homeworkFiledown(sysFileName,response);
 
 	}
-	@RequestMapping(value = "/prof/selectHwResultPage", method = RequestMethod.GET)
-	public ModelAndView selectHwResult(HomeworkBean hwb) {
+	
+	
+	
+	@RequestMapping(value = "/prof/selectHwResultPage/{lv}/{idnum}/{num}/{id}", produces = {"text/plain;charset=utf-8", "application/json;charset=utf-8"})
+	public ModelAndView selectHwResult(HttpSession session, @PathVariable String lv,@PathVariable String idnum,@PathVariable("num") String num,@PathVariable("id") String id) {
 		ModelAndView mav = new ModelAndView();
-		mav = hm.selectHwResult(hwb);
+		
+		mav = hm.selectHwResult(session, lv, idnum, num,id);
+		
 		return mav;
 		
 	}

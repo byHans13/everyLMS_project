@@ -42,38 +42,21 @@ public class CourseHomeController {
 	
 	
 	@RequestMapping(value = "/prof/deletecourse")
-	public ModelAndView deleteCourse(HttpSession session, CourseBean cb, CourseFilesBean cfb,RedirectAttributes attr) {
+	public ModelAndView deleteCourse(HttpSession session, CourseBean cb, CourseFilesBean cfb) {
 		ModelAndView mav = new ModelAndView();
-		System.out.println("이거cb야: ㅍ     " + cb.getCo_idnum());
-		System.out.println("이거cb야: ㅍ     " + cfb.getFl_sysname());
-		mav = com.deleteCourse(session, cb, cfb,attr);
+		mav = com.deleteCourse(session, cb, cfb);
 		return mav;
 	}
 	
-	@RequestMapping(value = "/prof/updatecoursepage")
-	public ModelAndView updatecoursePage(HttpSession session, CourseBean cb, CourseFilesBean cfb) {
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("cb", new Gson().toJson(cb));
-		mav.addObject("cfb",new Gson().toJson(cfb));
-		mav.setViewName("teacher/gahee/updatecoursePage");
-		return mav;
-	}
 	
 	@RequestMapping(value = "/prof/updatecourse")
-	public ModelAndView updateCourse(MultipartHttpServletRequest multi, HttpSession session, RedirectAttributes attr) {
+	public ModelAndView updateCourse(MultipartHttpServletRequest multi, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		mav = com.updateCourse(multi, session,attr);
+		mav = com.updateCourse(multi, session);
 		return mav;
 	}
 	
 	
-	@RequestMapping(value = "/prof/gohome")
-	public ModelAndView gohome(){
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("cl_ct", 1);
-		mav.setViewName("teacher/gahee/classmain");
-		return mav;
-	}
 	
 	
 	

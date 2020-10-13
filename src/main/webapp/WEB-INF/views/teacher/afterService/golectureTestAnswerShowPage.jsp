@@ -1,10 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<sec:authorize access="hasRole('ROLE_STUD')">
+	<script src="../script/wsocket.js"></script>
+</sec:authorize>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="//www.google.com/jsapi"></script>
 <title>Insert title here</title>
@@ -66,12 +70,12 @@ td{
 	<div style="height: 50px;"></div>
 	
 	<section id="section" style="margin-left: 20px;">
-		<div style="background-color: #B7F0B1; height: 80px; ">
+		<div style="background-color: #409cff; height: 80px; ">
 		<div style="height: 5px;"></div>
-			<h1 id="cmt"></h1>
+			<h1 id="cmt" style="color: white; font-size: 35px;"></h1>
 		</div>
 		<div style="height: 50px;"></div>
-		<div style="width: 1000px; height: 100px; border: 1px solid black; overflow: auto;">
+		<div style="width: 1000px; height: 100px; overflow: auto;background-color: #EBF5FF;">
 			<div style="width: 120px ; height: 98px; float: left;">
 				<div style="width: 118px;height: 2px;"></div>
 				<b style="font-size: 24px;">&nbsp;문제번호 : </b>
@@ -142,7 +146,7 @@ var arr2=null;
 	
 	 for(var i=0; i<pbmaxnum; i++){
 		 $("#pbnum").append("<div style='width: 75px; text-align: center; float: left;'>"+
-		 					"<button type='button' onclick='pbnumclick("+i+")'><b class='b'>"+(i+1)+"</b></button></div>");
+		 					"<button type='button' class='btn btn-primary' onclick='pbnumclick("+i+")'><b class='b'>"+(i+1)+"</b></button></div>");
 	 }
 	 /* 선택비율 및 정답률 오답률 그래프 */
 	 var pb_idnum;

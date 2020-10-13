@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -40,8 +41,10 @@ public class PlanClassController {
 	
 
 	@RequestMapping(value = "/prof/updateplanclass")
-	public ModelAndView updateplanclass(HttpSession session, ClassUpBean cub , RedirectAttributes attr) {	
-		ModelAndView mav = pcm.updateplanclass(session,cub,attr);
+	public ModelAndView updateplanclass(HttpSession session, ClassUpBean cub, RedirectAttributes attr, @RequestParam("lv")String lv) {	
+		System.out.println("LV:    "+lv);
+		ModelAndView mav = pcm.updateplanclass(session,cub,attr,lv);
+		
 		return mav;	
 	} 
 	

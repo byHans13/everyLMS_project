@@ -1,5 +1,7 @@
 package com.icia.materialUpload;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,34 +26,44 @@ public class MaterialUploadMM {
 	ModelAndView mav;
 
 	// "시험자료업로드" 클릭시 Class List 페이지 이동 및 Class List Select
-//	public ModelAndView selectTestMaterial(HttpSession session, MaterialUpload mu) {
 	public ModelAndView selectTestMaterialClassList(HttpSession session, MaterialUpload mu) {
 		mav = new ModelAndView();
 		String view = null;
+		String encodeParam = null;
 		SecurityContext context = SecurityContextHolder.getContext();
 		User user = (User) context.getAuthentication().getPrincipal();
-		System.out.println("session id = " + user.getUsername());
 		mu.setCl_id(user.getUsername());
 		System.out.println("Class id = " + mu.getCl_id());
 		List<MaterialUpload> muList = new ArrayList<MaterialUpload>();
-		System.out.println("selectTestMaterialClassList mu = " + mu);
 		muList = muDao.selectTestMaterialClassList(mu);
 		System.out.println("selectTestMaterialClassList muList = " + muList);
+
 		StringBuilder sb = new StringBuilder();
 		if (muList != null) {
-			System.out.println("muList Cl_idnum = " + muList);
-			//search 기능 활용 및 추천 강의 삭제 방법.문의
-			sb.append("<form action='searchclass' method='post'><input type='text' name='searchClass' placeholder='search'><input type='submit' value='검색'></form>");
-			sb.append("<table class='sbClassTable'>" + "<tr class='sbClassTr'>" + "<th class='sbClassTh'>NO.</th>"
-					+ "<th class='sbClassTh'>강의명</th>" + "<th class='sbClassTh'>회차</th>"
-					+ "<th class='sbClassTh'>학생수</th>" + "<th class='sbClassTh'>교수명</th>"
-					+ "<th class='sbClassTh'>문제작성</th>" + "</tr>");
+			System.out.println("muList Cl_idnum = " + muList.get(0).getCl_idnum());
+			// search 기능 활용 및 추천 강의 삭제 방법.문의
+//			sb.append("<form action='searchclass' method='post'><input type='text' name='searchClass' placeholder='search'><input type='submit' value='검색'></form>");
+			sb.append("<div><h3><b>시험 자료 업로드 - 강의 리스트</b></h3></div>");
+			sb.append("<div class='container' style='width:1100px; height:600px; overflow:auto; overflow-x:hidden;'><br>");
+			sb.append("<table class='sbClassTable table table-hover'>" + "<tr class='sbClassTr'>"
+					+ "<th class='sbClassTh'>NO.</th>" + "<th class='sbClassTh'>강의명</th>"
+					+ "<th class='sbClassTh'>회차</th>" + "<th class='sbClassTh'>학생수</th>"
+					+ "<th class='sbClassTh'>교수명</th>" + "<th class='sbClassTh'>작성 / 확인</th>" + "</tr>");
 			for (int i = 0; i < muList.size(); i++) {
 				mu.setCl_idnum(muList.get(i).getCl_idnum());
 				mu.setCl_lv(muList.get(i).getCl_lv());
 				int cnt;
 				cnt = muDao.selectTestMaterialCountList(mu);
 				System.out.println("selectTestMaterialClassList cntList = " + cnt);
+				int pbCnt;
+				pbCnt = muDao.selectTestMaterialPbNumCount(mu);
+				muList.get(i).setPb_num(pbCnt);
+				System.out.println("selectTestMaterialClassList pbNum = " + muList.get(i).getPb_num());
+				try {
+					encodeParam = URLEncoder.encode(mu.getCl_idnum(), "UTF-8");
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
 				sb.append("<tr class='sbClassTr'>");
 				sb.append("<td class='sbClassTd'>" + muList.get(i).getCl_idnum() + "</td>");
 				sb.append("<td class='sbClassTd'>" + muList.get(i).getCl_clname() + "</td>");
@@ -59,10 +71,11 @@ public class MaterialUploadMM {
 				sb.append("<td class='sbClassTd'>" + cnt + "</td>");
 				sb.append("<td class='sbClassTd'>" + muList.get(i).getCl_id() + "</td>");
 				sb.append("<td class='sbClassTd'>"
-						+ "<input type='button' value='문제 작성' onclick=location.href='inserttestmaterialuploadpage?cl_idnum="
-						+ muList.get(i).getCl_idnum() + "&cl_lv=" + muList.get(i).getCl_lv() + "'><br>"
-						+ "<input type='button' value='문제 확인' onclick=location.href='selecttestmaterialuploadlistpage?cl_idnum="
-						+ muList.get(i).getCl_idnum() + "&cl_lv=" + muList.get(i).getCl_lv() + "'></td></tr>");
+						+ "<input type='button' class='btn btn-primary btn-sm' value='문제 작성' onclick=location.href='inserttestmaterialuploadpage?cl_idnum="
+						+ encodeParam + "&cl_lv=" + muList.get(i).getCl_lv() + "&pb_num=" + muList.get(i).getPb_num()
+						+ "'>&nbsp;&nbsp;"
+						+ "<input type='button' class='btn btn-default btn-sm' value='문제 확인' onclick=location.href='selecttestmaterialuploadlistpage?cl_idnum="
+						+ encodeParam + "&cl_lv=" + muList.get(i).getCl_lv() + "'></td></tr>");
 			}
 			sb.append("</table>");
 			System.out.println("selectTestMaterial ClassList SELECT 성공");
@@ -207,6 +220,7 @@ public class MaterialUploadMM {
 	public ModelAndView insertTestMaterialUpload(HttpSession session, MaterialUpload mu) {
 		mav = new ModelAndView();
 		String view = null;
+		String encodeParam = null;
 		System.out.println("insert 최종 MM 교수명 : " + mu.getPb_id());
 		System.out.println("insert 최종 MM 총회차 : " + mu.getPb_num());
 		System.out.println("insert 최종 MM 강의명 : " + mu.getCl_clname());
@@ -266,11 +280,15 @@ public class MaterialUploadMM {
 					System.out.println("dp_pbnum : " + mu.getDp_pbnum());
 					System.out.println("dp_pbexm : " + mu.getDp_pbexm());
 					System.out.println("dp_pbexmnum : " + mu.getDp_pbexmnum());
-
+					try {
+						encodeParam = URLEncoder.encode(mu.getCl_idnum(), "UTF-8");
+					} catch (UnsupportedEncodingException e) {
+						e.printStackTrace();
+					}
 					if (muDao.insertTestMaterialUploadDetailProblemAjax(mu)) {
 						System.out.println("DetailProblem insert 성공");
-//						view = "redirect:/prof/selecttestmaterialuploadlistpage?cl_idnum=" + mu.getDp_idnum() + "&cl_lv=" + mu.getDp_lv();
-						view = "redirect:/prof/selecttestmaterialclasslist?cl_idnum=" + mu.getDp_idnum() + "&cl_lv=" + mu.getDp_lv();
+						view = "redirect:/prof/selecttestmaterialclasslist?cl_idnum=" + encodeParam + "&cl_lv="
+								+ mu.getDp_lv();
 					} else {
 						view = "inserttestmaterialuploadpage";
 						System.out.println("DetailProblem insert 실패");
@@ -285,7 +303,7 @@ public class MaterialUploadMM {
 		return mav;
 	}
 
-	// "문제 확인" 버튼 클릭시 
+	// "문제 확인" 버튼 클릭시
 	public List<MaterialUpload> selectViewTestMaterialUploadPageAjax(HttpSession session, MaterialUpload mu) {
 		List<MaterialUpload> pbList = new ArrayList<MaterialUpload>();
 		MaterialUpload materialUpload = muDao.selectViewTestMaterialUploadPageAjax(mu);
@@ -307,6 +325,7 @@ public class MaterialUploadMM {
 	public ModelAndView selectQuizMaterialClassList(HttpSession session, MaterialUpload mu) {
 		mav = new ModelAndView();
 		String view = null;
+		String encodeParam = null;
 		SecurityContext context = SecurityContextHolder.getContext();
 		User user = (User) context.getAuthentication().getPrincipal();
 		System.out.println("session id = " + user.getUsername());
@@ -318,17 +337,24 @@ public class MaterialUploadMM {
 		System.out.println("selectQuizMaterialClassList muList = " + muList);
 		StringBuilder sb = new StringBuilder();
 		if (muList != null) {
-			System.out.println("muList Cl_idnum = " + muList);
-			sb.append("<table class='sbClassTable'>" + "<tr class='sbClassTr'>" + "<th class='sbClassTh'>NO.</th>"
-					+ "<th class='sbClassTh'>강의명</th>" + "<th class='sbClassTh'>회차</th>"
-					+ "<th class='sbClassTh'>학생수</th>" + "<th class='sbClassTh'>교수명</th>"
-					+ "<th class='sbClassTh'>퀴즈작성</th>" + "</tr>");
+			System.out.println("muList Cl_idnum = " + muList.get(0).getCl_idnum());
+			sb.append("<div><h3><b>퀴즈 자료 업로드 - 강의 리스트</b></h3></div>");
+			sb.append("<div class='container' style='width:1100px; height:600px; overflow:auto; overflow-x:hidden;'><br>");
+			sb.append("<table class='sbClassTable table table-hover'>" + "<tr class='sbClassTr'>"
+					+ "<th class='sbClassTh'>NO.</th>" + "<th class='sbClassTh'>강의명</th>"
+					+ "<th class='sbClassTh'>총회차</th>" + "<th class='sbClassTh'>학생수</th>"
+					+ "<th class='sbClassTh'>교수명</th>" + "<th class='sbClassTh'>퀴즈작성</th>" + "</tr>");
 			for (int i = 0; i < muList.size(); i++) {
 				mu.setCl_idnum(muList.get(i).getCl_idnum());
 				mu.setCl_lv(muList.get(i).getCl_lv());
 				int cnt;
 				cnt = muDao.selectQuizMaterialCountList(mu);
 				System.out.println("selectQuizMaterialClassList cntList = " + cnt);
+				try {
+					encodeParam = URLEncoder.encode(mu.getCl_idnum(), "UTF-8");
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
 				sb.append("<tr class='sbClassTr'>");
 				sb.append("<td class='sbClassTd'>" + muList.get(i).getCl_idnum() + "</td>");
 				sb.append("<td class='sbClassTd'>" + muList.get(i).getCl_clname() + "</td>");
@@ -336,10 +362,10 @@ public class MaterialUploadMM {
 				sb.append("<td class='sbClassTd'>" + cnt + "</td>");
 				sb.append("<td class='sbClassTd'>" + muList.get(i).getCl_id() + "</td>");
 				sb.append("<td class='sbClassTd'>"
-						+ "<input type='button' value='강좌 리스트 확인' onclick=location.href='selectquizmaterialclcolist?cl_idnum="
-						+ muList.get(i).getCl_idnum() + "&cl_lv=" + muList.get(i).getCl_lv() + "'></td></tr>");
+						+ "<input type='button' class='btn btn-primary btn-sm' value='강좌 리스트 확인' onclick=location.href='selectquizmaterialclcolist?cl_idnum="
+						+ encodeParam + "&cl_lv=" + muList.get(i).getCl_lv() + "'></td></tr>");
 			}
-			sb.append("</table>");
+			sb.append("</table></div>");
 			System.out.println("selectQuizMaterial ClassList SELECT 성공");
 			view = "goTeacherLoginFrm";
 			mav.addObject("muList", sb.toString() + "");
@@ -355,6 +381,7 @@ public class MaterialUploadMM {
 	public ModelAndView selectQuizMaterialClCoList(HttpSession session, MaterialUpload mu) {
 		mav = new ModelAndView();
 		String view = null;
+		String encodeParam = null;
 		SecurityContext context = SecurityContextHolder.getContext();
 		User user = (User) context.getAuthentication().getPrincipal();
 		System.out.println("session id = " + user.getUsername());
@@ -367,15 +394,22 @@ public class MaterialUploadMM {
 		StringBuilder sb = new StringBuilder();
 		if (muList != null) {
 			System.out.println("muList Cl_idnum = " + muList.get(0).getCl_idnum());
-			sb.append("<table class='sbClassTable'>" + "<tr class='sbClassTr'>" + "<th class='sbClassTh'>NO.</th>"
-					+ "<th class='sbClassTh'>강의명</th>" + "<th class='sbClassTh'>회차</th>"
-					+ "<th class='sbClassTh'>강좌명</th>" + "<th class='sbClassTh'>교수명</th>"
-					+ "<th class='sbClassTh'>퀴즈작성</th>" + "</tr>");
+			sb.append("<div><h3><b>퀴즈 자료 업로드 - 강좌 리스트</b></h3></div>");
+			sb.append("<div class='container' style='width:1100px; height:600px; overflow:auto; overflow-x:hidden;'><br>");
+			sb.append("<table class='sbClassTable table table-hover'>" + "<tr class='sbClassTr'>"
+					+ "<th class='sbClassTh'>NO.</th>" + "<th class='sbClassTh'>강의명</th>"
+					+ "<th class='sbClassTh'>회차</th>" + "<th class='sbClassTh'>강좌명</th>"
+					+ "<th class='sbClassTh'>교수명</th>" + "<th class='sbClassTh'>퀴즈작성</th>" + "</tr>");
 			for (int i = 1; i < muList.size(); i++) {
 				mu.setCl_idnum(muList.get(i).getCl_idnum());
 				mu.setCl_lv(muList.get(i).getCl_lv());
+				mu.setCo_num(muList.get(i).getCo_num());
+				int pbCnt;
+				pbCnt = muDao.selectQuizMaterialPbNumCount(mu);
+				muList.get(i).setPb_num(pbCnt);
+				System.out.println("selectQuizMaterialClassList pbNum = " + muList.get(i).getPb_num());
 				sb.append("<tr class='sbClassTr'>");
-				sb.append("<td class='sbClassTd'>" + i + "</td>");
+				sb.append("<td class='sbClassTd'>" + muList.get(i).getCl_idnum() + "</td>");
 				sb.append("<td class='sbClassTd'>" + muList.get(i).getCl_clname() + "</td>");
 				sb.append("<td class='sbClassTd'>" + muList.get(i).getCo_num() + "</td>");
 				sb.append("<td class='sbClassTd'>" + muList.get(i).getCo_name() + "</td>");
@@ -383,16 +417,18 @@ public class MaterialUploadMM {
 				System.out.println("일련번호 : " + muList.get(i).getCl_idnum());
 				System.out.println("레벨값 : " + muList.get(i).getCl_lv());
 				System.out.println("회차 : " + muList.get(i).getCo_num());
-				sb.append("<td class='sbClassTd'>" + "<input type='button' value='퀴즈 작성'"
-						+ "onclick=location.href='insertquizmaterialuploadpage?cl_idnum=" + muList.get(i).getCl_idnum()
-						+ "&cl_lv=" + muList.get(i).getCl_lv() + "&co_num=" + muList.get(i).getCo_num() + "'><br>"
-						+ "<input type='button' value='퀴즈 확인'"
-						+ "onclick=location.href='selectquizmaterialuploadlistpage?cl_idnum="
-						+ muList.get(i).getCl_idnum() + "&cl_lv=" + muList.get(i).getCl_lv() + "&co_num="
-						+ muList.get(i).getCo_num() + "'></td></tr>");
-//				sb.append("<td class='sbClassTd'>"
-//						+ "<input type='button' value='강좌 리스트 확인' onclick=location.href='selectquizmaterialcourselist?cl_idnum="
-//						+ muList.get(i).getCl_idnum() + "&cl_lv=" + muList.get(i).getCl_lv() + "'></td></tr>");
+				try {
+					encodeParam = URLEncoder.encode(mu.getCl_idnum(), "UTF-8");
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
+				sb.append("<td class='sbClassTd'>" + "<input type='button' class='btn btn-primary btn-sm' value='퀴즈 작성'"
+						+ "onclick=location.href='insertquizmaterialuploadpage?cl_idnum=" + encodeParam + "&cl_lv="
+						+ muList.get(i).getCl_lv() + "&co_num=" + muList.get(i).getCo_num() + "&pb_num="
+						+ muList.get(i).getPb_num() + "'>&nbsp;"
+						+ "&nbsp;<input type='button' class='btn btn-default btn-sm' value='퀴즈 확인'"
+						+ "onclick=location.href='selectquizmaterialuploadlistpage?cl_idnum=" + encodeParam + "&cl_lv="
+						+ muList.get(i).getCl_lv() + "&co_num=" + muList.get(i).getCo_num() + "'></td></tr>");
 			}
 			sb.append("</table>");
 			System.out.println("selectQuizMaterial clcoList SELECT 성공");
@@ -490,7 +526,7 @@ public class MaterialUploadMM {
 		String[] dp_pbexmArr = dp_pbexm.split(",");
 		String[] dp_pbexmnumArr = dp_pbexmnumSt.split(",");
 		System.out.println("학생답 : " + mu.getPb_pbstudent());
-		
+
 		System.out.println("if문 시작전");
 		if (dp_pbexm.contains(",") || dp_pbexmnumSt.contains(",")) {
 			System.out.println(", 있데");
@@ -574,7 +610,7 @@ public class MaterialUploadMM {
 			System.out.println("강의 레벨 : " + mu.getPb_lv());
 		}
 		System.out.println("insertSelect Ajax muList = " + muList);
-		
+
 		String dp_pbexm = mu.getDp_pbexm();
 		String dp_pbexmnumSt = mu.getDp_pbexmnumSt();
 		mu.setPb_pbnum(Integer.parseInt(mu.getPb_pbnumSt()));
@@ -582,13 +618,15 @@ public class MaterialUploadMM {
 		String[] dp_pbexmArr = dp_pbexm.split(",");
 		String[] dp_pbexmnumArr = dp_pbexmnumSt.split(",");
 		System.out.println("학생답 : " + mu.getPb_pbstudent());
-		
+
 		System.out.println("if문 시작전");
+		String encodeParam = null;
 		if (dp_pbexm.contains(",") || dp_pbexmnumSt.contains(",")) {
 			System.out.println(", 있데");
 			if (muDao.insertQuizMaterialUploadProblemAjax(mu)) {
 				mu.setDp_lv(mu.getPb_lv());
 				mu.setDp_id(mu.getPb_id());
+
 				mu.setDp_idnum(mu.getPb_idnum());
 				mu.setDp_pbnum(Integer.parseInt(mu.getPb_pbnumSt()));
 
@@ -606,14 +644,19 @@ public class MaterialUploadMM {
 					System.out.println("dp_pbnum : " + mu.getDp_pbnum());
 					System.out.println("dp_pbexm : " + mu.getDp_pbexm());
 					System.out.println("dp_pbexmnum : " + mu.getDp_pbexmnum());
-
+					try {
+						
+						encodeParam = URLEncoder.encode(mu.getCl_idnum(), "UTF-8");
+					} catch (UnsupportedEncodingException e) {
+						e.printStackTrace();
+					}
 					if (muDao.insertQuizMaterialUploadDetailProblemAjax(mu)) {
 						System.out.println("DetailProblem insert 성공");
-						view = "redirect:/prof/selectquizmaterialclcolist?cl_idnum=" + mu.getCl_idnum() + "&cl_lv="
+						view = "redirect:/prof/selectquizmaterialclcolist?cl_idnum=" + encodeParam + "&cl_lv="
 								+ mu.getCl_lv();
 					} else {
 						System.out.println("DetailProblem insert 실패");
-						view = "redirect:/prof/insertquizmaterialuploadpage?cl_idnum=" + mu.getCl_idnum() + "&cl_lv="
+						view = "redirect:/prof/insertquizmaterialuploadpage?cl_idnum=" + encodeParam + "&cl_lv="
 								+ mu.getCl_lv() + "&co_num=" + mu.getCo_num();
 					}
 				}

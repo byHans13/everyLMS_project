@@ -44,6 +44,10 @@ public interface ICourseDao {
 			+ "(#{fl_subvd}, #{fl_sysname}, #{fl_oriname}, #{fl_num}, #{fl_id}, #{fl_idnum}, #{fl_lv})")
 	boolean insertFlHomework(FileBean fl);
 
+	
+	@Select("SELECT CL_LCNUM FROM CL WHERE CL_IDNUM=#{co_idnum}")
+	int getlcnum(@Param("co_idnum")String co_idnum);
+
 
 	
 	

@@ -12,5 +12,7 @@ public class AdmiapplicationBean {
 	String aa_idnum;
 	Integer aa_lv;
 	String aa_id;
+	
+	
 
 }

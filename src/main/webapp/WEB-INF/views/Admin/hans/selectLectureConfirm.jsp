@@ -1,9 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+      <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<sec:authorize access="hasRole('ROLE_STUD')">
+	<script src="../script/wsocket.js"></script>
+</sec:authorize>
 <title>Insert title here</title>
 </head>
 <style>
@@ -180,7 +185,7 @@ $(document).ready(function() {
   					str += "<tr><td>"+json[i].mb_id+"</td><td>"+json[i].cl_clname+"</td>";
   					str += "<td>"+json[i].cl_stday+"~"+json[i].cl_fnday+"</td>";
   					str += "<td><a href='#'"+json[i].mb_id+" class='selectClass' value='"+json[i].cl_idnum+","+json[i].co_lv+"'>보러 가기</td>";
-  					str += "<td><button id='lectureConfirm' value='"+json[i].cl_idnum+","+json[i].co_lv+"'>"+"확인"
+  					str += "<td><button class='lectureConfirm' value='"+json[i].cl_idnum+","+json[i].co_lv+"'>"+"확인"
 						+"</button></td><td><button id='lectureReject'>"+"거절"+"</button></td></tr>";
 				$('tbody').append(str);
   				}
@@ -262,7 +267,7 @@ $(document).on("click"," .lectureVideo",function(){
 });
 
 
-$(document).on("click","#lectureConfirm",function(){
+$(document).on("click",".lectureConfirm",function(){
 	var aaa=$(this).attr('value');
 	console.log(aaa);
 	var str=aaa.split(",");

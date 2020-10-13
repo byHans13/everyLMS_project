@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -77,12 +78,22 @@ public class StudentController {
 		mav = mm.selectMyMemoPage(id, session);
 		return mav;
 	}
-	@RequestMapping(value = "stud/Addpoint", method = RequestMethod.GET) //메모장
-	public ModelAndView Addpoint(String id,HttpSession session) {
-		mav = mm.Addpoint(id, session);
-		return mav;
-	}
-	
+	@RequestMapping(value = "stud/Addpoint")
+	   public ModelAndView Addpoint(String id,HttpSession session) {
+	      mav = mm.Addpoint(id, session);
+	      return mav;
+	   }
+	   @RequestMapping(value = "stud/Payment")
+	   public ModelAndView Payment(String id,String onechk,HttpSession session,HttpServletRequest req, String resultpt) {
+	      mav = mm.Payment(id,onechk, session , req , resultpt);
+	      return mav;
+	   }
+	   @RequestMapping(value = "stud/PointCharge")
+	   public ModelAndView PointCharge(String id,String resultpt,HttpServletRequest req,HttpSession session) {
+	      System.out.println(resultpt);
+	      mav = mm.PointCharge(id,resultpt,req,session);
+	      return mav;
+	   }
 	@GetMapping(value="classHome")
 	   public ModelAndView selectClassHome(Clasc cb, HttpSession session) {
 	      mav= mm.selectClassHomePage(cb, session);   

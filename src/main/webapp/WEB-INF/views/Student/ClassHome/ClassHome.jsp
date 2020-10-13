@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+    <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
+	
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +11,9 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="../resources/js/jquery.serializeObject.js"></script>
+<sec:authorize access="hasRole('ROLE_STUD')">
+	<script src="../script/wsocket.js"></script>
+</sec:authorize>
 
 
 <style>
@@ -263,6 +268,27 @@ background-color: black;;
 	</footer>
 </body>
 <script>
+jQuery.fn.serializeObject = function() {
+	  var obj = null;
+	  try {
+	    if(this[0].tagName && this[0].tagName.toUpperCase() == "FORM" ) {
+	      var arr = this.serializeArray();
+	      if(arr){
+	        obj = {};    
+	        jQuery.each(arr, function() {
+	        obj[this.name] = this.value;
+	        });             
+	      }
+	    }
+	  }catch(e) {
+	    alert(e.message);
+	  }finally  {}
+	  console.log("serialObject hans= ",obj);
+	  return obj;
+	}
+
+
+
 	var sessionID = "${sessionScope.id}";
 	var el = ${classInfo}; //포워딩으로 보내준 Gson값 받음
 	var infoReview = ${infoReview};
