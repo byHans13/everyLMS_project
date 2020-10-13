@@ -129,6 +129,10 @@ public class StudentController {
 	      return mav;
 	   }//강의 일련번호로 classInfo view 출력해서 classHome으로 이동
 	
-	
+	@RequestMapping(value = "/SelectClassDetail") //게시판 글 상세보기
+	public ModelAndView SelectClassDetail(@RequestParam("cob_bonum") String cob_bonum, Integer pageNum, HttpServletRequest req , HttpSession session) {
+		mav = mm.SelectClassDetail(cob_bonum, pageNum, req,session);
+		return mav;
+	}
 }
 

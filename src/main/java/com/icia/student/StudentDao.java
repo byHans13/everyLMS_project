@@ -67,5 +67,11 @@ public interface StudentDao {
 	@Select("SELECT mb_point FROM mb WHERE mb_ID = #{MB_ID}")
 	String selectMyPointAjax(String pt_id);
 	String UpdateMyPoint(@Param("resultpt")String resultpt,@Param("id")String id);
+@Select("SELECT COUNT(*) FROM COB")
+	int getboardCount();
+@Select("SELECT * FROM COB WHERE COB_BONUM =#{COB_BONUM}")
+List<CourseBoard> getBoardList(String cob_bonum);
+@Select("SELECT * FROM CR WHERE CR_BONUM =#{cob_bonum}")
+List<Reply> getBoardreply(String cob_bonum);
 
 }

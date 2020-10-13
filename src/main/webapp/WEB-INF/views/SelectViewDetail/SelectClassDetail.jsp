@@ -1,17 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-  <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<sec:authorize access="hasRole('ROLE_STUD')">
 <script src = "../ckeditor/ckeditor.js"></script>
-</sec:authorize>
-
 <style type="text/css">
 table {
 	width: 100%;
@@ -64,33 +60,33 @@ section {
 		<jsp:include page="../h2k5every_aside.jsp" />
 	</aside>
 	<section id="section" style="margin-left: 20px;">
-<h3>글쓰기</h3>
-	<form action="boardwrite" id="frm" method="post" enctype="multipart/form-data">
+			<input type='hidden' id='token' data-token-name='${_csrf.headerName}'
+			name='${_csrf.parameterName}' value='${_csrf.token}' /> <input
+			type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		<table>
-			<c:forEach var="board" items="${vlist}">
+			<c:forEach var="clasc" items="${clist}">
 				<tr height="30">
-					<td width="100" bgcolor="lightgray" align="center">NUM</td>
-					<td colspan="5">${board.b_num}</td>
+					<td width="100" bgcolor="lightgray" align="center">강좌명</td>
+					<td colspan="5">${clasc.co_name}</td>
+					<td width="100" bgcolor="lightgray" align="center">회차</td>
+					<td colspan="5">${clasc.co_num}</td>
 				</tr>
 				<tr height="30">
-					<td bgcolor="lightgray" align="center">WRITER</td>
-					<td width="150">${board.b_id}</td>
-					<td bgcolor="lightgray" align="center">DATE</td>
-					<td width="150">${board.b_date}</td>
-					<td bgcolor="lightgray" align="center">VIEWS</td>
-					<td width="150">${board.b_views}</td>
+					<td bgcolor="lightgray" align="center">아이디</td>
+					<td width="150">${clasc.cob_id}</td>
+					<td bgcolor="lightgray" align="center">날짜</td>
+					<td width="150">${clasc.cob_date}</td>
+				</tr>
+				<tr>
+					<td bgcolor="lightgray" align="center" colspan="2">TITLE</td>
+					<td colspan="5">${clasc.cob_title}</td>
 				</tr>
 				<tr height="30">
-					<td bgcolor="lightgray" align="center">TITLE</td>
-					<td colspan="5">${board.b_title}</td>
-				</tr>
-				<tr height="30">
-					<td bgcolor="lightgray" align="center">CONTENTS</td>
-					<td colspan="5">${board.b_contents}</td>
+					<td bgcolor="lightgray" align="center" colspan="2">CONTENTS</td>
+					<td colspan="5">${board.cob_contents}</td>
 				</tr>
 			</c:forEach>
 		</table>
-	</form>
 	<form name="rFrm" id="rFrm">
 			<table>
 				<tr>
@@ -109,6 +105,7 @@ section {
 				</c:forEach>
 			</table>
 		</form>
+	<div align="center">${Paging}</div>
 	</section>
 </body>
 <script>
