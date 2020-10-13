@@ -13,12 +13,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.icia.classHome.ClassBean;
 import com.icia.classHome.CourseBean;
 import com.icia.classHome.CourseBoardBean;
 import com.icia.classHome.MemoBean;
 import com.icia.classHome.ScheduleBean;
+import com.icia.homework.HomeworkBean;
 
 @RequestMapping(value="/stud")
 @RestController
@@ -173,6 +175,7 @@ public class ClassHomeRestController {
 	}
 	@GetMapping(value="rest/selectBuyClass")
 	public Map<String, Object> selectBuyClass (ClassBean cb, HttpSession session){
+		System.out.println(cb);
 		Map<String, Object> buyMap = cs.selectBuyClass(cb, session);
 		return buyMap;
 	}
@@ -195,6 +198,16 @@ public class ClassHomeRestController {
 	@GetMapping(value="rest/insertFinalTestForceStop")
 	public boolean insertFinalTestForceStop(ProblemBean pb, HttpSession session) {
 		boolean result = cs.insertFinalTestPbnum(pb, session);
+		return result;
+	}
+	@GetMapping(value="rest/selectClassHomeworkList")
+	public Map<String, Object> selectClassHomeworkList (HomeworkBean hw, HttpSession session){
+		Map<String, Object> hwMap = cs.selectClassHomeworkList(hw, session);
+		return hwMap;
+	}
+	@PostMapping(value="rest/insertHomework")
+	public boolean insertHomework(MultipartHttpServletRequest multi, HttpSession session) {
+		boolean result = cs.insertHomework(multi, session);
 		return result;
 	}
 }

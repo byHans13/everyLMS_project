@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +9,9 @@
     <title>ClassHome</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="../resources/js/jquery.serializeObject.js"></script>
+<sec:authorize access="hasRole('ROLE_STUD')">
+	<script src="../script/wsocket.js"></script>
+</sec:authorize>
     
 
     <style>
@@ -80,9 +84,34 @@
             text-align:left;
             padding:14px;
         }
+        
+        header {
+	/* background-color: gray; */
+}
+
+aside {
+	/* background-color: blue; */
+	width: 300px;
+	float: left;
+}
+
+section {
+	/* background-color: pink; */
+	width: 1000px;
+	float: left;
+	position: absolute;
+	transform:translate(300px,0px)
+}
     </style>
 </head>
 <body>
+<header>
+      <jsp:include page="../h2k5every_loginHeader.jsp" /><!-- 동적인 방식 -->
+   </header>
+   <aside>
+      <jsp:include page="../h2k5every_aside.jsp" />
+   </aside>
+   <section id="section" style="margin-left: 20px;">
     <div id='classMain' name='classMain' class='classMain'>
         	<input type='hidden' id='token' data-token-name='${_csrf.headerName}' 
 						name = '${_csrf.parameterName}' value='${_csrf.token}' >
@@ -116,6 +145,11 @@
         <div class='classRight' name='classRight' id='classRight'>
         </div>
     </div>
+    
+    	</section>
+	<footer>
+		<jsp:include page="../h2k5every_footer.jsp" />
+	</footer>
         
     </body>
     <script> 

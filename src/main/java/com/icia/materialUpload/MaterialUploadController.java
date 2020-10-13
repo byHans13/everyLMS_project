@@ -1,5 +1,9 @@
 package com.icia.materialUpload;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,7 +39,7 @@ public class MaterialUploadController {
 		mav = mumm.insertTestMaterialUploadPage(session, mu);
 		return mav;
 	}
-	
+
 	// "업로드 완료" 클릭시 insertTestMaterialUploadPage의 Form의 데이터 insert 후 페이지 이동.
 	@RequestMapping(value = "prof/inserttestmaterialupload", method = RequestMethod.POST)
 	public ModelAndView insertTestMaterialUpload(HttpSession session, MaterialUpload mu) {
@@ -60,25 +64,34 @@ public class MaterialUploadController {
 	}
 
 	// "퀴즈자료업로드" 클릭시 Class List 페이지 이동 및 Class List Select
-	@RequestMapping(value = "prof/selectquizmaterialclasslist", method = RequestMethod.GET)
-	public ModelAndView selectQuizMaterialClassList(HttpSession session, MaterialUpload mu) {
+	@RequestMapping(value = "prof/selectquizmaterialclasslist", method = RequestMethod.GET, produces = {
+			"text/plain;charset=utf-8", "application/json;charset=utf-8" })
+	public ModelAndView selectQuizMaterialClassList(HttpSession session, MaterialUpload mu,
+			HttpServletRequest request) {
 		System.out.println("퀴즈자료업로드 ClassList select 페이지 이동");
-		mav = new ModelAndView();
-		mav = mumm.selectQuizMaterialClassList(session, mu);
+		try {
+			request.setCharacterEncoding("UTF-8");
+			mav = new ModelAndView();
+			mav = mumm.selectQuizMaterialClassList(session, mu);
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return mav;
 	}
-	
+
 	// "강좌 리스트 확인" 클릭시 Course List 페이지 이동 및 Class List Select
-	@RequestMapping(value = "prof/selectquizmaterialclcolist", method = RequestMethod.GET)
+	@RequestMapping(value = "prof/selectquizmaterialclcolist", method = RequestMethod.GET, produces = {
+			"text/plain;charset=utf-8", "application/json;charset=utf-8" })
 	public ModelAndView selectQuizMaterialClCoList(HttpSession session, MaterialUpload mu) {
 		System.out.println("퀴즈자료업로드 ClCoList select 페이지 이동");
 		mav = new ModelAndView();
-		System.out.println(mu.getCl_idnum());
-		System.out.println(mu.getCl_lv());
+		System.out.println("clcolist 컨트롤러 일련번호 = " + mu.getCl_idnum());
+		System.out.println("clcolist 컨트롤러 레벨 = " + mu.getCl_lv());
 		mav = mumm.selectQuizMaterialClCoList(session, mu);
 		return mav;
 	}
-	
+
 	// "퀴즈 작성" 클릭시 시험자료업로드 Frm 페이지 이동 및 Class Course Select
 	@RequestMapping(value = "prof/insertquizmaterialuploadpage", method = RequestMethod.GET)
 	public ModelAndView insertQuizMaterialUploadPage(HttpSession session, MaterialUpload mu) {
@@ -89,7 +102,7 @@ public class MaterialUploadController {
 		mav = mumm.insertQuizMaterialUploadPage(session, mu);
 		return mav;
 	}
-	
+
 	// "퀴즈 확인" 클릭시 시험자료업로드 Frm 페이지 이동 및 Class Course Select
 	@RequestMapping(value = "prof/selectquizmaterialuploadlistpage", method = RequestMethod.GET)
 	public ModelAndView selectQuizMaterialUploadListPage(HttpSession session, MaterialUpload mu) {
@@ -104,7 +117,7 @@ public class MaterialUploadController {
 		mav.setViewName("teacher/kyj/selectQuizMaterialUploadListPage");
 		return mav;
 	}
-	
+
 	// "업로드 완료" 클릭시 insertTestMaterialUploadPage의 Form의 데이터 insert 후 페이지 이동.
 	@RequestMapping(value = "prof/insertquizmaterialupload", method = RequestMethod.POST)
 	public ModelAndView insertQuizMaterialUpload(HttpSession session, MaterialUpload mu) {
@@ -114,6 +127,5 @@ public class MaterialUploadController {
 		mav = mumm.insertQuizMaterialUpload(session, mu);
 		return mav;
 	}
-	
-}
 
+}

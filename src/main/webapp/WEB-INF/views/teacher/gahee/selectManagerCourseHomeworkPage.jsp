@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>   
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +10,9 @@
 <meta name="_csrf" content="${_csrf.token}">
 <meta name="_csrf_header" content="${_csrf.headerName}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<sec:authorize access="hasRole('ROLE_STUD')">
+	<script src="../script/wsocket.js"></script>
+</sec:authorize>
 <script> 
 
 $(function(){     
@@ -87,16 +91,35 @@ html, body {
    overflow: scroll
 }
 video{
-width: 500px;
-height: 500px;
+width: 300px;
+height: 300px;
+}
+
+        aside {
+	width: 300px;
+	float: left;
+}
+section {
+	width: 1000px;
+	float: left;
+		position: absolute;
+	transform:translate(320px,20px);
 }
 </style>
 </head>
 <body>
+<header>
+<input type="hidden" id='token' data-token-name='${_csrf.headerName }' value='${_csrf.token }'/>
+		<jsp:include page="../../h2k5every_loginHeader.jsp" /><!-- 동적인 방식 -->
+	</header>
+	<aside>
+		<jsp:include page="../../h2k5every_teacherAside.jsp" />
+	</aside>
+	<section id="section" style="margin-left: 20px;">
 <h1>강좌</h1>
 <div>
-<table>
-<thead>
+<table class="table table-hover">
+<thead style="background-color:silver;">
 <tr>
 <th >회차</th>
 <th >강좌명</th>
@@ -107,10 +130,11 @@ height: 500px;
 <tbody id='coTbody'></tbody>
 </table>
 </div>
+<br>
 <h1>과제</h1>
 <div>
-<table>
-<thead>
+<table class="table table-hover">
+<thead style="background-color:silver;">
 <tr>
 <th>회차</th>
 <th>강좌명</th>
@@ -136,6 +160,10 @@ height: 500px;
      	<div id="bg_layer"><input type="hidden" id='token' data-token-name='${_csrf.headerName }' value='${_csrf.token }'/></div>
       	<div id="contents_layer"><input type="hidden" id='token' data-token-name='${_csrf.headerName }' value='${_csrf.token }'/></div>
  </div>
+ </section>
+	<footer>
+		<jsp:include page="../../h2k5every_footer.jsp" />
+	</footer>
 <script>
 
 
@@ -148,6 +176,7 @@ var subvd="";
 	for(var i=0; i<courseList.length; i++){
 		//console.log(courseList[i].fbList[0].fl_subvd);
 		subvd = courseList[i].fbList[0].fl_subvd;
+		
 		if(subvd=="course"){//강의파일	
 			$('#coTbody').append("<tr><td>"+courseList[i].co_num+"회차</td><td>"+courseList[i].co_name+"</td><td onclick=\"openFiles('"+courseList[i].fbList[0].fl_sysname+"')\">"+courseList[i].fbList[0].fl_oriname+"</td><td>"+courseList[i].co_cont+"</td></tr>");																			
 		}
@@ -155,7 +184,7 @@ var subvd="";
 		$('#hoTbody').append("<tr id='tr"+i+"'><td>"+courseList[i].co_num+"회차</td><td>"+courseList[i].co_name+"</td>");	
 		if(courseList[i].fbList.length>1){
 			
-			$('#tr'+i).append("<td><a id='a"+i+"' href='homeworkFiledown?sysFileName="+courseList[i].fbList[1].fl_sysname+"'></a></td><td id='td"+i+"'></td><td><a onclick=\"openAaList('"+courseList[i].co_lv+"','"+courseList[i].co_idnum+"','"+courseList[i].co_num+"')\">상세보기</td></tr>");
+			$('#tr'+i).append("<td><a id='a"+i+"' href='/h2k5every/stud/homeworkFiledown?sysFileName="+courseList[i].fbList[1].fl_sysname+"'></a></td><td id='td"+i+"'></td><td><a onclick=\"openAaList('"+courseList[i].co_lv+"','"+courseList[i].co_idnum+"','"+courseList[i].co_num+"')\">상세보기</td></tr>");
 			homeworkList(courseList[i].co_num,courseList[i].co_lv,courseList[i].co_idnum,i);
 			//var arrHome = homeworkList(courseList[i].co_num,courseList[i].co_lv,courseList[i].co_idnum,i);
 			//console.dir(arrHome);
@@ -283,7 +312,7 @@ var subvd="";
 						console.log("stList: "+stList);
 						var number=0;
 						$('#contents_layer').empty();
-						$('#contents_layer').append(" <table><thead><tr><th>수강자</th><th>제출여부</th><th>결과</th></tr></thead><tbody id='tb'>");
+						$('#contents_layer').append(" <table class='table table-hover'><thead style='background-color:silver;'><tr><th>수강자</th><th>제출여부</th><th>결과</th></tr></thead><tbody id='tb'>");
 						if(stHWList.length!=0){
 						for(var i in stList){
 							for (var j in stHWList){
@@ -322,14 +351,17 @@ var subvd="";
 	
 function goHwResult(lv, idnum, num, id) {
 		console.log(lv, idnum, num, id);
-		$('body').append("<form  action=\"selectHwResultPage?${csrf.parameterName}=${_csrf.token}\" method=\"get\"></form>");
+		/* $('body').append("<form  action=\"selectHwResultPage?${csrf.parameterName}=${_csrf.token}\" method=\"get\"></form>");
 		$('form').append("<input type='hidden' name='hw_lv' value="+lv+">");
 		$('form').append("<input type='hidden' name='hw_idnum' value="+idnum+">");
 		$('form').append("<input type='hidden' name='hw_num' value="+num+">");
 		$('form').append("<input type='hidden' id='token' data-token-name='${_csrf.headerName }' value='${_csrf.token }'/>");
-		$('form').append("<input type='hidden' name='hw_id' value="+id+">");
+		$('form').append("<input type='hidden' name='hw_id' value="+id+">"); */
+		location.href="selectHwResultPage/"+lv+"/"+idnum+"/"+num+"/"+id;
 		//console.log($('form').serialize());
-		$('form').submit();
+		/* $('form').submit(); */
+		
+		
 	} 
 	
 $(function() {

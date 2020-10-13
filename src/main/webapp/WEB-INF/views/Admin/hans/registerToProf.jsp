@@ -1,7 +1,6 @@
-
-'5'
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +8,9 @@
 <title>Insert title here</title>
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<sec:authorize access="hasRole('ROLE_STUD')">
+	<script src="../script/wsocket.js"></script>
+</sec:authorize>
 <style>
 table,tr{
     border: 1px solid black;
@@ -25,8 +27,25 @@ td{
     border-collapse: collapse;
     font-size: x-large;
 }
+        aside {
+	width: 300px;
+	float: left;
+}
+section {
+	width: 1000px;
+	float: left;
+		position: absolute;
+	transform:translate(320px,20px);
+}
 </style>
 <body>
+<input type="hidden" id='token' data-token-name='${_csrf.headerName }' value='${_csrf.token }'/>
+		<jsp:include page="../../h2k5every_loginHeader.jsp" /><!-- 동적인 방식 -->
+	</header>
+	<aside>
+		<jsp:include page="../../h2k5every_teacherAside.jsp" />
+	</aside>
+	<section id="section" style="margin-left: 20px;">
 	<h1>Register to Profession</h1>
 	<form enctype="multipart/form-data" action="register?${_csrf.parameterName }=${_csrf.token}" id="register" method="post">
 		<input type="hidden" id="token" data-token-name="${_csrf.headerName}"
@@ -83,6 +102,10 @@ td{
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button>등록하러 가기</button>
 
 	</form>
+	 </section>
+	<footer>
+		<jsp:include page="../../h2k5every_footer.jsp" />
+	</footer>
 
 </body>
 

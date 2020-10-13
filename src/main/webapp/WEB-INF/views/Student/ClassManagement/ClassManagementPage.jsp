@@ -1,9 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	    <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<sec:authorize access="hasRole('ROLE_STUD')">
+	<script src="../script/wsocket.js"></script>
+</sec:authorize>
 <title>Insert title here</title>
 <style>
 header {
@@ -74,7 +80,50 @@ section {
    white-space: normal;
    overflow: scroll
 }
-
+table.type11 {
+    border-collapse: separate;
+    border-spacing: 1px;
+    text-align: center;
+    line-height: 1.5;
+    margin: 20px 10px;
+}
+table.type11 th {
+    width: 155px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #fff;
+    background: black ;
+}
+table.type11 td {
+    width: 155px;
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    background: #eee;
+}
+table.type05 {
+    border-collapse: separate;
+    border-spacing: 1px;
+    text-align: left;
+    line-height: 1.5;
+    border-top: 1px solid #ccc;
+    margin: 20px 10px;
+}
+table.type05 th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    background: #efefef;
+}
+table.type05 td {
+    width: 350px;
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+}
 </style>
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -116,19 +165,20 @@ var myClassList = ${myClassList};
 var myLikeList = ${myLikeList};
 var section = $('#section');
 var modal = $('#modal');
-
+console.log(myLikeList);
 function startClassManagementPage(){
 	section.append("<div id='classList'><h3>수강 중인 과목</h3><br/></div>");	
 	section.append("<div id='likeList'><h3>나의 관심 강의</h3><br/></div>");	
 	//create myClassList Table 
-	var str="<table id='tableCL'><tr><td>강의명</td><td>진도율</td><td>강의실로 이동</td></tr>";
+	var str="<table id='tableCL' class='type11'><thead><tr><th>강의명</th><th>진도율</th><th>강의실로 이동</th></thead></tr>";
+		str+="<tbody>";
 	if(Object.keys(myClassList).length !=0){		
 		console.log(myClassList);
 		for(var i in myClassList){
 			if(myClassList[i].at_atmkCnt ==0){
 				var percent=0;
 			}else{
-				var percent = myClassList[i].at_atmkCnt / myClassList[i].cl_lcnum * 100;		
+				var percent = (myClassList[i].at_atmkCnt-1) / myClassList[i].cl_lcnum * 100;		
 			}
 		str +="<tr><td>"+myClassList[i].cl_clName+"</td>";
 		str +="<td>"+percent.toFixed(1)+"%</td>";
@@ -137,12 +187,13 @@ function startClassManagementPage(){
 	}else{
 		str +="<tr><td colspan='3'>수강 중인 강의가 없습니다.</td></tr>";
 	}
-	str +="</table>";
+	str +="</tbody></table>";
 	$('#classList').append(str);
 	//create myLikeList Table
-	str="<table id='tableLL'><tr><td>강의명</td><td>강사명</td><td>강의계획서 보기</td><td>수강신청</td></tr>";
+	str="<table id='tableLL' class='type11'><thead><tr><th>강의명</th><th>강사명</th><th>강의계획서 보기</th><th>수강신청</th></tr></thead>";
 	console.log(Object.keys(myLikeList).length);
 	console.log(myLikeList);
+	str+="<tbody>";
 	if(Object.keys(myLikeList).length!=0){
 		for(var j in myLikeList){
 			str+="<tr><td>"+myLikeList[j].cl_clName+"</td>";
@@ -153,13 +204,15 @@ function startClassManagementPage(){
 	}else{
 		str +="<tr><td colspan='4'>관심설정한 강의가 없습니다.</td></tr>";
 	}
-	str +="</table>";
+	str +="</tbody></table>";
 	$('#likeList').append(str);
 };//startClassManagementPage END
 
 function openBuyPage(idnum, lv){
 	modal.addClass('open');
 	var m_contents=$('#contents_modal');
+	var str="";
+	m_contents.html("");
 	var obj = {"cl_idnum":idnum, "cl_lv":lv};
 	$.ajax({
 		type:'get',
@@ -169,18 +222,23 @@ function openBuyPage(idnum, lv){
 		success:function(json){
 			if(Object.keys(json).length!=0){				
 				m_contents.append("<h3>강의 구매<h3>");
-				m_contents.append("<p>강의명: "+json.cb.cl_clName+"</p>");
-				m_contents.append("<p>학습레벨: lv"+json.cb.cl_lv+"</p>");
-				m_contents.append("<p>강수: "+json.cb.cl_lcnum+"강</p>");
-				m_contents.append("<p>수강기간: "+json.cb.cl_stDay.substring(0,10)+" ~ "+json.cb.cl_fnDay.substring(0,10)+"</p>");
-				m_contents.append("<p>강의가격: <input type='text' value='"+json.cb.cl_pt+"' readonly> point</p>");
-				m_contents.append("<p>나의 보유 포인트: <input type='text' value='"+json.mb.mb_point+"' readonly> point</p>");
+				str +="<table class='type05' id='buyTable'>";
+				str +="<tr><th>강의명</th><td>"+json.cb.cl_clName+"</td></tr>";
+				str +="<tr><th>학습레벨</th><td>"+json.cb.cl_lv+"</td></tr>";
+				str +="<tr><th>강수</th><td>"+json.cb.cl_lcnum+"</td></tr>";
+				str +="<tr><th>수강기간</th><td>"+json.cb.cl_stDay.substring(0,10)+" ~ "+json.cb.cl_fnDay.substring(0,10)+"</td></tr>";
+				var date = new Date();
+				str +="<tr><th>Today</th><td>"+date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+"</td></tr>";
+				str +="<tr><th>강의가격</th><td><input type='text' value='"+json.cb.cl_pt+"' readonly> point</td></tr>";
+				str +="<tr><th>나의 보유 포인트</th><td><input type='text' value='"+json.mb.mb_point+"' readonly> point</td></tr>";
 				var deductPoint = json.mb.mb_point - json.cb.cl_pt;
-				m_contents.append("<p>차감 후 남는 포인트: <input type='' value='"+deductPoint+"' readonly> point</p><br/>");
 				var booleanPoint = deductPoint>=0;
-				m_contents.append("<input type='checkbox'id='mustChk'/><b> 위 상품 정보 및 거래 조건을 확인하였으며, 구매 진행에 동의합니다.(필수)</b>");
-				m_contents.append("<p id='err'></p>");
-				m_contents.append("<input type='button' value='구매하기' onclick=\"insertBuyClass('"+json.cb.cl_idnum+"','"+json.cb.cl_lv+"','"+json.cb.cl_pt+"','"+booleanPoint+"')\">");
+				str +="<tr><th>차감 후 나의 포인트</th><td><input type='text' value='"+deductPoint+"' readonly> point</td></tr>";
+				str +="</table>";
+				str +="<input type='checkbox'id='mustChk'/><b> 위 상품 정보 및 거래 조건을 확인하였으며, 구매 진행에 동의합니다.(필수)</b>";
+				str +="<p id='err'></p>";
+				str +="<input type='button' value='구매하기' onclick=\"insertBuyClass('"+json.cb.cl_idnum+"','"+json.cb.cl_lv+"','"+json.cb.cl_pt+"','"+booleanPoint+"')\">";
+				m_contents.append(str);
 			}else{
 				alert("구매하기창 불러오기에 실패했습니다.");
 			}
@@ -191,13 +249,17 @@ function openBuyPage(idnum, lv){
 };//openBuyPage END
 modal.find('#bg_modal').on('mousedown',function(evt){
 	console.log(evt);
-	modal.removeClass('open'); 
+	if(confirm("구매중입니다. 나가시겠습니까?")){
+		modal.removeClass('open');			
+	}
 });// modal mousesdown end
 $(document).keydown(function(evt){
 	if(evt.keyCode !=27){
 		return;
 	}else if (modal.hasClass('open')){
-		modal.removeClass('open');
+		if(confirm("구매중입니다. 나가시겠습니까?")){
+			modal.removeClass('open');			
+		}
 	}
 }); //modal esc END
 

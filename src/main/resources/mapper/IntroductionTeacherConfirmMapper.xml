@@ -20,6 +20,7 @@ group by class.cl_idnum, course.co_lv, mb_id, cl_clname, cl_fnday, cl_stday
 
 </select>
 
+
 <select id="selectLectureData" resultType="intrTeaConf">
 select fl_sysname, co_num, co_name, mb_id, cl_clname, co_lv, cl_fnday, cl_stday, cl_idnum, cl_cc, co_cont, cl_pt
 from member 
@@ -43,5 +44,38 @@ group by class.cl_idnum, course.co_lv, mb_id, cl_clname, cl_fnday, cl_stday
 
 
 </select>
+
+
+<select id="selectEvalFrmConfirmYes"  resultType="intrTeaConf">
+
+select  mb_id, cl_clname, co_lv, cl_fnday, cl_stday, cl_idnum, co_num
+from member 
+inner join class on member.mb_id=class.cl_id
+inner join course on class.cl_idnum=course.co_idnum and class.cl_lv = course.co_lv 
+inner join files on course.co_num= files.fl_num and course.co_idnum = files.fl_idnum 
+where cl_ct=2 and cl_idnum=#{cl_idnum} and co_lv=#{co_lv}
+group by class.cl_idnum, course.co_lv, mb_id, cl_clname, cl_fnday, cl_stday, co_num
+
+</select>
+
+<insert id="insertEvaluationForm" >
+insert into evaluationForm (ef_num, ef_idnum, ef_item, ef_question, ef_lv) 
+values 
+<choose>
+			<when test= "j== 1">
+				('${co_num}','${cl_idnum}', '강의 내용','수업의 질은 괜찮은 편인가','${co_lv}')
+			</when>
+			<when test= "j == 2">
+				('${co_num}','${cl_idnum}', '강의 내용','강의는 들을만 하였는가','${co_lv}')
+			</when>
+			<when test= "j == 3">
+				('${co_num}','${cl_idnum}', '교수 태도','교수는 수업에 열의가 있는가','${co_lv}')
+			</when>
+			<when test= "j == 4">
+				('${co_num}','${cl_idnum}', '교수 태도','교수는 강의계획서에 맞게 수업을 준비하였는가','${co_lv}')
+			</when>
+</choose>
+
+</insert>
 
 </mapper>

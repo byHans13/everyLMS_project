@@ -62,7 +62,7 @@ $(document).ready
 	console.log('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal}');
 	console.log('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.authorities}');
 	//var aut =JSON.parse("${sessionScope.SPRING_SECURITY_CONTEXT.authentication.authorities}");
-	var aut= "${aut}";
+	var aut= "${sessionScope.SPRING_SECURITY_CONTEXT.authentication.authorities}";
 	console.log(aut);
 	var n = aut.indexOf("ROLE_PROF");
 	console.log("권한체크",n);
@@ -90,7 +90,9 @@ $(document).ready
         <div>
             <div><p><a href='#'>공지사항</a></p></div>
             <div><p><a href='insertcounselboard'>상담게시판</a></p></div>
+            <div><p><a href='Addpoint'>포인트 충전소</a></p></div>
             <div><p><a href='#'>내 정보 관리</a></p></div>
+            <div><p><a href='selectMsg'>나의 강의 메일</a></p></div>
         </div>
       
         <input type='radio' name='asideMenu' id='myGradeManagement'>

@@ -9,7 +9,8 @@
 	5.resultType 1개 또는 1개 이상의 레코드를 검색하려는 경우 bean(DTO)타입만 명시하면 됨.(select일떄는 resultType을 꼭 입력해야함) 
 -->
 
-<mapper namespace="com.icia.materialUpload.IMaterialUploadDao">
+
+    <mapper namespace="com.icia.materialUpload.IMaterialUploadDao">
 	<!-- 시험 -->
 	<select id="selectTestMaterialClassList" parameterType="materialUpload" resultType="materialUpload">
 		SELECT * FROM CLASS WHERE CL_ID = #{cl_id} AND Cl_CT = 2
@@ -17,6 +18,10 @@
 	
 	<select id="selectTestMaterialCountList" parameterType="materialUpload" resultType="int">
 		SELECT COUNT(*) FROM ADMIAPPLICATION WHERE AA_IDNUM = #{cl_idnum} AND AA_LV = #{cl_lv}
+	</select>
+	
+	<select id="selectTestMaterialPbNumCount" parameterType="materialUpload" resultType="int">
+		SELECT COUNT(*) FROM PROBLEM WHERE PB_IDNUM = #{cl_idnum} AND PB_LV = #{cl_lv} AND pb_num = 0
 	</select>
 	
 	<select id="insertTestMaterialUploadPage" parameterType="materialUpload" resultType="materialUpload">
@@ -102,6 +107,7 @@
 		SELECT CO_NUM FROM COURSE WHERE CO_IDNUM=#{cl_idnum} AND CO_LV=#{cl_lv} AND CO_NUM = #{pb_num}
 	</select>
 	
+	
 	<!-- 퀴즈 -->
 	<select id="selectQuizMaterialClassList" parameterType="materialUpload" resultType="materialUpload">
 		SELECT * FROM CLASS WHERE CL_ID = #{cl_id} AND CL_CT = 2
@@ -109,6 +115,10 @@
 	
 	<select id="selectQuizMaterialCountList" parameterType="materialUpload" resultType="int">
 		SELECT COUNT(*) FROM ADMIAPPLICATION WHERE AA_IDNUM = #{cl_idnum} AND AA_LV = #{cl_lv}
+	</select>
+	
+ 	<select id="selectQuizMaterialPbNumCount" parameterType="materialUpload" resultType="int">
+		SELECT COUNT(*) FROM PROBLEM WHERE PB_IDNUM = #{cl_idnum} AND PB_LV = #{cl_lv} AND PB_PBCHKQZ=1 AND PB_NUM = #{co_num}
 	</select>
 	
 	<select id="selectQuizMaterialClCoList" parameterType="materialUpload" resultType="materialUpload">
@@ -177,6 +187,8 @@
 		<result column="DP_CONAME" property="dp_coname"/>
 		<collection property="muDpList" javaType="java.util.ArrayList" resultMap="mapQuizDetailProblem"/>
 	</resultMap>
+	
+	
 	
 	<resultMap type="muDetailProblem" id="mapQuizDetailProblem">
 		<collection property="muDpExmList" javaType="java.util.ArrayList" resultMap="muQuizDpExmList"/>

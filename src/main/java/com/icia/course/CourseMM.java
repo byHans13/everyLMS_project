@@ -1,6 +1,8 @@
 package com.icia.course;
 
  
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -70,24 +72,36 @@ public class CourseMM {
 			cfb.setFl_lv(lv.get(0).getCl_lv());
 			boolean fiResult = fm.fileUp(multi, cfb);
 			if(fiResult) {
-				System.out.println("성공::   "+fiResult);
-				mav.addObject("cl_ct", 0);
-				 mav.setViewName("redirect:/prof/classmain/0/1");
+				String co_idnum="";
+				String msg ="";
+				try {
+					co_idnum = URLEncoder.encode(cb.getCo_idnum(), "UTF-8");
+					msg =  URLEncoder.encode("강좌등록에성공하셨습니다.", "UTF-8");
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				String co_lv =cb.getCo_lv().toString();
+				
+				int co_lcnum = cod.getlcnum(cb.getCo_idnum());
+				System.out.println("co_lcnum:    "+co_lcnum);
+				System.out.println("성공:   "+fiResult);
+				 mav.setViewName("redirect:/prof/coursePage/"+co_lv+"/"+co_idnum+"/"+co_lcnum+"/"+msg);
+				 //coursePage/{co_lv}/{co_idnum}/{co_lcnum}
 				session.removeAttribute("co_idnum");
 				session.removeAttribute("co_num");
-			}}}
+				}}}
 		
 		return mav;
 	}
 
 	@Transactional
-	public ModelAndView deleteCourse(HttpSession session, CourseBean cb, CourseFilesBean cfb, RedirectAttributes attr) {
+	public ModelAndView deleteCourse(HttpSession session, CourseBean cb, CourseFilesBean cfb) {
 		ModelAndView mav = new ModelAndView();
 		cfb.setFl_idnum(cb.getCo_idnum());
 		cfb.setFl_lv(cb.getCo_lv());
 		cfb.setFl_num(Integer.parseInt(cb.getCo_num()));
 		List<CourseFilesBean>delFileList = cod.selectDelFile(cfb);
-		
 		boolean delFilesResult = cod.deleteCourseFiles(cfb);
 		
 		if(delFilesResult) {
@@ -96,14 +110,24 @@ public class CourseMM {
 			if(delCoResult) {
 				fm.delete(delFileList);
 				System.out.println("강좌삭제 성공");
-				mav.addObject("falseMsg","강좌를 삭제하였습니다.");
-				mav.addObject("cl_ct", 0);
-				 mav.setViewName("teacher/gahee/classmain");
+				//mav.addObject("cl_ct", 0);
+				String co_idnum="";
+				String msg ="";
+				try {
+					co_idnum= URLEncoder.encode(cfb.getFl_idnum(),"UTF-8");
+					msg = URLEncoder.encode("강좌를삭제합니다","UTF-8");
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				String co_lv= cfb.getFl_lv().toString();
+				int co_lcnum = cod.getlcnum(cfb.getFl_idnum());
+				 mav.setViewName("redirect:/prof/coursePage/"+co_lv+"/"+co_idnum+"/"+co_lcnum+"/"+msg);
 			}
 		}else {
 			System.out.println("트렌제션");
 			mav.addObject("falseMsg","강좌삭제에 실패");
-			mav.setViewName("new");
+			mav.setViewName("goTeacherLoginFrm");
 		}
 		
 		 
@@ -112,9 +136,8 @@ public class CourseMM {
 	}
 
 	@Transactional
-	public ModelAndView updateCourse(MultipartHttpServletRequest multi, HttpSession session, RedirectAttributes attr) {
+	public ModelAndView updateCourse(MultipartHttpServletRequest multi, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-
 		CourseBean cb = new CourseBean();
 		cb.setCo_idnum(multi.getParameter("co_idnum"));
 		cb.setCo_lv(Integer.parseInt(multi.getParameter("co_lv")));
@@ -130,9 +153,21 @@ public class CourseMM {
 			cfb.setFl_num(Integer.parseInt(multi.getParameter("co_num")));
 			boolean fiResult = fm.fileUpdate(multi, cfb);
 			if(fiResult) {
-				mav.addObject("falseMsg","수정성공");
-				mav.addObject("cl_ct", 0);
-				 mav.setViewName("teacher/gahee/classmain");
+//				mav.addObject("falseMsg","수정성공");
+//				mav.addObject("cl_ct", 0);
+//				 mav.setViewName("teacher/gahee/classmain");
+				String co_idnum="";
+				String msg ="";
+				try {
+					co_idnum= URLEncoder.encode(cb.getCo_idnum(),"UTF-8");
+					msg = URLEncoder.encode("강좌를수정합니다.","UTF-8");
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				String co_lv= cb.getCo_lv().toString();
+				int co_lcnum = cod.getlcnum(cfb.getFl_idnum());
+				 mav.setViewName("redirect:/prof/coursePage/"+co_lv+"/"+co_idnum+"/"+co_lcnum+"/"+msg);
 			}
 			
 		}else {

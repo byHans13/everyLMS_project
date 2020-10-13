@@ -15,6 +15,7 @@ import com.icia.classHome.FileBean;
 import com.icia.classHome.MemoBean;
 import com.icia.classHome.ProblemBean;
 import com.icia.classHome.ScheduleBean;
+import com.icia.homework.HomeworkBean;
 import com.icia.member.Member;
 
 
@@ -22,7 +23,7 @@ public interface ClassHomeDao {
 	
 		
 		//scheduel select, delete, insert -lv값 수정 완료  // test 못함
-		@Select("SELECT * FROM aaCl WHERE aa_id = #{aa_id}")
+		@Select("SELECT * FROM aaCl WHERE aa_id = #{aa_id} AND cl_ct=2")
 		List<AdmiApplicationBean> selectMyCalendar(AdmiApplicationBean ab);
 		List<ScheduleBean> selectSchedule(ScheduleBean sb);
 		boolean insertSchedule(ScheduleBean cb);
@@ -36,6 +37,8 @@ public interface ClassHomeDao {
 		String selectClassAvgNum(ClassBean cb);
 		@Select("SELECT * FROM (SELECT * FROM cobKindAndGpa ORDER BY gpa_gpa DESC) WHERE cob_idnum=#{cl_idnum} AND cob_lv=#{cl_lv} AND ROWNUM <= 2")
 		List<CourseBoardBean> selectInfoReview(ClassBean cb);
+		@Select("SELECT likes_check FROM likes WHERE likes_idnum=#{cl_idnum} AND likes_lv=#{cl_lv} AND likes_id=#{cl_id}")
+		Integer selectClassLikeDefault(ClassBean cb);
 		
 		//강의목록 들어갔을 때, 출석값, course 출력위해 - lv 수정, test 완료
 		@Select("SELECT * FROM courseAttend WHERE co_idnum=#{co_idnum} AND co_lv=#{co_lv} AND aa_id = #{aa_id}")
@@ -120,7 +123,7 @@ public interface ClassHomeDao {
 		List<CourseBean> selectCourseNum(ClassBean cl);// lv modi
 		@Select("SELECT * FROM problem WHERE pb_idnum=#{pb_idnum} AND pb_lv=#{pb_lv} AND pb_num = #{pb_num} AND pb_id=#{pb_id}")
 		List<ProblemBean> selectProblemNum(ProblemBean pb);// lv modi 
-		@Select("SELECT * FROM problemView WHERE pb_idnum = #{pb_idnum} AND pb_lv=#{pb_lv} AND pb_num = #{pb_num} AND pb_pbnum = #{pb_pbnum}")
+		@Select("SELECT * FROM problemView WHERE pb_idnum = #{pb_idnum} AND pb_lv=#{pb_lv} AND pb_num = #{pb_num} AND pb_id=#{pb_id} AND pb_pbnum = #{pb_pbnum}")
 		List<ProblemBean> selectPreviewQuiz(ProblemBean pb);// lv modi
 		
 		//공지사항 게시판 들어갔을 때 게시글 출력 위해 - lv 수정, test  완료
@@ -185,7 +188,7 @@ public interface ClassHomeDao {
 		boolean updateClassLike(LikeBean lb);
 		
 		//classManagementPage로 이동 
-		@Select("SELECT * FROM likes WHERE likes_id=#{sessionId} AND likes_check=1")
+		@Select("SELECT * FROM likeCt WHERE likes_id=#{sessionId} AND likes_check='1' AND cl_ct='2'")
 		List<LikeBean> selectMyLikeList(String sessionId);
 		@Select("SELECT * FROM classInfo WHERE cl_idnum=#{likes_idnum} AND cl_lv=#{likes_lv}")
 		ClassBean selectMyLikeListInfo(LikeBean likeBean);
@@ -203,7 +206,9 @@ public interface ClassHomeDao {
 		boolean insertPointBreakdown(PointBean pb);
 		@Insert("INSERT INTO aa(aa_idnum, aa_lv, aa_id) VALUES(#{cl_idnum}, #{cl_lv}, #{cl_id})")
 		boolean insertClassAdmiApplication(ClassBean cb);
-		
+		@Insert("INSERT INTO atd(atd_atmk, atd_num, atd_id, atd_idnum, atd_lv) VALUES"
+				+ "(1, 0, #{cl_id}, #{cl_idnum}, #{cl_lv})")
+		void insertClassAtmkNumZero(ClassBean cb);
 		//LevelCheckPage
 		@Select("SELECT * FROM cc WHERE cc_id=#{sessionId} AND cc_check=1")
 		List<ConcernBean> selectLevelCheckPage(String sessionId);
@@ -213,8 +218,8 @@ public interface ClassHomeDao {
 		List<ProblemBean> selectLevelCheckRandomQuizInfo(ProblemBean pb);
 		@Select("SELECT * FROM detailProblemCC WHERE pb_idnum=#{pb_idnum} AND pb_lv=#{pb_lv} AND pb_num=#{pb_num} AND pb_pbnum=#{pb_pbnum}")
 		List<ProblemBean> selectLevelCheckQuizDetail(ProblemBean problemBean);
-		@Insert("INSERT INTO grade(gr_idnum, gr_id, gr_num, gr_lv, gr_score, gr_kind) "
-				+ "VALUES(#{gr_idnum}, #{gr_id}, #{gr_num}, #{gr_lv}, #{gr_score}, #{gr_kind})")
+		@Insert("INSERT INTO grade(gr_seqnum, gr_idnum, gr_id, gr_num, gr_lv, gr_score, gr_kind) "
+				+ "VALUES(#{gr_kind}||LPAD(kind_seq.NEXTVAL,4,0), #{gr_idnum}, #{gr_id}, #{gr_num}, #{gr_lv}, #{gr_score}, #{gr_kind})")
 		boolean insertCourseGrade(GradeBean gb);
 		@Update("UPDATE pb SET pb_answerchk=#{pb_answerchk} WHERE pb_idnum=#{pb_idnum} AND pb_lv=#{pb_lv} "
 				+ "AND pb_num=#{pb_num} AND pb_pbnum=#{pb_pbnum} AND pb_id=#{pb_id}")
@@ -242,6 +247,17 @@ public interface ClassHomeDao {
 				+ "VALUES(#{pb_num}, #{pb_lv}, #{pb_id},#{pb_idnum},#{pb_pbnum},#{pb_pbname},#{pb_pbanswer},#{pb_pbexplain},#{pb_pbstudent},#{pb_answerchk},default,#{pb_pbchkqz})")
 		boolean insertClassFinalTestForceStop();
 
+		//ClassHome - Homework
+		List<HomeworkBean> selectClassHomeworkList(HomeworkBean hw);
+		@Select("SELECT * FROM hw WHERE hw_id=#{hw_id} AND hw_idnum=#{hw_idnum} AND hw_lv=#{hw_lv}")
+		List<HomeworkBean> selectClassMyHomeworkList(HomeworkBean hw);
+		@Insert("INSERT INTO hw(hw_hwname, hw_id, hw_num, hw_idnum, hw_lv, hw_date, hw_psfa) VALUES"
+				+ "(#{hw_hwname}, #{hw_id}, #{hw_num}, #{hw_idnum}, #{hw_lv}, sysdate, #{hw_psfa})")
+		boolean insertHwHomework(HomeworkBean hw);
+		@Insert("INSERT INTO fl(fl_subvd, fl_sysname, fl_oriname, fl_num, fl_id, fl_idnum, fl_lv) VALUES"
+				+ "(#{fl_subvd}, #{fl_sysname}, #{fl_oriname}, #{fl_num}, #{fl_id}, #{fl_idnum}, #{fl_lv})")
+		boolean insertFlHomework(FileBean fl);
+		
 
 
 

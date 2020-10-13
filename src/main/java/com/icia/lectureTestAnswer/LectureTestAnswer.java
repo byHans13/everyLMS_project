@@ -18,6 +18,7 @@ public class LectureTestAnswer {
 	String cl_id;
 	Integer gr_id1;
 	Integer co_num;
+	String gr_kind;
 	
 	String pb_idnum;
 	Integer pb_pbnum;

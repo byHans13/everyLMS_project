@@ -1,10 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<sec:authorize access="hasRole('ROLE_STUD')">
+	<script src="../script/wsocket.js"></script>
+</sec:authorize>
 <title>강의별퀴즈관리</title>
 <style>
 header {
@@ -29,20 +33,16 @@ section {
     border: 1px black solid;
     float: left;
 }
-table{
-	width: 1100px;
-	margin:auto;
-/* 	border: 1px solid black; */
-	border-collapse: collapse;
-	text-align: center;
-}
-th, td {
-	font-size: 30px;
-	/* border: 1px solid black; */
-}
-td{
-	/* border: 1px solid black; */
-}
+.tg  {border-collapse:collapse;border-color:#9ABAD9;border-spacing:0;}
+.tg td{background-color:#EBF5FF;border-color:#9ABAD9;border-style:solid;border-width:0px;color:#444;
+  font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{background-color:#409cff;border-color:#9ABAD9;border-style:solid;border-width:0px;color:#fff;
+  font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-tns0{font-size:32px;font-weight:bold;text-align:center;vertical-align:top}
+.tg .tg-qncv{font-size:32px;text-align:left;vertical-align:top}
+.tg .tg-g9xd{background-color:#D2E4FC;font-size:32px;text-align:left;vertical-align:top}
+.tg .tg-dlxr{background-color:#D2E4FC;font-size:32px;text-align:center;vertical-align:top}
+.tg .tg-j32n{font-size:32px;text-align:center;vertical-align:top}
 </style>
 </head>
 <body>
@@ -57,8 +57,8 @@ td{
 	<section id="section" style="margin-left: 20px;">
 	
 	<form id="frm">	
-		<div style="background-color: #B7F0B1; height: 80px; ">
-			<h2 style="float: left; margin-left: 10px;margin-top: 15px;">강의별 퀴즈관리</h2>
+		<div style="background-color: #409cff; height: 80px; ">
+			<h2 style="float: left; margin-left: 10px;margin-top: 15px;color: white; font-size: 35px;"><b>강의별 퀴즈관리</b></h2>
 			<button style="float: right; margin-right: 20px; margin-top: 30px; height: 30px;" 
 					type="button" onclick="contSelect()">검색</button>
 			<input style="float: right; height: 30px; margin-top: 30px;" type="text" name="cont"/> 
@@ -72,9 +72,9 @@ td{
 		
 		<div style="height: 100px;"></div>
 		
-		<div id="selectbox">
+		<div id="selectbox" style="overflow: auto; height: 500px;" >
 			
-			<table id="selectTable">
+			<table id="selectTable" class="tg">
 			</table>
 		</div>
 		
@@ -101,32 +101,35 @@ $(document).ready
 		success: function (json) {
 			console.log(json);
 			console.log(json.length);
-			console.log(json[0].cl_clname);
-			$("#selectTable").append("<tr>");
-			$("#selectTable").append("<th style='text-align: center;'>강의명</th>");
-			$("#selectTable").append("<th style='text-align: center;'>강좌명</th>");
-			$("#selectTable").append("<th style='text-align: center;'>회차</th>");
-			$("#selectTable").append("<th style='text-align: center;'>학생수</th>");
-			$("#selectTable").append("<th style='text-align: center;'>반평균</th>");
-			$("#selectTable").append("<th style='text-align: center;'>강사명</th>");
-			$("#selectTable").append("<th style='text-align: center;'>상세보기</th>");
-			$("#selectTable").append("</tr>");
 			
-			for(var i=0; i<json.length; i++){
-				
+			if(json.length==0){
+				$("#comt").html("등록된 퀴즈가 없습니다.");
+			}else{
+			
 				$("#selectTable").append("<tr>");
-				$("#selectTable").append("<td>"+json[i].cl_clname+"</td>");
-				$("#selectTable").append("<td>"+json[i].co_name+"</td>");
-				$("#selectTable").append("<td>"+json[i].co_num+"</td>");
-				$("#selectTable").append("<td>"+json[i].gr_id+"</td>");
-				$("#selectTable").append("<td>"+json[i].gr_score+"</td>");
-				$("#selectTable").append("<td>"+json[i].cl_id+"</td>");
-				$("#selectTable").append("<td><a href='goLectureQuizShowPage?clname="+json[i].cl_clname+
-										"&name="+json[i].co_name+"&lcnum="+json[i].co_num+
-										"'><button type='button'>클릭</button></a></td>");
+				$("#selectTable").append("<th class='tg-tns0'>강의명</th>");
+				$("#selectTable").append("<th class='tg-tns0'>강좌명</th>");
+				$("#selectTable").append("<th class='tg-tns0'>회차</th>");
+				$("#selectTable").append("<th class='tg-tns0'>학생수</th>");
+				$("#selectTable").append("<th class='tg-tns0'>반평균</th>");
+				$("#selectTable").append("<th class='tg-tns0'>강사명</th>");
+				$("#selectTable").append("<th class='tg-tns0'>상세보기</th>");
 				$("#selectTable").append("</tr>");
 				
-			}  
+				for(var i=0; i<json.length; i++){
+					$("#selectTable").append("<tr>");
+					$("#selectTable").append("<td class='tg-g9xd'>"+json[i].cl_clname+"</td>");
+					$("#selectTable").append("<td class='tg-dlxr'>"+json[i].co_name+"</td>");
+					$("#selectTable").append("<td class='tg-dlxr'>"+json[i].co_num+"</td>");
+					$("#selectTable").append("<td class='tg-dlxr'>"+json[i].gr_id+"</td>");
+					$("#selectTable").append("<td class='tg-dlxr'>"+json[i].gr_score+"</td>");
+					$("#selectTable").append("<td class='tg-dlxr'>"+json[i].cl_id+"</td>");
+					$("#selectTable").append("<td class='tg-dlxr'><a href='goLectureQuizShowPage?clname="+json[i].cl_clname+
+											"&name="+json[i].co_name+"&lcnum="+json[i].co_num+
+											"'><button type='button' class='btn btn-primary'>클릭</button></a></td>");
+					$("#selectTable").append("</tr>");
+		  		}
+			}
 		},
 		error: function (err) {
 			console.log(err);
@@ -155,32 +158,37 @@ $(document).ready
 		success: function (json) {
 			console.log(json);
 			
-			$("#selectTable").append("<tr>");
-			$("#selectTable").append("<th style='text-align: center;'>강의명</th>");
-			$("#selectTable").append("<th style='text-align: center;'>강좌명</th>");
-			$("#selectTable").append("<th style='text-align: center;'>회차</th>");
-			$("#selectTable").append("<th style='text-align: center;'>학생수</th>");
-			$("#selectTable").append("<th style='text-align: center;'>반평균</th>");
-			$("#selectTable").append("<th style='text-align: center;'>강사명</th>");
-			$("#selectTable").append("<th style='text-align: center;'>상세보기</th>");
-			$("#selectTable").append("</tr>");
+			if(json.length==0){
+				$("#comt").html("");
+				$("#comt").html("등록된 퀴즈가 없습니다.");
+			}else{
 			
-			for(var i=0; i<json.length; i++){
-				
 				$("#selectTable").append("<tr>");
-				$("#selectTable").append("<td>"+json[i].cl_clname+"</td>");
-				$("#selectTable").append("<td>"+json[i].co_name+"</td>");
-				$("#selectTable").append("<td>"+json[i].co_num+"</td>");
-				$("#selectTable").append("<td>"+json[i].gr_id+"</td>");
-				$("#selectTable").append("<td>"+json[i].gr_score+"</td>");
-				$("#selectTable").append("<td>"+json[i].cl_id+"</td>");
-				$("#selectTable").append("<td><a href='goLectureQuizShowPage?clname="+json[i].cl_clname+
-						"&name="+json[i].co_name+"&lcnum="+json[i].co_num+
-						"'><button type='button'>클릭</button></a></td>");
+				$("#selectTable").append("<th class='tg-tns0'>강의명</th>");
+				$("#selectTable").append("<th class='tg-tns0'>강좌명</th>");
+				$("#selectTable").append("<th class='tg-tns0'>회차</th>");
+				$("#selectTable").append("<th class='tg-tns0'>학생수</th>");
+				$("#selectTable").append("<th class='tg-tns0'>반평균</th>");
+				$("#selectTable").append("<th class='tg-tns0'>강사명</th>");
+				$("#selectTable").append("<th class='tg-tns0'>상세보기</th>");
 				$("#selectTable").append("</tr>");
 				
-			}  
-			
+				for(var i=0; i<json.length; i++){
+					
+					$("#selectTable").append("<tr>");
+					$("#selectTable").append("<td class='tg-g9xd'>"+json[i].cl_clname+"</td>");
+					$("#selectTable").append("<td class='tg-dlxr'>"+json[i].co_name+"</td>");
+					$("#selectTable").append("<td class='tg-dlxr'>"+json[i].co_num+"</td>");
+					$("#selectTable").append("<td class='tg-dlxr'>"+json[i].gr_id+"</td>");
+					$("#selectTable").append("<td class='tg-dlxr'>"+json[i].gr_score+"</td>");
+					$("#selectTable").append("<td class='tg-dlxr'>"+json[i].cl_id+"</td>");
+					$("#selectTable").append("<td class='tg-dlxr'><a href='goLectureQuizShowPage?clname="+json[i].cl_clname+
+							"&name="+json[i].co_name+"&lcnum="+json[i].co_num+
+							"'><button type='button'>클릭</button></a></td>");
+					$("#selectTable").append("</tr>");
+					
+				}  
+		  }
 		},
 		error: function (err) {
 			console.log(err);

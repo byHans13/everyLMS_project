@@ -15,6 +15,8 @@ private String aa_id;
 private String cl_clName;
 private String cl_id;
 private int cl_lcnum;
+private String cl_cc;
+private String cl_ct;
 // cl + aa = aaCl view Page BeanClass
 private int at_atmkCnt;
 }

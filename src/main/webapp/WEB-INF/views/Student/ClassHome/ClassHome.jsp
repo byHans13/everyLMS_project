@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+    <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
+	
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +11,9 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="../resources/js/jquery.serializeObject.js"></script>
+<sec:authorize access="hasRole('ROLE_STUD')">
+	<script src="../script/wsocket.js"></script>
+</sec:authorize>
 
 
 <style>
@@ -38,10 +43,12 @@ section {
 	display: flex;
 	margin: 5px;
 	border: 1px solid black;
+	background: #eee;	
 	width :1075px;
 }
 
 #classInfo {
+	background: #eee;
 	list-style: none;
 	margin-top: 40px;
 	margin-left: 20px;
@@ -65,13 +72,14 @@ section {
 	width: 1075px;
 	height: 65px;
 	text-align: center;
+	background: #eee;
 }
 
 .li {
 	list-style: none;
 	display: inline-block;
 	margin-left: 20px;
-	margin-top: 10px;
+	margin-top: 20px;
 	margin-right: 20px;
 }
 
@@ -84,6 +92,7 @@ section {
 }
 
 .classLeft {
+	background: #eee;
 	border: 1px solid black;
 	width: 300px;
 	height: 650px;
@@ -91,6 +100,7 @@ section {
 }
 
 .classRight {
+	background: #eee;
 	border: 1px solid black;
 	width: 775px;
 	height: 650px;
@@ -98,25 +108,112 @@ section {
 	text-align: center;
 	overflow: scroll;
 }
-
-.classInfoTable {
-	text-align: center;
-	border-bottom: 1px solid black;
-	margin-left: 50px;
-	font-size: medium;
+table.type02 {
+    border-collapse: separate;
+    border-spacing: 0;
+    text-align: left;
+    line-height: 1.5;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+  	margin : 20px 10px;
+}
+table.type02 th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #fff;
+    border-left: 1px solid #fff;
+    background-color: black;
+    color:white
+}
+table.type02 td {
+    width: 350px;
+    padding: 10px;
+    vertical-align: top;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+table.type11 {
+    border-collapse: separate;
+    border-spacing: 1px;
+    text-align: center;
+    line-height: 1.5;
+    margin:auto;
+    margin-top:30px;
+}
+table.type11 th {
+    width: 240px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #fff;
+    background:black;
+}
+table.type11 td {
+    width: 155px;
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    background: #eee;
+}
+.btn_like {
+  position: relative;
+  display: block;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #e8e8e8;
+  border-radius: 44px;
+  font-family: notokr-bold,sans-serif;
+  font-size: 14px;
+  line-height: 16px;
+  background-color: #fff;
+  transition: border .2s ease-out,box-shadow .1s ease-out,background-color .4s ease-out;
+}
+.btn_unlike .img_emoti {
+    background-position: -30px -120px;
 }
 
-td {
-	text-align: left;
-	padding: 14px;
+.img_emoti {
+    display: inline-block;
+    overflow: hidden;
+    font-size: 0;
+    line-height: 0;
+    background: url(https://mk.kakaocdn.net/dn/emoticon/static/images/webstore/img_emoti.png?v=20180410) no-repeat;
+    text-indent: -9999px;
+    vertical-align: top;
+    width: 20px;
+    height: 17px;
+    margin-top: 1px;
+    background-position: 0px -120px;
+    text-indent: 0;
+}
+.ani_heart_m.hi {
+    -webkit-background-size: 9000px 125px;
+    background-size: 9000px 125px;
+}
+
+.ani_heart_m.bye {
+    background-size: 8250px 125px;
+}
+#prevBtn{
+border-top-left-radius: 5px; 
+border-bottom-left-radius: 5px; 
+margin-right:-4px;
+border: 1px solid black; 
+background-color: rgba(0,0,0,0); 
+color: black; 
+padding: 5px;
+}
+#prevBtn:hover{
+color:white; 
+background-color: black;;
 }
 </style>
 </head>
-
-
 <body>
-
-
 	<header>
 		<%-- <%@ include file="h2k5every_header.jsp"%><!-- 정적인 방식 --> --%>
 		<jsp:include page="../../h2k5every_loginHeader.jsp" /><!-- 동적인 방식 -->
@@ -132,11 +229,16 @@ td {
 			<ul class='ul'>
 				<li id='classInfo'></li>
 				<li id='className'></li>
-				<li id='classLikeBtn'><input type='button' value='좋아요'
-					onclick='classLike()'></li>
+				<li id='classLikeBtn'>
+					<button type='button' onclick='classLike()' class='btn_like' id='classLike'>
+						<span class="img_emoti">좋아요</span>
+						<span class="ani_heart_m"></span>
+					</button>
+				</li>
 			</ul>
 			<input type='hidden' value='' name='cl_idnum' id='classPk'
-				class='classPk'> <input type='hidden' value=''
+				class='classPk'> 
+			<input type='hidden' value=''
 				name='cob_kind' id='boardKind' class='boardKind'>
 		</div>
 		<div id='classNav' name='classNav' class='classNav'>
@@ -149,14 +251,13 @@ td {
 				<li id='classQNA' class='li' onclick='classQNA()'>Q&A</li>
 				<li id='classPostscript' class='li' onclick='classReview()'>
 					수강후기</li>
-				<li id='classReference' class='li' onclick='test()'>과제제출 </li>
-           	<li id='classFinalTest' class='li' onclick='classFinalTest()' style='color:red;'>최종시험</li>
+				<li id='classReference' class='li' onclick='classHomeworkSubmit()'>과제제출 </li>
 			</ul>
 		</div>
 		<div id='classAll' name='classAll' class='classAll'>
 			<div id='classLeft' name='classLeft' class="classLeft">
-				<h4>강의정보</h4>
-				<table class='classInfoTable' id='classInfoTable'>
+				<h4><b>강의정보</b></h4>
+				<table class='type02' id='classInfoTable' >
 				</table>
 			</div>
 			<div class='classRight' name='classRight' id='classRight'></div>
@@ -167,11 +268,35 @@ td {
 	</footer>
 </body>
 <script>
+jQuery.fn.serializeObject = function() {
+	  var obj = null;
+	  try {
+	    if(this[0].tagName && this[0].tagName.toUpperCase() == "FORM" ) {
+	      var arr = this.serializeArray();
+	      if(arr){
+	        obj = {};    
+	        jQuery.each(arr, function() {
+	        obj[this.name] = this.value;
+	        });             
+	      }
+	    }
+	  }catch(e) {
+	    alert(e.message);
+	  }finally  {}
+	  console.log("serialObject hans= ",obj);
+	  return obj;
+	}
+
+
+
 	var sessionID = "${sessionScope.id}";
 	var el = ${classInfo}; //포워딩으로 보내준 Gson값 받음
 	var infoReview = ${infoReview};
 	var avg = ${avgNum};
+	var likeNum= ${likeNum};
+	console.log("likelikelikeNum="+likeNum);
 	classInfoAjax(); //강의실 들어오자마자 강좌소개에 필요한 값 ajax 밑 div 찍어주기 위한 함수 실행
+	
 	function test() {
 		alert('성공');
 	};
@@ -185,23 +310,26 @@ td {
 			$('#classImg').html("<img src='../picture/"+el[i].pi_pisysname+"' width='150px' height='200px'>");
 			$('#classInfo').html("<h5>" + el[i].cl_cc + " | LV " + el[i].cl_lv + " | "+ el[i].mb_name + " 강사</h5>");
 			$('#className').html("<h2>" + el[i].cl_clName + "</h2>");
-			cInfo.append("<tr><td>과목명</td><td>" + el[i].cl_clName	+ "</td></tr>");
-			cInfo.append("<tr><td>학습레벨</td><td>LV " + el[i].cl_lv	+ "</td></tr>");
-			cInfo.append("<tr><td>강수</td><td>" + el[i].cl_lcnum+ "강</td></tr>");
-			cInfo.append("<tr><td>강의평점</td><td>" + avg + "점</td></tr>");
+			cInfo.append("<tr><th>과목명</th><td>" + el[i].cl_clName	+ "</td></tr>");
+			cInfo.append("<tr><th>학습레벨</th><td>LV " + el[i].cl_lv	+ "</td></tr>");
+			cInfo.append("<tr><th>강수</th><td>" + el[i].cl_lcnum+ "강</td></tr>");
+			cInfo.append("<tr><th>강의평점</th><td>" + avg + "점</td></tr>");
 		}
 		//ajax하기 전 초기화 
 		$("#classRight").html("");
 		//classRight에 값 찍어주기, 수강후기는 ajax 타고 와야함 
 		var str = $("#classRight");
-		str.append("<div style='width:745px; height:80px;'><h3>해당강의 맛보기 문제 풀어보기</h3><hr style='width:350px;'>");
-		str.append("<div>해당강의의 맛보기 문제를 풀어볼 수 있습니다.</div><div>해당강의와 level이 맞지 않으면 맛보기 문제를 풀어주세요.</div>");
-		str.append("<br><input type='button' onclick='previewQuiz()' value='맛보기문제 풀러가기'>");
-		str.append("<br><br><hr style='width:350px;'></div>");
+		var rightInfo="";
+		rightInfo+="<div style='width:745px; height:80px; position: absolute;'>";
+		rightInfo+="<h3>해당강의 맛보기 문제 풀어보기</h3><hr style='width:350px; border-color:black;'>";
+		rightInfo+="<div>해당 강의의 맛보기 문제를 풀어볼 수 있습니다.<br/>해당 강의와 level이 맞지 않으면 맛보기 문제를 풀어주세요.</div>";
+		rightInfo+="<br/><input type='button' onclick='previewQuiz()' value='맛보기문제 풀러가기' id='prevBtn'>";
+		rightInfo+="<br/><br/><hr style='width:350px; border-color:black;'></div>";
+		str.append(rightInfo);
 		// 수강후기 ajax 타고와서 table 찍어줌
 		var classReviews = "";
-		classReviews += "<div style='width:745px; height:300px;'><br><br><div>수강후기 ";
-		classReviews += "<input type='button' value='+더보기' onclick='classReview()'><hr style='width:100px;'></div><br/>";
+		classReviews += "<div style='width:745px; height:300px; transform :translate(0px, 230px);'><br/><br/><div>수강후기 ";
+		classReviews += "<input type='button' value='+더보기' onclick='classReview()' id='prevBtn'><hr style='width:100px; border-color:black;'></div><br/>";
 		for ( var i in infoReview) {
 			if (infoReview[i].cob_id.length > 2) {
 				var name = infoReview[i].cob_id.split('');
@@ -230,7 +358,12 @@ td {
 			classReviews += "<div>" + infoReview[i].cob_cont+ "</div></div><br/>";
 		}
 		str.append(classReviews);
-
+		if(likeNum !=0){
+		    $('button').addClass('btn_unlike');
+		    $('.ani_heart_m').addClass('hi');
+		}else{
+		    $('.ani_heart_m').addClass('bye');
+		}
 	}//classInfoAjax() END
 	function classLike() {
 		var obj = {
@@ -250,13 +383,15 @@ td {
 			success : function(json) {
 				console.log(json);
 				if (json) {
-					alert("관심강의에 등록되었습니다. 수강신청관리 페이지에서 확인하실 수 있습니다.")
+					likeNum =1;
+					alert("관심강의에 등록되었습니다. 수강신청관리 페이지에서 확인하실 수 있습니다.");
 				} else {
-					alert("좋아요가 취소되었습니다.")
+					likeNum =0;
+					alert("좋아요가 취소되었습니다.");
 				}
 			},
 			error : function(json) {
-				alert("error: 새로고침이나 브라우저를 다시 실행해주세요.")
+				alert("error: 새로고침이나 브라우저를 다시 실행해주세요.");
 			}
 		});//ajaxEND
 	}//function classLike()END
@@ -289,29 +424,22 @@ td {
 							alert("로그인 후 이용해주세요.");
 							classInfoAjax();
 						} else {
-							lectureList.append("<div id='lectureDiv' style='width:1036px; height:652px;'><table id='lectureTable' style='margin:auto; border-collapse:collapse;'></table></div>");
-							$('#lectureTable').append("<tr><td>회차</td><td>강좌명</td><td>수강여부</td></tr>");
+							var str="";
+							lectureList.append("<div id='lectureDiv' style='width:1036px; height:652px;'><table id='lectureTable' class='type11'></table></div>");
+							str +="<thead><tr><th>회차</th><th>강좌명</th><th>수강여부</th></tr></thead><tbody>";
 							for ( var i in json) {
 								console.log("atmk=" + json[i].atd_atmk);
 								if (json[i].atd_atmk != null) {
-									$('#lectureTable').append("<tr style='border-bottom:1px solid black;'><td>"
-															+ json[i].co_num
-															+ "강</td><td><a href='selectClassLectureVideoPage?co_idnum="
-															+ json[i].co_idnum
-															+ "&co_lv="
-															+ json[i].co_lv
-															+ "&co_num="
-															+ json[i].co_num
-															+ "&atd_atmk="
-															+ json[i].atd_atmk
-															+ "' target='_blank'>"
-															+ json[i].co_name
-															+ "</a></td><td>수강완료</td></tr>");
+									str +="<tr><td>"+json[i].co_num+"강</td>";
+									str +="<td><a href='selectClassLectureVideoPage?co_idnum="+json[i].co_idnum+"&co_lv="+json[i].co_lv+"&co_num="
+										+json[i].co_num+"&atd_atmk="+json[i].atd_atmk+"'target='_blank'>"+json[i].co_name+"</a></td><td>수강완료</td></tr>";
 								} else {
-									$('#lectureTable').append("<tr style='border-bottom:1px solid black;'><td>"+ json[i].co_num+ "강</td><td><a href='selectClassLectureVideoPage?co_idnum="
-															+ json[i].co_idnum+ "&co_lv="+ json[i].co_lv+ "&co_num="+ json[i].co_num+ "' target='_blank'>"+ json[i].co_name	+ "</a></td><td>미수강</td></tr>");
+									str +="<tr><td>"+ json[i].co_num+ "강</td>";
+									str +="<td><a href='selectClassLectureVideoPage?co_idnum="+json[i].co_idnum+ "&co_lv="
+										+json[i].co_lv+"&co_num="+json[i].co_num+"'target='_blank'>"+ json[i].co_name+"</a></td><td>미수강</td></tr>";
 								}
 							}//for 
+							$('#lectureTable').append(str);
 						}// 로그인 if else에서 else문 end
 					},
 					error : function(err) {
@@ -839,12 +967,127 @@ td {
 		});// ajax insertReviewReply END
 	}//function insertReviewReply()END
 	
-	function classFinalTest(){
-    	var idnum =el[0].cl_idnum;
-    	var lv=el[0].cl_lv;
-    	var num=0;
-    	window.open("selectClassFinalTest?pb_idnum="+idnum+"&pb_lv="+lv+"&pb_num="+num,'_blank','width=800, height=600, top=200, left=200'); 
-
-    }// function classFinalTest() END
+	function classHomeworkSubmit(){
+		var obj = {
+			'hw_idnum' : $('#classPk').val(),
+			'hw_lv' : el[0].cl_lv
+		}
+		var str ="";
+		console.log(obj);
+		$('#classRight').html("");
+		$('#classRight').append("<div id='hwDiv' style='width:1036px; height:652px;'></div>");
+		$('#hwDiv').append("<table id='hwTable' style='margin:auto; border-collapse:collapse;'></table>");
+		$('#hwTable').append("<tr><td>회차</td><td>과제명</td><td>과제확인</td><td>제출마감일</td><td>제출하기</td><td>비고</td></tr>");
+		//<a id='a"+i+"' href='homeworkFiledown?sysFileName="+courseList[i].fbList[1].fl_sysname+"'></a>
+		$.ajax({
+			type:'get',
+			url:'rest/selectClassHomeworkList',
+			data:obj,
+			dataType:'json',
+			success: function(json){
+				console.log(json);
+				console.log(Object.keys(json["hw"]).length);
+				console.log(json["hw"][0].hw_idnum);
+				console.log(Object.keys(json["myHw"]).length);
+				if(Object.keys(json["hw"]).length !=0){
+					for(var i=0; i<Object.keys(json["hw"]).length; i++){
+						str ="";
+						str +="<tr>";
+						str +="<td>"+json["hw"][i].hw_num+"강</td>";
+						str +="<td>"+json["hw"][i].hw_hwname+"</td>";
+						str += "<td><a href='homeworkFiledown?sysFileName="+json["hw"][i].fbList[1].fl_sysname+"'>"
+								+json["hw"][i].fbList[1].fl_oriname+"</a></td>";
+						str +="<td>"+json["hw"][i].hw_date.substring(0,10)+"</td>";
+						var hwList = JSON.stringify(json["hw"][i]);
+						var submitDate = new Date(json["hw"][i].hw_date);
+						var today = new Date();
+						var CheckSubmit =0;
+						for(var j =0; j<Object.keys(json["myHw"]).length; j++){
+							if(json["hw"][i].hw_num == json["myHw"][j].hw_num)
+								CheckSubmit +=1;
+						}
+						if(CheckSubmit !=0){
+							str +="<td onclick=\"alert('이미 파일을 제출했습니다.')\">submit</td>";
+							str +="<td>제출완료</td>";
+						}else{
+							if(today <= submitDate){
+								str +="<td onclick='insertClassHomeworkPage("+hwList+")'><a href='#;'>submit</a></td>";
+								str +="<td>제출가능</td>";							
+							}else{
+								str +="<td onclick=\"alert('제출기한이 지났습니다.')\">submit</td>";
+								str +="<td>제출불가</td>";							
+							}							
+						}
+						str +="</tr>";
+						$('#hwTable').append(str);
+					}//for i
+				}else{
+					$('#hwTable').append("<tr><td colspan='5'>업로드된 과제가 없습니다.</td></tr>");
+				}
+			},error: function(err){
+				console.log(err);
+				$('#hwTable').append("<tr><td colspan='5'>업로드된 과제가 없습니다.</td></tr>");
+			}
+		});
+	}//function classHomeworkSubmit() END
+	function insertClassHomeworkPage(hwList){
+		console.log(hwList);
+		console.log(hwList.hw_idnum);
+		var str ="";
+		var hwInsertPage = $('#classRight');
+		hwInsertPage.html("");
+		hwInsertPage.append("<div id='hwInsertDiv' style='width:500px; height:652px; margin:auto; text-align:left;'></div>");
+		str += "<h4>"+hwList.hw_num+"강 과제: "+hwList.hw_hwname+" 업로드</h4><hr>"
+			str += "<form method='post' id='insertHw' enctype='multipart/form-data'>";
+			str += "<input type='hidden' id='idnum' name='hw_idnum' value='"+hwList.hw_idnum+"'>";
+			str += "<input type='hidden' id='lv' name='hw_lv' value='"+hwList.hw_lv+"'>";
+			str += "<input type='hidden' id='num' name= hw_num value='"+hwList.hw_num+"'>";
+			str += "<input type='text' id='name' name='hw_hwname' placeholder='과제 제목을 입력해주세요.'><hr/>";
+			str += " <input type='file' id='file' name='fl_oriname' multiple='false'><hr/>";
+			str += "<input type='button' value='작성하기' onclick='insertHomework()'></form>";	
+			$('#hwInsertDiv').append(str);
+	}// function insertClassHomeworkPage END
+	function insertHomework(){
+		var data = $('#insertHw')[0];
+		var formData = new FormData(data);
+		$.ajax({
+			type:'post',
+			url:'rest/insertHomework',
+			data:formData,
+			dataType:'json',
+		    processData: false,
+		    contentType: false,
+		    beforeSend : function(xhr) {
+				var $token = $("#token");
+				xhr.setRequestHeader($token.data("token-name"), $token.val());
+			},success: function(json){
+				console.log(json);
+				if(json==true){
+					alert("과제 제출에 성공했습니다.");
+					classHomeworkSubmit();
+				}else{
+					alert("과제 제출에 실패했습니다.");
+					classHomeworkSubmit();
+				}
+			},error: function(err){
+				alert("error:: 과제 제출에 실패했습니다. 관리자에게 문의해주세요.");
+				classHomeworkSubmit();
+			} 
+		});//ajax ED		
+	};//function insertHomework END 
+	
+	
+	$('button').click(function(){
+		  if($(this).hasClass('btn_unlike')){
+		    $(this).removeClass('btn_unlike');
+		    $('.ani_heart_m').removeClass('hi');
+		    $('.ani_heart_m').addClass('bye');
+		  }
+		  else{
+		    $(this).addClass('btn_unlike');
+		    $('.ani_heart_m').addClass('hi');
+		    $('.ani_heart_m').removeClass('bye');
+		  }
+		});
 </script>
 </html>

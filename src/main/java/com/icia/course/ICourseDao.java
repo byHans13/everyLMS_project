@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.icia.classHome.FileBean;
 import com.icia.classup.ClassUpBean;
 
 public interface ICourseDao {
@@ -37,6 +38,15 @@ public interface ICourseDao {
 	
 	@Select("SELECT * FROM FL WHERE FL_IDNUM=#{fl_idnum} AND FL_LV=#{fl_lv} AND FL_NUM=#{fl_num}")
 	List<CourseFilesBean> selectDelFile(CourseFilesBean cfb);
+	
+	
+	@Insert("INSERT INTO fl(fl_subvd, fl_sysname, fl_oriname, fl_num, fl_id, fl_idnum, fl_lv) VALUES"
+			+ "(#{fl_subvd}, #{fl_sysname}, #{fl_oriname}, #{fl_num}, #{fl_id}, #{fl_idnum}, #{fl_lv})")
+	boolean insertFlHomework(FileBean fl);
+
+	
+	@Select("SELECT CL_LCNUM FROM CL WHERE CL_IDNUM=#{co_idnum}")
+	int getlcnum(@Param("co_idnum")String co_idnum);
 
 
 	

@@ -28,24 +28,34 @@ public class LectureTestAnswerMM {
 		return qlist;
 	}
 
-	public List<isTestTaker> selectboxLectureTestAnswer(String id, String cont, String box) {
+	public List<isTestTaker> selectboxLectureTestAnswer(String id, String cont, String box,String box1) {
 		System.out.println(id);
 		System.out.println(cont);
 		System.out.println(box);
+		System.out.println(box1);
 		List<isTestTaker> qlist=null;
+		String from=null;
+		
+		if(box1.equals("T")) {
+			from="lectureQuiz1";
+		}
+		else if(box1.equals("Q")) {
+			from="lectureQuiz";	
+		}
+		System.out.println(from);
 		
 		switch (box) {
 		case "0":
 				System.out.println("전체검색");
-				qlist= ltaDao.allSelectLectureTestAnswer(id,cont);
+				qlist= ltaDao.allSelectLectureTestAnswer(id,cont,from);
 			break;
 		case "1":
 				System.out.println("강의명 검색");
-				qlist= ltaDao.classSelectLectureTestAnswer(id,cont);
+				qlist= ltaDao.classSelectLectureTestAnswer(id,cont,from);
 			break;
 		case "2":
 				System.out.println("강좌명 검색");
-				qlist= ltaDao.courseSelectLectureTestAnswer(id,cont);
+				qlist= ltaDao.courseSelectLectureTestAnswer(id,cont,from);
 			break;
 
 		default:
@@ -82,5 +92,17 @@ public class LectureTestAnswerMM {
 		
 		
 		return plist;
+	}
+
+	public List<LectureTestAnswer> selectLectureQuizAnswer(String id) {
+		System.out.println(id);
+		List<LectureTestAnswer> qlist= ltaDao.selectLectureQuizAnswer(id);
+		if(qlist!=null){
+			System.out.println("들어오냐");
+			return qlist;
+		}
+		System.out.println("qlist: null");
+		
+		return qlist;
 	}
 }

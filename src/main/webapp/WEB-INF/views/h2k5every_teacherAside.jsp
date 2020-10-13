@@ -81,10 +81,10 @@ input[class*='myClassCheckbox']+label{
             <input type='checkbox' class='myClassCheckbox'name='asideMenu' id='myGradeManagement'
             onclick = "checkboxChecked2(2)">
             <label for='myGradeManagement'>성적 관리</label>
-               <div>
+              <div>
                 <div><p><a href='goStudyAvgPage'>강의 반평균</a></p></div>
                 <div><p><a href='goLectureResultPage'>강의 성적 관리</a></p></div>
-                <div><p><a href='#'>강의 피드백</a></p></div>     
+                <div><p><a href='goGradePercentagePage'>성적 백분율</a></p></div>
                </div>
             <input type='checkbox' class='myClassCheckbox' name='asideMenu' id='myAfterManagement'
             onclick = "checkboxChecked2(3)">
@@ -99,7 +99,7 @@ input[class*='myClassCheckbox']+label{
        <div>
          <input type='checkbox' class='myClassCheckbox' name='asideMenu' id='myClassManagement'
          onclick = "checkboxChecked(1)">
-         <label for='myClassManagement' id='insertClass'><a href='classUploadPage'>강의 등록</a></label>
+         <label for='myClassManagement' id='insertClass'><a href='classUploadPage' style="color: white; text-decoration: none;">강의 등록</a></label>
          <input type='checkbox' class='myClassCheckbox'name='asideMenu' id='mySuggestClass'
          onclick = "checkboxChecked(2)">
          <label for='mySuggestClass' id='class'>강의 관리</label>
@@ -108,37 +108,18 @@ input[class*='myClassCheckbox']+label{
              <div><p><a href='classmain/1'>작성완료 강의</a></p></div> 
             <div><p><a href='classmain/2'>수강중인 강의</a></p></div>
             <div><p><a href='classmain/3'>종료한 강의</a></p></div>
-            <div><p><a href='#'>나의 Q&A</a></p></div>
-            <div><p><a href='#'>내 강의 후기</a></p></div>
-
          </div>
           <input type='checkbox' class='myClassCheckbox' name='asideMenu' id='myTestAndAssign'
          onclick = "checkboxChecked(3)">
-         <label for='myTestAndAssign'><a href='classuploadmanagerpage'>현재 강의 관리</a></label>
-         <input type='checkbox' class='myClassCheckbox'name='asideMenu' id='mySuggestClass'
-         onclick = "checkboxChecked(2)">
-         <label for='mySuggestClass'>추천 강의</label>
-            <div>
-             <div><p><a href='#'>성적에 맞는 강의 추천</a></p></div>
-             <div><p><a href='#'>취향에 맞는 강의 추천</a></p></div>
-             <div><p><a href='#'>재수강 관리</a></p></div>     
-             <div><p><a href='#'>심화학습 관리</a></p></div>
-             <div><p><a href='#'>level check</a></p></div>
-            </div>
-         <input type='checkbox' class='myClassCheckbox' name='asideMenu' id='myTestAndAssign'
-         onclick = "checkboxChecked(3)">
-         <label for='myTestAndAssign'>과제 및 시험</label>
-          <div>
-                <div><p><a href='#'>과제 관리</a></p></div>
-                <div><p><a href='#'>222</a></p></div>
-         </div>  
+         <label for='myTestAndAssign'><a href='classuploadmanagerpage' style="color: white;  text-decoration: none;">현재 강의 관리</a></label>
+
         <!-- 강의관리 마무리 div id='myClass' -->
        </div>   
        <!-- 총괄 div id='asideMenu' -->
     </div>
     
     <div style="background-color: black; ">
-        <p style="margin-top: auto;"><b><a href="/h2k5every/stud/goLoginFrm" style="color: white; ">학생페이지이동</a></b></p>
+        <p style="margin-top: auto;"><b><a href="/h2k5every/stud/goLoginFrm" style="color: white;  text-decoration: none;">학생페이지이동</a></b></p>
     </div>
 <script>
 

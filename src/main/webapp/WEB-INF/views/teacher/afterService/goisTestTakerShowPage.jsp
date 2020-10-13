@@ -1,10 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<sec:authorize access="hasRole('ROLE_STUD')">
+	<script src="../script/wsocket.js"></script>
+</sec:authorize>
 <title>Insert title here</title>
 <style>
 header {
@@ -48,6 +52,16 @@ td{
 	width: 150px;
 	height: 50px;
 }
+.tg  {border-collapse:collapse;border-color:#9ABAD9;border-spacing:0;}
+.tg td{background-color:#EBF5FF;border-color:#9ABAD9;border-style:solid;border-width:0px;color:#444;
+  font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{background-color:#409cff;border-color:#9ABAD9;border-style:solid;border-width:0px;color:#fff;
+  font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-tns0{font-size:32px;font-weight:bold;text-align:center;vertical-align:top}
+.tg .tg-qncv{font-size:32px;text-align:left;vertical-align:top}
+.tg .tg-g9xd{background-color:#D2E4FC;font-size:32px;text-align:left;vertical-align:top}
+.tg .tg-dlxr{background-color:#D2E4FC;font-size:32px;text-align:center;vertical-align:top}
+.tg .tg-j32n{font-size:32px;text-align:center;vertical-align:top}
 </style>
 </head>
 <body>
@@ -61,13 +75,13 @@ td{
 	</aside>
 	
 	<div style="height: 50px;"></div>
-	<section id="section" style="margin-left: 20px; background-color: #B7F0B1; height: 80px;">
-		<h1 id="cmt"></h1>
+	<section id="section" style="margin-left: 20px; background-color: #409cff; height: 80px;">
+		<h1 id="cmt" style="color: white; font-size: 35px;"></h1>
 		<div style="height: 100px;"></div>
 		
 		<table>
 			<tr>
-				<td><button class="Tbtn" type="button" onclick="isTestTaker(1)" id="isTestTaker">All</button></td>
+				<td><button style="font-size: 30px;" class="Tbtn btn btn-primary" type="button" onclick="isTestTaker(1)" id="isTestTaker">All</button></td>
 				<td rowspan="4">
 					<div>
 						<p>응시자: <b id="text1"></b></p>
@@ -76,17 +90,17 @@ td{
 				</td>
 			</tr>
 			<tr>
-				<td><button class="Tbtn" type="button" onclick="isTestTaker(2)" id=testTaker>응시</button></td>
+				<td><button style="font-size: 30px;" class="Tbtn btn btn-primary" type="button" onclick="isTestTaker(2)" id=testTaker>응시</button></td>
 			</tr>
 			<tr>
-				<td><button class="Tbtn" type="button" onclick="isTestTaker(3)" id="nonTestTaker">미응시</button></td>
+				<td><button style="font-size: 30px;" class="Tbtn btn btn-primary" type="button" onclick="isTestTaker(3)" id="nonTestTaker">미응시</button></td>
 			</tr>
 		</table>			
 		<hr>
 		<div style="height: 10px;"></div>
 		<div style="overflow: auto; height: 400px;">
 			
-			<table id="infoTable">
+			<table id="infoTable" class="tg">
 
 			</table>
 			
@@ -103,7 +117,7 @@ $(document).ready
 (function() {
 	console.log(it);
 	
-	$("#cmt").html(it.cl_clname+" 응시 or 미응시 확인");
+	$("#cmt").html("<b>"+it.cl_clname+" 응시 or 미응시 확인</b>");
 	
 });
 
@@ -113,7 +127,7 @@ function isTestTaker(cnt) {
 	console.log("All");
  	$.ajax({
 		type:'post',
-		url:'rest/isTestTakerSelect?co_name='+it.co_name+'&gr_num='+it.gr_num,
+		url:'rest/isTestTakerSelect?cl_idnum='+it.cl_idnum+'&gr_num='+it.gr_num,
 		datatype:'json',
 		beforeSend : function(xhr)
 		{
@@ -128,26 +142,26 @@ function isTestTaker(cnt) {
 			var nonTestTakercnt=0;
 
 			$("#infoTable").append("<tr>");
-			$("#infoTable").append("<th style='text-align: center;'>강좌명</th>");
-			$("#infoTable").append("<th style='text-align: center;'>회차</th>");
-			$("#infoTable").append("<th style='text-align: center;'>학생</th>");
-			$("#infoTable").append("<th style='text-align: center;'>응시여부</th>");
+			$("#infoTable").append("<th class='tg-tns0'>강좌명</th>");
+			$("#infoTable").append("<th class='tg-tns0'>회차</th>");
+			$("#infoTable").append("<th class='tg-tns0'>학생</th>");
+			$("#infoTable").append("<th class='tg-tns0'>응시여부</th>");
 			$("#infoTable").append("</tr>");
-			
+			console.log(cnt);
 			switch (cnt) {
 			case 1:
 				for(var i=0; i<json.length; i++){
 					
 					$("#infoTable").append("<tr>");
-					$("#infoTable").append("<td>"+json[i].co_name+"</td>");
-					$("#infoTable").append("<td>"+json[i].gr_num+"</td>");
-					$("#infoTable").append("<td>"+json[i].gr_id+"</td>");
+					$("#infoTable").append("<td class='tg-g9xd'>"+json[i].co_name+"</td>");
+					$("#infoTable").append("<td class='tg-dlxr'>"+json[i].gr_num+"</td>");
+					$("#infoTable").append("<td class='tg-dlxr'>"+json[i].gr_id+"</td>");
 					if(Object.keys(json[i]).length==5){
 						testTakercnt++
-						$("#infoTable").append("<td>응시</td>");
+						$("#infoTable").append("<td class='tg-dlxr'>응시</td>");
 					}else{
 						nonTestTakercnt++
-						$("#infoTable").append("<td>미응시</td>");
+						$("#infoTable").append("<td class='tg-dlxr'>미응시</td>");
 					}
 					$("#infoTable").append("</tr>");
 				}
@@ -159,10 +173,10 @@ function isTestTaker(cnt) {
 					if(Object.keys(json[i]).length==5){
 						testTakercnt++
 						$("#infoTable").append("<tr>");
-						$("#infoTable").append("<td>"+json[i].co_name+"</td>");
-						$("#infoTable").append("<td>"+json[i].gr_num+"</td>");
-						$("#infoTable").append("<td>"+json[i].gr_id+"</td>");
-						$("#infoTable").append("<td>응시</td>");
+						$("#infoTable").append("<td class='tg-g9xd'>"+json[i].co_name+"</td>");
+						$("#infoTable").append("<td class='tg-dlxr'>"+json[i].gr_num+"</td>");
+						$("#infoTable").append("<td class='tg-dlxr'>"+json[i].gr_id+"</td>");
+						$("#infoTable").append("<td class='tg-dlxr'>응시</td>");
 					}
 					$("#infoTable").append("</tr>");
 				}
@@ -174,10 +188,10 @@ function isTestTaker(cnt) {
 					if(Object.keys(json[i]).length!=5){
 						nonTestTakercnt++
 						$("#infoTable").append("<tr>");
-						$("#infoTable").append("<td>"+json[i].co_name+"</td>");
-						$("#infoTable").append("<td>"+json[i].gr_num+"</td>");
-						$("#infoTable").append("<td>"+json[i].gr_id+"</td>");
-						$("#infoTable").append("<td>미응시</td>");
+						$("#infoTable").append("<td class='tg-g9xd'>"+json[i].co_name+"</td>");
+						$("#infoTable").append("<td class='tg-dlxr'>"+json[i].gr_num+"</td>");
+						$("#infoTable").append("<td class='tg-dlxr'>"+json[i].gr_id+"</td>");
+						$("#infoTable").append("<td class='tg-dlxr'>미응시</td>");
 					}
 					$("#infoTable").append("</tr>");
 				}

@@ -39,17 +39,29 @@ public class LectureTestAnswerRestController {
 
 			return Json;
 	}
-	
+	//selectLectureQuizAnswer
+	@PostMapping(value = "selectLectureQuizAnswer", produces = "application/json;charset=utf-8")
+	public String selectLectureQuizAnswer() {
+		System.out.println("채점 및 정답률 관리");		
+		SecurityContext context = SecurityContextHolder.getContext();
+		User user = (User) context.getAuthentication().getPrincipal();
+		System.out.println(user.getUsername());
+		String id= user.getUsername();
+			List<LectureTestAnswer> qlist=ltam.selectLectureQuizAnswer(id);
+			String Json = new Gson().toJson(qlist);
+
+			return Json;
+	}
 	@RequestMapping(value = "selectboxLectureTestAnswer", produces = "application/json;charset=utf-8")
 	public String selectboxLectureTestAnswer(@RequestParam("cont") String cont,@RequestParam("box") String box,
-										HttpSession session) {
+											 @RequestParam("box1") String box1,HttpSession session) {
 		System.out.println("채점 및 정답률 검색");
 		SecurityContext context = SecurityContextHolder.getContext();
 		User user = (User) context.getAuthentication().getPrincipal();
 		System.out.println(user.getUsername());
 		String id= user.getUsername();
 		
-		List<isTestTaker> qlist=ltam.selectboxLectureTestAnswer(id,cont,box);
+		List<isTestTaker> qlist=ltam.selectboxLectureTestAnswer(id,cont,box,box1);
 		String Json = new Gson().toJson(qlist);
 			
 		return Json;

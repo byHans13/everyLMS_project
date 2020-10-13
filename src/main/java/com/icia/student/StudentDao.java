@@ -37,7 +37,7 @@ public interface StudentDao {
 
 	int getreviewDetailCount(@Param("search") String search, @Param("selvalue") String selvalue);
 
-	@Select("SELECT  * FROM vw_class WHERE CL_CLNAME = #{cl_clname} and aa_id = #{id} order by Co_NUM asc")
+	@Select("SELECT  * FROM vw_class WHERE CL_CLNAME = #{cl_clname} and AA_ID = #{id} order by Co_NUM asc")
 	List<Clasc> selectClassListAjax(@Param("cl_clname") String cl_clname, @Param("id") String id);
 
 	@Select("SELECT  * FROM co WHERE Co_idnum = #{Cl_idnum} order by Co_NAME asc")
@@ -50,8 +50,6 @@ public interface StudentDao {
 	@Delete("DELETE FROM COB WHERE COB_BONUM=#{cob_bonum}")
 	void cobdelete(HashMap<String, Object> cobdelete);
 
-	@Select("SELECT point_pt FROM POINT WHERE POINT_ID = #{MB_ID}")
-	List<Point> selectMypoint(String id);
 
 	List<Clasc> selectClassHome(Clasc cb);
 
@@ -60,5 +58,14 @@ public interface StudentDao {
 
 	@Select("SELECT * FROM (SELECT * FROM cobKindAndGpa ORDER BY gpa_gpa DESC) WHERE cob_idnum=#{cl_idnum} AND cob_lv=#{cl_lv} AND ROWNUM <= 2")
 	List<CourseBoard> selectInfoReview(Clasc cb);
+
+	@Select ("SELECT mb_point FROM mb WHERE mb_ID = #{MB_ID}")
+	   String selectMypoint(String id);
+	void insertMyPoint(@Param("onechk")String onechk,@Param("id")String id);
+
+
+	@Select("SELECT mb_point FROM mb WHERE mb_ID = #{MB_ID}")
+	String selectMyPointAjax(String pt_id);
+	String UpdateMyPoint(@Param("resultpt")String resultpt,@Param("id")String id);
 
 }

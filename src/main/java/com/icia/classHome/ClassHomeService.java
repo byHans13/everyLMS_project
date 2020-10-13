@@ -1,5 +1,7 @@
 package com.icia.classHome;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -13,8 +15,12 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.icia.basic.userClass.FileManager;
 import com.icia.classHome.AdmiApplicationBean;
 import com.icia.classHome.ClassBean;
 import com.icia.classHome.CourseBean;
@@ -23,6 +29,7 @@ import com.icia.classHome.FileBean;
 import com.icia.classHome.MemoBean;
 import com.icia.classHome.ProblemBean;
 import com.icia.classHome.ScheduleBean;
+import com.icia.homework.HomeworkBean;
 import com.icia.member.Member;
 import com.google.gson.Gson;
 
@@ -49,9 +56,9 @@ public class ClassHomeService {
 
 	public List<ScheduleBean> selectSchedule(ScheduleBean sb, HttpSession session) {
 		sb.setSc_id(session.getAttribute("id").toString());
-		System.out.println("cb="+sb);
+		System.out.println("cb=" + sb);
 		List<ScheduleBean> sList = cDao.selectSchedule(sb);
-		System.out.println("sList="+sList);
+		System.out.println("sList=" + sList);
 		if (sList != null) {
 			return sList;
 		} else {
@@ -103,10 +110,10 @@ public class ClassHomeService {
 	}
 
 	public List<CourseBean> selectCourseList(CourseBean cb) {
-		System.out.println("dons cb="+cb);
+		System.out.println("dons cb=" + cb);
 		List<CourseBean> cList;
 		cList = cDao.selectCourseList(cb);
-		System.out.println("dons test"+cList.get(0).getCo_lv());
+		System.out.println("dons test" + cList.get(0).getCo_lv());
 		if (cList != null) {
 			return cList;
 		}
@@ -118,21 +125,29 @@ public class ClassHomeService {
 		List<CourseBoardBean> rList;
 		mav = new ModelAndView();
 		String view;
-		String avgNum=null;
+		String avgNum = null;
 		cList = cDao.selectClassHome(cb);
 		session.setAttribute("classId", cList.get(0).getCl_id());
 		if (cList != null) {
 			avgNum = cDao.selectClassAvgNum(cb);
-			if(avgNum == null) {
-				avgNum="0";
+			if (avgNum == null) {
+				avgNum = "0";
 			}
 			rList = cDao.selectInfoReview(cb);
 			System.out.println(rList);
 			view = "Student/ClassHome/ClassHome";
 		} else {
-			view = "./";
+			view = "./"; 
 			rList = null;
 		}
+		cb.setCl_id(session.getAttribute("id").toString());
+		System.out.println("cb="+cb);
+		Integer likeNum = cDao.selectClassLikeDefault(cb);
+		System.out.println("likeNum");
+		if(likeNum == null) {
+			likeNum = 0;
+		}
+		mav.addObject("likeNum", likeNum);
 		mav.addObject("classInfo", new Gson().toJson(cList));
 		mav.addObject("avgNum", avgNum);
 		mav.addObject("infoReview", new Gson().toJson(rList));
@@ -165,10 +180,10 @@ public class ClassHomeService {
 			view = "./";
 		}
 		mav.addObject("LectureInfo", new Gson().toJson(fList));
-		System.out.println("atmk="+cob.getAtd_atmk());
-		if(cob.getAtd_atmk() != null) {
-			mav.addObject("atmk", cob.getAtd_atmk());			
-		}else {
+		System.out.println("atmk=" + cob.getAtd_atmk());
+		if (cob.getAtd_atmk() != null) {
+			mav.addObject("atmk", cob.getAtd_atmk());
+		} else {
 			mav.addObject("atmk", 0);
 		}
 		mav.setViewName(view);
@@ -233,11 +248,17 @@ public class ClassHomeService {
 				pb.setPb_id(session.getAttribute("classId").toString());
 				List<ProblemBean> pList = cDao.selectProblemNum(pb);
 				if (pList != null) {
+					if(pList.size()<5) {
+						if(pList.size() ==i) {
+							break;
+						}
+					}
 					pb.setPb_pbnum(random.nextInt(pList.size()) + 1);
 					pbNum[i] = pb.getPb_pbnum();
 					pList = cDao.selectPreviewQuiz(pb);
 					System.out.println(pList);
 					if (pList != null) {
+						System.out.println("pList.length="+pList.size());
 						pMap.put("Quiz" + (i + 1), pList);
 						if (i > 0) {
 							for (int j = 0; j < i; j++) {
@@ -567,8 +588,8 @@ public class ClassHomeService {
 
 	public List<ProblemBean> selectCourseQuizWithPbnum(ProblemBean pb, HttpSession session) {
 		List<ProblemBean> pList;
-		String professorId =null;
-		if(pb.getPb_id() !=null) {
+		String professorId = null;
+		if (pb.getPb_id() != null) {
 			professorId = pb.getPb_id();
 		}
 		pb.setPb_id(session.getAttribute("id").toString());
@@ -576,10 +597,10 @@ public class ClassHomeService {
 		if (cnt != 0) {
 			pList = cDao.selectCoQuizThroughId(pb); // 체크한 값 가져오기
 		} else {
-			if(professorId !=null) {
+			if (professorId != null) {
 				pb.setPb_id(professorId);
-			}else {
-				pb.setPb_id(session.getAttribute("classId").toString());				
+			} else {
+				pb.setPb_id(session.getAttribute("classId").toString());
 			}
 			pList = cDao.selectCoQuizThroughId(pb);// 교수 id로 select
 
@@ -594,8 +615,8 @@ public class ClassHomeService {
 
 	public int insertCourseQuiz(ProblemBean pb, HttpSession session) {
 		String sessionID = session.getAttribute("id").toString();
-		String professorId =null;
-		if(pb.getPb_id()!=null) {
+		String professorId = null;
+		if (pb.getPb_id() != null) {
 			professorId = pb.getPb_id();
 		}
 		pb.setPb_id(sessionID);
@@ -609,10 +630,10 @@ public class ClassHomeService {
 				pbnum = 0;
 			}
 		} else {
-			if(professorId != null) {
+			if (professorId != null) {
 				pb.setPb_id(professorId);
-			}else {
-				pb.setPb_id(session.getAttribute("classId").toString());				
+			} else {
+				pb.setPb_id(session.getAttribute("classId").toString());
 			}
 			pb = cDao.selectPbdata(pb);
 			pb.setPb_pbstudent(pb_pbstudent);
@@ -629,10 +650,10 @@ public class ClassHomeService {
 
 	public int lastQuizInsert(ProblemBean pb, HttpSession session) {
 		String sessionClassId;
-		if(pb.getPb_id()!=null) {
-			sessionClassId=pb.getPb_id();
-		}else {
-			sessionClassId=session.getAttribute("classId").toString();			
+		if (pb.getPb_id() != null) {
+			sessionClassId = pb.getPb_id();
+		} else {
+			sessionClassId = session.getAttribute("classId").toString();
 		}
 		String sessionID = session.getAttribute("id").toString();
 		List<ProblemBean> pList;
@@ -687,7 +708,8 @@ public class ClassHomeService {
 				} // j:if
 			} // j
 			if (insertChk == 0) {
-				if (pb.getPb_pbstudent().equals(pb.getPb_pbexplain())) {// ==0 문제를 못 풀어서 default값 0 입력 실질적으로 if true문 실행 안됨
+				if (pb.getPb_pbstudent().equals(pb.getPb_pbexplain())) {// ==0 문제를 못 풀어서 default값 0 입력 실질적으로 if true문 실행
+																		// 안됨
 					pb.setPb_answerchk(1);
 					result = cDao.insertLastQuiz(pb);
 					quizGrade += 1;
@@ -699,12 +721,12 @@ public class ClassHomeService {
 			} else { // insertChk == 1
 				pb.setPb_id(sessionID);
 				pb = cDao.selectPbdata(pb);
-				System.out.println("update before ="+pb.getPb_pbstudent().equals(pb.getPb_pbexplain()));
-				System.out.println("eeeeee="+pb.getPb_pbstudent());
-				System.out.println("rrrrrrr="+pb.getPb_pbexplain());
+				System.out.println("update before =" + pb.getPb_pbstudent().equals(pb.getPb_pbexplain()));
+				System.out.println("eeeeee=" + pb.getPb_pbstudent());
+				System.out.println("rrrrrrr=" + pb.getPb_pbexplain());
 				if (pb.getPb_pbstudent().equals(pb.getPb_pbexplain())) {
 					pb.setPb_answerchk(1);
-					System.out.println("pb_answerchk="+pb.getPb_answerchk());
+					System.out.println("pb_answerchk=" + pb.getPb_answerchk());
 					result = cDao.updateCourseQuizAnswerchk(pb);
 					quizGrade += 1;
 				} else {
@@ -717,21 +739,21 @@ public class ClassHomeService {
 		GradeBean gb = new GradeBean();
 		if (result == true) {
 			double insertGrade = quizGrade / defaultArr.length;
-			insertGrade = Math.floor(insertGrade*100);
+			insertGrade = Math.floor(insertGrade * 100);
 			gb.setGr_score(insertGrade);
 			gb.setGr_id(sessionID);
 			gb.setGr_idnum(pb.getPb_idnum());
 			gb.setGr_lv(pb.getPb_lv());
 			gb.setGr_num(pb.getPb_num());
-			if(gb.getGr_num() ==0) {
-				gb.setGr_kind("H");
-			}else {
-				gb.setGr_kind("Q");				
+			if (gb.getGr_num() == 0) {
+				gb.setGr_kind("T");
+			} else {
+				gb.setGr_kind("Q");
 			}
 			result = cDao.insertCourseGrade(gb);
 		}
 		int count = cDao.selectLastQuizCnt(pb);
-		if(gb.getGr_num()!=0) {
+		if (gb.getGr_num() != 0) {
 			if (defaultArr.length == count) {
 				if (cDao.insertCourseAtmk(pb)) {
 					System.out.println("출석 변경 성공");
@@ -746,14 +768,15 @@ public class ClassHomeService {
 			} else {
 				return 0;
 			}
-		}else {
-			if(result==true) {
+		} else {
+			if (result == true) {
 				return 1;
-			}else {
+			} else {
 				return 0;
 			}
 		}
 	}
+
 	public boolean insertOrientationAtmk(ProblemBean pb, HttpSession session) {
 		boolean result = false;
 		pb.setPb_id(session.getAttribute("id").toString());
@@ -797,7 +820,7 @@ public class ClassHomeService {
 			int size = myClassList.size();
 			for (int x = 0; x < size; x++) {
 				aaBean = myClassList.get(x);
-				aaBean.setAt_atmkCnt(cDao.selectCountMyClassAtmk(aaBean));
+				aaBean.setAt_atmkCnt(cDao.selectCountMyClassAtmk(aaBean));//
 				myClassList.set(x, aaBean);
 			}
 			if (myClassList != null) {
@@ -864,7 +887,7 @@ public class ClassHomeService {
 		}
 		return buyMap;
 	}
-
+	@Transactional
 	public boolean insertBuyClass(ClassBean cb, HttpSession session) {
 		boolean result = false;
 		String sessionId = session.getAttribute("id").toString();
@@ -892,6 +915,7 @@ public class ClassHomeService {
 						System.out.println(cb);
 						if (cDao.insertClassAdmiApplication(cb) == true) {
 							System.out.println("insert AdmiApplication query success");
+							cDao.insertClassAtmkNumZero(cb);
 							result = true;
 						} else {
 							System.out.println("admi insert fail");
@@ -917,15 +941,15 @@ public class ClassHomeService {
 		mav = new ModelAndView();
 		String sessionId = session.getAttribute("id").toString();
 		List<ConcernBean> ccList;
-		if(sessionId != null) {
+		if (sessionId != null) {
 			ccList = cDao.selectLevelCheckPage(sessionId);
-			System.out.println("ccBean="+ccList);
-			if(ccList != null) {
+			System.out.println("ccBean=" + ccList);
+			if (ccList != null) {
 				mav.addObject("concern", new Gson().toJson(ccList));
-			}else {
+			} else {
 				mav.addObject("concern", null);
 			}
-		}else {
+		} else {
 			mav.addObject("concern", null);
 		}
 		mav.setViewName("Student/RecomendClassManagement/LevelCheckPage");
@@ -938,27 +962,27 @@ public class ClassHomeService {
 		HashSet<Integer> set;
 		set = cDao.selectConcernMaxLevel(pb);
 		Iterator<Integer> itSet = set.iterator();
-		boolean result= false;
-		while(itSet.hasNext()) {
-			if(pb.getPb_lv() == itSet.next()) {
+		boolean result = false;
+		while (itSet.hasNext()) {
+			if (pb.getPb_lv() == itSet.next()) {
 				result = true;
 			}
 		}
-		System.out.println("result="+result);
-		if(result == true) {			
-			pList = cDao.selectLevelCheckRandomQuizInfo(pb);//list size=3 
-			for(int i=0; i<pList.size(); i++) {
-				List<ProblemBean> pListForMap;			
-				pListForMap= cDao.selectLevelCheckQuizDetail(pList.get(i));
-				pMap.put("Quiz"+i, pListForMap);
+		System.out.println("result=" + result);
+		if (result == true) {
+			pList = cDao.selectLevelCheckRandomQuizInfo(pb);// list size=3
+			for (int i = 0; i < pList.size(); i++) {
+				List<ProblemBean> pListForMap;
+				pListForMap = cDao.selectLevelCheckQuizDetail(pList.get(i));
+				pMap.put("Quiz" + i, pListForMap);
 			}
 			System.out.println(pMap);
-			if(pMap !=null) {
+			if (pMap != null) {
 				return pMap;
-			}else {
-				return pMap;			
+			} else {
+				return pMap;
 			}
-		}else {
+		} else {
 			return pMap;
 		}
 	}
@@ -973,36 +997,38 @@ public class ClassHomeService {
 		mav.setViewName("Student/ClassHome/ClassFinalTest");
 		return mav;
 	}
+
 	public ModelAndView selectClassFinalTestPage(HttpSession session) {
-		mav= new ModelAndView();
+		mav = new ModelAndView();
 		String sessionId = session.getAttribute("id").toString();
-		String view; 
+		String view;
 		List<ClassBean> cList = cDao.selectClassFinalTestPage(sessionId);
 		List<GradeBean> gList;
-		System.out.println("clist="+cList);
-		if(cList != null) {
+		System.out.println("clist=" + cList);
+		if (cList != null) {
 			gList = cDao.selectClassFinalTestGrade(sessionId);
 			mav.addObject("ft", new Gson().toJson(cList));
-			if(gList != null) {
+			if (gList != null) {
 				mav.addObject("grade", new Gson().toJson(gList));
-				view="Student/GradeManagement/LastTestPage";				
-			}else {				
+				view = "Student/GradeManagement/LastTestPage";
+			} else {
 				mav.addObject("grade", 0);
-				view="Student/GradeManagement/LastTestPage";				
+				view = "Student/GradeManagement/LastTestPage";
 			}
-		}else {
+		} else {
 			mav.addObject("ft", 0);
-			view="Student/GradeManagement/LastTestPage";
+			view = "Student/GradeManagement/LastTestPage";
 		}
 		mav.setViewName(view);
 		return mav;
 	}
+
 	public List<ProblemBean> selectFinalTestPbnum(ProblemBean pb) {
-		System.out.println("pb="+pb);
-		List<ProblemBean> pbnum ;
-		if(pb !=null) {
-			pbnum = cDao.selectFinalTestPbnum(pb);			
-		}else {
+		System.out.println("pb=" + pb);
+		List<ProblemBean> pbnum;
+		if (pb != null) {
+			pbnum = cDao.selectFinalTestPbnum(pb);
+		} else {
 			pbnum = null;
 		}
 		return pbnum;
@@ -1015,50 +1041,137 @@ public class ClassHomeService {
 		int lv = pb.getPb_lv();
 		int num = pb.getPb_num();
 		List<ProblemBean> pbnumList;
-		int count =0;
-		int insertChk=0;
-		boolean result =false;
-		//pb = idnum lv num id 
+		int count = 0;
+		int insertChk = 0;
+		boolean result = false;
+		// pb = idnum lv num id
 		pb.setPb_id(professor);
 		pbnumList = cDao.selectClassFinalTestLength(pb);
-		for(int i=0; i<pbnumList.size(); i++) {
+		for (int i = 0; i < pbnumList.size(); i++) {
 			pb.setPb_pbnum(pbnumList.get(i).getPb_pbnum());
-			pb = cDao.selectClassFinalTestPbInfo(pb); 
+			pb = cDao.selectClassFinalTestPbInfo(pb);
 			insertChk = cDao.selectClassFinalTestInsertChk(pb);
 			pb.setPb_answerchk(0);
 			pb.setPb_pbstudent("0");
 			pb.setPb_id(sessionId);
-			if(insertChk !=0) {
+			if (insertChk != 0) {
 				result = cDao.updateClassFinalTest(pb);
-			}else {
+			} else {
 				result = cDao.insertClassFinalTestForceStop();
 			}
-			if(result == true) {
-				count+=1;
-			}else {
-				count+=0;
+			if (result == true) {
+				count += 1;
+			} else {
+				count += 0;
 			}
-			// 1) sessionID 입력값 있는지 
-			// 2) 있으면 update 
-			// 3) 없으면 insert 
+			// 1) sessionID 입력값 있는지
+			// 2) 있으면 update
+			// 3) 없으면 insert
 			// 4) count+=1; >> if(count==10) true;
-			insertChk =0;
-			result=false;
+			insertChk = 0;
+			result = false;
 		}
-		if(count == pbnumList.size()) {
+		if (count == pbnumList.size()) {
 			GradeBean gb = new GradeBean();
-				gb.setGr_score(0);
-				gb.setGr_id(sessionId);
-				gb.setGr_idnum(idnum);
-				gb.setGr_lv(lv);
-				gb.setGr_num(num);
-				gb.setGr_kind("T");
-				result = cDao.insertCourseGrade(gb);
+			gb.setGr_score(0);
+			gb.setGr_id(sessionId);
+			gb.setGr_idnum(idnum);
+			gb.setGr_lv(lv);
+			gb.setGr_num(num);
+			gb.setGr_kind("T");
+			result = cDao.insertCourseGrade(gb);
 		}
-		if(result == true) {
+		if (result == true) {
 			return true;
-		}else {
+		} else {
 			return false;
 		}
 	}
+
+	public Map<String, Object> selectClassHomeworkList(HomeworkBean hw, HttpSession session) {
+		String sessionId = session.getAttribute("id").toString();
+		List<HomeworkBean> hwList;
+		List<HomeworkBean> myHwList;
+		Map<String, Object> hwMap = new HashMap<>();
+		hw.setHw_id(sessionId);
+		hwList = cDao.selectClassHomeworkList(hw);
+		myHwList = cDao.selectClassMyHomeworkList(hw);
+		hwMap.put("hw", hwList);
+		hwMap.put("myHw", myHwList);
+		return hwMap;
+	}
+
+	@Transactional
+	public boolean insertHomework(MultipartHttpServletRequest multi, HttpSession session) {
+		HomeworkBean hw = new HomeworkBean();
+		FileBean fl = new FileBean();
+		FileManager fm = new FileManager();
+		String sessionId = session.getAttribute("id").toString();
+		boolean result = false;
+		int count = 0;
+		hw.setHw_idnum(multi.getParameter("hw_idnum"));
+		hw.setHw_lv(Integer.parseInt(multi.getParameter("hw_lv")));
+		hw.setHw_num(Integer.parseInt(multi.getParameter("hw_num")));
+		hw.setHw_hwname(multi.getParameter("hw_hwname"));
+		hw.setHw_psfa("f");
+		hw.setHw_id(sessionId);
+		result = cDao.insertHwHomework(hw);
+		if (result == true) {
+			result = false;
+			count += 1;
+			fl.setFl_id(sessionId);
+			fl.setFl_idnum(multi.getParameter("hw_idnum"));
+			fl.setFl_lv(Integer.parseInt(multi.getParameter("hw_lv")));
+			fl.setFl_num(Integer.parseInt(multi.getParameter("hw_num")));
+			fl.setFl_subvd("homework");
+			// 1) 물리경로
+			String root = multi.getSession().getServletContext().getRealPath("/");
+			String path = root + "upload/";
+			System.out.println("fullpath: " + path);
+			// 2) 저장경로 여부
+			File dir = new File(path);
+			if (!dir.isDirectory()) { // 여부 체크
+				dir.mkdir(); // 폴더 생성
+			}
+			// 3)파일값 가져오기
+			List<MultipartFile> fList = multi.getFiles("fl_oriname");
+			for (int i = 0; i < fList.size(); i++) {
+				result = false;
+				MultipartFile mf = fList.get(0); // 실제파일
+				System.out.println("eeeeeeeeeee=" + mf.getOriginalFilename());
+				if (mf.getOriginalFilename() != null) {
+					String oriFileName = mf.getOriginalFilename(); // a.txt
+					System.out.println("oriFileName:  " + oriFileName);
+					String sysFileName = System.currentTimeMillis() + "."
+							+ oriFileName.substring(oriFileName.lastIndexOf(".") + 1);
+					System.out.println("sysFileName:  " + sysFileName);
+					fl.setFl_sysname(sysFileName);
+					fl.setFl_oriname(oriFileName);
+					System.out.println("flflflffl=" + fl);
+					try {
+						mf.transferTo(new File(path + sysFileName)); // 서버upload에 파일 저장
+						System.out.println("ggggggggggg");
+						System.out.println("cdcdcddcdcdcdao=" + cDao);
+						result = cDao.insertFlHomework(fl);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} 
+			}// while or For end
+			if (result == true) {
+				count += 1;
+			} else {
+				count += 0;
+			}
+
+		} else {
+			return false;
+		}
+		if (count == 2) {
+			return true;
+		} else {
+			return false;
+		}
+	}//insertHOmework END
 }// classHomeService END
