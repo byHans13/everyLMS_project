@@ -37,17 +37,54 @@
 	crossorigin="anonymous"></script>
 </head>
 <style>
+header {
+	/* background-color: gray; */
+	 position: absolute; 
+	 transform:translate(0px,0px);  
+	 width: 1500px; 
+}
+
+aside {
+	/* background-color: blue; */
+	width: 300px;
+	float: left;
+	position : absolute;
+	transform:translate(0px,112px);  
+}
+
+section {
+	/* background-color: pink; */
+	margin-top: 20px;
+	width: 1100px;
+	float: left;
+	position: absolute;
+	transform:translate(320px,110px);
+}
+
 .muSmall {
 	width: 300px;
 }
 </style>
+</head>
 <body>
+	<header>
+		<jsp:include page="../../h2k5every_loginHeader.jsp" />
+	</header>
+	<aside>
+		<jsp:include page="../../h2k5every_teacherAside.jsp" />
+	</aside>
+	<section>
 	<input type="hidden" id="token" data-token-name="${_csrf.headerName}"
 		name="${_csrf.parameterName}" value="${_csrf.token}" />
 	<input type="hidden" id="idnum" name="idnum"
 		value="${muList[0].cl_idnum}">
 	<input type="hidden" id="lv" name="lv" value="${muList[0].cl_lv}">
-	<div class="container" id="container"></div>
+	<div class="container" id="container">
+	</div>
+	</section>
+	<footer>
+		<jsp:include page="../../h2k5every_footer.jsp" />
+	</footer>
 
 	<script>
 	$.urlParam = function(name){
@@ -81,37 +118,38 @@
 				$("#testMaterialUploadThead").append("<caption id='testMaterialUploadCaption' style='width:500px;'>");
 				$("#testMaterialUploadCaption").append("<h2>시험 자료 업로드</h2>");
 				$("#testMaterialUploadTable").append("<tr><td id='btnTd'><button id='btnAdd' class='btn btn-primary btn-sm' type='button'  onclick='uploadAddClick()'>문제 추가</button>&nbsp;"
+									 + "<input type='button' class='btn btn-primary btn-sm' value='뒤로가기' onclick=location.href='/h2k5every/prof/selecttestmaterialclasslist'>&nbsp;"
 									 + "<input type='button' id='btnUploadComplet' class='btn btn-default btn-sm' onclick='uploadComplet()' value='업로드 완료'></td></tr>");
 				$("#testMaterialUploadTable").append("<tbody id='testMaterialUploadTbody'>");					
 				$("#testMaterialUploadTbody").append("<tr><td><h1>"+(cnt+1)+"번 문제</h1>");
 				$("#testMaterialUploadTbody").append("<input type='hidden' name='pb_idnum' value='"+idnum+"'>");
 				$("#testMaterialUploadTbody").append("<input type='hidden' name='pb_lv' value='"+lv+"'></td></tr>");
 // 				$("#testMaterialUploadTbody").append("<tr class = 'input-group'><td colspan='2' class='muSmall'><span class='input-group-addon'><b>교수명</b></span>"
-				$("#testMaterialUploadTbody").append("<tr class = 'input-group'><td colspan='2' class='muSmall'><b>교수명&nbsp; </b>"
-					 				 + "<input type='text' class='form-control'name='pb_id' placeholder='교수명' value='"+ uploadInfo[0].cl_id +"' readonly='readonly'  style='border-radius: 8px; text-align:center; width:40%;'></td>"
+				$("#testMaterialUploadTbody").append("<tr colspan='2'><td style='background-color:gray;' class='muSmall'><b>교수명&nbsp; </b>"
+					 				 + "<input type='text' name='pb_id' placeholder='교수명' value='"+ uploadInfo[0].cl_id +"' readonly='readonly'  style='border-radius: 8px; text-align:center; width:80%;'></td>"
 									 + "<td class='muSmall' style='background-color:gray;'><b>총회차&nbsp; </b>"
 									 + "<input type='hidden' name='pb_num' value=0>"
-									 + "<input type='text' placeholder='총회차' value='"+ uploadInfo[0].cl_lcnum +"' class='form-control' style='width:20%;' readonly='readonly'></td></tr>");
-				$("#testMaterialUploadTbody").append("<tr><td style='background-color:gray;'><b>강의명&nbsp; </b><input type='text' name='cl_clname' placeholder='강의명' value='"+ uploadInfo[0].cl_clname +"' style='border-radius: 8px; text-align:center; width:40%;' readonly='readonly'></td>"
-									 + "<td style='background-color:gray;'><b>강좌명&nbsp; </b><select id='selectBoxCoName' style='border-radius: 8px; text-align:center; width:80%;' name='dp_coname'></td></tr>");
+									 + "<input type='text' placeholder='총회차' value='"+ uploadInfo[0].cl_lcnum +"' style='border-radius: 8px; text-align:center; width:82%;'  readonly='readonly'></td></tr>");
+				$("#testMaterialUploadTbody").append("<tr><td style='background-color:gray;'><b>강의명&nbsp; </b><input type='text' name='cl_clname' placeholder='강의명' value='"+ uploadInfo[0].cl_clname +"' style='border-radius: 8px; text-align:center; width:80%;' readonly='readonly'></td>"
+									 + "<td style='background-color:gray;'><b>강좌명&nbsp; </b><select id='selectBoxCoName' style='border-radius: 8px; text-align:center; width:82%;' name='dp_coname'></td></tr>");
 									 for(var i=1; i<uploadInfo.length; i++){
 				$("#selectBoxCoName").append("<option value='"+uploadInfo[i].co_name+"'>"+uploadInfo[i].co_name+"</option>");
 									 }
 				$("#testMaterialUploadTbody").append("<tr>"
-									 + "<td style='background-color:gray;' colspan='2'><b>&nbsp;&nbsp;문제&nbsp;&nbsp;&nbsp;</b><input type='text' id='pb_pbname' name='pb_pbname' placeholder='문제명' style='width:90%; border-radius: 8px; text-align:center;'></td>"
+									 + "<td style='background-color:gray;' colspan='2'><b>&nbsp;&nbsp;문제&nbsp;&nbsp;&nbsp;</b><input type='text' id='pb_pbname' name='pb_pbname' placeholder='문제명' style='width:94%; border-radius: 8px; text-align:center;'></td>"
 									 + "<td class='muSmall'><input type='hidden' name='pb_pbnumSt' placeholder='문제번호' value='"+(cnt+1)+"'></td></tr>");
 				$("#testMaterialUploadTbody").append("<tr><td colspan='2' style='background-color:gray;'><span>"
 									 + "<label for='dp_pbexmnum1'>&nbsp;1번 보기&nbsp;&nbsp;</label>"
-									 + "<input type='text' style='border-radius: 8px; width:80%; text-align:center;' id='dp_pbexm1' class='dp_pbexm' name='dp_pbexm' placeholder='보기를 입력해주세요.'>"
+									 + "<input type='text' style='border-radius: 8px; width:92%; text-align:center;' id='dp_pbexm1' class='dp_pbexm' name='dp_pbexm' placeholder='보기를 입력해주세요.'>"
 									 + "<input type='hidden' class='dp_pbexmnum' name='dp_pbexmnumSt' value='1'><br>"
 									 + "<label for='dp_pbexmnum2'>&nbsp;2번 보기&nbsp;&nbsp;</label>"
-									 + "<input type='text' style='border-radius: 8px; width:80%; text-align:center;' id='dp_pbexm2' class='dp_pbexm' name='dp_pbexm' placeholder='보기를 입력해주세요.'>"
-									 + "<input type='hidden' class='dp_pbexmnum' name='dp_pbexmnumSt' value='2'><br>"
+									 + "<input type='text' style='border-radius: 8px;  width:92%; text-align:center;' id='dp_pbexm2' class='dp_pbexm' name='dp_pbexm' placeholder='보기를 입력해주세요.'>"
+									 + "<input type='hidden' class='dp_pbexmnum' name=dp_pbexmnumSt' value='2'><br>"
 									 + "<label for='dp_pbexmnum3'>&nbsp;3번 보기&nbsp;&nbsp;</label>"
-									 + "<input type='text' style='border-radius: 8px; width:80%; text-align:center;' id='dp_pbexm3' class='dp_pbexm' name='dp_pbexm' placeholder='보기를 입력해주세요.'>"
+									 + "<input type='text' style='border-radius: 8px; width:92%; text-align:center;' id='dp_pbexm3' class='dp_pbexm' name='dp_pbexm' placeholder='보기를 입력해주세요.'>"
 									 + "<input type='hidden' class='dp_pbexmnum' name='dp_pbexmnumSt' value='3'><br>"
 									 + "<label for='dp_pbexmnum4'>&nbsp;4번 보기&nbsp;&nbsp;</label>"
-									 + "<input type='text' style='border-radius: 8px; width:80%; text-align:center;' id='dp_pbexm4' class='dp_pbexm' name='dp_pbexm' placeholder='보기를 입력해주세요.'>"
+									 + "<input type='text' style='border-radius: 8px; width:92%; text-align:center;' id='dp_pbexm4' class='dp_pbexm' name='dp_pbexm' placeholder='보기를 입력해주세요.'>"
 									 + "<input type='hidden' class='dp_pbexmnum' name='dp_pbexmnumSt' value='4'>"
 									 + "</span></td></tr>");
 				$("#testMaterialUploadTbody").append("<tr><td colspan='2' style='background-color:gray;'>"
@@ -194,37 +232,38 @@
 					$("#testMaterialUploadThead").append("<caption id='testMaterialUploadCaption' style='width:500px;'>");
 					$("#testMaterialUploadCaption").append("<h2>시험 자료 업로드</h2>");
 					$("#testMaterialUploadTable").append("<tr><td id='btnTd'><button id='btnAdd' class='btn btn-primary btn-sm' type='button'  onclick='uploadAddClick()'>문제 추가</button>&nbsp;"
+										 + "<input type='button' class='btn btn-primary btn-sm' value='뒤로가기' onclick=location.href='/h2k5every/prof/selecttestmaterialclasslist'>&nbsp;"
 										 + "<input type='button' id='btnUploadComplet' class='btn btn-default btn-sm' onclick='uploadComplet()' value='업로드 완료'></td></tr>");
 					$("#testMaterialUploadTable").append("<tbody id='testMaterialUploadTbody'>");					
 					$("#testMaterialUploadTbody").append("<tr><td><h1>"+(cnt+1)+"번 문제</h1>");
 					$("#testMaterialUploadTbody").append("<input type='hidden' name='pb_idnum' value='"+idnum+"'>");
 					$("#testMaterialUploadTbody").append("<input type='hidden' name='pb_lv' value='"+lv+"'></td></tr>");
-					$("#testMaterialUploadTbody").append("<tr><td style='background-color:gray;' class='muSmall'><b>교수명&nbsp; </b>"
-						 				 + "<input type='text' name='pb_id' placeholder='교수명' value='"+ uploadInfo[0].cl_id +"' readonly='readonly' style='border-radius: 8px; text-align:center; width:40%;'></td>"
+					$("#testMaterialUploadTbody").append("<tr colspan='2'><td style='background-color:gray;' class='muSmall'><b>교수명&nbsp; </b>"
+						 				 + "<input type='text' name='pb_id' placeholder='교수명' value='"+ uploadInfo[0].cl_id +"' readonly='readonly'  style='border-radius: 8px; text-align:center; width:80%;'></td>"
 										 + "<td class='muSmall' style='background-color:gray;'><b>총회차&nbsp; </b>"
 										 + "<input type='hidden' name='pb_num' value=0>"
-										 + "<input type='text' placeholder='총회차' value='"+ uploadInfo[0].cl_lcnum +"'readonly='readonly' style='border-radius: 8px;  text-align:center; width:40%;'></td></tr>");
-					$("#testMaterialUploadTbody").append("<tr><td style='background-color:gray;'><b>강의명&nbsp; </b><input type='text' name='cl_clname' placeholder='강의명' value='"+ uploadInfo[0].cl_clname +"' style='border-radius: 8px; text-align:center; width:40%;' readonly='readonly'></td>"
-										 + "<td style='background-color:gray;'><b>강좌명&nbsp; </b><select id='selectBoxCoName' style='border-radius: 8px; text-align:center; width:80%;' name='dp_coname'></td></tr>");
+										 + "<input type='text' placeholder='총회차' value='"+ uploadInfo[0].cl_lcnum +"' style='border-radius: 8px; text-align:center; width:82%;'  readonly='readonly'></td></tr>");
+					$("#testMaterialUploadTbody").append("<tr><td style='background-color:gray;'><b>강의명&nbsp; </b><input type='text' name='cl_clname' placeholder='강의명' value='"+ uploadInfo[0].cl_clname +"' style='border-radius: 8px; text-align:center; width:80%;' readonly='readonly'></td>"
+										 + "<td style='background-color:gray;'><b>강좌명&nbsp; </b><select id='selectBoxCoName' style='border-radius: 8px; text-align:center; width:82%;' name='dp_coname'></td></tr>");
 										 for(var i=1; i<uploadInfo.length; i++){
 					$("#selectBoxCoName").append("<option value='"+uploadInfo[i].co_name+"'>"+uploadInfo[i].co_name+"</option>");
 										 }
 					$("#testMaterialUploadTbody").append("<tr>"
-										 + "<td style='background-color:gray;' colspan='2'><b>&nbsp;&nbsp;문제&nbsp;&nbsp;&nbsp;</b><input type='text' id='pb_pbname' name='pb_pbname' placeholder='문제명' style='width:90%; border-radius: 8px; text-align:center;'></td>"
+										 + "<td style='background-color:gray;' colspan='2'><b>&nbsp;&nbsp;문제&nbsp;&nbsp;&nbsp;</b><input type='text' id='pb_pbname' name='pb_pbname' placeholder='문제명' style='width:94%; border-radius: 8px; text-align:center;'></td>"
 										 + "<td class='muSmall'><input type='hidden' name='pb_pbnumSt' placeholder='문제번호' value='"+(cnt+1)+"'></td></tr>");
 					$("#testMaterialUploadTbody").append("<tr><td colspan='2' style='background-color:gray;'><span>"
 										 + "<label for='dp_pbexmnum1'>&nbsp;1번 보기&nbsp;&nbsp;</label>"
-										 + "<input type='text' style='border-radius: 8px; width:80%; text-align:center;' id='dp_pbexm1' class='dp_pbexm' name='dp_pbexm' placeholder='보기를 입력해주세요.'>"
+										 + "<input type='text' style='border-radius: 8px; width:92%; text-align:center;' id='dp_pbexm1' class='dp_pbexm' name='dp_pbexm' placeholder='보기를 입력해주세요.'>"
 										 + "<input type='hidden' class='dp_pbexmnum' name='dp_pbexmnumSt' value='1'><br>"
 										 + "<label for='dp_pbexmnum2'>&nbsp;2번 보기&nbsp;&nbsp;</label>"
-										 + "<input type='text' style='border-radius: 8px; width:80%; text-align:center;' id='dp_pbexm2' class='dp_pbexm' name='dp_pbexm' placeholder='보기를 입력해주세요.'>"
-										 + "<input type='hidden' class='dp_pbexmnum' name='dp_pbexmnumSt' value='2'><br>"
+										 + "<input type='text' style='border-radius: 8px;  width:92%; text-align:center;' id='dp_pbexm2' class='dp_pbexm' name='dp_pbexm' placeholder='보기를 입력해주세요.'>"
+										 + "<input type='hidden' class='dp_pbexmnum' name=dp_pbexmnumSt' value='2'><br>"
 										 + "<label for='dp_pbexmnum3'>&nbsp;3번 보기&nbsp;&nbsp;</label>"
-										 + "<input type='text' style='border-radius: 8px; width:80%; text-align:center;' id='dp_pbexm3' class='dp_pbexm' name='dp_pbexm' placeholder='보기를 입력해주세요.'>"
+										 + "<input type='text' style='border-radius: 8px; width:92%; text-align:center;' id='dp_pbexm3' class='dp_pbexm' name='dp_pbexm' placeholder='보기를 입력해주세요.'>"
 										 + "<input type='hidden' class='dp_pbexmnum' name='dp_pbexmnumSt' value='3'><br>"
 										 + "<label for='dp_pbexmnum4'>&nbsp;4번 보기&nbsp;&nbsp;</label>"
-										 + "<input type='text' style='border-radius: 8px; width:80%; text-align:center;' id='dp_pbexm4' class='dp_pbexm' name='dp_pbexm' placeholder='보기를 입력해주세요.'>"
-										 + "<input type='hidden' class='dp_pbexmnum' name='dp_pbexmnumSt' value='4'><br>"
+										 + "<input type='text' style='border-radius: 8px; width:92%; text-align:center;' id='dp_pbexm4' class='dp_pbexm' name='dp_pbexm' placeholder='보기를 입력해주세요.'>"
+										 + "<input type='hidden' class='dp_pbexmnum' name='dp_pbexmnumSt' value='4'>"
 										 + "</span></td></tr>");
 					$("#testMaterialUploadTbody").append("<tr><td colspan='2' style='background-color:gray;'>"
 										 + "<b>&nbsp;정답 : </b>"

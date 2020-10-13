@@ -43,8 +43,8 @@ public class MaterialUploadMM {
 			System.out.println("muList Cl_idnum = " + muList.get(0).getCl_idnum());
 			// search 기능 활용 및 추천 강의 삭제 방법.문의
 //			sb.append("<form action='searchclass' method='post'><input type='text' name='searchClass' placeholder='search'><input type='submit' value='검색'></form>");
-			sb.append("<div><h3><b>시험 자료 업로드</b></h3></div>");
-			sb.append("<div class='container' style='width:1100px; height:600px;'>");
+			sb.append("<div><h3><b>시험 자료 업로드 - 강의 리스트</b></h3></div>");
+			sb.append("<div class='container' style='width:1100px; height:600px; overflow:auto; overflow-x:hidden;'><br>");
 			sb.append("<table class='sbClassTable table table-hover'>" + "<tr class='sbClassTr'>"
 					+ "<th class='sbClassTh'>NO.</th>" + "<th class='sbClassTh'>강의명</th>"
 					+ "<th class='sbClassTh'>회차</th>" + "<th class='sbClassTh'>학생수</th>"
@@ -339,7 +339,7 @@ public class MaterialUploadMM {
 		if (muList != null) {
 			System.out.println("muList Cl_idnum = " + muList.get(0).getCl_idnum());
 			sb.append("<div><h3><b>퀴즈 자료 업로드 - 강의 리스트</b></h3></div>");
-			sb.append("<div class='container' style='width:1100px; height:600px;'>");
+			sb.append("<div class='container' style='width:1100px; height:600px; overflow:auto; overflow-x:hidden;'><br>");
 			sb.append("<table class='sbClassTable table table-hover'>" + "<tr class='sbClassTr'>"
 					+ "<th class='sbClassTh'>NO.</th>" + "<th class='sbClassTh'>강의명</th>"
 					+ "<th class='sbClassTh'>총회차</th>" + "<th class='sbClassTh'>학생수</th>"
@@ -395,7 +395,7 @@ public class MaterialUploadMM {
 		if (muList != null) {
 			System.out.println("muList Cl_idnum = " + muList.get(0).getCl_idnum());
 			sb.append("<div><h3><b>퀴즈 자료 업로드 - 강좌 리스트</b></h3></div>");
-			sb.append("<div class='container' style='width:1100px; height:600px;'>");
+			sb.append("<div class='container' style='width:1100px; height:600px; overflow:auto; overflow-x:hidden;'><br>");
 			sb.append("<table class='sbClassTable table table-hover'>" + "<tr class='sbClassTr'>"
 					+ "<th class='sbClassTh'>NO.</th>" + "<th class='sbClassTh'>강의명</th>"
 					+ "<th class='sbClassTh'>회차</th>" + "<th class='sbClassTh'>강좌명</th>"
@@ -425,8 +425,8 @@ public class MaterialUploadMM {
 				sb.append("<td class='sbClassTd'>" + "<input type='button' class='btn btn-primary btn-sm' value='퀴즈 작성'"
 						+ "onclick=location.href='insertquizmaterialuploadpage?cl_idnum=" + encodeParam + "&cl_lv="
 						+ muList.get(i).getCl_lv() + "&co_num=" + muList.get(i).getCo_num() + "&pb_num="
-						+ muList.get(i).getPb_num() + "'><br>"
-						+ "<input type='button' class='btn btn-default btn-sm' value='퀴즈 확인'"
+						+ muList.get(i).getPb_num() + "'>&nbsp;"
+						+ "&nbsp;<input type='button' class='btn btn-default btn-sm' value='퀴즈 확인'"
 						+ "onclick=location.href='selectquizmaterialuploadlistpage?cl_idnum=" + encodeParam + "&cl_lv="
 						+ muList.get(i).getCl_lv() + "&co_num=" + muList.get(i).getCo_num() + "'></td></tr>");
 			}
