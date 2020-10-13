@@ -44,6 +44,7 @@ public class HomeworkMM {
 		hb.setHw_lv(Integer.parseInt(multi.getParameter("hw_lv")));
 		hb.setHw_num(Integer.parseInt(multi.getParameter("hw_num")));
 		hb.setHw_psfa("0");
+
 		boolean homeresult = hd.insertHomework(hb);
 		System.out.println("homeresult:   "+homeresult);
 		if(homeresult) {
@@ -59,7 +60,8 @@ public class HomeworkMM {
 				try {
 					session.removeAttribute("courseList");
 					String encodedParam = URLEncoder.encode(hb.getHw_idnum(), "UTF-8");
-					mav.setViewName("redirect:/prof/selectmanagercoursehomeworkpage/"+encodedParam);
+					String msg = URLEncoder.encode("1", "UTF-8");
+					mav.setViewName("redirect:/prof/selectmanagercoursehomeworkpage/"+encodedParam+"/"+msg);
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
 				}
@@ -107,21 +109,21 @@ public class HomeworkMM {
 	}
 
 
-	public ModelAndView selectHwResult(HomeworkBean hwb) {
+	public ModelAndView selectHwResult(HttpSession session, String lv, String idnum, String num, String id) {
 		ModelAndView mav = new ModelAndView();
-		System.out.println(hwb);
-		System.out.println(hwb.getHw_id());
-		String hw_id = hwb.getHw_id();
-		String hw_num = hwb.getHw_num().toString();
-		String hw_lv = hwb.getHw_lv().toString();
-		String hw_idnum = hwb.getHw_idnum();
+		//System.out.println(hwb);
+		System.out.println(id);
+		String hw_id = id;
+		String hw_num = num;
+		String hw_lv = lv;
+		String hw_idnum = idnum;
 		List<HomeworkBean> hwResultList = hd.selectHwResult(hw_id,hw_num,hw_lv,hw_idnum);
 		System.out.println("size:    "+hwResultList.size());
 		if(hwResultList.size()!=0) {
-			
 			System.out.println(hwResultList.toString());
-			mav.addObject("hwResultList",new Gson().toJson(hwResultList));
-			mav.setViewName("teacher/gahee/selectHwResultPage");
+			//mav.addObject("hwResultList",new Gson().toJson(hwResultList));
+			session.setAttribute("hwResultList", new Gson().toJson(hwResultList));
+			mav.setViewName("redirect:/prof/selectHwResultPage");
 		}else {
 			mav.addObject("msg","false");
 			mav.setViewName("teacher/gahee/goTeacherLoginFrm");
@@ -148,6 +150,10 @@ public class HomeworkMM {
 		}
 		return result;
 	}
+
+
+
+
 
 
 

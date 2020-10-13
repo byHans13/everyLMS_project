@@ -81,6 +81,35 @@ section {
 	float: left;
 	position: absolute;
 	transform:translate(300px,0px); 
+	height: 500px;
+}
+table.type11 {
+    border-collapse: separate;
+    border-spacing: 1px;
+    text-align: center;
+    line-height: 1.5;
+    margin: 20px 10px;
+}
+table.type11 th {
+    width: 155px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #fff;
+    background: #ce4869 ;
+}
+table.type11 td {
+    width: 155px;
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    background: #eee;
+}
+div.tabcontent{
+ height: 500px;
+}
+div.tab{
+height: 500px;
 }
 
 
@@ -94,22 +123,21 @@ section {
    <aside>
       <jsp:include page="./h2k5every_aside.jsp" />
    </aside>
-   <section id="section" style="margin-left: 20px;">
-   <div class="tab">
+   <section id="section" style=" margin-left: 20px;"  >
+   <div class="tab" style="background-color: #ce4869;">
   <button class="tablinks" onclick="openCity(event, 'London')" id="defaultOpen">총 메일<span class="badge"></span></button>
-  <button class="tablinks" onclick="openCity(event, 'Paris')">안읽은 메일<span class="badge"></span></button>
+  <button class="tablinks" onclick="openCity(event, 'Paris')" >안읽은 메일<span class="badge"></span></button>
   <button class="tablinks" onclick="openCity(event, 'Tokyo')">읽은메일</button>
 </div>
 
-<div id="London" class="tabcontent">
-  
+<div id="London" class="tabcontent" style="overflow: auto;"> 
 </div>
 
-<div id="Paris" class="tabcontent">
+<div id="Paris" class="tabcontent" style="overflow: auto;">
 
 </div>
 
-<div id="Tokyo" class="tabcontent">
+<div id="Tokyo" class="tabcontent" style="overflow: auto;">
 
 </div>
 
@@ -135,7 +163,8 @@ section {
 	 // Get the element with id="defaultOpen" and click on it
 	 document.getElementById("defaultOpen").click();
    </script>
-   
+  
+ 
    
    
    <script>
@@ -148,10 +177,9 @@ section {
    function all() {
 	   var num=aaclmsg.length;
 	   var st=0;
-	   $('#London').append("<center><table id='aa'><tr ><th>글번호</th><th>알림</th><th>보낸시간</th><th>읽음여부</th></tr>");
+	   $('#London').append("<center><table class='type11'><thead><tr><th>글번호</th><th>알림</th><th>보낸시간</th><th>읽음여부</th></tr></thead><tbody id='aa'></tbody>");
 	   for(var i=0; i<aaclmsg.length; i++){
 	   $('#aa').append("<tr><td>"+(i)+"</td><td><a style='text-decoration: none; color: black;' onclick=\"readMsg('"+aaclmsg[i].msg_id+"','"+aaclmsg[i].msg_text+"','"+aaclmsg[i].msg_st+"')\">"+aaclmsg[i].msg_id+"님의 쪽지를 보냈습니다.</a></td><td>"+aaclmsg[i].msg_date+"</td><td id='re"+i+"'></td></tr>");
-	   //<a onclick=\"openClassPlan('"+managerClassList[i].pc_title+"','"+managerClassList[i].pc_cont+"','"+managerClassList[i].cl_cc+"','"+managerClassList[i].cl_lcnum+"')\">
 	   if(aaclmsg[i].msg_st==1){
 		   $('#re'+i).text('읽음');
 	   }else{
@@ -162,11 +190,12 @@ section {
 	   $('#London').prepend("</table></center>");
 	   $('.badge').text(st);
 	   
+	   
 }
    
    function read() {
 	   var num=0;
-	   $('#Tokyo').append("<center><table id='rr'><tr ><th>글번호</th><th>알림</th><th>보낸시간</th></tr>");
+	   $('#Tokyo').append("<center><table class='type11'><thead><tr><th>글번호</th><th>알림</th><th>보낸시간</th></tr></thead><tbody id='rr'></tbody>");
 	   for(var i=0; i<aaclmsg.length; i++){
 		   console.log("aaclmsg[i].msg_st= "+aaclmsg[i].msg_st);
 		   if(aaclmsg[i].msg_st==1){
@@ -179,7 +208,7 @@ section {
    
    function noread() {
 	   var num=0;
-	   $('#Paris').append("<center><table id='nn'><tr ><th>글번호</th><th>알림</th><th>보낸시간</th></tr>");
+	   $('#Paris').append("<center><table class='type11'><thead><tr><th>글번호</th><th>알림</th><th>보낸시간</th></tr></thead><tbody id='nn'></tbody>");
 	   for(var i=0; i<aaclmsg.length; i++){
 		   console.log("aaclmsg[i].msg_st= "+aaclmsg[i].msg_st);
 		   if(aaclmsg[i].msg_st==0){
@@ -195,6 +224,7 @@ section {
 			 upMsg(msg_id,msg_text);
 		 }
 	}
+	 
    
    
    

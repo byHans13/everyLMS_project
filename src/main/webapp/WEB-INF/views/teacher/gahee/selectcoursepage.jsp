@@ -14,6 +14,57 @@
 
 <title>Insert title here</title>
 <style>
+html, body {
+   height: 100%;
+   margin: 0
+}
+aside {
+	width: 300px;
+	float: left;
+}
+section {
+	width: 1000px;
+	float: left;
+}
+.menu{
+    margin-left: 20px;
+    text-align:center;
+    width: 200px;
+    border: 1px black solid;
+    float: left;
+}
+table.type07 {
+    border-collapse: collapse;
+    text-align: left;
+    line-height: 1.5;
+    border: 1px solid #ccc;
+    margin: 20px 10px;
+}
+table.type07 thead {
+    border-right: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    background: #e7708d;
+}
+table.type07 thead th {
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #fff;
+}
+table.type07 tbody th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    background: #fcf1f4;
+}
+table.type07 td {
+    width: 350px;
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+}
 video{
 width: 500px;
 height: 500px;
@@ -22,12 +73,40 @@ height: 500px;
 </style>
 </head>
 <body>
-<h1>강의 보여주기</h1>
-<h2>회차: </h2><p id="num"></p><br>
-<h2>제목: </h2><p id="name">
-<h2>동영상 </h2>
-<video id="sysname" autoplay="autoplay" controls="controls"></video>
-<h2>내용: </h2><p id="cont"></p>
+<header style="width: 1500px;">
+		<jsp:include page="../../h2k5every_loginHeader.jsp" /><!-- 동적인 방식 -->
+	</header>
+	<aside>
+		<jsp:include page="../../h2k5every_teacherAside.jsp" />
+	</aside>
+	<section id="section" style="margin-left: 50px;">
+
+<table class="type07">
+    <thead>
+    <tr>
+        <th>MY강좌</th>
+        <th>내용</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th>회차</th>
+        <td id="num"></td>
+    </tr>
+    <tr>
+        <th>제목</th>
+        <td id='name'></td>
+    </tr>
+    <tr>
+        <th>강좌동영상</th>
+        <td><video id="sysname" autoplay="autoplay" controls="controls"></video></td>
+    </tr>
+    <tr>
+        <th>내용</th>
+        <td id="cont"></td>
+    </tr>
+    </tbody>
+</table>
 
 <form method="post" action="deletecourse">
 <input type="hidden" id='dnum' name='co_num'>
@@ -54,13 +133,17 @@ height: 500px;
 </form>
 
 <a href="classmain/0"><button>홈으로</button></a>
+</section>
+<footer>
+		<jsp:include page="../../h2k5every_footer.jsp" />
+	</footer>
 
 <script>
 var List = ${myCoList};
 var myCoList = List[0];
 console.dir(myCoList);
 if(myCoList !=""){
-	$('#num').text(myCoList.co_num);
+	$('#num').text(myCoList.co_num+"회차");
 	$('#name').text(myCoList.co_name);
 	$('#cont').html(myCoList.co_cont);
 	$('#sysname').attr("src","../video/"+myCoList.fbList[0].fl_sysname);

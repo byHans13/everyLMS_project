@@ -130,6 +130,40 @@ section {
     border: 1px black solid;
     float: left;
 }
+table.type07 {
+    border-collapse: collapse;
+    text-align: left;
+    line-height: 1.5;
+    border: 1px solid #ccc;
+    margin: 20px 10px;
+}
+table.type07 thead {
+    border-right: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    background: #e7708d;
+}
+table.type07 thead th {
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #fff;
+}
+table.type07 tbody th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    background: #fcf1f4;
+}
+table.type07 td {
+    width: 350px;
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+}
+table.type07 a{text-decoration: none; 
+ color: #333333;}
         
 </style>
 </head>
@@ -185,10 +219,11 @@ if(managerClassList.length !=0){
 function openClassPlan(pc_title,pc_cont,cl_cc,cl_lcnum) {
 	 $('#contents_layer').empty();
 	 $('#articleView_layer').addClass('open');
-	//console.log(pc_title+pc_cont+cl_cc+cl_lcnum);
-	//var cont = pc_cont.replace(/(<br>|<br\/>|<br \/>)/g, '\r\n');
-	$('#contents_layer').append("<center class='table table-bordered'><h3>강의계획서</h3><table><tr><th>계획서 개요</th><th>"+pc_title+"</th></tr><tr><th>계획서 내용</th><th>"+pc_cont+"</th></tr><tr><th>관심사</th><th>"+cl_cc+"</th></tr><tr><th>총강좌회차</th><th>"+cl_lcnum+"</th></tr></table></center>");
-	
+	//$('#contents_layer').append("<center class='table table-bordered'><h3>강의계획서</h3><table><tr><th>계획서 개요</th><th>"+pc_title+"</th></tr><tr><th>계획서 내용</th><th>"+pc_cont+"</th></tr><tr><th>관심사</th><th>"+cl_cc+"</th></tr><tr><th>총강좌회차</th><th>"+cl_lcnum+"</th></tr></table></center>");
+	 $('#articleView_layer').addClass('open'); //모달박스 나타남
+	    $('#contents_layer').html("<table class='type07'><thead><tr><th>강의계획서</th><th>내용</th></tr></thead>"+
+	    		"<tbody><tr><th>개요</th><td>"+pc_title+"</td></tr><tr><th>내용</th><td>"+pc_cont+"LV</td></tr>"+
+	    		"<tr><th>관심사</th><td>"+cl_cc+"</td></tr><tr><th>총강좌회차</th><td>"+cl_lcnum+"회차</td></tr></tbody></table>");
 	
 }
 function openCoursePage(cl_lv,cl_idnum) {
@@ -200,7 +235,7 @@ function openCoursePage(cl_lv,cl_idnum) {
 }
 
 
-function ajaxaa(cl_lv,cl_idnum,sumnum) {
+function ajaxaa(cl_lv,cl_idnum,cl_lcsum) {
 	$.ajax({
 		url:'rest/aaList?cl_lv='+cl_lv+'&cl_idnum='+cl_idnum,
 		type:'GET',
@@ -221,7 +256,7 @@ function ajaxaa(cl_lv,cl_idnum,sumnum) {
 		$('#comeAa').append("<table id='ttt' class='table table-hover'><thead style='background-color:silver;'><tr><th>학생ID</th><th>진도율</th><th>쪽지보내기</th></tr></thead><tbody id='aa'>");
 		for(var i=0; i<aaList.length; i++){
 			console.log(aaList[i]);
-			$('#aa').append("<tr><td>"+aaList[i].aa_id+"</td><td><a onclick=\"openProgress('"+aaList[i].aa_id+"','"+cl_idnum+"','"+cl_lv+"','"+sumnum+"')\">상세보기</a></td><td><a onclick=\"openMsg('"+aaList[i].aa_id+"','"+cl_idnum+"')\">보내기</a></td></tr>");
+			$('#aa').append("<tr><td>"+aaList[i].aa_id+"</td><td><a onclick=\"openProgress('"+aaList[i].aa_id+"','"+cl_idnum+"','"+cl_lv+"','"+cl_lcsum+"')\">상세보기</a></td><td><a onclick=\"openMsg('"+aaList[i].aa_id+"','"+cl_idnum+"')\">보내기</a></td></tr>");
 		}
 		$('#comeAa').prepend("</tbody></table>");
 		}else{
@@ -237,7 +272,7 @@ function ajaxaa(cl_lv,cl_idnum,sumnum) {
 }
 
 
-function openProgress(id, idnum, lv,sumnum) {
+function openProgress(id, idnum, lv,cl_lcsum) {
 	$.ajax({
 		url:'rest/countAt?atd_id='+id+'&atd_idnum='+idnum+'&atd_lv='+lv,
 		type:'GET',
@@ -251,8 +286,8 @@ function openProgress(id, idnum, lv,sumnum) {
 			xhr.setRequestHeader($token.data("token-name"), $token.val());
 		},
 		success: function(countAt) {
-			var sum = parseInt(sumnum);
-			var count =parseInt(countAt);
+			var sum = parseInt(cl_lcsum);
+			var count =(parseInt(countAt))-1;
 		console.log(countAt);
 		// $('#contents_layer').empty();
 		 $('#articleView_layer').addClass('open');
@@ -261,7 +296,7 @@ function openProgress(id, idnum, lv,sumnum) {
 		 console.log("sum:  "+sum);
 		 console.log("persent:  "+persent);
 		 $('#contents_layer').empty();
-		 $('#contents_layer').append("<table><tr><td>"+id+"</td><td></div><div id='graph'><span id='sp'>"+persent+"</span></div></tr></table>");
+		 $('#contents_layer').append(id+"님의 진도율입니다.<table><tr><td>"+id+"</td><td></div><div id='graph'><span id='sp'>"+persent+"</span></div></tr></table>");
 		 $('#sp').css("width",persent+"%");
 		 $('style').append(" @keyframes stack{0%{ width: 0; color: rgba(255, 255, 255, 0);} 50%{ color:  rgba(255, 255, 255, 1); } 100%{  width: "+persent+"%;}}");
 		},
