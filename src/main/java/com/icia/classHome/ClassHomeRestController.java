@@ -175,6 +175,7 @@ public class ClassHomeRestController {
 	}
 	@GetMapping(value="rest/selectBuyClass")
 	public Map<String, Object> selectBuyClass (ClassBean cb, HttpSession session){
+		System.out.println(cb);
 		Map<String, Object> buyMap = cs.selectBuyClass(cb, session);
 		return buyMap;
 	}

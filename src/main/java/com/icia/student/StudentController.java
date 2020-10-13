@@ -1,5 +1,7 @@
 package com.icia.student;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.DateFormat;
 
 import java.util.Date;
@@ -7,6 +9,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -79,21 +82,47 @@ public class StudentController {
 		return mav;
 	}
 	@RequestMapping(value = "stud/Addpoint")
-	   public ModelAndView Addpoint(String id,HttpSession session) {
-	      mav = mm.Addpoint(id, session);
-	      return mav;
-	   }
-	   @RequestMapping(value = "stud/Payment")
-	   public ModelAndView Payment(String id,String onechk,HttpSession session,HttpServletRequest req, String resultpt) {
-	      mav = mm.Payment(id,onechk, session , req , resultpt);
-	      return mav;
-	   }
-	   @RequestMapping(value = "stud/PointCharge")
-	   public ModelAndView PointCharge(String id,String resultpt,HttpServletRequest req,HttpSession session) {
-	      System.out.println(resultpt);
-	      mav = mm.PointCharge(id,resultpt,req,session);
-	      return mav;
-	   }
+	public ModelAndView Addpoint(String id, HttpSession session) {
+		mav = mm.Addpoint(id, session);
+		return mav;
+	}
+
+	@RequestMapping(value = "stud/Payment")
+	public ModelAndView Payment(String id, String onechk, HttpServletResponse response, HttpServletRequest req,
+			String resultpt) throws IOException {
+		PrintWriter out = response.getWriter();
+		response.setContentType("text/html; charset=UTF-8");
+		if (onechk == null || resultpt == null) {
+			out.println("<script>alert('포인트를 설정해주세요!')</script>");
+			out.flush();
+		} else {
+			mav = mm.Payment(id, onechk, response, req, resultpt);
+		}
+		return mav;
+	}
+
+	@RequestMapping(value = "stud/PointCharge")
+	public ModelAndView PointCharge(String id,String resultpt,String phonearea,String chk_box,String onechk,HttpServletRequest req,HttpServletResponse response) throws IOException {
+		System.out.println(chk_box);
+		System.out.println(onechk);
+	PrintWriter out = response.getWriter();
+		response.setContentType("text/html; charset=UTF-8");
+		if(phonearea == "") {
+			out.println("<script>alert('핸드폰인증을 해주세요.')</script>");
+			out.flush();
+		}else if(chk_box == null) {
+			out.println("<script>alert('필수사항 체크가 안되어있습니다.')</script>");
+			out.flush();
+		}else {
+		mav = mm.PointCharge(id,resultpt,phonearea, onechk,req,response);
+		}
+		return mav;
+	}
+	@RequestMapping(value = "stud/complete")
+	public ModelAndView complete(String id, String resultpt, HttpServletRequest req, HttpSession session) {
+		mav = mm.complete(id, resultpt, req, session);
+		return mav;
+	}
 	@GetMapping(value="classHome")
 	   public ModelAndView selectClassHome(Clasc cb, HttpSession session) {
 	      mav= mm.selectClassHomePage(cb, session);   

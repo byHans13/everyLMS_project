@@ -54,7 +54,7 @@
  	
  	<select id="studAttendanceNum" parameterType="GradePercentage" resultType="int">
  		select count(*) from attendance
-		where at_id=#{gr_id1} and at_idnum=#{cl_idnum} and at_atmk=1  
+		where atd_id=#{gr_id1} and atd_idnum=#{cl_idnum} and atd_atmk=1  
  	</select>
  	
  	<select id="selectRateclass" parameterType="GradePercentage" resultType="GradePercentage">

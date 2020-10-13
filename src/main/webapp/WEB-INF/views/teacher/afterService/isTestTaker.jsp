@@ -118,6 +118,7 @@ $(document).ready
 					var co_name = json[i].co_name.replace(/ /gi,',');
 					console.log(cl_clname);
 					console.log(co_name);
+					console.log(json[i].cl_idnum);
 					
 					$("#selectTable").append("<tr>");
 					$("#selectTable").append("<td class='tg-g9xd'>"+json[i].cl_clname+"</td>");
@@ -127,6 +128,7 @@ $(document).ready
 					$("#selectTable").append("<td class='tg-dlxr'><form action='goisTestTakerShowPage' method='post'>"+
 							 				 "<input type='hidden' name='cl_clname' value="+cl_clname+">"+
 							 				 "<input type='hidden' name='co_name' value="+co_name+">"+
+							 				 "<input type='hidden' name='cl_idnum' value="+json[i].cl_idnum+">"+
 							 				 "<input type='hidden' name='cl_lcnum' value="+json[i].co_num+">"+
 							 				 "<input type='hidden' id='token' data-token-name='${_csrf.headerName}' name = '${_csrf.parameterName}' value='${_csrf.token}' />"+
 											 "<button class='btn btn-primary'>클릭</button><td></form>");
@@ -188,6 +190,7 @@ function contSelect() {
 						$("#selectTable").append("<td class='tg-dlxr'><form action='goisTestTakerShowPage' method='post'>"+
 												 "<input type='hidden' name='cl_clname' value="+cl_clname+">"+
 												 "<input type='hidden' name='co_name' value="+co_name+">"+
+												 "<input type='hidden' name='cl_idnum' value="+json[i].cl_idnum+">"+
 												 "<input type='hidden' name='cl_lcnum' value="+json[i].co_num+">"+
 												 "<input type='hidden' id='token' data-token-name='${_csrf.headerName}' name = '${_csrf.parameterName}' value='${_csrf.token}' />"+
 												 "<button class='btn btn-primary'>클릭</button><td></form>");

@@ -1,50 +1,47 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-    <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<sec:authorize access="hasRole('ROLE_STUD')">
-	<script src="../script/wsocket.js"></script>
-</sec:authorize>
-
 
 </head>
 <style>
-.cS {
-	text-align: center;
-	top: 30%;
-	left: 50%;
-/* 	transform: translate(-50%, -50%);
-	position: absolute; */
-	padding: 5px 10px;
+select {  
+  font-family: "Noto Sansf KR", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  
+  color: #444;
+  background-color: #fff;
+  
+  padding: .6em 1.4em .5em .8em;
+  margin: 0;
+  
+  border: 1px solid #aaa;
+  border-radius: .5em;
+  box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
 }
 
-#memoobj {
-	top: 55%;
-	left: 50%;
-/* 	transform: translate(-50%, -50%);
-	position: absolute; */
-	padding: 5px 10px;
-	border-style: solid
+select:hover {
+    border-color: #888;
 }
 
-#updatemymemo {
-	top: 90%;
-	left: 75%;
-	/* transform: translate(-50%, -50%);
-	position: absolute; */
-	padding: 5px 10px;
-}
-header {
-	/* background-color: gray; */
+select:focus {
+    border-color: #aaa;
+    box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
+    box-shadow: 0 0 0 3px -moz-mac-focusring;
+    color: #222;
+    outline: none;
 }
 
+select:disabled {
+  opacity: 0.5;
+}
 header {
 	/* background-color: gray; */
 }
@@ -59,13 +56,33 @@ section {
 	/* background-color: pink; */
 	width: 1000px;
 	float: left;
-	position: absolute;
-	transform:translate(300px,0px)
 }
+header {
+	/* background-color: gray; */
+}
+
+aside {
+	/* background-color: blue; */
+	width: 300px;
+	float: left;
+}
+
+section {
+	/* background-color: pink; */
+	width: 1000px;
+	float: left;
+}
+#boot {
+      background-color: #b3c6ff;
+    }
+    #memobox{
+    align-content: center;
+
+    }
 </style>
 <body>
 <header>
-		<jsp:include page="../h2k5every_loginHeader.jsp" /><!-- 동적인 방식 -->
+		<jsp:include page="../h2k5every_header.jsp" /><!-- 동적인 방식 -->
 	</header>
 	<aside>
 		<jsp:include page="../h2k5every_aside.jsp" />
@@ -84,25 +101,26 @@ section {
 			</select>
 				<button id="clickmymemo" onclick="clickmymemo()">검색</button></td>
 		</tr>
-	</table>
-	<table class="cS" id="cS">
-		<tr bgcolor="skyblue" height="30">
-			<th width="150">강의명</th>
-			<th width="200">강좌명<select id="clname" name="clname"><option
-						value="">-------------</option></select></th>
-			<th width="150">강의날짜</th>
-			<th width="150">메모보기</th>
+	</table>	
+	<div class="container">
+	<table class="table table-striped">
+		<tr id="boot">
+			<td>강의명</td>
+			<td>강좌명 <select id="clname" name="clname"><option value="">-----------------</option></select></td>
+			<td>강의날짜</td>
+			<td >메모보기</td>
 		</tr>
 		<tbody id="tableShow">
 			<tr class="cm_tr">
-				<th width="150" align=center id="cm_name"></th>
-				<th width="150" align=center id="cm_clname"></th>
-				<th width="150" align=center id="cm_date"></th>
-				<th width="150" align=center id="cm_memo"></th>
+				<td id="cm_name"></td>
+				<td id="cm_clname"></td>
+				<td id="cm_date"></td>
+				<td id="cm_memo"> </td>
 			</tr>
 		</tbody>
 	</table>
-	<table>
+	</div>
+	<table id = "memobox">
 		<tr>
 			<td id="memojang"><textarea rows="20" cols="90" name="memoobj" id="memoobj"> </textarea></td>
 		</tr>
@@ -119,6 +137,7 @@ section {
 		var json = new Object();
 		json.cl_idnum = select_sub;
 		console.log(json);
+				$('#clname').children('option').remove();
 		$.ajax({
 			type : 'post',
 			dataType : 'json',
@@ -134,7 +153,7 @@ section {
 			data : JSON.stringify(json),
 			success : function(click) {
 				console.log(click);
-				$('#clname').children('option').remove();
+				$('#clname').val("----------");		
 				$.each(click, function(i) {
 					$("#clname").append(
 							"<option value='"+click[i].co_name+"'>"
@@ -171,13 +190,15 @@ section {
 						console.log(result);
 						$("#memoobj").val('');
 				     	str = "";
+				     		$("#tableShow").empty();
+				     	
 						for (i = 0; i < result.length; i++) {
-							str += "<th>" + result[i].cl_clname + "</th>";
-							str += "<th>" + result[i].co_name + "</th>";
-							str += "<th>" + result[i].cl_stday + "</th>";							
-							str += "<th ><a href='#;' onclick=\"viewmemo('"
+							str += "<td>" + result[i].cl_clname + "</td>";
+							str += "<td>" + result[i].co_name + "</td>";
+							str += "<td>" + result[i].cl_stday + "</td>";							
+							str += "<td ><a href='#;' onclick=\"viewmemo('"
 									+ result[i].mo_contents + "')\">메모 보기</a></th>"
-									str += "<th><input type='hidden' name='mo_num'id='mo_num' value="+result[i].mo_num+"></th>"
+									str += "<th><input type='hidden' name='mo_num'id='mo_num' value="+result[i].mo_num+"></td>"
 							$("#tableShow").html(str);
 						}
 						for ( var i in result) {
