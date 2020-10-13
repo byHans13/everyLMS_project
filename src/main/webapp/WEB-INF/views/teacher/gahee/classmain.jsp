@@ -142,7 +142,6 @@ table.type07 td {
 table.type07 a{text-decoration: none; 
  color: #333333;}
 
-=======
 img{
 	width: 100px;
 	height: 100px;
