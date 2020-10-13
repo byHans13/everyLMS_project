@@ -27,7 +27,7 @@ public class ClassManagerMM {
 	public List<ClassUpBean> selectClass(HttpSession session) {
 		String id = session.getAttribute("id").toString();
 		List<ClassUpBean> manager_classList = cmd.selectClass(id);
-		
+		System.out.println("manager_classList: "+manager_classList);
 		return manager_classList;
 	}
 

@@ -158,7 +158,7 @@ dd {
 		<input type="hidden" id="hidid" name="hidid" value="${id}" /> <input
 			type="hidden" id="hidmypt" name="hidmypt" value="${Point}" />
 		<h3 id="getpt" style="margin-left: 200px; color: gray;">${id}님의 보유POINT =>  ${Point}POINT</h3>
-		<form action="Payment">
+		<form action="Payment" method="post">
 			<dl>
 				<dt style="margin-left: 30%;">충전 페이지 입니다.^ㅁ^+</dt>
 				<div class="point_charge_row">
