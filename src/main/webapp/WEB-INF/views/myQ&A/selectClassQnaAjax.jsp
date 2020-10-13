@@ -82,7 +82,7 @@ div > #paging {
 			<table>
 				<tr>
 					<td width="600px"><select name="search" id="search">
-							<option>----------</option>
+							<option>강의명</option>
 							<c:forEach var="Clasc" items="${sList}" varStatus="i">
 								<option value="${Clasc.cl_clname}">${Clasc.cl_clname}</option>
 							</c:forEach>
@@ -106,7 +106,7 @@ div > #paging {
 						<td align="center">${Clasc.co_num}</td>
 						<td align="center">${Clasc.co_name}</td>
 						<td align="center"><a
-							href='selectClassQnaDetailAjax?cob_bonum=${Clasc.cob_bonum}'>${Clasc.cob_title}</a></td>
+							href='SelectClassDetail?cob_bonum=${Clasc.cob_bonum}'>${Clasc.cob_title}</a></td>
 						<td align="center">${Clasc.cob_id}</td>
 						<td align="center">${Clasc.cob_date}|<input type='checkbox'
 							name="dtncheck" id="btncheck" value='${Clasc.cob_bonum}'

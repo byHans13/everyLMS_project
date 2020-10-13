@@ -66,27 +66,49 @@ section {
 	<section id="section" style="margin-left: 20px;">
 <h3>글쓰기</h3>
 	<form action="boardwrite" id="frm" method="post" enctype="multipart/form-data">
-		<table border="1">
-			<tr>
-				<td>제목</td>
-				<td><input type="text" name="b_title" id="b_title" required></td>
-			</tr>
-			<tr>
-				<td>내용</td>
-				<td>
-				<textarea id = "editor4" name="b_contents"></textarea>
-
-<script>CKEDITOR.replace('editor4');</script></td>
-			</tr>
-			<tr>
-				<td colspan="2" align="center">
-					<input type="submit" value="글작성" >
-					<input type="reset" id="reset" value="취소">
-					<input type="button" onclick="location.href='insertcounselboard'" value="리스트 보기">
-				</td>
-			</tr>	
+		<table>
+			<c:forEach var="board" items="${vlist}">
+				<tr height="30">
+					<td width="100" bgcolor="lightgray" align="center">NUM</td>
+					<td colspan="5">${board.b_num}</td>
+				</tr>
+				<tr height="30">
+					<td bgcolor="lightgray" align="center">WRITER</td>
+					<td width="150">${board.b_id}</td>
+					<td bgcolor="lightgray" align="center">DATE</td>
+					<td width="150">${board.b_date}</td>
+					<td bgcolor="lightgray" align="center">VIEWS</td>
+					<td width="150">${board.b_views}</td>
+				</tr>
+				<tr height="30">
+					<td bgcolor="lightgray" align="center">TITLE</td>
+					<td colspan="5">${board.b_title}</td>
+				</tr>
+				<tr height="30">
+					<td bgcolor="lightgray" align="center">CONTENTS</td>
+					<td colspan="5">${board.b_contents}</td>
+				</tr>
+			</c:forEach>
 		</table>
 	</form>
+	<form name="rFrm" id="rFrm">
+			<table>
+				<tr>
+					<td><textarea rows="3" cols="50" name="r_contents"
+							id="r_contents"></textarea></td>
+					<td><input type="button" value="댓글전송" onclick="replyinsert();"
+						style="width: 70px; height: 50px"></td>
+			</table>
+			<table id="rTable">
+				<c:forEach var="reply" items="${rList}">
+					<tr height="25" align="center">
+						<td width="100">${reply.r_id}</td>
+						<td width="100">${reply.r_contents}</td>
+						<td width="100">${reply.r_date}</td>
+					</tr>
+				</c:forEach>
+			</table>
+		</form>
 	</section>
 </body>
 <script>

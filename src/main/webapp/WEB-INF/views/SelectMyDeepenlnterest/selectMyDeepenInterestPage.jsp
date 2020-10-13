@@ -147,7 +147,7 @@ table.type05 td {
 
 		<input Type="hidden" value="${id}" id="hiddenid"> <select
 			id="LIKEMYCC" name="LIKEMYCC">
-			<option>---------</option>
+			<option>강의명</option>
 			<c:forEach var="cc" items="${CList}" varStatus="i">
 				<option value="${cc.cc_cc}">${cc.cc_cc}</option>
 			</c:forEach>

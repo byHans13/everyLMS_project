@@ -116,6 +116,7 @@ section {
 					$("#quizMaterialUploadTable"+i).append("<tr><td id='btnTd'>"
 										 /* + "<input type='button' id='btnAdd' value='퀴즈수정' onclick='uploadAddClick()'>" */
 										 + "<input type='button' value='뒤로가기' class='btn btn-primary btn-sm' onclick=location.href='/h2k5every/prof/selectquizmaterialclcolist'>"
+										 + "<input type='button' value='뒤로가기' class='btn btn-primary btn-sm' onclick=location.href='/h2k5every/prof/selectquizmaterialclcolist?Cl_idnum="+idnum+"&Cl_lv="+lv+"'>"
 							 			 + "<input type='button' value='홈으로' class='btn btn-default btn-sm' onclick=location.href='/h2k5every/prof/goTeacherLoginFrm'></td></tr>");
 					$("#quizMaterialUploadTable"+i).append("<tbody id='quizMaterialUploadTbody"+i+"'>");
 					$("#quizMaterialUploadTbody"+i).append("<tr><td><h1>" + uploadInfo[0].muPbList[i].dp_coname + "&nbsp;-&nbsp;" + (i+1) + "번 퀴즈</h1></td></tr>");

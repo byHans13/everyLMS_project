@@ -149,7 +149,7 @@ div > #paging {
    <h2>${id}</h2>
    <select id="AVGLEVEL" name="AVGLEVEL">
       <c:forEach var="leve" items="${lList}" varStatus="i">
-         <option>---------</option>
+         <option>강의명</option>
          <option value="${leve.lv_lv}">${leve.lv_lv}</option>
       </c:forEach>
    </select>

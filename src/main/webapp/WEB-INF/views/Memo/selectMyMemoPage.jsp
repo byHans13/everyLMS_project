@@ -94,7 +94,7 @@ section {
 	<table>
 		<tr>
 			<td width="600px"><select name="questType" id="questType">
-					<option>----------</option>
+					<option>강의명</option>
 					<c:forEach var="Clasc" items="${sList}" varStatus="i">
 			<option value = "${Clasc.cl_idnum}">${Clasc.cl_clname}</option>
 		</c:forEach>

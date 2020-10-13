@@ -75,7 +75,7 @@ section {
     <input type="hidden" name = "${_csrf.parameterName}" value="${_csrf.token}" />
 	<h2>${id}</h2>
 	<select class="celect_box"id="classList" name="classList">
-		<option id="color">---------------</option>
+		<option id="color">강의명</option>
 		<c:forEach var="Clasc" items="${sList}" varStatus="i">
 			<option id="color"value = "${Clasc.cl_clname}">${Clasc.cl_clname}</option>
 		</c:forEach>
