@@ -8,6 +8,23 @@
 <title>class-previewQuiz</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="../resources/js/jquery.serializeObject.js"></script>
+  	<script src="../resources/js/jquery.serializeObject.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+	crossorigin="anonymous">
+
+<!-- LaTest compiled and minified JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+	crossorigin="anonymous"></script>
 <sec:authorize access="hasRole('ROLE_STUD')">
 	<script src="../script/wsocket.js"></script>
 </sec:authorize>
@@ -18,18 +35,35 @@
 	border: 1px solid black;
 	margin: auto;
 	margin-top: 25px;
+
 }
+#quizBody, #quizHead{
+	padding-left: 2%;
+	
+}
+#quizHead{
+padding-top:4%;
+width:101%;
+font-weight: bold;
+position: relative;
+}
+#quizBody{ 
+ position: relative;
+/*  margin-left: 10%; */
+ } 
 
 .head {
 	text-align: center;
+	
 }
+
 </style>
 </head>
 <body>
 	<h2 class='head'>previewQuiz</h2>
 	<div class='previewQuiz' name='previewQuiz' id='previewQuiz'>
-		<div id='quizHead'></div>
-		<div id='quizBody'></div>
+		<div id='quizHead' class='container'></div>
+		<div id='quizBody' class='container'></div>
 	</div>
 	<input type='hidden' value='' id='quizNum'>
 	<input type='hidden' id='token' data-token-name='${_csrf.headerName}' 
@@ -40,19 +74,23 @@
 	previewQuizStart();
 	function previewQuizStart() {
 		var obj = ${previewQuiz};
+		console.log(obj);
+		console.log(Object.keys(obj).length);
 		var QuizNum = 1;
+		var str="";
 		$('#quizNum').val(QuizNum);
-		$('#quizHead').append(QuizNum + "번<br><br>");
-		$('#quizHead').append(obj["Quiz" + QuizNum][0].pb_pbname + "<br>");
+ 		str+="<table class='table'>";
+		str+="<tr style='width:50%;'><td style='background-color:gray;'>"+QuizNum+"번. "+obj["Quiz" + QuizNum][0].pb_pbname+"</td></tr>";
 		for (var i = 0; i < obj["Quiz" + QuizNum].length; i++) {
 			if (obj["Quiz" + QuizNum][i].dp_pbexmnum != 0) { // 객관식 				
-				$('#quizBody').append("<input type='radio' id='QuizValMulti' name='QuizValMulti' value='"+obj["Quiz"+QuizNum][i].dp_pbexmnum+"'>"
-										+ obj["Quiz" + QuizNum][i].dp_pbexm+ "<br>");
+				str+="<tr><td><input type='radio' style='border-radius: 8px;' id='QuizValMulti' name='QuizValMulti' value='"+obj["Quiz"+QuizNum][i].dp_pbexmnum+"'>&nbsp;";
+				str+=obj["Quiz"+ QuizNum][i].dp_pbexm+"</td></tr>";
 			} else {
-				$('#quizBody').append("<textarea id='QuizValSubject' name='QuizValSubject' cols='50' rows='10'></textarea><br>");
+				str+="<tr><td><textarea id='QuizValSubject' name='QuizValSubject' cols='50' rows='10'></textarea></td></tr>";
 			}
 		}//for 
-		$('#quizBody').append("<input type='button' value='정답확인하기' onclick='QuizCheck()'>");
+		$('#quizHead').append(str);
+		$('#quizBody').append("<br><input type='button' value='정답확인하기' class='btn btn-primary btn-sm' onclick='QuizCheck()'>");
 	}// previewQuizStart() END
 	
 	function QuizCheck(){
@@ -64,31 +102,35 @@
 		if($('input:radio[id=QuizValMulti]').is(':checked') == true){
 			$('#quizHead').html("");
 			$('#quizBody').html("");
-			$('#quizHead').append("<p>나의 답: "+myNum+"</p>");
-			$('#quizHead').append("<p>문제 답: "+obj["Quiz"+i][0].pb_pbexplain+"</p><br/><p>해설:<br/>");
-			$('#quizHead').append(obj["Quiz"+i][0].pb_pbanswer+"</p><br/>");
+			var str="";
+			str +="<table class='table'>";
+			str +="<tr style='background-color:gray;'><td>나의 답:&nbsp;"+myNum+"</td>";
+			str +="<tr style='background-color: lightgray;'><td>문제 답:&nbsp;"+obj["Quiz"+i][0].pb_pbexplain+"</td>";
+			str +="<tr style='background-color: lightgray;'><td colspan='2'>해설<br><br>:&nbsp;";
+			str +=obj["Quiz"+i][0].pb_pbanswer+"</td></tr>";
+			$('#quizHead').append(str);
 			if(i == 5){
-				$('#quizHead').append("<div>준비된 맛보기 퀴즈를 다 푸셨습니다.</div>");
+				$('#quizHead').append("<div style='color:black; font-weight: normal;'>준비된 맛보기 퀴즈를 다 푸셨습니다.</div>");
 			}else{
-				if(i == Object.keys(obj).length){					
-					$('#quizHead').append("<div>준비된 맛보기 퀴즈를 다 푸셨습니다.</div>");
+				if((i-1) == Object.keys(obj).length){					
+					$('#quizHead').append("<div style='color:black; font-weight: normal;'>준비된 맛보기 퀴즈를 다 푸셨습니다.</div>");
 				}else{
-					$('#quizHead').append("<input type='button' value='다음 문제 풀기' onclick='previewQuizNext()'>");					
+					$('#quizHead').append("<input type='button' value='다음 문제 풀기' class='btn btn-primary btn-sm' onclick='previewQuizNext()'>");					
 				}
 			}
 		}else if($('#QuizValSubject').val() != "" && $('#QuizValSubject').val() != undefined){
 			$('#quizHead').html("");
 			$('#quizBody').html("");
-			$('#quizHead').append("<p>나의 답: "+mySubject+"</p>");
+			$('#quizHead').append("<p style='color: red;'>나의 답: "+mySubject+"</p>");
 			$('#quizHead').append("<p>문제 답: "+obj["Quiz"+i][0].pb_pbexplain+"</p><br/><p>해설:<br/>");
 			$('#quizHead').append(obj["Quiz"+i][0].pb_pbanswer+"</p><br/>");
 			if(i == 5){
 				$('#quizHead').append("<div>준비된 맛보기 퀴즈를 다 푸셨습니다.</div>");
 			}else{
-				if(i == Object.keys(obj).length){					
+				if((i-1) == Object.keys(obj).length){					
 					$('#quizHead').append("<div>준비된 맛보기 퀴즈를 다 푸셨습니다.</div>");
 				}else{
-					$('#quizHead').append("<input type='button' value='다음 문제 풀기' onclick='previewQuizNext()'>");
+					$('#quizHead').append("<input type='button' value='다음 문제 풀기' class='btn btn-primary btn-sm' onclick='previewQuizNext()'>");
 				}
 				
 			}
@@ -100,19 +142,23 @@
 	function previewQuizNext(){
 		var obj = ${previewQuiz};
 		var QuizNum = parseInt($('#quizNum').val()) + 1;
+		console.log(QuizNum);
+		console.log(obj);
+		var str="";
 		$('#quizNum').val(QuizNum); 
 		$('#quizHead').html("");
 		$('#quizBody').html("");
-		$('#quizHead').append(QuizNum + "번<br><br>");
-		$('#quizHead').append(obj["Quiz" + QuizNum][0].pb_pbname + "<br>");
+		str+="<table>";
+		str+="<tr><td>"+QuizNum+"번 "+obj["Quiz" + QuizNum][0].pb_pbname+"</td></tr>";
 		for (var i = 0; i < obj["Quiz" + QuizNum].length; i++) {
 			if (obj["Quiz" + QuizNum][i].dp_pbexmnum != 0) { // 객관식 				
-				$('#quizBody').append("<input type='radio' id='QuizValMulti' name='QuizValMulti' value='"+obj["Quiz"+QuizNum][i].dp_pbexmnum+"'>"
-										+ obj["Quiz" + QuizNum][i].dp_pbexm+ "<br>");
+				str+="<tr><td><input type='radio' id='QuizValMulti' name='QuizValMulti' value='"+obj["Quiz"+QuizNum][i].dp_pbexmnum+"'></td>";
+				str+="<td>"+ obj["Quiz" + QuizNum][i].dp_pbexm+"</td></tr>";
 			} else {
-				$('#quizBody').append("<textarea id='QuizValSubject' name='QuizValSubject' cols='50' rows='10'></textarea><br>");
+				str+="<tr><td><textarea id='QuizValSubject' name='QuizValSubject' cols='50' rows='10'></textarea></td></tr>";
 			}
 		}//for 
+		$('#quizHead').append(str);
 		$('#quizBody').append("<input type='button' value='정답확인하기' onclick='QuizCheck()'>");
 		
 	}//previewQuizNext() END

@@ -9,6 +9,22 @@
 <title>Insert title here</title>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+	crossorigin="anonymous">
+
+<!-- LaTest compiled and minified JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+	crossorigin="anonymous"></script>
 	<sec:authorize access="hasRole('ROLE_STUD')">
 	<script src="../script/wsocket.js"></script>
 </sec:authorize>
@@ -29,6 +45,7 @@ section {
 	width: 1000px;
 	float: left;
 }
+
 </style>
 </head>
 <body>
@@ -90,22 +107,30 @@ function testtest(id) {
 function startSelectQuiz(){
 	var showQuiz = $('#showQuiz');
 	var str="";
-	showQuiz.append("<h4>LevelCheck</h4>");
-	str += "<select id='cc' onchange='concernChange()'><option value=''>관심사를 선택해주세요.</option>";
+	showQuiz.append("<div id='showQuiz' class='container'></div>");
+	str +="<h4 style='text-align: center; margin-top: 25%;'>LevelCheck</h4>";
+	str += "<div style='text-align: center;'><select style='width: 30%;' id='cc' onchange='concernChange()'><option value=''>관심사를 선택해주세요.</option>";
 	for(var i in concern){
-		str += "<option value='"+concern[i].cc_cc+"'>"+concern[i].cc_cc+"</option>";
+		str += "<div><option value='"+concern[i].cc_cc+"'>"+concern[i].cc_cc+"</option></div>";
 	}
-	str += "</select>";
-	showQuiz.append(str);
+	str += "</select></div>";
+	$('#showQuiz').append(str);
 };//function startSelectQuiz() END
 
 function concernChange(){
 	var showQuiz = $('#showQuiz');
+	
 	var ccValue = $('#cc').val();
 	if(ccValue !=""){
-		$('#btn').html("");
 		var str="";
-		str +="<div id='btn'><input type='button' value='"+ccValue+" 문제 풀기' onclick='selectLevelCheckQuiz()'></div>";
+		showQuiz.html("");
+		str +="<h4 style='text-align: center; margin-top: 25%;'>LevelCheck</h4>";
+		str += "<div style='text-align: center;'><select id='cc'  style='width: 30%;' onchange='concernChange()'><option value=''>관심사를 선택해주세요.</option>";
+		for(var i in concern){
+			str += "<option value='"+concern[i].cc_cc+"'>"+concern[i].cc_cc+"</option>";
+		}
+		str += "</select></div><br><br>";
+		str +="<div id='btn' style='text-align:center;'><input type='button' class='btn btn-primary btn-sm' style='text-align:center;'  value='"+ccValue+" 문제 풀기' onclick='selectLevelCheckQuiz()'></div>";
 		showQuiz.append(str);
 		currentCC = ccValue;
 	}else{
@@ -131,17 +156,18 @@ function selectLevelCheckQuiz(){
 			var problemListObj ={};
 			if(Object.keys(json).length !=0){
 				showQuiz.html("");
-				showQuiz.append("<h4>LevelCheck</h4><br/>");
+				showQuiz.append("<div style='text-align: center; background-color:gray; height:10%;'><h4 style='text-align:center; margin-top:0px; padding-top:12px;'>LevelCheck</h4></div>");
+				str +="<table class='table'>";
 				for(var i=0; i<Object.keys(json).length; i++){
 					var problemList = {};
-					str += "<div>"+(i+1)+". "+json["Quiz"+i][i].pb_pbname+"</div><br/>";
+					str += "<tr style='background-color:lightgray;'><td>"+(i+1)+".&nbsp;"+json["Quiz"+i][i].pb_pbname+"</td></tr>";
 					for(var j=0; j<json["Quiz"+i].length; j++){
 						if(json["Quiz"+i][i].dp_pbexmnum != 0){
 							checkQuizStyle="m";
-							str +="<input type='radio' id='levelCheckMulti"+i+"'name='levelCheckMulti"+i+"' value='"+json["Quiz"+i][j].dp_pbexmnum+"'>"+json["Quiz"+i][j].dp_pbexm+"<br/>";
+							str +="<tr><td><input type='radio' id='levelCheckMulti"+i+"'name='levelCheckMulti"+i+"' value='"+json["Quiz"+i][j].dp_pbexmnum+"'>&nbsp;"+json["Quiz"+i][j].dp_pbexm+"</td></tr>";
 						}else{
 							checkQuizStyle="s";
-							str +="<textarea id='levelCheckSubject"+i+"' cols='50' rows='10'></textarea><br/>";
+							str +="<tr><td><textarea id='levelCheckSubject"+i+"' cols='50' rows='10'></textarea></td></tr>";
 						}	
 						 var detailObj= {
 								"pb_pbnum":(i+1),
@@ -157,11 +183,11 @@ function selectLevelCheckQuiz(){
 					problemListObj["Quiz"+i]=problemList;
 					//console.log(problemList);
 					//console.log(problemList[0]);
-					str += "<hr/>";
 				}//for i
+					str += "</table><br/><br/>";
 				//console.log(problemListObj);
 				//console.log(problemListObj["Quiz0"]);
-				str +="<input type='button' value='다음 문제 풀기' onclick='checkQuizAnswer()'>";
+				str +="<div style='text-align:center;'><input type='button' class='btn btn-primary btn-sm' value='다음 문제 풀기' onclick='checkQuizAnswer()'></div><br/><br/>";
 				showQuiz.append(str);
 				QuizList[x]=problemListObj;
 			}else{
@@ -222,37 +248,42 @@ function checkQuizAnswer(){
 function LevelChkQuizQuizEnd(){
 	var showQuiz=$('#showQuiz');
 	var str ="";
+	var strr ="";
 	var quiz=1;
 	showQuiz.html("");
-	showQuiz.append("<h4>오답풀이</h4><br/>");
-	showQuiz.append("<p>관심사: "+currentCC+"</p>");
-	showQuiz.append("<p>수준: "+problemLv+"</p>"); 
-	showQuiz.append("<p><b>levelCheck는 참고용입니다. 과목의 오리엔테이션을 꼭 보고 수강해주세요.</b></p><br/>");
+	showQuiz.append("<div style='text-align: center; background-color:gray; height:12%;'><h4 style='text-align:center; margin-top:0px; padding-top:20px;'>오답풀이</h4></div>");
+	strr +="<table class='table' style='margin-bottom:0px;'>";
+	strr +="<tr style='background-color:lightgray;'><td>관심사:&nbsp;"+currentCC+"</td></tr>";
+	strr +="<tr style='background-color:lightgray;'><td>LV:&nbsp;"+problemLv+"</td></tr>";
+	strr +="<p style='text-align:center; margin-top:10px;'><b>levelCheck는 참고용입니다. 과목의 오리엔테이션을 꼭 보고 수강해주세요.</b></p>";
+	strr +="</table>";
+	showQuiz.append(strr);
 	for(var i=0; i<Object.keys(QuizList).length; i++){// lv 올라간 개수 
 		for(var j=0; j<Object.keys(QuizList[i]).length; j++){// lv에서 문제 개수
+			str +="<table class='table' style='margin-bottom:0px;'>";
 			if(QuizList[i]["Quiz"+j][0].pb_studans == QuizList[i]["Quiz"+j][0].pb_pbexplain){
-				str += "<div style='color:blue;'><b>"+(quiz++)+". "+QuizList[i]["Quiz"+j][0].pb_pbname+"</b></div><br/>";			
+				str += "<tr colspan='2' style='boader:1px solid gray;'><td style='color:blue;'>"+(quiz++)+".&nbsp;"+QuizList[i]["Quiz"+j][0].pb_pbname+"</td></tr>";			
 			}else{
-				str += "<div style='color:red;'><b>"+(quiz++)+". "+QuizList[i]["Quiz"+j][0].pb_pbname+"</b></div><br/>";							
+				str += "<tr colspan='2'><td style='color:red;'>"+(quiz++)+".&nbsp;"+QuizList[i]["Quiz"+j][0].pb_pbname+"</td></tr>";							
 			}
 			for(var n=0; n<Object.keys(QuizList[i]["Quiz"+j]).length; n++){//문제의 행 개수 
 				if(QuizList[i]["Quiz"+j][j].dp_pbexmnum !=0){
 					if((n+1) == QuizList[i]["Quiz"+j][n].pb_pbexplain){
-						str +="<p style='color:blue;'>("+QuizList[i]["Quiz"+j][n].dp_pbexmnum+") "+QuizList[i]["Quiz"+j][n].dp_pbexm+"</p>";				
+						str +="<tr><td colspan='2' style='color:blue;'>("+QuizList[i]["Quiz"+j][n].dp_pbexmnum+")"+QuizList[i]["Quiz"+j][n].dp_pbexm+"</td></tr>";				
 					}else if((n+1) == QuizList[i]["Quiz"+j][n].pb_studans){
-						str +="<p style='color:red;'>("+QuizList[i]["Quiz"+j][n].dp_pbexmnum+") "+QuizList[i]["Quiz"+j][n].dp_pbexm+"</p>";					
+						str +="<tr><td colspan='2' style='color:red;'>("+QuizList[i]["Quiz"+j][n].dp_pbexmnum+")"+QuizList[i]["Quiz"+j][n].dp_pbexm+"</td></tr>";					
 					}else{
-						str +="<p>("+QuizList[i]["Quiz"+j][n].dp_pbexmnum+") "+QuizList[i]["Quiz"+j][n].dp_pbexm+"</p>";					
+						str +="<tr><td>("+QuizList[i]["Quiz"+j][n].dp_pbexmnum+")"+QuizList[i]["Quiz"+j][n].dp_pbexm+"</td></tr>";					
 					}					
 				}else{
-					str +="<br/><p>나의 답: "+QuizList[i]["Quiz"+j][n].pb_studans+"</p>";
+					str +="<tr style='background-color:lightgray;'><td>나의 답:&nbsp;"+QuizList[i]["Quiz"+j][n].pb_studans+"</td></tr>";
 				}
 			}//for n
-			str +="<p><b>해설</b></p>";
-			str +="<p>나의 답: "+QuizList[i]["Quiz"+j][j].pb_studans+"</p>";
-			str +="<p>문제 답: "+QuizList[i]["Quiz"+j][j].pb_pbexplain+"</p><br/>";
-			str +="<p>"+QuizList[i]["Quiz"+j][0].pb_pbanswer+"</p>";
-			str += "<hr/>";
+			str +="<tr style='background-color:gray;'><td colspan='2'>해설</td></tr>";
+			str +="<tr style='background-color:lightgray;'><td>나의 답:&nbsp;"+QuizList[i]["Quiz"+j][j].pb_studans+"</td></tr>";
+			str +="<tr style='background-color:lightgray;'><td>문제 답:&nbsp;"+QuizList[i]["Quiz"+j][j].pb_pbexplain+"</td></tr>";
+			str +="<tr style='background-color:lightgray;'><td colspan='2'>"+QuizList[i]["Quiz"+j][0].pb_pbanswer+"</td></tr>";
+// 			str += "<br/>";
 		}// for j
 	}// for i
 	showQuiz.append(str);
