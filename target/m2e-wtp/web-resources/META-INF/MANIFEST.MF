@@ -1,5 +1,10 @@
 Manifest-Version: 1.0
+<<<<<<< HEAD
 Built-By: HanSeungHo
 Build-Jdk: 1.8.0_251
+=======
+Built-By: Jung suhyun
+Build-Jdk: 1.8.0_261
+>>>>>>> origin/dons10_13_1754i
 Created-By: Maven Integration for Eclipse
 
