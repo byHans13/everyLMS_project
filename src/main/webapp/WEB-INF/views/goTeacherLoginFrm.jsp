@@ -29,21 +29,16 @@ aside {
 	width: 300px;
 	float: left;
 	position : absolute;
-	transform:translate(0px,112px);  
+	transform:translate(0px,230px);  
 }
 
 section {
 	/* background-color: pink; */
-	margin-top: 20px;
 	width: 1100px;
 	float: left;
 	position: absolute;
-<<<<<<< HEAD
-	transform:translate(320px,100px);
 	margin-top: 100px;
-=======
 	transform:translate(320px,110px);
->>>>>>> origin/kyj_201013_04
 }
 .menu{
     margin-left: 20px;

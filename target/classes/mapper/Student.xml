@@ -130,9 +130,9 @@ RN>=#{pageNum}*9-10 and cob_title LIKE '%'||#{search}||'%'
 		CO_NAME = #{co_name}
 	</select>
 	<select id="UpdateMyPoint" parameterType="String" resultType="String">
-		UPDATE POINT SET
-		point_pt = #{resultpt}
-		WHERE POINT_ID=#{id}
+		UPDATE mb SET
+		mb_point = #{resultpt}
+		WHERE mb_ID=#{id}
 	</select>
 
 </mapper>
