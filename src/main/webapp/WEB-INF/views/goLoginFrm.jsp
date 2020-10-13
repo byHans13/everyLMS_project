@@ -5,7 +5,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <sec:authorize access="hasRole('ROLE_STUD')">
 	<script src="../script/wsocket.js"></script>
 </sec:authorize>
@@ -50,6 +49,8 @@ fieldset{
 <script>
  $(document).ready
 (function() {
+	 var id = "${id}";
+	test(id);
 	console.log('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal}');
 	console.log('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.authorities}');
 	//var aut =JSON.parse("${sessionScope.SPRING_SECURITY_CONTEXT.authentication.authorities}");
@@ -59,18 +60,27 @@ fieldset{
 	console.log("권한체크",n);
 	var profCheck ="${profCheck}";
 	console.log(profCheck);
-	 var id = "${id}";
 	 console.log("hansnq3"+id);
-/* 	if (n != -1){
-		$("#goTeacherPage").append("<p style='margin-top: auto;'><b><a href='/h2k5every/prof/goTeacherLoginFrm' style='color: white; '>강사페이지이동</a></b></p>");
-	}
-	else if (n == -1 && profCheck < 1){
-		$("#goTeacherPage").append("<p style='margin-top: auto;'><b><a href='/h2k5every/stud/registertoprof' style='color: white; '>강사등록하러가기</a></b></p>");
-	}else{
-		$("#goTeacherPage").append("<p style='margin-top: auto;'><b><a href='#' style='color: white; '>강사 신청중인 상태입니다.</a></b></p>");
-		
-	} */
-	test(id);
+	 var obj = {"cc_id": id};
+	 console.log("hansObj",obj);
+		$.ajax({
+			type:'get',
+			url:'rest/selectmainstudentview',
+			data : obj,
+			datatype:'json',
+			success: function (json) {
+				console.log(json);
+				console.log(json.length);
+			
+				
+			},
+			error: function (err) {
+				console.log(err);
+			}
+			
+		});
+	 
+	 
 }); 
 </script>
 	<header>

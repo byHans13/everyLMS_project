@@ -105,7 +105,6 @@ section {
     border: 1px black solid;
     float: left;
 }
-<<<<<<< HEAD
 
 table.type07 {
     border-collapse: collapse;
@@ -142,7 +141,6 @@ table.type07 td {
 table.type07 a{text-decoration: none; 
  color: #333333;}
 
-=======
 img{
 	width: 100px;
 	height: 100px;
@@ -150,7 +148,6 @@ img{
 table{
 	text-align: center;
 }
->>>>>>> origin/kjg_05
 </style>
 </head>
 <body>

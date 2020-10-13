@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+ <mapper namespace="com.icia.allmain.IAllMainDao">
+ 
+ <select id="selectmainstudentview" resultType="allmain">
+select cl_clname,cl_id,cl_lv, cl_lcnum, cl_pt, pc_cont, pi_pisysname 
+from cc inner join cl
+on cc_cc = cl_cc
+inner join pi
+on cl_idnum=pi_idnum and cl_lv = pi_lv
+inner join pc
+on cl_idnum=pc_idnum and cl_lv = pc_lv
+where cl_ct=2 and cc_check = 1
+group by cl_clname,cl_id,cl_lv, cl_lcnum, cl_pt, pc_cont, pi_pisysname
+ 
+ </select>
+ 
+ 
+ 
+</mapper> 

@@ -35,8 +35,8 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/workspring/RealProject_LMSevery/jarFile/javaSDK-2.2.jar"/>
-	<classpathentry kind="lib" path="D:/workspring/RealProject_LMSevery/jarFile/javaSDK-2.2-sources.jar"/>
-	<classpathentry kind="lib" path="D:/workspring/RealProject_LMSevery/jarFile/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/work/springWork/RealProject_semi/jarFile/javaSDK-2.2.jar"/>
+	<classpathentry kind="lib" path="C:/work/springWork/RealProject_semi/jarFile/javaSDK-2.2-sources.jar"/>
+	<classpathentry kind="lib" path="C:/work/springWork/RealProject_semi/jarFile/json-simple-1.1.1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
