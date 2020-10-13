@@ -134,5 +134,8 @@ RN>=#{pageNum}*9-10 and cob_title LIKE '%'||#{search}||'%'
 		mb_point = #{resultpt}
 		WHERE mb_ID=#{id}
 	</select>
-
+	<insert id="insertMyPoint" parameterType="String">
+	INSERT INTO Point VALUES(SYSDATE,#{onechk},#{id})
+	
+	</insert>
 </mapper>
