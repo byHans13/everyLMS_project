@@ -746,7 +746,7 @@ public class ClassHomeService {
 			gb.setGr_lv(pb.getPb_lv());
 			gb.setGr_num(pb.getPb_num());
 			if (gb.getGr_num() == 0) {
-				gb.setGr_kind("H");
+				gb.setGr_kind("T");
 			} else {
 				gb.setGr_kind("Q");
 			}
