@@ -181,9 +181,6 @@ var cl_ct = parseInt(cl);
 console.log(cl_ct);
 openClass(cl_ct);
 
-
-
-
 function openClass(cl_ct) {
 	console.log("cl_ct: "+ cl_ct);
 	if(cl_ct=='1'){

@@ -17,9 +17,6 @@
 	<script src="../script/wsocket.js"></script>
 </sec:authorize>
 <script src="../resources/js/jquery.serializeObject.js"></script>
-<sec:authorize access="hasRole('ROLE_STUD')">
-	<script src="../script/wsocket.js"></script>
-</sec:authorize>
 <meta charset="UTF-8">
 <title>CalendarTest</title>
 <style>

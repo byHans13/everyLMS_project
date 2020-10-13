@@ -13,10 +13,7 @@
 </sec:authorize>
 <script src="../resources/js/jquery.serializeObject.js"></script>
 
-  
-<sec:authorize access="hasRole('ROLE_STUD')">
-	<script src="../script/wsocket.js"></script>
-</sec:authorize>
+
 <style>
 header {
 	/* background-color: gray; */
