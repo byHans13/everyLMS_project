@@ -172,7 +172,7 @@ function startClassManagementPage(){
 			if(myClassList[i].at_atmkCnt ==0){
 				var percent=0;
 			}else{
-				var percent = myClassList[i].at_atmkCnt / myClassList[i].cl_lcnum * 100;		
+				var percent = (myClassList[i].at_atmkCnt-1) / myClassList[i].cl_lcnum * 100;		
 			}
 		str +="<tr><td>"+myClassList[i].cl_clName+"</td>";
 		str +="<td>"+percent.toFixed(1)+"%</td>";

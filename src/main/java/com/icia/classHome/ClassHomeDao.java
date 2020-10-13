@@ -123,7 +123,7 @@ public interface ClassHomeDao {
 		List<CourseBean> selectCourseNum(ClassBean cl);// lv modi
 		@Select("SELECT * FROM problem WHERE pb_idnum=#{pb_idnum} AND pb_lv=#{pb_lv} AND pb_num = #{pb_num} AND pb_id=#{pb_id}")
 		List<ProblemBean> selectProblemNum(ProblemBean pb);// lv modi 
-		@Select("SELECT * FROM problemView WHERE pb_idnum = #{pb_idnum} AND pb_lv=#{pb_lv} AND pb_num = #{pb_num} AND pb_pbnum = #{pb_pbnum}")
+		@Select("SELECT * FROM problemView WHERE pb_idnum = #{pb_idnum} AND pb_lv=#{pb_lv} AND pb_num = #{pb_num} AND pb_id=#{pb_id} AND pb_pbnum = #{pb_pbnum}")
 		List<ProblemBean> selectPreviewQuiz(ProblemBean pb);// lv modi
 		
 		//공지사항 게시판 들어갔을 때 게시글 출력 위해 - lv 수정, test  완료

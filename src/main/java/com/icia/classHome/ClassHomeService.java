@@ -137,7 +137,7 @@ public class ClassHomeService {
 			System.out.println(rList);
 			view = "Student/ClassHome/ClassHome";
 		} else {
-			view = "./";
+			view = "./"; 
 			rList = null;
 		}
 		cb.setCl_id(session.getAttribute("id").toString());
@@ -248,11 +248,17 @@ public class ClassHomeService {
 				pb.setPb_id(session.getAttribute("classId").toString());
 				List<ProblemBean> pList = cDao.selectProblemNum(pb);
 				if (pList != null) {
+					if(pList.size()<5) {
+						if(pList.size() ==i) {
+							break;
+						}
+					}
 					pb.setPb_pbnum(random.nextInt(pList.size()) + 1);
 					pbNum[i] = pb.getPb_pbnum();
 					pList = cDao.selectPreviewQuiz(pb);
 					System.out.println(pList);
 					if (pList != null) {
+						System.out.println("pList.length="+pList.size());
 						pMap.put("Quiz" + (i + 1), pList);
 						if (i > 0) {
 							for (int j = 0; j < i; j++) {
