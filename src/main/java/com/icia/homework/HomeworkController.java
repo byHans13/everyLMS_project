@@ -41,6 +41,7 @@ public class HomeworkController {
 	@RequestMapping(value = "/prof/inserthomework", method = RequestMethod.POST, produces = {"text/plain;charset=utf-8", "application/json;charset=utf-8"})
 	public ModelAndView insertHomework(HttpServletRequest request, HttpSession session, MultipartHttpServletRequest multi,RedirectAttributes attr) {
 		ModelAndView mav = new ModelAndView();
+		
 		try {
 			request.setCharacterEncoding("UTF-8");
 			

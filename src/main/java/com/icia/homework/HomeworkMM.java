@@ -44,6 +44,7 @@ public class HomeworkMM {
 		hb.setHw_lv(Integer.parseInt(multi.getParameter("hw_lv")));
 		hb.setHw_num(Integer.parseInt(multi.getParameter("hw_num")));
 		hb.setHw_psfa("0");
+
 		boolean homeresult = hd.insertHomework(hb);
 		System.out.println("homeresult:   "+homeresult);
 		if(homeresult) {
@@ -59,7 +60,8 @@ public class HomeworkMM {
 				try {
 					session.removeAttribute("courseList");
 					String encodedParam = URLEncoder.encode(hb.getHw_idnum(), "UTF-8");
-					mav.setViewName("redirect:/prof/selectmanagercoursehomeworkpage/"+encodedParam);
+					String msg = URLEncoder.encode("1", "UTF-8");
+					mav.setViewName("redirect:/prof/selectmanagercoursehomeworkpage/"+encodedParam+"/"+msg);
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
 				}
