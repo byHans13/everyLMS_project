@@ -13,6 +13,28 @@
 <meta name="_csrf" content="${_csrf.token}">
 <meta name="_csrf_header" content="${_csrf.headerName}">
 <style>
+html, body {
+   height: 100%;
+   margin: 0
+}
+
+        aside {
+	width: 300px;
+	float: left;
+}
+section {
+	width: 1000px;
+	float: left;
+		position: absolute;
+	transform:translate(320px,20px);
+}
+.menu{
+    margin-left: 20px;
+    text-align:center;
+    width: 200px;
+    border: 1px black solid;
+    float: left;
+}
 table.type07 {
     border-collapse: collapse;
     text-align: left;
@@ -45,16 +67,29 @@ table.type07 td {
     vertical-align: top;
     border-bottom: 1px solid #ccc;
 }
+.button3 {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #f44336;
+}
+.button3:hover {
+  background-color: #f44336;
+  color: white;
+}
 
 </style>
 </head>
 <body>
-<h1>업데이트 강의계획서</h1>
+<header>
+		<jsp:include page="../../h2k5every_loginHeader.jsp" /><!-- 동적인 방식 -->
+	</header>
+	<aside>
+		<jsp:include page="../../h2k5every_teacherAside.jsp" />
+	</aside>
+	<section id="section" style="margin-left: 20px;">
 <form method="post" id='upfrm' >
 <input type="hidden" name = "${_csrf.parameterName}" value="${_csrf.token}" />
 <input type="hidden" id='token' data-token-name='${_csrf.headerName }' value='${_csrf.token }'/>
-
-
 <table class="type07">
     <thead>
     <tr>
@@ -86,11 +121,16 @@ table.type07 td {
     </tbody>
 </table>
 <input type="hidden" id='idnum' name='pc_idnum' required="required" >
-<button type="button" id='upbtn'>수정하기</button>
+<button type="button" id='upbtn' class='button3'>수정하기</button>
+<button type="reset" class='button3'>취소</button>
 </form>
 
 
-<button type="reset">취소</button>
+
+</section>
+<footer>
+		<jsp:include page="../../h2k5every_footer.jsp" />
+	</footer>
 <script>
 var update = ${upPlanClass};
 console.dir(update);

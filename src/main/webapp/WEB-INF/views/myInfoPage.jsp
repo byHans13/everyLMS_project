@@ -93,6 +93,17 @@ table.type07 td {
     vertical-align: top;
     border-bottom: 1px solid #ccc;
 }
+ .button3 {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #f44336;
+  margin-top: 8px;
+}
+.button3:hover {
+  background-color: #f44336;
+  color: white;
+}
+ 
     </style>
 </head>
 <body>
@@ -131,16 +142,17 @@ if(myInfo.length == 0){
 }else{
 	$('#basic').append("<table class='type10'><thead><tr><th>"+myInfo[0].mb_id+"님의 정보</th><th>내용</th></tr></thead><tbody>"+
 			"<tr><th>이름</th><td>"+myInfo[0].mb_name+"<p style='font-size: 13px;'>이름이나 생년월일, 성별 등의 정보가 변경되었다면 본인확인을 통해 정보를 수정할 수 있습니다.<br> 본인확인은 휴대전화를 통해 가능합니다. 정보가 일치 않다면, 휴대전화수정을 진행 후 수정해주세요.</p>"+
-			 "<button onclick='info("+myInfo[0].mb_phone+")'>수정하기</button></td></tr>"+
+			 "<button onclick='info("+myInfo[0].mb_phone+")' class='button3'>수정하기</button></td></tr>"+
 			 "<tr><th class='even'>휴대전화</th><td class='even'><p id='updatePhone'>"+myInfo[0].mb_phone+"</p>"+
 			   "<p style='font-size: 13px;'>아이디, 비밀번호 찾기 등 본인확인이 필요한 경우 또는 유료 결제 등 으로부터 알림을 받을 때 사용할 휴대전화입니다.</p>"+
-			   "<button onclick='phonebtn()' id='bb'>수정하기</button><p id='ss'></p></td></tr>"+ 
+			   "<button onclick='phonebtn()' id='bb' class='button3'>수정하기</button><p id='ss'></p></td></tr>"+ 
 			"<tr><th>계정이메일</th><td><p id='updateEmail'>"+myInfo[0].mb_email+"</p><p  style='font-size: 13px;'>서비스의 변경/종료 등 대부분 안내에 사용할 이메일 주소입니다.</p>"+
-			"<button onclick='emailbtn()' id='ee'>수정하기</button><p id='kk11'></p></td></tr>"+
+			"<button onclick='emailbtn()' id='ee' class='button3'>수정하기</button><p id='kk11'></p></td></tr>"+
 			"<tr><th class='even'>보유포인트</th><td class='even'><p>"+myInfo[0].mb_point+"POINT</p>"+
 			   "<p style='font-size: 13px;'>강의등록시 차감되는 포인트 입니다.</p>"+
-			   "<button>충전하기</button></td></tr></tbody></table>");
+			   "<button class='button3'>충전하기</button></td></tr></tbody></table>");
 }
+update();
 
 function info(phone) {
 	var go = confirm("기존 전화번호랑 일치하나요? 맞으면 '확인'  틀리면 '취소'를 눌러주세요");
@@ -149,7 +161,7 @@ function info(phone) {
 		$('#gosms').css('display','block');
 		$('#gosms').append("<table class='type07'><thead><tr><th>"+myInfo[0].mb_id+"의 정보수정</th><th>내용</th></tr></thead><tbody>"+
 				"<tr><th>휴대전화 번호</th><td id='phoneNum'>"+myInfo[0].mb_phone+"</td></tr>"+
-				"<tr><th>인증하기</th><td><button onclick='send()'>인증하기</button></td></tr></tbody></table>");
+				"<tr><th>인증하기</th><td><button onclick='send()' class='button3'>인증하기</button></td></tr></tbody></table>");
 	
 		
 	}else{
@@ -175,7 +187,7 @@ function send() {
 			}else if(sms=='1'){
 				alert("해당 휴대폰으로 인증번호를 발송했습니다");
 				number=number;
-				$('#gosms').append("<input type='text' placeholder='인증번호' id='f'><button onclick='gonum("+number+")'>확인</button>");
+				$('#gosms').append("<input type='text' placeholder='인증번호' id='f'><button onclick='gonum("+number+")' class='button3'>확인</button>");
 			}
        },
        error: function(err) {
@@ -200,6 +212,8 @@ function update() {
 	$('#basic').css('display','none');
 	$('#gosms').css('display','none');
 	$('#updateInfo').css('display','block');
+	var rrn = (myInfo[0].mb_rrn).split("");
+	var bi = ""+rrn[0]+rrn[1]+rrn[2]+rrn[3]+rrn[4]+rrn[5];
 	$('#updateInfo').append("<table class='type07'><thead><tr><th>"+myInfo[0].mb_id+"의 정보수정</th><th>내용</th></tr></thead><tbody>"+
 			"<tr><th>이름</th>"+
 			"<td><input type='text' id='name'  value='"+myInfo[0].mb_name+"' style='border: solid 1px #fff;' required='required'></td></tr>"+
@@ -208,9 +222,9 @@ function update() {
 			"<tr><th>학력</th>"+
 			"<td><input type='text' value='"+myInfo[0].mb_loe+"' style='border: solid 1px #fff;' required='required' id='loe'></td></tr>"+
 			"<tr><th>생년월일</th>"+
-			"<td><input type='text' value='"+myInfo[0].mb_rrn+"' style='border: solid 1px #fff;' required='required' id='loe' required='required'></td></tr>"+
+			"<td><input type='text' value='"+bi+"' style='border: solid 1px #fff;' required='required' id='loe' required='required'></td></tr>"+
 			" <tr><th>수정</th>"+
-			"<td><button onclick='upbtn()'>수정하기</button><p>*성별과 생년월일은 변경 할 수 없습니다.*</p></td></tr></tbody></table>");
+			"<td><button onclick='upbtn()' class='button3'>수정하기</button><p>*성별과 생년월일은 변경 할 수 없습니다.*</p></td></tr></tbody></table>");
 }
 
 
@@ -243,7 +257,7 @@ function update() {
 		$('#updatePhone').append("<input type='number' id='upPhone'>");
 		$('#upPhone').focus();
 		$('#bb').remove();
-		$('#ss').append("<button onclick='goupphonebtn()'>번호 수정</button>");
+		$('#ss').append("<button onclick='goupphonebtn()' class='button3'>번호 수정</button>");
 	}
 	
 	function goupphonebtn() {
@@ -272,7 +286,7 @@ function update() {
 		$('#updateEmail').append("<input type='text' id='upEmail'>");
 		$('#upEmail').focus();
 		$('#ee').remove();
-		$('#kk11').append("<button onclick='goupemailbtn()'>이메일 수정</button>");
+		$('#kk11').append("<button onclick='goupemailbtn()' class='button3'>이메일 수정</button>");
 	}
 	
 	function goupemailbtn() {

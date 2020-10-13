@@ -64,6 +64,16 @@ table.type07 td {
     vertical-align: top;
     border-bottom: 1px solid #ccc;
 }
+.button3 {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #f44336;
+  margin-top: 8px;
+}
+.button3:hover {
+  background-color: #f44336;
+  color: white;
+}
 </style>
 </head>
 <body>
@@ -101,11 +111,12 @@ table.type07 td {
 <input type="hidden" name="co_idnum" id="a">
 <input type="hidden" name="co_num" id="b">
 <input type="hidden" name="fl_num" id="c">
-<button type="button" id="btn">강의 등록하기</button>
+<button type="button" id="btn" class='button3'>강의 등록하기</button>
 <input type="hidden" name = "${_csrf.parameterName}" value="${_csrf.token}" />
 <input type="hidden" id='token' data-token-name='${_csrf.headerName }' value='${_csrf.token }'/>
+<button type="reset" class='button3'>취소</button>
 </form>
-<button type="reset">취소</button>
+
 </section>
 <footer>
 		<jsp:include page="../../h2k5every_footer.jsp" />

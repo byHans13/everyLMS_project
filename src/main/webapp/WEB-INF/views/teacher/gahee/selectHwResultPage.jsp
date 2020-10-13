@@ -66,6 +66,16 @@ table.type07 td {
 }
 table.type07 a{text-decoration: none; 
  color: #333333;}
+ .button3 {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #f44336;
+  margin-top: 8px;
+}
+.button3:hover {
+  background-color: #f44336;
+  color: white;
+}
 </style>
 </head>
 <body>
@@ -108,22 +118,22 @@ $('#stName').text(hwResultList[0].hw_hwname);
 $('#stFl').html("<a href='/h2k5every/stud/homeworkFiledown?sysFileName="+hwResultList[0].fbList[0].fl_sysname+"'>"+hwResultList[0].fbList[0].fl_oriname+"다운로드</a>");
 switch (hwResultList[0].hw_psfa) {
 case "P" :
-	$('#stResult').html("PASS    <button type='button' id='reBnt' value='pass'>수정하기</button>");
+	$('#stResult').html("PASS    <button type='button' id='reBnt' value='pass' class='button3'>수정하기</button>");
 	break;
 case "p" :
-	$('#stResult').html("PASS    <button type='button' id='reBnt' value='pass'>수정하기</button>");
+	$('#stResult').html("PASS    <button type='button' id='reBnt' value='pass' class='button3'>수정하기</button>");
 	break;
 case "F":
-	$('#stResult').html("FAIL    <button type='button' id='reBnt' value='fail'>수정하기</button>");
+	$('#stResult').html("FAIL    <button type='button' id='reBnt' value='fail' class='button3'>수정하기</button>");
 	break;
 case "f":
-	$('#stResult').html("FAIL    <button type='button' id='reBnt' value='fail'>수정하기</button>");
+	$('#stResult').html("FAIL    <button type='button' id='reBnt' value='fail' class='button3'>수정하기</button>");
 	break;
 
 }
 $('#reBnt').click(function() {
 	$('#stResult').html("");
-	$('#stResult').html("<input type='radio' name='aa' value='f'>FAIL<input type='radio' name='aa' value='p'>PASS     <button type='button' onclick='goUpdate()'>수정</button>");
+	$('#stResult').html("<input type='radio' name='aa' value='f'>FAIL<input type='radio' name='aa' value='p'>PASS     <button type='button' onclick='goUpdate()' class='button3'>수정</button>");
 	//$(this).attr('value')
 });
 

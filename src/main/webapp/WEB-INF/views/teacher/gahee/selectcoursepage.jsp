@@ -69,6 +69,16 @@ video{
 width: 500px;
 height: 500px;
 }
+.button3 {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #f44336;
+  margin-top: 8px;
+}
+.button3:hover {
+  background-color: #f44336;
+  color: white;
+}
 
 </style>
 </head>
@@ -115,7 +125,7 @@ height: 500px;
 <input type="hidden" id='dcont' name='co_cont'>
 <input type="hidden" id='didnum' name='co_idnum'>
 <input type="hidden" id='dlv' name='co_lv'>
-<button type="submit">강의 삭제하기</button>
+<button type="submit" class='button3'>강의 삭제하기</button>
 <input type="hidden" name = "${_csrf.parameterName}" value="${_csrf.token}" />
 <input type="hidden" id='token' data-token-name='${_csrf.headerName }' value='${_csrf.token }'/>
 </form>
@@ -127,12 +137,13 @@ height: 500px;
 <input type="hidden" id='ucont' name='co_cont'>
 <input type="hidden" id='uidnum' name='co_idnum'>
 <input type="hidden" id='ulv' name='co_lv'>
-<button type="submit">강의 수정하기</button>
+<button type="submit" class='button3'>강의 수정하기</button>
 <input type="hidden" name = "${_csrf.parameterName}" value="${_csrf.token}" />
 <input type="hidden" id='token' data-token-name='${_csrf.headerName }' value='${_csrf.token }'/>
-</form>
 
-<a href="classmain/0"><button>홈으로</button></a>
+</form>
+<a href="classmain/0"><button class='button3'>홈으로</button></a>
+
 </section>
 <footer>
 		<jsp:include page="../../h2k5every_footer.jsp" />
