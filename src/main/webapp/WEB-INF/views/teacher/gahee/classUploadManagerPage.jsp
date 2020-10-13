@@ -130,6 +130,40 @@ section {
     border: 1px black solid;
     float: left;
 }
+table.type07 {
+    border-collapse: collapse;
+    text-align: left;
+    line-height: 1.5;
+    border: 1px solid #ccc;
+    margin: 20px 10px;
+}
+table.type07 thead {
+    border-right: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    background: #e7708d;
+}
+table.type07 thead th {
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #fff;
+}
+table.type07 tbody th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    background: #fcf1f4;
+}
+table.type07 td {
+    width: 350px;
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+}
+table.type07 a{text-decoration: none; 
+ color: #333333;}
         
 </style>
 </head>
@@ -185,10 +219,11 @@ if(managerClassList.length !=0){
 function openClassPlan(pc_title,pc_cont,cl_cc,cl_lcnum) {
 	 $('#contents_layer').empty();
 	 $('#articleView_layer').addClass('open');
-	//console.log(pc_title+pc_cont+cl_cc+cl_lcnum);
-	//var cont = pc_cont.replace(/(<br>|<br\/>|<br \/>)/g, '\r\n');
-	$('#contents_layer').append("<center class='table table-bordered'><h3>강의계획서</h3><table><tr><th>계획서 개요</th><th>"+pc_title+"</th></tr><tr><th>계획서 내용</th><th>"+pc_cont+"</th></tr><tr><th>관심사</th><th>"+cl_cc+"</th></tr><tr><th>총강좌회차</th><th>"+cl_lcnum+"</th></tr></table></center>");
-	
+	//$('#contents_layer').append("<center class='table table-bordered'><h3>강의계획서</h3><table><tr><th>계획서 개요</th><th>"+pc_title+"</th></tr><tr><th>계획서 내용</th><th>"+pc_cont+"</th></tr><tr><th>관심사</th><th>"+cl_cc+"</th></tr><tr><th>총강좌회차</th><th>"+cl_lcnum+"</th></tr></table></center>");
+	 $('#articleView_layer').addClass('open'); //모달박스 나타남
+	    $('#contents_layer').html("<table class='type07'><thead><tr><th>강의계획서</th><th>내용</th></tr></thead>"+
+	    		"<tbody><tr><th>개요</th><td>"+pc_title+"</td></tr><tr><th>내용</th><td>"+pc_cont+"LV</td></tr>"+
+	    		"<tr><th>관심사</th><td>"+cl_cc+"</td></tr><tr><th>총강좌회차</th><td>"+cl_lcnum+"회차</td></tr></tbody></table>");
 	
 }
 function openCoursePage(cl_lv,cl_idnum) {

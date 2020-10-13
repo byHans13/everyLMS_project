@@ -45,9 +45,7 @@ table.type07 td {
     vertical-align: top;
     border-bottom: 1px solid #ccc;
 }
-input{ 
-outline:none;
-}
+
 </style>
 </head>
 <body>

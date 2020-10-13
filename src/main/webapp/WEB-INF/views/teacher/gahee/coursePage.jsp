@@ -67,6 +67,10 @@ html, body {
    white-space: normal;
    overflow: scroll
 }
+html, body {
+   height: 100%;
+   margin: 0
+}
 aside {
 	width: 300px;
 	float: left;

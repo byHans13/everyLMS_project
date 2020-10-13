@@ -13,6 +13,25 @@
 	<script src="../script/wsocket.js"></script>
 </sec:authorize>
 <style>
+html, body {
+   height: 100%;
+   margin: 0
+}
+aside {
+	width: 300px;
+	float: left;
+}
+section {
+	width: 1000px;
+	float: left;
+}
+.menu{
+    margin-left: 20px;
+    text-align:center;
+    width: 200px;
+    border: 1px black solid;
+    float: left;
+}
 table.type07 {
     border-collapse: collapse;
     text-align: left;
@@ -48,7 +67,13 @@ table.type07 td {
 </style>
 </head>
 <body>
-<h1 id="n"></h1>
+<header style="width: 1500px;">
+		<jsp:include page="../../h2k5every_loginHeader.jsp" /><!-- 동적인 방식 -->
+	</header>
+	<aside>
+		<jsp:include page="../../h2k5every_teacherAside.jsp" />
+	</aside>
+	<section id="section" style="margin-left: 20px;">
 <form action="insertCourse?${_csrf.parameterName }=${_csrf.token}"  method="post" enctype="multipart/form-data" id="frm">
 
 <table class="type07">
@@ -81,6 +106,10 @@ table.type07 td {
 <input type="hidden" id='token' data-token-name='${_csrf.headerName }' value='${_csrf.token }'/>
 </form>
 <button type="reset">취소</button>
+</section>
+<footer>
+		<jsp:include page="../../h2k5every_footer.jsp" />
+	</footer>
 
 
 

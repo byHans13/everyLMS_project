@@ -351,14 +351,17 @@ var subvd="";
 	
 function goHwResult(lv, idnum, num, id) {
 		console.log(lv, idnum, num, id);
-		$('body').append("<form  action=\"selectHwResultPage?${csrf.parameterName}=${_csrf.token}\" method=\"get\"></form>");
+		/* $('body').append("<form  action=\"selectHwResultPage?${csrf.parameterName}=${_csrf.token}\" method=\"get\"></form>");
 		$('form').append("<input type='hidden' name='hw_lv' value="+lv+">");
 		$('form').append("<input type='hidden' name='hw_idnum' value="+idnum+">");
 		$('form').append("<input type='hidden' name='hw_num' value="+num+">");
 		$('form').append("<input type='hidden' id='token' data-token-name='${_csrf.headerName }' value='${_csrf.token }'/>");
-		$('form').append("<input type='hidden' name='hw_id' value="+id+">");
+		$('form').append("<input type='hidden' name='hw_id' value="+id+">"); */
+		location.href="selectHwResultPage/"+lv+"/"+idnum+"/"+num+"/"+id;
 		//console.log($('form').serialize());
-		$('form').submit();
+		/* $('form').submit(); */
+		
+		
 	} 
 	
 $(function() {

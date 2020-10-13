@@ -161,13 +161,6 @@ table.type07 a{text-decoration: none;
 	</footer>
 
 
-
-
-
-
-
-
-
 <div id="articleView_layer">
      <div id="bg_layer"></div>
      <div id="contents_layer"></div>
@@ -202,20 +195,19 @@ function openClass(cl_ct) {
 		success: function(classList) {
 			if(classList.length !=0){
 			$("#classOpen").append('<table style="border: solid 1px;" class="table table-hover">');
-			$('table').append('<thead style="background-color:silver;"><tr><th>강의명</th><th>강의 시작일</th><th>강의 종료일</th><th>강의 회차</th><th>강의 가격</th><th>관심분야</th><th>강의 계획서</th><th>썸네일</th></tr></thead><tbody>');
+			$('table').append('<thead style="background-color:silver;"><tr><th>강의명</th><th>강의 시작일</th><th>강의 종료일</th><th>강의 회차</th><th>강의 가격</th><th>관심분야</th><th>강의 계획서</th><th>썸네일</th><th>MY강좌</th></tr></thead><tbody>');
 			for(var i=0; i<classList.length; i++){
 				console.log("classList[i].pi_pisysname: "+ classList[i].pi_pisysname);
 				var st = classList[i].cl_stday.split(" ");
 				var fn = classList[i].cl_fnday.split(" ");
 				if(classList[i].pc_title==undefined){
 				 $('tbody').append("<tr><td>"+classList[i].cl_clname+"</td><td>"+st[0]+"</td><td>"+fn[0]+"</td><td>"+classList[i].cl_lcnum+"</td><td>"+classList[i].cl_pt+"</td><td>"+classList[i].cl_cc+"</td><td><a id='go"+i+"'>쓰기</a></td>"
-				 +"<td><img src=\"../picture/"+classList[i].pi_pisysname+"\"></td></tr></tbody></table>");
-				 //console.log("hi");
+				 +"<td><img src=\"../picture/"+classList[i].pi_pisysname+"\"></td><td>강의계획서를 작성후에 볼 수 있습니다.</td></tr></tbody></table>");
 				 $('#go'+i).attr("href","insertplanclasspage/"+classList[i].cl_idnum+"/"+classList[i].cl_clname+"/"+classList[i].cl_lcnum+"/"+classList[i].cl_lv);
 				
 				}else{
 					//console.log(classList[i].pc_cont);
-					$('tbody').append("<tr><td>"+classList[i].cl_clname+"</td><td>"+st[0]+"</td><td>"+fn[0]+"</td><td>"+classList[i].cl_lcnum+"</td><td>"+classList[i].cl_pt+"</td><td>"+classList[i].cl_cc+"</td><td><a href='#' onclick=\"articleView('"+classList[i].cl_clname+"','"+classList[i].cl_lv+"','"+classList[i].pc_title+"','"+classList[i].pc_cont+"','"+classList[i].cl_lcnum+"','"+classList[i].cl_idnum+"')\">보기</a></td>"+"<td><img src=\"../picture/"+classList[i].pi_pisysname+"\"></td></tbody></table>");	     
+					$('tbody').append("<tr><td>"+classList[i].cl_clname+"</td><td>"+st[0]+"</td><td>"+fn[0]+"</td><td>"+classList[i].cl_lcnum+"</td><td>"+classList[i].cl_pt+"</td><td>"+classList[i].cl_cc+"</td><td><a href='#' onclick=\"articleView('"+classList[i].cl_clname+"','"+classList[i].cl_lv+"','"+classList[i].pc_title+"','"+classList[i].pc_cont+"','"+classList[i].cl_lcnum+"','"+classList[i].cl_idnum+"')\">보기</a></td>"+"<td><img src=\"../picture/"+classList[i].pi_pisysname+"\"></td><td><a href='coursePage/"+classList[i].cl_lv+"/"+classList[i].cl_idnum+"/"+classList[i].cl_lcnum+"'>보기</a></td></tr></tbody></table>");	     
 						}//end
 				} 
 			}else if(classList.length ==0){
@@ -235,10 +227,6 @@ function articleView(clname, lv, title, cont, lcnum, idnum){
 	var clNumber = parseInt(lcnum);
 	console.log(clNumber);
 	   $('#articleView_layer').addClass('open'); //모달박스 나타남
-	       
-		   //	$('#contents_layer').append("<a href='coursePage/"+lv+"/"+idnum+"/"+lcnum+"'><h3 style="color: black;">나의 강의</h3></a>');
-		    //$('#contents_layer').append("<a id='uppc' onclick=\"updateplan('"+clname+"','"+lv+"','"+title+"','"+cont+"','"+lcnum+"','"+idnum+"')\"><h3 style='color: black;'>강의 계획서 수정</h3></a>");	
-		   // $('#contents_layer').append('<a><h3 style="color: black;">강의 계획서 삭제</h3></a>');	
 		    $('#contents_layer').html("<table class='type07'><thead><tr><th>타이틀</th><th>내용</th></tr></thead>"+
 		    		"<tbody><tr><th>강의명</th><td>"+clname+"</td></tr><tr><th>강의레벨</th><td>"+lv+"LV</td></tr>"+
 		    		"<tr><th>제목</th><td>"+title+"</td></tr><tr><th>내용</th><td>"+pc_cont+"</td></tr>"+

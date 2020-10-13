@@ -25,6 +25,8 @@ public interface IHomeworkDao {
 	@Select("SELECT HW_ID FROM HW WHERE NOT HW_ID=#{hw_id} AND NOT HW_PSFA='0' AND HW_NUM=#{hw_num} AND HW_LV=#{hw_lv} AND HW_IDNUM=#{hw_idnum}")
 	List<String> selectStHWList(@Param("hw_id")String hw_id, @Param("hw_lv")String hw_lv, @Param("hw_idnum")String hw_idnum, @Param("hw_num")String hw_num);
 
+	
+	
 	List<HomeworkBean> selectHwResult(@Param("hw_id")String hw_id, @Param("hw_num")String hw_num,@Param("hw_lv")String hw_lv, @Param("hw_idnum")String hw_idnum);
 	
 	
