@@ -166,7 +166,7 @@ section {
 				var fnDay = new Date(ft[i].cl_fnDay);
 				var today = new Date();
 				console.log("ft[i].atd_atmk: )"+ft[i].atd_atmk+" vs ft[i].cl_lcnum:"+ft[i].cl_lcnum);
-				if(ft[i].atd_atmk == ft[i].cl_lcnum || date <= today && today <= fnDay ){
+				if(ft[i].atd_atmk == (ft[i].cl_lcnum+1) || date <= today && today <= fnDay ){
 					console.log("atmk lcnum값 통과");
 					if(gr.length != 0){
 						console.log("gr.length 통과");

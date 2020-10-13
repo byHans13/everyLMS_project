@@ -46,14 +46,14 @@ group by class.cl_idnum, course.co_lv, mb_id, cl_clname, cl_fnday, cl_stday
 </select>
 
 
-<select id="selectEvalFrmConfirmYes" parameterType="intrTeaConf" resultType="intrTeaConf">
+<select id="selectEvalFrmConfirmYes"  resultType="intrTeaConf">
 
 select  mb_id, cl_clname, co_lv, cl_fnday, cl_stday, cl_idnum, co_num
 from member 
 inner join class on member.mb_id=class.cl_id
 inner join course on class.cl_idnum=course.co_idnum and class.cl_lv = course.co_lv 
 inner join files on course.co_num= files.fl_num and course.co_idnum = files.fl_idnum 
-where cl_ct=1
+where cl_ct=2 and cl_idnum=#{cl_idnum} and co_lv=#{co_lv}
 group by class.cl_idnum, course.co_lv, mb_id, cl_clname, cl_fnday, cl_stday, co_num
 
 </select>

@@ -133,13 +133,10 @@
 	});
 		
 	function uploadAddClick() {
-<<<<<<< HEAD
 		idnum=encodeURIComponent(idnum);
 		console.log("퀴즈추가 일련번호 : "+ $("#idnum").val());
 		console.log("퀴즈추가 레벨값 : " + $("#lv").val());
 		var FormData = $('#insertquizMaterialUploadFrm').serialize();
-=======
->>>>>>> origin/kyj_201013_03
 		var pbname = $("#pb_pbname");
 		var pbexm1 = $("#dp_pbexm1");
 		var pbexm2 = $("#dp_pbexm2");

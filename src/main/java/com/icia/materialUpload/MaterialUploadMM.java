@@ -645,6 +645,7 @@ public class MaterialUploadMM {
 					System.out.println("dp_pbexm : " + mu.getDp_pbexm());
 					System.out.println("dp_pbexmnum : " + mu.getDp_pbexmnum());
 					try {
+						
 						encodeParam = URLEncoder.encode(mu.getCl_idnum(), "UTF-8");
 					} catch (UnsupportedEncodingException e) {
 						e.printStackTrace();

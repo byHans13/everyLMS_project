@@ -1,6 +1,11 @@
 package com.icia.introductionTeacherConfirm;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,9 +38,18 @@ public class IntroductionTeacherConfirmRestController {
 		List<IntroductionTeacherConfirmBean> itcfList = itcfMm.selectLectureData(cl_idnum, co_lv);
 		return itcfList;
 	}
-	@PostMapping	(value="selectlectureconfirmyes")
-	public List<IntroductionTeacherConfirmBean> insertLectureConfirm(String cl_idnum, String co_lv){
-		List<IntroductionTeacherConfirmBean> itcfList = itcfMm.selectLectureConfirmYes(cl_idnum, co_lv);
+	@PostMapping	(value="selectlectureconfirmyes", produces = {"text/plain;charset=utf-8", "application/json;charset=utf-8"})
+	public List<IntroductionTeacherConfirmBean> insertLectureConfirm(String cl_idnum, String co_lv, HttpServletRequest request){
+		List<IntroductionTeacherConfirmBean> itcfList = new ArrayList<IntroductionTeacherConfirmBean>();
+		try {
+			request.setCharacterEncoding("UTF-8");
+			String encoderParam = URLEncoder.encode(cl_idnum, "UTF-8");
+			System.out.println("hans1313"+encoderParam);
+			itcfList = itcfMm.selectLectureConfirmYes(cl_idnum, co_lv);
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return itcfList;
 	}
 	

@@ -88,7 +88,6 @@ text-align: center;
 	</aside>
 	
 	<section id="section" style="margin-left: 20px;">
-<<<<<<< HEAD
 		<div id="aaa">
 			<h3>
 				<b>추천강의</b>
@@ -101,16 +100,8 @@ text-align: center;
 				<b>관심사</b>
 			</h3>
 		</div>
-=======
 	
-			<div id="aaa"><h3><b>추천강의</b></h3></div>
-			<div style="border:solid black 1px; overflow:scroll; width: 1100px;height: 600px;">
-			${muList}
-			</div>
-			    <input type="hidden" name = "${_csrf.parameterName}" value="${_csrf.token}" /></div>
-			<div id="menu"><h3><b>관심사</b></h3></div>
 			
->>>>>>> origin/sibal_gahee
 	</section>
 	<footer>
 		<jsp:include page="h2k5every_footer.jsp" />
