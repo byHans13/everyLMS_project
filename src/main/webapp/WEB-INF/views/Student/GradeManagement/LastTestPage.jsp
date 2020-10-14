@@ -80,6 +80,35 @@ section {
 	white-space: normal;
 	overflow: scroll
 }
+table.type02 {
+    border-collapse: separate;
+    border-spacing: 0;
+    text-align: left;
+    line-height: 1.5;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+  	margin : 20px 10px;
+}
+table.type02 th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #fff;
+    border-left: 1px solid #fff;
+    background-color: black;
+    color:white
+}
+table.type02 td {
+    width: 350px;
+    padding: 10px;
+    vertical-align: top;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -157,7 +186,7 @@ section {
 		var str = "";
 		var body = $('#testTable');
 		body.append("<h3>Final Test List</h3>");
-		str += "<table><tr><td>강의명</td><td>LV</td><td>강사명</td><td>강의종료일</td><td>finalTest</td></tr>";
+		str += "<table class='type02'><tr><th>강의명</th><th>LV</th><th>강사명</th><th>강의종료일</th><th>finalTest</th></tr>";
 			console.log("ft.length="+Object.keys(ft).length);
 		if (Object.keys(ft).length !=0) {
 			for (var i = 0; i < Object.keys(ft).length; i++) {

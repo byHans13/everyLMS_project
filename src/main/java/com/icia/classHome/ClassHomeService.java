@@ -112,8 +112,9 @@ public class ClassHomeService {
 	public List<CourseBean> selectCourseList(CourseBean cb) {
 		System.out.println("dons cb=" + cb);
 		List<CourseBean> cList;
+		System.out.println(cDao);
 		cList = cDao.selectCourseList(cb);
-		System.out.println("dons test" + cList.get(0).getCo_lv());
+		System.out.println("dons test" + cList);
 		if (cList != null) {
 			return cList;
 		}
@@ -137,14 +138,14 @@ public class ClassHomeService {
 			System.out.println(rList);
 			view = "Student/ClassHome/ClassHome";
 		} else {
-			view = "./"; 
+			view = "./";
 			rList = null;
 		}
 		cb.setCl_id(session.getAttribute("id").toString());
-		System.out.println("cb="+cb);
+		System.out.println("cb=" + cb);
 		Integer likeNum = cDao.selectClassLikeDefault(cb);
 		System.out.println("likeNum");
-		if(likeNum == null) {
+		if (likeNum == null) {
 			likeNum = 0;
 		}
 		mav.addObject("likeNum", likeNum);
@@ -249,7 +250,7 @@ public class ClassHomeService {
 				List<ProblemBean> pList = cDao.selectProblemNum(pb);
 				if (pList != null) {
 					if(pList.size()<5) {
-						if(pList.size() ==i) {
+						if(pList.size()==i) {
 							break;
 						}
 					}
@@ -258,7 +259,7 @@ public class ClassHomeService {
 					pList = cDao.selectPreviewQuiz(pb);
 					System.out.println(pList);
 					if (pList != null) {
-						System.out.println("pList.length="+pList.size());
+						System.out.println("pList.length=" + pList.size());
 						pMap.put("Quiz" + (i + 1), pList);
 						if (i > 0) {
 							for (int j = 0; j < i; j++) {
@@ -887,6 +888,7 @@ public class ClassHomeService {
 		}
 		return buyMap;
 	}
+
 	@Transactional
 	public boolean insertBuyClass(ClassBean cb, HttpSession session) {
 		boolean result = false;
@@ -1157,8 +1159,8 @@ public class ClassHomeService {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				} 
-			}// while or For end
+				}
+			} // while or For end
 			if (result == true) {
 				count += 1;
 			} else {
@@ -1173,5 +1175,5 @@ public class ClassHomeService {
 		} else {
 			return false;
 		}
-	}//insertHOmework END
+	}// insertHOmework END
 }// classHomeService END

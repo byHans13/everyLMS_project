@@ -43,7 +43,7 @@ public class ClassHomeRestController {
 		List<ScheduleBean> sList = cs.deleteSchedule(sb, session);
 		return sList;
 	}
-	@PostMapping(value="rest/selectCourseListAjax")
+	@PostMapping(value="rest/selectCourseListAjax", produces = {"text/plain;charset=utf-8", "application/json;charset=utf-8"})
 	public  List<CourseBean> selectCourseList(CourseBean cb) {
 		List<CourseBean> cList = cs.selectCourseList(cb);
 		return cList;
