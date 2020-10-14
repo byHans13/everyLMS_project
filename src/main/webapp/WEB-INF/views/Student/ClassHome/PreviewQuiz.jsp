@@ -112,12 +112,9 @@ position: relative;
 			if(i == 5){
 				$('#quizHead').append("<div style='color:black; font-weight: normal;'>준비된 맛보기 퀴즈를 다 푸셨습니다.</div>");
 			}else{
-				if((i-1) == Object.keys(obj).length){					
-					$('#quizHead').append("<div style='color:black; font-weight: normal;'>준비된 맛보기 퀴즈를 다 푸셨습니다.</div>");
-				}else{
-					$('#quizHead').append("<input type='button' value='다음 문제 풀기' class='btn btn-primary btn-sm' onclick='previewQuizNext()'>");					
-				}
+					$('#quizHead').append("<input type='button' value='다음 문제 풀기' class='btn btn-primary btn-sm' onclick='previewQuizNext()'>");						
 			}
+			
 		}else if($('#QuizValSubject').val() != "" && $('#QuizValSubject').val() != undefined){
 			$('#quizHead').html("");
 			$('#quizBody').html("");
@@ -127,12 +124,7 @@ position: relative;
 			if(i == 5){
 				$('#quizHead').append("<div>준비된 맛보기 퀴즈를 다 푸셨습니다.</div>");
 			}else{
-				if((i-1) == Object.keys(obj).length){					
-					$('#quizHead').append("<div>준비된 맛보기 퀴즈를 다 푸셨습니다.</div>");
-				}else{
 					$('#quizHead').append("<input type='button' value='다음 문제 풀기' class='btn btn-primary btn-sm' onclick='previewQuizNext()'>");
-				}
-				
 			}
 		}else{
 			alert("정답을 입력하고 넘어가주세요.");			

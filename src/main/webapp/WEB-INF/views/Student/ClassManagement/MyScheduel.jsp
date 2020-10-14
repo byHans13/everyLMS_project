@@ -212,6 +212,7 @@ var notLeapYear=[31,28,31,30,31,30,31,31,30,31,30,31];
 var pageFirst = first; 
 var pageYear;
 var classList = ${classList};
+console.log(classList);
 
 // 년도 / 4 = 0 >> 윤년 
 if(first.getFullYear() % 4 === 0){ 
@@ -363,6 +364,14 @@ function showMain(){ // 시작했을 때,날짜 변경시 실행
 		  return obj;
 		}
     var obj = jQuery('#todoList').serializeObject();
+    /* var obj = {
+    		"sc_idnum":,
+    		"sc_lv":,
+    		"sc_num":,
+    		"sc_year":,
+    		"sc_month":,
+    		"sc_date":
+    }; */
     console.log(obj);
     $.ajax({ //일정 select하기
     	type:'post' ,
@@ -520,10 +529,10 @@ function deleteCalendar(classList, lv, contents, courseList){
  }
  // classList값을 통해 이벤트 발생 courseList 출력
  $('#classList').change(function(){
-	 console.log("shut down",$('#classList'));
-	var idnum = $('#classList').val();
+	console.log($('#classList').val());
+	var idnum =$('#classList').val();
 	var lv = classList[0].cl_lv;
-	console.log(lv);
+	/////////////전역변수에 idnum lv 넣어야해 근데 이건 showInfo에서 그 후 여기서 co_num 넣는 작업 ! 
 	$.ajax({
 		type:'post',
 		url:'rest/selectCourseListAjax',
