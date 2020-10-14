@@ -159,6 +159,9 @@ dd {
 			type="hidden" id="hidmypt" name="hidmypt" value="${Point}" />
 		<h3 id="getpt" style="margin-left: 200px; color: gray;">${id}님의 보유POINT =>  ${Point}POINT</h3>
 		<form action="Payment" method="post">
+		<input type='hidden' id='token' data-token-name='${_csrf.headerName}'
+			name='${_csrf.parameterName}' value='${_csrf.token}' /> 
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			<dl>
 				<dt style="margin-left: 30%;">충전 페이지 입니다.^ㅁ^+</dt>
 				<div class="point_charge_row">

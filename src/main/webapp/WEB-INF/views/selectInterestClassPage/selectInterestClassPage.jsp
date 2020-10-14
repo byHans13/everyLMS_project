@@ -243,9 +243,7 @@ $('#LIKEMYCC')
 							    }else{
 							    str += "<th><h2>"+result[i].gpa_gpa+"</h2></th>"
 							    }		
-								str += "<th><a href='goSelectTasterQuestion?cl_idnum="+result[i].cl_idnum+"'>맛보기문제|<a href='goSelectClassReport?cl_idnum="
-										+ result[i].cl_idnum
-										+ "'>강의계획서</th>";
+								str += "<th><a href='goSelectTasterQuestion?cl_idnum="+result[i].cl_idnum+"'>맛보기문제|<a href='/h2k5every/stud/classHome?cl_idnum="+result[i].cl_idnum+"&cl_lv="+result[i].cl_lv+"'>강의실로 이동</a></th>";
 										
 							    str+="<td><a href='#' onclick=\"openBuyPage('"+result[i].cl_idnum+"', '"+result[i].cl_lv+"')\">수강신청 하러가기</a></td></tr>";
 									
