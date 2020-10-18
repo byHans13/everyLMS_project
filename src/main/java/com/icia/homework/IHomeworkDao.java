@@ -2,6 +2,7 @@ package com.icia.homework;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -32,5 +33,12 @@ public interface IHomeworkDao {
 	
 	@Update("UPDATE HW SET HW_PSFA=#{hw_psfa} WHERE HW_ID=#{hw_id} AND HW_NUM=#{hw_num} AND HW_IDNUM=#{hw_idnum} AND NOT HW_PSFA='0'")
 	Integer updateStHw(@Param("hw_id") String hw_id, @Param("hw_idnum") String hw_idnum, @Param("hw_num") String hw_num, @Param("hw_psfa") String hw_psfa);
+
+	
+	
+	
+	@Insert("INSERT INTO grade VALUES('H'||LPAD(kind_seq.NEXTVAL,4,0),#{gr_idnum},#{gr_id},#{gr_num},#{gr_lv},#{gr_score},#{gr_kind})")
+	boolean insertGr(HomeworkBean hb);
+
 	
 }

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>   
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +10,9 @@
 <meta name="_csrf" content="${_csrf.token}">
 <meta name="_csrf_header" content="${_csrf.headerName}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<sec:authorize access="hasRole('ROLE_STUD')">
+	<script src="../script/wsocket.js"></script>
+</sec:authorize>
 <script> 
 
 $(function(){     
@@ -90,9 +94,28 @@ video{
 width: 500px;
 height: 500px;
 }
+
+        aside {
+	width: 300px;
+	float: left;
+}
+section {
+	width: 1000px;
+	float: left;
+		position: absolute;
+	transform:translate(320px,20px);
+}
 </style>
 </head>
 <body>
+<header>
+<input type="hidden" id='token' data-token-name='${_csrf.headerName }' value='${_csrf.token }'/>
+		<jsp:include page="../../h2k5every_loginHeader.jsp" /><!-- 동적인 방식 -->
+	</header>
+	<aside>
+		<jsp:include page="../../h2k5every_teacherAside.jsp" />
+	</aside>
+	<section id="section" style="margin-left: 20px;">
 <h1>강좌</h1>
 <div>
 <table>
@@ -136,6 +159,10 @@ height: 500px;
      	<div id="bg_layer"><input type="hidden" id='token' data-token-name='${_csrf.headerName }' value='${_csrf.token }'/></div>
       	<div id="contents_layer"><input type="hidden" id='token' data-token-name='${_csrf.headerName }' value='${_csrf.token }'/></div>
  </div>
+ </section>
+	<footer>
+		<jsp:include page="../../h2k5every_footer.jsp" />
+	</footer>
 <script>
 
 
@@ -155,7 +182,7 @@ var subvd="";
 		$('#hoTbody').append("<tr id='tr"+i+"'><td>"+courseList[i].co_num+"회차</td><td>"+courseList[i].co_name+"</td>");	
 		if(courseList[i].fbList.length>1){
 			
-			$('#tr'+i).append("<td><a id='a"+i+"' href='homeworkFiledown?sysFileName="+courseList[i].fbList[1].fl_sysname+"'></a></td><td id='td"+i+"'></td><td><a onclick=\"openAaList('"+courseList[i].co_lv+"','"+courseList[i].co_idnum+"','"+courseList[i].co_num+"')\">상세보기</td></tr>");
+			$('#tr'+i).append("<td><a id='a"+i+"' href='/h2k5every/stud/homeworkFiledown?sysFileName="+courseList[i].fbList[0].fl_sysname+"'></a></td><td id='td"+i+"'></td><td><a onclick=\"openAaList('"+courseList[i].co_lv+"','"+courseList[i].co_idnum+"','"+courseList[i].co_num+"')\">상세보기</td></tr>");
 			homeworkList(courseList[i].co_num,courseList[i].co_lv,courseList[i].co_idnum,i);
 			//var arrHome = homeworkList(courseList[i].co_num,courseList[i].co_lv,courseList[i].co_idnum,i);
 			//console.dir(arrHome);

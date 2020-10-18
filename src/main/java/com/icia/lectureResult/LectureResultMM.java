@@ -55,28 +55,36 @@ public class LectureResultMM {
 		System.out.println(cont);
 		System.out.println(box1);
 		System.out.println(box2);
-		
 		List<LectureResult> list=null;
+		String from=null;
 		
-		switch (box2) {
-		case "0":
-				System.out.println("전체검색");
-				list= lrDao.allSelectLectureResult(id,cont,box1);
-			break;
-		case "1":
-				System.out.println("강의명 검색");
-				list= lrDao.classSelectLectureResult(id,cont,box1);
-			break;
-		case "2":
-				System.out.println("강좌명 검색");
-				list= lrDao.courseSelectLectureResult(id,cont,box1);
-			break;
-
-		default:
-				System.out.println("기본값을 들어온다고?");
-			break;
+		if(box1.equals("T")) {
+			from="lectureQuiz1";
 		}
-		
+		else if(box1.equals("Q")) {
+			from="lectureQuiz";	
+		}
+		System.out.println(from);
+			
+			switch (box2) {
+				case "0":
+					System.out.println("전체검색");
+					list= lrDao.allSelectLectureResult(id,cont,box1,from);
+				break;
+				case "1":
+					System.out.println("강의명 검색");
+					list= lrDao.classSelectLectureResult(id,cont,box1,from);
+					break;
+				case "2":
+					System.out.println("강좌명 검색");
+					list= lrDao.courseSelectLectureResult(id,cont,box1,from);
+					break;
+
+				default:
+					System.out.println("기본값을 들어온다고?");
+					break;
+			}
+
 		return list;
 		
 	}

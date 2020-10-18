@@ -8,7 +8,6 @@
 <sec:authorize access="hasRole('ROLE_STUD')">
 	<script src="../script/wsocket.js"></script>
 	</sec:authorize>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <meta charset="UTF-8">
 <meta name="_csrf" content="${_csrf.token}">
 <meta name="_csrf_header" content="${_csrf.headerName}">
@@ -117,6 +116,8 @@ html, body {
 section {
 	width: 1000px;
 	float: left;
+		position: absolute;
+	transform:translate(320px,20px);
 }
 .menu{
     margin-left: 20px;

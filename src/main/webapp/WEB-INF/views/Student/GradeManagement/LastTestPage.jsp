@@ -1,10 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	    <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<sec:authorize access="hasRole('ROLE_STUD')">
+	<script src="../script/wsocket.js"></script>
+</sec:authorize>
 <style>
 header {
 	/* background-color: gray; */
@@ -155,25 +160,42 @@ section {
 		str += "<table><tr><td>강의명</td><td>LV</td><td>강사명</td><td>강의종료일</td><td>finalTest</td></tr>";
 		if (ft != 0) {
 			for (var i = 0; i < ft.length; i++) {
-				//	if(atmklength == lcnum){
-				for (var j = 0; j < gr.length; j++) {
-					if (ft[i].cl_idnum == gr[j].aa_idnum
+				var date = new Date(ft[i].cl_fnDay);
+				date.setDate(date.getDate()-5);
+				var fnDay = new Date(ft[i].cl_fnDay);
+				var today = new Date();
+				if(ft[i].atd_atmk == ft[i].cl_lcnum || date <= today && today <= fnDay ){
+					if(gr.length != 0){
+						for (var j = 0; j < gr.length; j++) {
+							if (ft[i].cl_idnum == gr[j].aa_idnum
 							&& ft[i].cl_lv == gr[j].aa_lv && gr[j].gr_kind == 0) {
+								str += "<tr>";
+								str += "<td>" + ft[i].cl_clName + "</td>";
+								str += "<td>" + ft[i].cl_lv + "</td>";
+								str += "<td>" + ft[i].mb_name + "</td>";
+								str += "<td>" + ft[i].cl_fnDay.substring(0, 10)+"</td>";
+								str += "<td><a href='#' onclick=\"openFinalTest('"
+								+ ft[i].cl_idnum + "','" + ft[i].cl_lv + "','"
+								+ ft[i].cl_id + "')\">시험보기</a></td>";
+								str += "</tr>";
+								tableCount += 1;
+							} else {
+								tableCount += 0;
+							}//else
+						}//for j	
+					}else{//if(gr.length!=null)
 						str += "<tr>";
 						str += "<td>" + ft[i].cl_clName + "</td>";
 						str += "<td>" + ft[i].cl_lv + "</td>";
 						str += "<td>" + ft[i].mb_name + "</td>";
-						str += "<td>" + ft[i].cl_fnDay.substring(0, 10)
-								+ "</td>";
+						str += "<td>" + ft[i].cl_fnDay.substring(0, 10)+"</td>";
 						str += "<td><a href='#' onclick=\"openFinalTest('"
-								+ ft[i].cl_idnum + "','" + ft[i].cl_lv + "','"
-								+ ft[i].cl_id + "')\">시험보기</a></td>";
+						+ ft[i].cl_idnum + "','" + ft[i].cl_lv + "','"
+						+ ft[i].cl_id + "')\">시험보기</a></td>";
 						str += "</tr>";
-						tableCount += 1;
-					} else {
-						tableCount += 0;
-					}//else
-				}//for j	
+						tableCount +=1;
+					}
+				}//if date==true or lcnum==atmk
 			}//for i
 			if (tableCount != 0) {
 				str += "</table>";

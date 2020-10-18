@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +9,9 @@
 <meta name="_csrf_header" content="${_csrf.headerName}">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<sec:authorize access="hasRole('ROLE_STUD')">
+	<script src="../script/wsocket.js"></script>
+</sec:authorize>
 </head>
 <body>
 <div id='st'>
@@ -30,7 +34,7 @@ $('#stId').text(hwResultList[0].hw_id);
 $('#stNum').text(hwResultList[0].hw_num);
 $('#stDate').text(hwResultList[0].hw_date);
 $('#stName').text(hwResultList[0].hw_hwname);
-$('#stFl').html("<a href='homeworkFiledown?sysFileName="+hwResultList[0].fbList[0].fl_sysname+"'>"+hwResultList[0].fbList[0].fl_oriname+"다운로드</a>");
+$('#stFl').html("<a href='/h2k5every/stud/homeworkFiledown?sysFileName="+hwResultList[0].fbList[0].fl_sysname+"'>"+hwResultList[0].fbList[0].fl_oriname+"다운로드</a>");
 switch (hwResultList[0].hw_psfa) {
 case "P" :
 	$('#stResult').html("PASS    <button type='button' id='reBnt' value='pass'>수정하기</button>");
@@ -59,7 +63,7 @@ $('#reBnt').click(function() {
 			//document.getElementsByName('aa').values;
 		//console.log(pafa);
 		$.ajax({
-			url:'rest/updateStHw?id='+hwResultList[0].hw_id+'&num='+hwResultList[0].hw_num+'&pafa='+pafa+'&idnum='+hwResultList[0].hw_idnum,
+			url:'rest/updateStHw?id='+hwResultList[0].hw_id+'&num='+hwResultList[0].hw_num+'&pafa='+pafa+'&idnum='+hwResultList[0].hw_idnum+'&lv='+hwResultList[0].hw_lv,
 			type:'GET',
 			//async: false,
 			dataType: 'json',
@@ -73,10 +77,10 @@ $('#reBnt').click(function() {
 			success: function(result) {
 				console.log(result);
 				switch (result) {
-				case 1:
+				case true:
 					alert("수정되었습니다.");
 					//history.go(-1);
-					location.href='/h2k5every/prof/selectmanagercoursehomeworkpage?co_idnum='+hwResultList[0].hw_idnum;
+					location.href='/h2k5every/prof/selectmanagercoursehomeworkpage/'+hwResultList[0].hw_idnum;
 					break;
 				default:
 					alert("수정과정에서 문제 발생");

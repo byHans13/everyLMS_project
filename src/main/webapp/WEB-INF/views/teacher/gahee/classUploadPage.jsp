@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +9,9 @@
 <meta name="_csrf_header" content="${_csrf.headerName}">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<sec:authorize access="hasRole('ROLE_STUD')">
+	<script src="../script/wsocket.js"></script>
+</sec:authorize>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -27,7 +31,7 @@
 html, body {
    height: 100%;
    margin: 0
-}            
+}             
     #errP{
     color: red;
     }
@@ -42,14 +46,16 @@ aside {
 section {
 	width: 1000px;
 	float: left;
+			position: absolute;
+	transform:translate(320px,20px);
 }
-.menu{
+ .menu{
     margin-left: 20px;
     text-align:center;
     width: 200px;
     border: 1px black solid;
     float: left;
-}
+} 
         
     </style>
     </head>

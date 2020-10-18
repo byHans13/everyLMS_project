@@ -1,11 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<sec:authorize access="hasRole('ROLE_STUD')">
+	<script src="../script/wsocket.js"></script>
+</sec:authorize>
 <style>
 header {
 	/* background-color: gray; */
@@ -121,13 +125,13 @@ $(document).ready
 					
 				$("#selectTable").append("<td>"+json[i].cl_clname+"</td>");
 				$("#selectTable").append("<td>"+json[i].co_name+"</td>");
-				$("#selectTable").append("<td>"+json[i].cl_lcnum+"</td>");
+				$("#selectTable").append("<td>"+json[i].gr_num+"</td>");
 				$("#selectTable").append("<td>"+json[i].gr_id+"</td>");
 				$("#selectTable").append("<td>"+json[i].cl_id+"</td>");
 				$("#selectTable").append("<td> <form action='goStudyAvgShowPage' method='post'>"+
 										"<input type='hidden' name='cl_clname' value="+clname+">"+
 										"<input type='hidden' name='co_name' value="+co_name+">"+
-										"<input type='hidden' name='cl_lcnum' value="+json[i].cl_lcnum+">"+
+										"<input type='hidden' name='cl_lcnum' value="+json[i].gr_num+">"+
 										"<input type='hidden' name='cl_idnum' value="+json[i].cl_idnum+">"+
 										"<input type='hidden' id='token' data-token-name='${_csrf.headerName}' name = '${_csrf.parameterName}' value='${_csrf.token}' />"+
 										"<button>클릭</button></form></td>");
@@ -182,13 +186,13 @@ function contSelect() {
 					
 				$("#selectTable").append("<td>"+json[i].cl_clname+"</td>");
 				$("#selectTable").append("<td>"+json[i].co_name+"</td>");
-				$("#selectTable").append("<td>"+json[i].cl_lcnum+"</td>");
+				$("#selectTable").append("<td>"+json[i].gr_num+"</td>");
 				$("#selectTable").append("<td>"+json[i].gr_id+"</td>");
 				$("#selectTable").append("<td>"+json[i].cl_id+"</td>");
 				$("#selectTable").append("<td> <form action='goStudyAvgShowPage' method='post'>"+
 										"<input type='hidden' name='cl_clname' value="+clname+">"+
 										"<input type='hidden' name='co_name' value="+co_name+">"+
-										"<input type='hidden' name='cl_lcnum' value="+json[i].cl_lcnum+">"+
+										"<input type='hidden' name='cl_lcnum' value="+json[i].gr_num+">"+
 										"<input type='hidden' name='cl_idnum' value="+json[i].cl_idnum+">"+
 										"<input type='hidden' id='token' data-token-name='${_csrf.headerName}' name = '${_csrf.parameterName}' value='${_csrf.token}' />"+
 										"<button>클릭</button></form></td>");

@@ -1,10 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<sec:authorize access="hasRole('ROLE_STUD')">
+	<script src="../script/wsocket.js"></script>
+</sec:authorize>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="//www.google.com/jsapi"></script>
 <title>Insert title here</title>
@@ -112,9 +116,9 @@ var num=${num};
 		$("#clname").html(clname+" -평균");
 		
 		$("#selectTable").append("<tr>");
-		$("#selectTable").append("<th style='text-align: center;'>등수</th>");
 		$("#selectTable").append("<th style='text-align: center;'>강좌명</th>");
 		$("#selectTable").append("<th style='text-align: center;'>회차</th>");
+		$("#selectTable").append("<th style='text-align: center;'>등수</th>");
 		$("#selectTable").append("<th style='text-align: center;'>점수</th>");
 		$("#selectTable").append("<th style='text-align: center;'>학생아이디</th>");
 		$("#selectTable").append("</tr>");
@@ -132,7 +136,6 @@ function percentageBtn() {
 	var cnt1 =0;
 	var cnt2 =0;
 	var max =0;
-	
 	
  	for(var i=0; i<maxcnt;i++){
  		max += list[i].gr_score;
@@ -177,6 +180,7 @@ function percentageBtn() {
  	console.log(arr);
  	
  	var jsonStr =JSON.stringify(  arr[0] );
+ 	console.log(jsonStr);
  	
 	$.ajax({
 		type:'get',
