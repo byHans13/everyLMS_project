@@ -194,32 +194,18 @@ public boolean fileUpdate(MultipartHttpServletRequest multi, CourseFilesBean cfb
 	
 public boolean pictureInsert(MultipartHttpServletRequest multi, ClassUpBean cb) {
 		
-		// 1.이클립스의 물리적 저장경로 찾기
 		String root = multi.getSession().getServletContext().getRealPath("/");
-		System.out.println("root:  " + root);
 		String path = root + "picture/";
-		System.out.println("fullpath: "+path);
-		// 2.폴더 생성을 꼭 할것...
 		File dir = new File(path);
-		if (!dir.isDirectory()) { // upload폴더 없다면
-			dir.mkdir(); // upload폴더 생성
+		if (!dir.isDirectory()) { 
+			dir.mkdir();
 		}
-
-
-		// 3.파일을 가져오기-파일태그가 1개 일때
 		List<MultipartFile> fList = multi.getFiles("fileName");
-		
 		boolean isFile = false;
-		
 		for (int i = 0; i < fList.size(); i++) {
-			// 파일 메모리에 저장
 			MultipartFile mf = fList.get(0); // 실제파일
 			String oriFileName = mf.getOriginalFilename(); // a.txt
-			System.out.println("oriFileName:  "+ oriFileName);
-			
 			String sysFileName = System.currentTimeMillis() + "."+ oriFileName.substring(oriFileName.lastIndexOf(".") + 1);
-			System.out.println("sysFileName:  "+ sysFileName);
-			// 5.메모리->실제 파일 업로드
 			cb.setPi_pioriname(oriFileName);
 			cb.setPi_pisysname(sysFileName);
 			try {
@@ -229,10 +215,9 @@ public boolean pictureInsert(MultipartHttpServletRequest multi, ClassUpBean cb) 
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} // while or For end
+		}
 		if (isFile)
 			return true;
-		
 		return false;
 	}
 	

@@ -52,10 +52,9 @@ public class WSUserService {
 	public void sendMsg(String sender, String receiver, String msg) {
 		System.out.println("sendMsg: "+list.toString());
 		for(WSUser user:list) {
-			System.out.println(user.getUsername());
+			//System.out.println(user.getUsername());
 			if(user.getUsername().equals(receiver)) {
 				user.sendMessage(sender +":" + msg);
-				System.out.println(sender + "의 메시지 : " + msg);
 			}
 		}
 	}

@@ -24,14 +24,15 @@ public class CourseHomeController {
 
 	
 	@RequestMapping(value = "/prof/selectCoursePage/{co_idnum}/{co_num}", method = RequestMethod.GET)
-	public ModelAndView selectCoursePage(HttpSession session, @PathVariable String co_idnum, @PathVariable String co_num, RedirectAttributes attr){
+	public ModelAndView selectCoursePage(HttpSession session, @PathVariable String co_idnum, @PathVariable String co_num){
 		ModelAndView mav=new ModelAndView();
-		mav = com.selectCourse(session, co_num, co_idnum,attr);
+		mav = com.selectCourse(session, co_num, co_idnum);
 		return mav;
 	}
 	
+	
 
-	@RequestMapping(value = "/prof/insertCourse", method =RequestMethod.POST)
+	@RequestMapping(value = "/prof/insertCourse", method = RequestMethod.POST)
 	public ModelAndView insertCourse(MultipartHttpServletRequest multi, HttpSession session, RedirectAttributes attr){
 		System.out.println("insertCourseController");
 		ModelAndView mav = new ModelAndView();

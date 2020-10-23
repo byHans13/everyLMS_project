@@ -38,11 +38,11 @@ public class ClassUpController {
 	
 	
 	@RequestMapping(value = "/prof/insertclassupload", method = RequestMethod.POST)
-	public ModelAndView insertclassupload(MultipartHttpServletRequest multi, HttpSession session, RedirectAttributes attr) {
+	public ModelAndView insertclassupload(MultipartHttpServletRequest multi, HttpSession session) {
 		ModelAndView mav =new ModelAndView();
-		mav = cm.insertclassupload(multi,attr,session);
+		mav = cm.insertclassupload(multi,session);
 		
-		//fileName
+		///oooooooooooooooooooooooooooooooooooo
 		return mav;
 		
 	}

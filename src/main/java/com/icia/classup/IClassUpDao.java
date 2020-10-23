@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface IClassUpDao {
 
 	boolean insertclassupload(ClassUpBean cb);
+	
+	
+	
 
 	List<ClassUpBean> classList(String id);
 

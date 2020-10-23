@@ -41,11 +41,8 @@ public class ClassManagerController {
 	
 	@RequestMapping(value = "/prof/selectmanagercoursehomeworkpage/{co_idnum}")
 	public String selectManagerCourseHomeworkPage(@PathVariable String co_idnum, HttpSession session ) {
-		System.out.println("방금 받아온 co_idnum: "+co_idnum);
 		List<CourseBean> manager_courseList =cmm.selectCourse(co_idnum);
 		session.setAttribute("courseList", new Gson().toJson(manager_courseList));
-		//mav.addObject("courseList", new Gson().toJson(manager_courseList));
-		//mav.setViewName("teacher/gahee/selectManagerCourseHomeworkPage");
 		return "redirect:/prof/goselectmanagercoursehomeworkpage";
 	}
 	

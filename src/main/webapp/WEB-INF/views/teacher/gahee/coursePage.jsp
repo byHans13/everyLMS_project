@@ -148,18 +148,6 @@ table.type10 .even {
     </tr>
     </thead>
     <tbody>
-   <!--  <tr>
-        <th>항목명</th>
-        <td>내용이 들어갑니다.</td>
-    </tr>
-    <tr>
-        <th class="even">항목명</th>
-        <td>내용이 들어갑니다.</td>
-    </tr>
-    <tr>
-        <th>항목명</th>
-        <td>내용이 들어갑니다.</td>
-    </tr> -->
     </tbody>
 </table>
 	</div>
@@ -204,6 +192,7 @@ table.type10 .even {
 							var arr = new Array();
 							
 				 		if(myCourseNum.length != 0){
+				 			
 								for(var i=0; i<myCourseNum.length; i++){
 									arr[i] = myCourseNum[i].co_num;
 								}
@@ -242,6 +231,7 @@ table.type10 .even {
 
 					});
 		}
+		
 
 		function go() {
 			$.ajax({

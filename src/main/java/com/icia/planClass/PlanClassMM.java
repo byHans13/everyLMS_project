@@ -19,24 +19,16 @@ public class PlanClassMM {
 	private IPlanClassDao pcd;
 
 	
-	public ModelAndView insertplanclass(HttpSession session, ClassUpBean cb, HttpServletRequest request, RedirectAttributes attr) {
+	public ModelAndView insertplanclass(HttpSession session, ClassUpBean cb) {
 		ModelAndView mav =new ModelAndView();
-		System.out.println("idnum: "+cb.getPc_idnum());
-		System.out.println("lv: "+cb.getPc_lv());
-		System.out.println("title: "+cb.getPc_title());
-		System.out.println("content: "+ cb.getPc_cont());
-		
 		boolean result = pcd.insertplanclass(cb);
 		if(result) {
-			System.out.println("planclassOOOOOOOOOOOOOO");
-			 request.setAttribute("insertplanclass", "강의계획서 등록 성공");
 			 mav.addObject("cl_ct", 0);
 			 mav.setViewName("teacher/gahee/classmain");
 		}else {
-			System.out.println("planclassXXXXXXXXXXXXx");
-			request.setAttribute("insertplanclass", "강의계획서 등록 실패");
 			mav.setViewName("teacher/gahee/insertplanclasspage");
 		}
+		
 		session.removeAttribute("idNum");
 		session.removeAttribute("cl_name");
 		session.removeAttribute("cl_lcnum");

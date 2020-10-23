@@ -27,6 +27,7 @@ public class MoveCourseController {
 		session.setAttribute("co_lcnum", co_lcnum);
 		return "redirect:/prof/gocoursepage";
 	}
+	
 	@RequestMapping(value = "/prof/coursePage/{co_lv}/{co_idnum}/{co_lcnum}/{msg}", produces = {"text/plain;charset=utf-8", "application/json;charset=utf-8"})
 	public String insertCoursePage(HttpServletRequest request, HttpSession session, @PathVariable String co_lv, @PathVariable String co_idnum , @PathVariable String co_lcnum, @PathVariable String msg,RedirectAttributes attr){
 		try {

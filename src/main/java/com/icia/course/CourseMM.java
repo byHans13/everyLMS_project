@@ -35,19 +35,21 @@ public class CourseMM {
 		
 		return myCourseList;
 	}
+	
 
-	public ModelAndView selectCourse(HttpSession session, String co_num, String co_idnum, RedirectAttributes attr) {
+	public ModelAndView selectCourse(HttpSession session, String co_num, String co_idnum) {
 		ModelAndView mav = new ModelAndView();
 		List<CourseBean> myCoList = cod.myCoList(co_num,co_idnum);
 		if(myCoList.size()!=0) {
 			session.setAttribute("myCoList", new Gson().toJson(myCoList));
 			mav.setViewName("redirect:/prof/goselectcoursepage");
 		}else {
-			attr.addFlashAttribute("falseMsg","강의를 불러오지 못했습니다.");
 			 mav.setViewName("redirect:/goTeacherLoginFrm");
 		}
 		return mav;
 	}
+	
+	
 	
 	@Transactional
 	public ModelAndView insertCourse(MultipartHttpServletRequest multi, HttpSession session, RedirectAttributes attr) {

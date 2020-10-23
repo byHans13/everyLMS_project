@@ -34,8 +34,6 @@ public class ClassManagerMM {
 	public List<CourseBean> selectCourse(String co_idnum) {
 		String idnum = co_idnum;
 		List<CourseBean> manager_courseList = cmd.selectCourse(idnum);
-		System.out.println("LIST:   "+manager_courseList.size());
-		//System.out.println("LIST:   "+manager_courseList.toString());
 		return manager_courseList;
 	}
 

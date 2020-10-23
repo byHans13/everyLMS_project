@@ -298,7 +298,6 @@ function openProgress(id, idnum, lv,cl_lcsum) {
 				count+1;
 			}
 		console.log(countAt);
-		// $('#contents_layer').empty();
 		 $('#articleView_layer').addClass('open');
 		 var persent =(count/sum)*100;
 		 console.log("count:  "+count);

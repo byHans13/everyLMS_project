@@ -25,11 +25,10 @@ public class ClassUpMM {
 	@Autowired
 	FileManager fm;
 
-	public ModelAndView insertclassupload(MultipartHttpServletRequest multi, RedirectAttributes attr, HttpSession session) {
+	public ModelAndView insertclassupload(MultipartHttpServletRequest multi, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		ClassUpBean cb = new ClassUpBean();
 		cb.setCl_id(session.getAttribute("id").toString());
-		//cl_clname, fileName, cl_stday, cl_fnday, cl_pt, cl_lcnum, cl_lv, cl_cc
 		cb.setCl_clname(multi.getParameter("cl_clname"));
 		cb.setCl_stday(multi.getParameter("cl_stday"));
 		cb.setCl_fnday(multi.getParameter("cl_fnday"));
@@ -44,38 +43,28 @@ public class ClassUpMM {
 			fnSpSum += fnsp[i];
 		}
 		cb.setCl_idnum(""+cb.getCl_id()+cb.getCl_cc()+cb.getCl_lcnum()+fnSpSum);
-		System.out.println("cb.getCl_idnum():  "+ cb.getCl_idnum());
+	
+		if(cd.insertclassupload(cb)) {
+			if(fm.pictureInsert(multi, cb)) {
+				cb.setRc_idnum(cb.getCl_idnum());
+				cb.setRc_lv(cb.getCl_lv());
+				cb.setRc_at(Integer.parseInt(multi.getParameter("rc_at")));
+				cb.setRc_hw(Integer.parseInt(multi.getParameter("rc_hw")));
+				cb.setRc_qz(Integer.parseInt(multi.getParameter("rc_qz")));
+				cb.setRc_test(Integer.parseInt(multi.getParameter("rc_test")));
+				if(cd.insertrate(cb)) {
+					mav.addObject("cl_ct", 0);
+					mav.setViewName("teacher/gahee/classmain");
+				}
+			}
+		}else {
+			mav.setViewName("teacher/gahee/classUploadPage");
+		
+		}return mav;
+	}
 		
 
-		//rc_idnum, rc_lv, rc_at, rc_hw, rc_qz, rc_test
-		cb.setRc_idnum(cb.getCl_idnum());
-		cb.setRc_lv(cb.getCl_lv());
-		cb.setRc_at(Integer.parseInt(multi.getParameter("rc_at")));
-		cb.setRc_hw(Integer.parseInt(multi.getParameter("rc_hw")));
-		cb.setRc_qz(Integer.parseInt(multi.getParameter("rc_qz")));
-		cb.setRc_test(Integer.parseInt(multi.getParameter("rc_test")));
 
-		boolean clResult = cd.insertclassupload(cb);
-		boolean rcResult = cd.insertrate(cb);
-		if(clResult && rcResult) {
-			System.out.println("oooooooo");
-			boolean fiResult = fm.pictureInsert(multi, cb);
-			if(fiResult) {
-				mav.addObject("insertclassupload","성공");
-				mav.addObject("cl_ct", 0);
-				//attr.addFlashAttribute("goAjax","go");
-				//${cl_ct}
-				 mav.setViewName("teacher/gahee/classmain");
-			}
-			
-		}else {
-			System.out.println("xxxxxxxxxxxx");
-			mav.addObject("insertclassupload","실패");
-			mav.setViewName("teacher/gahee/classUploadPage");
-		}
-		return mav;
-	}
-	
 	public List<ClassUpBean> classList(HttpSession session) {
 		String id = session.getAttribute("id").toString();
 		System.out.println("hamq1"+id);

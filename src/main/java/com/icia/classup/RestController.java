@@ -40,6 +40,7 @@ public class RestController {
 		public String classListVal(@RequestParam("cl_ct")String cl_ct, HttpSession session) {
 			List<ClassUpBean> classListVal = cm.getClassList(cl_ct, session);
 			return new Gson().toJson(classListVal);
+			///oooooooooooooooooooooooooooooooooooo
 			
 		}
 		

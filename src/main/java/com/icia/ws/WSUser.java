@@ -38,10 +38,8 @@ public class WSUser {
 	}
 	
 	public void sendMessage(String msg) {
-		// 웹소켓이 주고받는 텍스트 형식으로 변환
 		TextMessage message = new TextMessage(msg);
 		for(WebSocketSession session:list) {
-			System.out.println("Last: "+session);
 			try {
 				session.sendMessage(message);
 			} catch (IOException e) {

@@ -1011,9 +1011,13 @@ jQuery.fn.serializeObject = function() {
 						str +="<tr>";
 						str +="<td>"+json["hw"][i].hw_num+"강</td>";
 						str +="<td>"+json["hw"][i].hw_hwname+"</td>";
-						str += "<td><a href='homeworkFiledown?sysFileName="+json["hw"][i].fbList[1].fl_sysname+"'>"
-								+json["hw"][i].fbList[1].fl_oriname+"</a></td>";
-						str +="<td>"+json["hw"][i].hw_date.substring(0,10)+"</td>";
+			//			console.log(json["hw"][i].fbList[1]);
+				//		console.log(json["hw"][i].fbList[0]);
+					//	console.log(json["hw"][i].fbList[1].fl_sysname);
+						//console.log(json["hw"][i].fbList[0].fl_sysname);
+		//				str += "<td><a href='homeworkFiledown?sysFileName="+json["hw"][i].fbList[1].fl_sysname+"'>"
+			//					+json["hw"][i].fbList[1].fl_oriname+"</a></td>";
+						str +="<td colspan='2'>"+json["hw"][i].hw_date.substring(0,10)+"</td>";
 						var hwList = JSON.stringify(json["hw"][i]);
 						var submitDate = new Date(json["hw"][i].hw_date);
 						var today = new Date();

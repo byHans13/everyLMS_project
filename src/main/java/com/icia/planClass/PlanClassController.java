@@ -33,8 +33,8 @@ public class PlanClassController {
 	
 
 	@RequestMapping(value = "/prof/insertplanclass", method = RequestMethod.POST)
-	public ModelAndView insertplanclass(HttpSession session, HttpServletRequest request, ClassUpBean cb,RedirectAttributes attr) {
-		ModelAndView mav=pcm.insertplanclass(session,cb,request,attr);
+	public ModelAndView insertplanclass(HttpSession session,ClassUpBean cb) {
+		ModelAndView mav=pcm.insertplanclass(session,cb);
 		return mav;
 		
 	}

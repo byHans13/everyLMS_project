@@ -8,6 +8,7 @@
 <insert id="insertplanclass" parameterType="com.icia.classup.ClassUpBean">
 INSERT INTO PLANCLASS(pc_idnum,pc_lv,pc_title,pc_cont) VALUES(#{pc_idnum},#{pc_lv},#{pc_title},#{pc_cont})
 </insert>
+
 <update id="updateplanclass" parameterType="com.icia.classup.ClassUpBean">
 UPDATE PLANCLASS SET PC_TITLE=#{pc_title} , PC_CONT=#{pc_cont}
 WHERE PC_IDNUM=#{pc_idnum} AND PC_LV=#{pc_lv}

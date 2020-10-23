@@ -18,7 +18,8 @@ public class AttendanceRestController {
 	
 	
 	@RequestMapping(value = "/prof/rest/countAt")
-	public Integer countAt(@RequestParam("atd_id")String atd_id,@RequestParam("atd_idnum")String atd_idnum,@RequestParam("atd_lv")String atd_lv) {
+	public Integer countAt(@RequestParam("atd_id")String atd_id,
+			@RequestParam("atd_idnum")String atd_idnum,@RequestParam("atd_lv")String atd_lv) {
 		Integer countAt = atm.countAt(atd_id ,atd_idnum, atd_lv);
 		return countAt;
 		

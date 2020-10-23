@@ -174,7 +174,6 @@ var subvd="";
  if(courseList!=""){
 	 $('#contents_layer').empty();
 	for(var i=0; i<courseList.length; i++){
-		//console.log(courseList[i].fbList[0].fl_subvd);
 		subvd = courseList[i].fbList[0].fl_subvd;
 		
 		if(subvd=="course"){//강의파일	
@@ -183,11 +182,8 @@ var subvd="";
 		
 		$('#hoTbody').append("<tr id='tr"+i+"'><td>"+courseList[i].co_num+"회차</td><td>"+courseList[i].co_name+"</td>");	
 		if(courseList[i].fbList.length>1){
-			
 			$('#tr'+i).append("<td><a id='a"+i+"' href='/h2k5every/stud/homeworkFiledown?sysFileName="+courseList[i].fbList[1].fl_sysname+"'></a></td><td id='td"+i+"'></td><td><a onclick=\"openAaList('"+courseList[i].co_lv+"','"+courseList[i].co_idnum+"','"+courseList[i].co_num+"')\">상세보기</td></tr>");
 			homeworkList(courseList[i].co_num,courseList[i].co_lv,courseList[i].co_idnum,i);
-			//var arrHome = homeworkList(courseList[i].co_num,courseList[i].co_lv,courseList[i].co_idnum,i);
-			//console.dir(arrHome);
 			
 		}else if(subvd != "homework" && subvd =="course"){
 			 $('#tr'+i).append("<td><a onclick=\"goInsert('"+courseList[i].co_num+"','"+courseList[i].co_lv+"','"+courseList[i].co_idnum+"')\">과제업로드</a></td><td>-</td><td>-</td></tr>");
@@ -256,8 +252,6 @@ var subvd="";
 			async: false,
 			dataType: 'json',
 			beforeSend : function(xhr){
-				//이거 안하면 403 error
-				//데이터를 전송하기 전에 헤더에 csrf값을 설정한다
 				var $token = $("#token");
 				xhr.setRequestHeader($token.data("token-name"), $token.val());
 			},
@@ -268,7 +262,6 @@ var subvd="";
 				$('#articleView_layer').addClass('open');
 				for(var i=0; i<aaList.length; i++){
 					stList[i]=aaList[i].aa_id;
-					//$('#contents_layer').append("<p>"+aaList[i].aa_id+"</p>");	
 				}
 				
 				sendHW(cl_lv,cl_idnum,co_num);
@@ -351,15 +344,8 @@ var subvd="";
 	
 function goHwResult(lv, idnum, num, id) {
 		console.log(lv, idnum, num, id);
-		/* $('body').append("<form  action=\"selectHwResultPage?${csrf.parameterName}=${_csrf.token}\" method=\"get\"></form>");
-		$('form').append("<input type='hidden' name='hw_lv' value="+lv+">");
-		$('form').append("<input type='hidden' name='hw_idnum' value="+idnum+">");
-		$('form').append("<input type='hidden' name='hw_num' value="+num+">");
-		$('form').append("<input type='hidden' id='token' data-token-name='${_csrf.headerName }' value='${_csrf.token }'/>");
-		$('form').append("<input type='hidden' name='hw_id' value="+id+">"); */
+		
 		location.href="selectHwResultPage/"+lv+"/"+idnum+"/"+num+"/"+id;
-		//console.log($('form').serialize());
-		/* $('form').submit(); */
 		
 		
 	} 
